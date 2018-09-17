@@ -21,7 +21,7 @@ endif::[]
 * What's different from https://github.com/se-edu/addressbook-level3[level 3]:
 ** A more sophisticated GUI that includes a list  panel and an in-built Browser.
 ** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI (currently implemented).
 
 == Site Map
 
