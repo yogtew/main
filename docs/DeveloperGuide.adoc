@@ -865,11 +865,13 @@ _{More to be added}_
 
 1. User requests to add a student with specified details
 2. ConTAct adds the person into the system
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*1a. The formatting is invalid.
+* 1a. The formatting is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -883,11 +885,13 @@ Use case ends.
 
 1. User requests to a list of students matching an input string
 2. ConTAct shows a list of persons
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*2a. The list is empty
+* 2a. The list is empty
 +
 Use case ends.
 
@@ -898,11 +902,13 @@ Use case ends.
 
 1. User requests to add a student with specified details
 2. ConTAct adds the person into the system
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*1a. The formatting is invalid.
+* 1a. The formatting is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -916,11 +922,13 @@ Use case ends.
 
 1. User requests to sort the students according to a parameter
 2. ConTAct displays the list of students in sorted order
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*1a. The parameter is invalid.
+* 1a. The parameter is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -928,7 +936,7 @@ Use case ends.
 Use case ends.
 
 [none]
-*2a. The list is empty
+* 2a. The list is empty
 +
 Use case ends.
 
@@ -941,11 +949,13 @@ Use case ends.
 2. ConTAct displays the list of students in that group
 3. The user inputs the attendance of the group
 4. ConTAct displays the resulting list
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*1a. The group is invalid.
+* 1a. The group is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -953,12 +963,12 @@ Use case ends.
 Use case ends.
 
 [none]
-*2a. The list is empty
+* 2a. The list is empty
 +
 Use case ends.
 
 [none]
-*3a. The user types in an incorrect input.
+* 3a. The user types in an incorrect input.
 [none]
 ** 3a1. ConTAct shows an error message.
 +
@@ -997,11 +1007,13 @@ Use case resumes at step 2.
 
 1. User schedules an event with the specified details
 2. ConTAct confirms the scheduling of said event
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*1a. The parameter(s) is invalid.
+* 1a. The parameter(s) is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -1017,11 +1029,13 @@ Use case ends.
 2. ConTAct fetches the emails of the students
 3. User types in the email header and body
 4. ConTAct sends out the email
++
+Use case ends.
 
 *Extesions*
 
 [none]
-*1a. The group(s) is invalid.
+* 1a. The group(s) is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -1029,7 +1043,7 @@ Use case ends.
 Use case ends.
 
 [none]
-*2a. The list of student emails is empty
+* 2a. The list of student emails is empty
 +
 [none]
 ** 2a1. ConTAct shows an error message.
@@ -1037,7 +1051,7 @@ Use case ends.
 Use case ends.
 
 [none]
-*4a. ConTAct cannot send out the email.
+* 4a. ConTAct cannot send out the email.
 +
 [none]
 ** 4a1. ConTAct shows an error message.
