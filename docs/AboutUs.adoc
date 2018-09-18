@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Andrew Tan
-image::Andrewtan.png[width="150", align="left"]
+image::AndrewTan.png[width="150", align="left"]
 {empty}[https://github.com/andrewtanJS[github]]
 
 Role: 
