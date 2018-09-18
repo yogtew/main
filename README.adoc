@@ -16,6 +16,7 @@ endif::[]
 
 * This is a student management system for teaching assistants. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * Teaching assistants who have trouble managing their student details, can use this to add, delete, find students. They can also use it to update attendance during each lesson and keep track of each students overall attendance.
+* This app also allows teaching assistants to keep track of their timetable and schedule classes and consultations easily.
 
 == Site Map
 
