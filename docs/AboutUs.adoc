@@ -13,8 +13,8 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::AndrewTan.png[width="150", align="left"]
 {empty}[https://github.com/andrewtanJS[github]]
 
-Role: 
-Responsibility:
+Role: Integration
+Responsibility: Git Expert
 
 '''
 
@@ -22,8 +22,8 @@ Responsibility:
 image::CyrusGuo.jpg[width="150", align="left"]
 {empty}[http://github.com/cyrusguo[github]]
 
-Role: 
-Responsibilities: 
+Role: Scheduling and tracking
+Responsibilities: Security Expert
 
 '''
 
@@ -31,8 +31,8 @@ Responsibilities:
 image::PreethiDevarajan.jpg[width="150", align="left"]
 {empty}[http://github.com/preethi-d[github]]
 
-Role: 
-Responsibilities: 
+Role: Team lead
+Responsibilities: Deliverables and deadlines 
 
 '''
 
@@ -40,8 +40,8 @@ Responsibilities:
 image::AlfredYip.jpg[width="150", align="left"]
 {empty}[http://github.com/alyip98[github]]
 
-Role: 
-Responsibilities: 
+Role: Developer 
+Responsibilities: Code quality
 
 '''
 
@@ -49,7 +49,7 @@ Responsibilities:
 image::YogusviTewari.jpg[width="150", align="left"]
 {empty}[http://github.com/yogtew[github]] [<<johndoe#, portfolio>>]
 
-Role: 
-Responsibilities: 
+Role: Developer
+Responsibilities: Documentation 
 
 '''
