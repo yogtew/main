@@ -9,11 +9,20 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
+=== Preethi Devarajan
+image::PreethiDevarajan.jpg[width="150", align="left"]
+{empty}[http://github.com/preethi-d[github]]
+
+Role: Team lead + 
+Responsibilities: Deliverables and deadlines 
+
+'''
+
 === Andrew Tan
 image::AndrewTan.png[width="150", align="left"]
 {empty}[https://github.com/andrewtanJS[github]]
 
-Role: Integration
+Role: Integration + 
 Responsibility: Git Expert
 
 '''
@@ -22,30 +31,22 @@ Responsibility: Git Expert
 image::CyrusGuo.jpg[width="150", align="left"]
 {empty}[http://github.com/cyrusguo[github]]
 
-Role: Scheduling and tracking
+Role: Scheduling and tracking + 
 Responsibilities: Security Expert
 
 '''
 
-=== Preethi Devarajan
-image::PreethiDevarajan.jpg[width="150", align="left"]
-{empty}[http://github.com/preethi-d[github]]
-
-Role: Team lead
-Responsibilities: Deliverables and deadlines 
-
-'''
 
 === Yip Seun Yuen
 image::AlfredYip.jpg[width="150", align="left"]
 {empty}[http://github.com/alyip98[github]]
 
-Role: Developer 
+Role: Developer + 
 Responsibilities: Code quality
 
 '''
 
-=== Yogusvi Tewari
+=== Yogusvi Tewari + 
 image::YogusviTewari.jpg[width="150", align="left"]
 {empty}[http://github.com/yogtew[github]] [<<johndoe#, portfolio>>]
 
