@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ConTAct - Developer Guide
 :site-section: DeveloperGuide
 :toc:
 :toc-title:
@@ -815,13 +815,14 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* Teaching assistants
+* has a need to manage a significant number of students across multiple classes
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage students and student details more effectively by providing a centralized platform
 
 [appendix]
 == User Stories
@@ -833,15 +834,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |tutor |add a new student |
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |tutor |add students in bulk |easily keep track of my classes
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |tutor |delete a student |remove entries that I no longer need
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |tutor |find a student by name |locate details of students without having to go through the entire list
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |tutor |mark attendace |keep track of who's been attending
+
+|`* * *` |tutor |schedule events |keep track of class timings and consultations
+
+|`* *` |tutor |sort students |identify groups of students
+
+|`* *` |tutor |email students |let them know of any announcements
 |=======================================================================
 
 _{More to be added}_
@@ -849,17 +856,133 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `ConTAct` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add students
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to add a student with specified details
+2. ConTAct adds the person into the system
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 1a. The formatting is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Search for students
+
+*MSS*
+
+1. User requests to a list of students matching an input string
+2. ConTAct shows a list of persons
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Add students
+
+*MSS*
+
+1. User requests to add a student with specified details
+2. ConTAct adds the person into the system
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 1a. The formatting is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort students
+
+*MSS*
+
+1. User requests to sort the students according to a parameter
+2. ConTAct displays the list of students in sorted order
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 1a. The parameter is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[discrete]
+=== Use case: Mark attendance
+
+*MSS*
+
+1. User requests to mark the attendance of a specified group
+2. ConTAct displays the list of students in that group
+3. The user inputs the attendance of the group
+4. ConTAct displays the resulting list
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 1a. The group is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. The list is empty
++
+Use case ends.
+
+[none]
+* 3a. The user types in an incorrect input.
+[none]
+** 3a1. ConTAct shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Delete students
+
+*MSS*
+
+1.  User requests to list students
+2.  ConTAct shows a list of students
+3.  User requests to delete a specific student in the list
+4.  ConTAct deletes the student
 +
 Use case ends.
 
@@ -873,11 +996,67 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. ConTAct shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Schedule events
+
+*MSS*
+
+1. User schedules an event with the specified details
+2. ConTAct confirms the scheduling of said event
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 1a. The parameter(s) is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Email students
+
+*MSS*
+
+1. User requests to email all students in a given group
+2. ConTAct fetches the emails of the students
+3. User types in the email header and body
+4. ConTAct sends out the email
++
+Use case ends.
+
+*Extesions*
+
+[none]
+* 1a. The group(s) is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. The list of student emails is empty
++
+[none]
+** 2a1. ConTAct shows an error message.
++
+Use case ends.
+
+[none]
+* 4a. ConTAct cannot send out the email.
++
+[none]
+** 4a1. ConTAct shows an error message.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
