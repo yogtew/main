@@ -4,7 +4,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-ConTAct was developed by the https://CS2103-AY1819S1-W13-3 team. 
+ConTAct was developed by the https://CS2103-AY1819S1-W13-3 team. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
@@ -48,7 +48,7 @@ Responsibilities: Code quality
 
 === Yogusvi Tewari + 
 image::YogusviTewari.jpg[width="150", align="left"]
-{empty}[http://github.com/yogtew[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/yogtew[github]]
 
 Role: Developer
 Responsibilities: Documentation 
