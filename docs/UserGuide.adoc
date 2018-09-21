@@ -14,7 +14,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/CS2103-AY1819S1-W13-3/main.git
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team ConTAct`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
