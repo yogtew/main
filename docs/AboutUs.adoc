@@ -10,7 +10,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 == Project Team
 
 === Preethi Devarajan
-image::preethi-d.jpg[width="150", align="left"]
+image::preethi-d.png[width="150", align="left"]
 {empty}[http://github.com/preethi-d[github]]
 
 Role: Team lead +
@@ -28,7 +28,7 @@ Responsibility: Git Expert
 '''
 
 === Cyrus Guo
-image::cyrusguo.jpg[width="150", align="left"]
+image::cyrusguo.png[width="150", align="left"]
 {empty}[http://github.com/cyrusguo[github]]
 
 Role: Scheduling and tracking +
@@ -38,7 +38,7 @@ Responsibilities: Security Expert
 
 
 === Yip Seun Yuen
-image::alyip98.jpg[width="150", align="left"]
+image::alyip98.png[width="150", align="left"]
 {empty}[http://github.com/alyip98[github]]
 
 Role: Developer +
@@ -47,7 +47,7 @@ Responsibilities: Code quality
 '''
 
 === Yogusvi Tewari +
-image::yogtew.jpg[width="150", align="left"]
+image::yogtew.png[width="150", align="left"]
 {empty}[http://github.com/yogtew[github]]
 
 Role: Developer
