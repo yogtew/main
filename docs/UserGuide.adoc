@@ -12,9 +12,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103-AY1819S1-W13-3/main.git
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team ConTAct`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
@@ -93,6 +93,66 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+=== Sorting students: `sort`
+
+Sorts students according to a given parameter. +
+Format: `sort PARAMETER`
+
+****
+* The sorting itself is only performed on the already exisiting fields.
+****
+
+Examples:
+
+*`sort NAME` +
+Returns a list of students by their name
+*`sort GRADES` +
+Returns a list of students by their grades
+
+=== Marking attendance: `attd`
+
+Allows the user to mark the attendance of students in a given class. +
+Format: `attd CLASS_NAME`
+
+****
+* The attendance marking is done after the command resolves, and the user will input the attendance accordingly.
+****
+
+Examples:
+
+*`attd CS2103-W13` +
+Outputs the list of students in the class, and waits for the user to input the attendance accordingly.
+
+=== Schedule timetables: `schedule`
+
+Schedules an event for the user to keep track of. +
+Format: `schedule EVENT_NAME d/DATE s/TIME_START e/TIME_END [MORE_DETAILS]`
+
+****
+* The event will be scheduled and reflected on the user's calendar
+* Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event
+****
+
+Examples:
+
+* `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800` +
+Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
+
+=== Emailing students
+
+Allows the user to email a specified group or student. +
+Format: `email GROUP_NAME [MORE_GROUP_NAMES]`
+
+****
+* The content of the email is specified only after the command is called
+* The user can specify any number of groups or students.
+****
+
+Examples:
+
+* `email CS2103-Tutorial-W13` +
+Gathers all the email addresses of the students in `CS2103-Tutorial-W13` for emailing.
 
 === Locating persons by name: `find`
 
@@ -249,6 +309,14 @@ e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 123466
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Sort* : `sort PARAMETER` +
+e.g. `sort NAME`
+* *Attendance* : `attd GROUP_NAME`
+e.g. `attd CS2103-Tutorial-W13`
+* *Schedule* : `schedule EVENT_NAME d/DATE s/TIME_START e/TIME_END [MORE_DETAILS]` +
+e.g `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800`
+* *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
+e.g. `email CS2103-Tutorial-W13`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
 * *List* : `list`
