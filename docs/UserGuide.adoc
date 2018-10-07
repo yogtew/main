@@ -108,7 +108,7 @@ Examples:
 *`sort NAME` +
 Returns a list of students sorted by their name
 *`sort GRADES` +
-Returns a list of students sorted by their grades, which is a field of each student. 
+Returns a list of students sorted by their grades, which is a field of each student.
 
 === Marking attendance: `attd`
 
