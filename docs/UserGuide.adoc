@@ -18,7 +18,7 @@ By: `Team ConTAct`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
-ConTAct is for teaching assistants who *prefer to use a desktop app for managing students*. More importantly, ConTAct is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ConTAct can get your student management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+ConTAct is an application for teaching assistants who *prefer to use a desktop app for managing students*. More importantly, ConTAct is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ConTAct can get your student management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
