@@ -8,7 +8,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Date {
 
-    public static final String DATE_NAME_CONTRAINTS =
+    public static final String DATE_NAME_CONSTRAINTS =
             "Dates should only be a valid date formatted as dd/mm/yyyy, dd-mm-yyyy, or dd.mm.yyyy";
 
     /**
@@ -30,7 +30,7 @@ public class Date {
      */
     public Date(String date) {
         requireNonNull(date);
-        checkArgument(isValidDate(date), DATE_NAME_CONTRAINTS);
+        checkArgument(isValidDate(date), DATE_NAME_CONSTRAINTS);
         this.date = date;
     }
 
