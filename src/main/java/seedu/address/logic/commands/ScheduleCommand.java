@@ -35,14 +35,14 @@ public class ScheduleCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
 
-    private final Event toAdd;
+    private final Event toSchedule;
 
     /**
      * Creates a ScheduleCommand to add the specified (@code Event)
      */
     public ScheduleCommand(Event event) {
         requireNonNull(event);
-        toAdd = event;
+        toSchedule = event;
     }
 
     @Override
@@ -50,8 +50,14 @@ public class ScheduleCommand extends Command {
         requireNonNull(model);
         // for now just executes the command without adding
         // model.addEvent(toAdd);
-        model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        // model.commitAddressBook();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toSchedule));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleCommand // instanceof handles nulls
+                && toSchedule.equals(((ScheduleCommand) other).toSchedule));
+    }
 }
