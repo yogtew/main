@@ -17,7 +17,7 @@ import seedu.address.model.Model;
  */
 public class ScheduleCommand extends Command {
 
-    public static final String COMMAND_WORD = "Schedule";
+    public static final String COMMAND_WORD = "schedule";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + "Schedules an event in the calendar."
             + "Parameters: "
