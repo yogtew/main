@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
-import java.util.Set;
 import java.util.stream.Stream;
 
 import seedu.address.calendar.event.Date;
@@ -30,7 +29,8 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
      */
     public ScheduleCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_DATE, PREFIX_START, PREFIX_END, PREFIX_DETAIL);
+                ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_DATE,
+                        PREFIX_START, PREFIX_END, PREFIX_DETAIL);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_DATE, PREFIX_START, PREFIX_END, PREFIX_DETAIL)
                 || !argMultimap.getPreamble().isEmpty()) {
