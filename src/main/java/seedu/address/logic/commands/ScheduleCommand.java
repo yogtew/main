@@ -17,32 +17,32 @@ import seedu.address.model.Model;
  */
 public class ScheduleCommand extends Command {
 
-    public static final String COMMAND_WORD = "Schedule";
+    public static final String COMMAND_WORD = "schedule";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Schedules an event in the calendar."
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Schedules an event in the calendar. "
             + "Parameters: "
             + PREFIX_EVENT_NAME + "EVENT_NAME "
             + PREFIX_DATE + "DATE "
-            + PREFIX_START + "TIME_START"
-            + PREFIX_END + "TIME_END"
+            + PREFIX_START + "TIME_START "
+            + PREFIX_END + "TIME_END "
             + PREFIX_DETAIL + "PREFIX_DETAILS\n"
             + "Example: " + COMMAND_WORD + " "
-            + "CS2103-Tutorial-W13 "
+            + "CS2103 Tutorial W13 "
             + PREFIX_DATE + "22-3-2018 "
-            + PREFIX_START + "1600"
-            + PREFIX_END + "1800"
+            + PREFIX_START + "16:00 "
+            + PREFIX_END + "18:00 "
             + PREFIX_DETAIL + "Week 3 CS2103 tutorial";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
 
-    private final Event toAdd;
+    private final Event toSchedule;
 
     /**
      * Creates a ScheduleCommand to add the specified (@code Event)
      */
     public ScheduleCommand(Event event) {
         requireNonNull(event);
-        toAdd = event;
+        toSchedule = event;
     }
 
     @Override
@@ -50,8 +50,14 @@ public class ScheduleCommand extends Command {
         requireNonNull(model);
         // for now just executes the command without adding
         // model.addEvent(toAdd);
-        model.commitAddressBook();
-        return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        // model.commitAddressBook();
+        return new CommandResult(String.format(MESSAGE_SUCCESS, toSchedule));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ScheduleCommand // instanceof handles nulls
+                && toSchedule.equals(((ScheduleCommand) other).toSchedule));
+    }
 }

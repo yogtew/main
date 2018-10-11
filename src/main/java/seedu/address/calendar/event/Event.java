@@ -87,7 +87,7 @@ public class Event {
                 .append(getStartTime())
                 .append(" End Time: ")
                 .append(getEndTime())
-                .append(" Details:")
+                .append(" Details: ")
                 .append(getDetail());
         return builder.toString();
     }
