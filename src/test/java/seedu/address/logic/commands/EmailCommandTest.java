@@ -1,15 +1,16 @@
 package seedu.address.logic.commands;
 
 import org.junit.Test;
+
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 public class EmailCommandTest {
 
