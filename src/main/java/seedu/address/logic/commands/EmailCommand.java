@@ -25,6 +25,7 @@ public class EmailCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_ADDRESS_ADDED_SUCCESS = "Email address added: %1$s";
+
     private final Index targetIndex;
 
     public EmailCommand(Index targetIndex) {
@@ -46,5 +47,12 @@ public class EmailCommand extends Command {
 
 
         return new CommandResult(String.format(MESSAGE_ADDRESS_ADDED_SUCCESS, addressToEmail));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailCommand // instanceof handles nulls
+                && targetIndex.equals(((EmailCommand) other).targetIndex)); // state check
     }
 }
