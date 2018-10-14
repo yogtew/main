@@ -139,7 +139,7 @@ Examples:
 * `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800` +
 Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
 
-=== Emailing students: 'email'
+=== Emailing students: `email`
 
 Allows the user to email a specified student. +
 Format: `email INDEX`
