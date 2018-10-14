@@ -239,6 +239,12 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::email[]
+=== Email feature
+==== Current Implementation
+
+The email feature is faciliated by Outlook Mail API. 
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
