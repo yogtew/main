@@ -1,0 +1,27 @@
+{
+  "authors":
+  [
+    {
+      "githubId" : "andrewtanJS",
+      "displayName" : "Andrew Tan",
+      "authorNames" : ["andrewtanJS", "andre", "U-ANDREWT\\andre"]
+    },
+    {
+      "githubId" : "preethi-d",
+      "displayName" : "preethid",
+      "authorNames" : ["preethi-d", "preethid", "preethidevarajan"]
+    },
+    {
+      "githubId": "yogtew",
+      "displayName": "Yogusvi Tewari"
+    },
+    {
+      "githubId" : "alyip98",
+      "displyName" : "Alfred Yip"
+    }
+    {
+      "githubId" : "cyrusguo",
+      "displayName" : "Cyrus Guo"
+    }
+  ]
+}
