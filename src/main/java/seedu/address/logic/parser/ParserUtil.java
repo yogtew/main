@@ -6,11 +6,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.calendar.event.Date;
-import seedu.address.calendar.event.Detail;
-import seedu.address.calendar.event.EndTime;
-import seedu.address.calendar.event.EventName;
-import seedu.address.calendar.event.StartTime;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.Detail;
+import seedu.address.model.event.EndTime;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.StartTime;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;

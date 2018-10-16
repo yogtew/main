@@ -9,12 +9,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.util.stream.Stream;
 
-import seedu.address.calendar.event.Date;
-import seedu.address.calendar.event.Detail;
-import seedu.address.calendar.event.EndTime;
-import seedu.address.calendar.event.Event;
-import seedu.address.calendar.event.EventName;
-import seedu.address.calendar.event.StartTime;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.Detail;
+import seedu.address.model.event.EndTime;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.StartTime;
 import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 /**
