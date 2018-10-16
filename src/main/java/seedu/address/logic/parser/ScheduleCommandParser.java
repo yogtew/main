@@ -2,7 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -10,7 +10,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import java.util.stream.Stream;
 
 import seedu.address.model.event.Date;
-import seedu.address.model.event.Detail;
+import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
@@ -30,9 +30,10 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
     public ScheduleCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_EVENT_NAME, PREFIX_DATE,
-                        PREFIX_START, PREFIX_END, PREFIX_DETAIL);
+                        PREFIX_START, PREFIX_END, PREFIX_DESCRIPTION);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME, PREFIX_DATE, PREFIX_START, PREFIX_END, PREFIX_DETAIL)
+        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT_NAME,
+                PREFIX_DATE, PREFIX_START, PREFIX_END, PREFIX_DESCRIPTION)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
@@ -41,9 +42,9 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         StartTime start = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_START).get());
         EndTime end = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_END).get());
-        Detail details = ParserUtil.parseDetail(argMultimap.getValue(PREFIX_DETAIL).get());
+        Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
 
-        Event event = new Event(eventName, date, start, end, details);
+        Event event = new Event(eventName, date, start, end, description);
 
         return new ScheduleCommand(event);
     }

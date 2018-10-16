@@ -16,7 +16,7 @@ public class Event {
     private final EndTime endTime;
 
     // Data fields
-    private final Detail detail;
+    private final Description description;
 
     /**
      * Constructs a (@code Event).
@@ -25,15 +25,15 @@ public class Event {
      * @param date a valid date in dd-mm-yyyy format.
      * @param startTime a valid start time in 24 hour format.
      * @param endTime a valid end time in 24 hour format.
-     * @param detail valid details of the event.
+     * @param description valid details of the event.
      */
-    public Event(EventName eventName, Date date, StartTime startTime, EndTime endTime, Detail detail) {
-        requireAllNonNull(eventName, date, startTime, endTime, detail);
+    public Event(EventName eventName, Date date, StartTime startTime, EndTime endTime, Description description) {
+        requireAllNonNull(eventName, date, startTime, endTime, description);
         this.eventName = eventName;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.detail = detail;
+        this.description = description;
     }
 
     public EventName getEventName() {
@@ -52,8 +52,8 @@ public class Event {
         return endTime;
     }
 
-    public Detail getDetail() {
-        return detail;
+    public Description getDescription() {
+        return description;
     }
 
     @Override
@@ -69,12 +69,12 @@ public class Event {
                 && Objects.equals(getDate(), event.getDate())
                 && Objects.equals(getStartTime(), event.getStartTime())
                 && Objects.equals(getEndTime(), event.getEndTime())
-                && Objects.equals(getDetail(), event.getDetail());
+                && Objects.equals(getDescription(), event.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getEventName(), getDate(), getStartTime(), getEndTime(), getDetail());
+        return Objects.hash(getEventName(), getDate(), getStartTime(), getEndTime(), getDescription());
     }
 
     @Override
@@ -87,8 +87,8 @@ public class Event {
                 .append(getStartTime())
                 .append(" End Time: ")
                 .append(getEndTime())
-                .append(" Details: ")
-                .append(getDetail());
+                .append(" Description: ")
+                .append(getDescription());
         return builder.toString();
     }
 
