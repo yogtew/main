@@ -241,9 +241,23 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::email[]
 === Email feature
-==== Current Implementation
+==== Current implementation - Emailing a single student
 
-The email feature is faciliated by Outlook Mail API. 
+The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. The Outlook mail interface appears in the browserpanel, and is activated when the email command is typed, instead of when a personcard is clicked. The email command itself takes in an index as a parameter (e.g email 2), and fetches the email address of the student at that index. It then opens up the Outlook UI, with the email address of the student in the 'to:' section. The CommandResult object that is returned by the email command lets the user know if the email address has been successfully added to the the 'to:' field. The email subject and content is also entered throuhg the CLI. 
+
+==== Using Outlook's Mail API 
+
+This API is a RESTful API, made for server-client communication. 
+
+Using the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message), the users email content/subject is converted to JSON format and forms the body of the email. 
+
+==== Future features/implementations - Emailing an entire class/group
+
+Use the 'select' feature to select an entire class, based on the tag that each student has of which class they are in. After selecting, the email command would extract all of their emails and open up the Outlook UI, with the email addressess of the students in the 'to:' section. (e.g 'select tutgroup4', 'email')
+
+==== Alternative implementations:
+
+Since the outlook mail API is being used, the only alternatives in implementation come about in the extracting of emails from the person object, and the shifting of the user input for the subject/content from the CLI to appear in the empty 'compose mail' box. 
 
 // tag::undoredo[]
 === Undo/Redo feature
