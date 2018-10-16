@@ -249,6 +249,8 @@ The email feature is faciliated by Outlook Mail API, since most NUS teaching ass
 
 This API is a RESTful API, made for server-client communication. 
 
+image::REST api.png[width="800"]
+
 Using the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message), the users email content/subject is converted to JSON format and forms the body of the email. 
 
 ==== Future features/implementations - Emailing an entire class/group
