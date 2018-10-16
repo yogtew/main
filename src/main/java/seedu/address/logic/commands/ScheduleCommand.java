@@ -7,6 +7,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Event;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -48,6 +56,15 @@ public class ScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        try {
+            // Simply writes to a text file in data for now.
+            BufferedWriter writer = new BufferedWriter(new FileWriter("data\\calendar.txt", true));
+            writer.append(toSchedule.toString() + "\n");
+            writer.close();
+        } catch (IOException exception) {
+            LogsCenter.getLogger("ScheduleCommand").log(Level.WARNING, "File Not Found");
+        }
+
         // for now just write to a simple output file
         // model.addEvent(toAdd);
         // model.commitAddressBook();
