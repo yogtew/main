@@ -261,6 +261,65 @@ Use the 'select' feature to select an entire class, based on the tag that each s
 
 Since the outlook mail API is being used, the only alternatives in implementation come about in the extracting of emails from the person object, and the shifting of the user input for the subject/content from the CLI to appear in the empty 'compose mail' box.
 
+//tag::schedule[]
+=== Schedule feature
+==== Current Implementation
+
+The schedule command is a completely new feature that allows the user to schedule events within ConTAct.
+It follows a similar command flow as that of the address book, but it will have it's own separate model and
+.xml file for storage. Furthermore, to facilitate this command, a new data type is introduced: the Event class.
+This Event class has it's own unique fields that the user can specify to schedule an event:
+
+* Event Name: The name of the event, valid if it is not an empty string.
+* Date: The date of the event, valid if expressed in these forms:  `DD-MM-YYYY`, `DD.MM.YYYY`, `DD/MM/YYYY`.
+It must also be a date that actually falls within a calendar (i.e. dates such as 25-13-2000 are invalid).
+* Start Time: The start time of the event, valid in this form: `HH:MM`, in 24-hour format.
+* End Time: The end time of the event, valid in this form: `HH:MM`, in 24-hour format.
+* Description: The description of the event, valid if it is not an empty string.
+
+Currently, the main operation is the `schedule` command, and it is implemented as such:
+
+* `schedule event/EVENT_NAME date/DATE start/START_TIME end/END_TIME descr/DESCRIPTION`
+
+Currently, this operation exists within the logic component of ConTAct, with the Event data structure falling
+under the models component.
+
+Below is an example of how the schedule command behaves:
+
+`schedule event/Office Christmas Party date/23-12-2018 start/18:00 end/20:00 descr/Party at Scranton Branch`
+
+This will simply create an event with the specified fields and store it similar to how the addressbook stores a person.
+Furthermore, the schedule command ensures that all the fields specified must be valid for it to be a success.
+
+The GUI itself will have a calendar component which will display the user's current list of events that they have
+scheduled, while adjusting for the current date.
+
+==== Design Considerations
+
+===== Aspect: How schedule handles the event model and storage
+
+* **Alternative 1 (current choice):** Stores the list of events within the same model as the addressbook, but keep
+storage separate.
+** Pros: Will be consistent with the implementation of the addressbook, while also ensuring that the storage component
+is distinct.
+
+* **Alternative 2:** Store the list of events as its own separate model and separate storage.
+** Pros: Will not interfere greatly with the implementation of the addressbook itself
+** Cons: Will be detached from the original architecture
+
+* **Alternative 3:** Store the list of events alongside the addressbook.
+** Pros: Will be easier to implement
+** Cons: Will be significantly harder to distinguish the addressbook and the calendar itself
+
+===== Aspect: Event data structure
+
+* **Alternative 1 (current choice):** Store the Event data structure under the models component of ConTAct.
+** Pros: Consistent with the Person model and the ConTAct architecture
+** Cons: Harder to integrate into the rest of the application
+
+* **Alternative 2:** Store the Event data structure as its own component
+** Cons: Will be detached from the actual application itself
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
