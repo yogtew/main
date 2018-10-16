@@ -52,7 +52,7 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_attendance() throws Exception {
         final String attendance = "Some attendance.";
-         AttendanceCommand command = (AttendanceCommand) parser.parseCommand(AttendanceCommand.COMMAND_WORD + " "
+        AttendanceCommand command = (AttendanceCommand) parser.parseCommand(AttendanceCommand.COMMAND_WORD + " "
                 + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_ATTENDANCE + attendance);
         assertEquals(new AttendanceCommand(INDEX_FIRST_PERSON, attendance), command);
     }
