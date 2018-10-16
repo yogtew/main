@@ -6,14 +6,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import seedu.address.calendar.event.Date;
-import seedu.address.calendar.event.Detail;
-import seedu.address.calendar.event.EndTime;
-import seedu.address.calendar.event.EventName;
-import seedu.address.calendar.event.StartTime;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.EndTime;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.StartTime;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -188,17 +188,17 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String detail} into an {@code Detail}.
+     * Parses a {@code String description} into an {@code Description}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code detail} is invalid.
+     * @throws ParseException if the given {@code description} is invalid.
      */
-    public static Detail parseDetail(String detail) throws ParseException {
-        requireNonNull(detail);
-        String trimmedDetail = detail.trim();
-        if (!Detail.isValidDetail(trimmedDetail)) {
-            throw new ParseException(Detail.DETAIL_STRING_CONSTRAINTS);
+    public static Description parseDescription(String description) throws ParseException {
+        requireNonNull(description);
+        String trimmedDescription = description.trim();
+        if (!Description.isValidDescription(trimmedDescription)) {
+            throw new ParseException(Description.DESCRIPTION_STRING_CONSTRAINTS);
         }
-        return new Detail(trimmedDetail);
+        return new Description(trimmedDescription);
     }
 }
