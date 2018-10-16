@@ -326,6 +326,21 @@ _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
 
+// tag::attendance[]
+=== Attendance Marking
+==== Implementation
+The Attendance Command is a new command that allows the TA to mark the attendance of students in his/her class. The Attendance Command is implemented in a similar way as the other commands already implemented in the address book.
+The main operation is the attendance command, which is implemented in the following way:
+
+* ATTENDANCE_COMMAND_WORD INDEX_NO PREFIX_ATTENDANCE attendance
+Example of how the command works:
+* attendance 1 /at present
+
+* This operation exists in the logic component of the address book.
+
+// end::attendance[]
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
