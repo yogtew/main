@@ -127,7 +127,7 @@ Outputs the list of students in the class, and waits for the user to input the a
 === Schedule timetables: `schedule`
 
 Schedules an event for the user to keep track of. +
-Format: `schedule EVENT_NAME d/DATE s/TIME_START e/TIME_END [MORE_DETAILS]`
+Format: `schedule EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
 
 ****
 * The event will be scheduled and reflected on the user's calendar
@@ -313,7 +313,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `sort NAME`
 * *Attendance* : `attd GROUP_NAME`
 e.g. `attd CS2103-Tutorial-W13`
-* *Schedule* : `schedule EVENT_NAME d/DATE s/TIME_START e/TIME_END [MORE_DETAILS]` +
+* *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800`
 * *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
 e.g. `email CS2103-Tutorial-W13`
