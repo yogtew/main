@@ -1,4 +1,4 @@
-package seedu.address.calendar.event;
+package seedu.address.model.event;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
@@ -15,7 +15,7 @@ public class EventName {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String EVENT_NAME_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String EVENT_NAME_VALIDATION_REGEX = "[^\\s].*";
 
     public final String eventName;
 
