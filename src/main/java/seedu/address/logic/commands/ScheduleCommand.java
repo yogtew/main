@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
@@ -10,8 +10,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Level;
 
 import seedu.address.commons.core.LogsCenter;
@@ -33,13 +31,13 @@ public class ScheduleCommand extends Command {
             + PREFIX_DATE + "DATE "
             + PREFIX_START + "TIME_START "
             + PREFIX_END + "TIME_END "
-            + PREFIX_DETAIL + "PREFIX_DETAILS\n"
+            + PREFIX_DESCRIPTION + "DESCRIPTION\n"
             + "Example: " + COMMAND_WORD + " "
             + "CS2103 Tutorial W13 "
             + PREFIX_DATE + "22-3-2018 "
             + PREFIX_START + "16:00 "
             + PREFIX_END + "18:00 "
-            + PREFIX_DETAIL + "Week 3 CS2103 tutorial";
+            + PREFIX_DESCRIPTION + "Week 3 CS2103 tutorial";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
 
