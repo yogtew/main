@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -20,11 +22,40 @@ public class AttendanceCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ATTENDANCE + "Present.";
 
-    public static final String MESSAGE_NOT_IMPLEMENTED_YET = "Attendance command not implemented yet.";
+    public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Attendance: %2$s";
+
+    private final Index index;
+    private final String attendance;
+
+    /**
+     * @param index of the student to mark the attendance of
+     * @param attendance of the student
+     */
+    public AttendanceCommand(Index index, String attendance) {
+        requireAllNonNull(index, attendance);
+
+        this.index = index;
+        this.attendance = attendance;
+    }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        throw new CommandException(MESSAGE_NOT_IMPLEMENTED_YET);
+        throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), attendance));
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == this) {
+            return true;
+        }
+
+        if (!(object instanceof AttendanceCommand)) {
+            return false;
+        }
+
+        AttendanceCommand a = (AttendanceCommand) object;
+        return index.equals(a.index)
+                && attendance.equals(a.attendance);
     }
 
 }
