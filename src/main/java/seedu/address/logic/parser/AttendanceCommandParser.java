@@ -26,7 +26,8 @@ public class AttendanceCommandParser implements Parser<AttendanceCommand> {
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendanceCommand.MESSAGE_USAGE), ive);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AttendanceCommand.MESSAGE_USAGE), ive);
         }
         String attendance = argMultimap.getValue(PREFIX_ATTENDANCE).orElse("");
         return new AttendanceCommand(index, attendance);

@@ -45,11 +45,11 @@ public class AttendanceCommand extends Command {
 
     @Override
     public boolean equals(Object object) {
-        if(object == this) {
+        if (object == this) {
             return true;
         }
 
-        if(!(object instanceof AttendanceCommand)) {
+        if (!(object instanceof AttendanceCommand)) {
             return false;
         }
 
