@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.event.Event;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 
 /**
  * Schedules an event to the calendar.
