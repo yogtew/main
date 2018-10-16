@@ -9,14 +9,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
 import java.util.stream.Stream;
 
+import seedu.address.logic.commands.ScheduleCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.StartTime;
-import seedu.address.logic.commands.ScheduleCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ScheduleCommand object
  */
