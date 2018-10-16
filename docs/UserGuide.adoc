@@ -139,20 +139,20 @@ Examples:
 * `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800` +
 Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
 
-=== Emailing students
+=== Emailing students: `email`
 
-Allows the user to email a specified group or student. +
-Format: `email GROUP_NAME [MORE_GROUP_NAMES]`
+Allows the user to email a specified student. +
+Format: `email INDEX`
 
 ****
 * The content of the email is specified only after the command is called
-* The user can specify any number of groups or students.
+* The user can specify only one student
 ****
 
 Examples:
 
-* `email CS2103-Tutorial-W13` +
-Gathers all the email addresses of the students in `CS2103-Tutorial-W13` for emailing.
+* `email 2` +
+Gathers the email address of the student with index 2 for emailing.
 
 === Locating persons by name: `find`
 
