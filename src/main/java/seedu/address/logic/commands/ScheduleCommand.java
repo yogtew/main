@@ -7,7 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
-import seedu.address.calendar.event.Event;
+import seedu.address.model.event.Event;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -48,7 +48,7 @@ public class ScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        // for now just executes the command without adding
+        // for now just write to a simple output file
         // model.addEvent(toAdd);
         // model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSchedule));
