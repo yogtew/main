@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= ConTAct - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -18,13 +18,13 @@ By: `Team ConTAct`      Since: `Aug 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+ConTAct is an application for teaching assistants who *prefer to use a desktop app for managing students*. More importantly, ConTAct is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, ConTAct can get your student management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `conTAct.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your ConTAct.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -106,9 +106,9 @@ Format: `sort PARAMETER`
 Examples:
 
 *`sort NAME` +
-Returns a list of students by their name
+Returns a list of students sorted by their name
 *`sort GRADES` +
-Returns a list of students by their grades
+Returns a list of students sorted by their grades, which is a field of each student.
 
 === Marking attendance: `attd`
 
@@ -116,7 +116,7 @@ Allows the user to mark the attendance of students in a given class. +
 Format: `attd CLASS_NAME`
 
 ****
-* The attendance marking is done after the command resolves, and the user will input the attendance accordingly.
+* The attendance marking as present is done for the entire class, which is decided by whoever has the tag with the CLASS_NAME,  and the user can individually mark those absent as 'absent'.
 ****
 
 Examples:
@@ -127,7 +127,7 @@ Outputs the list of students in the class, and waits for the user to input the a
 === Schedule timetables: `schedule`
 
 Schedules an event for the user to keep track of. +
-Format: `schedule EVENT_NAME d/DATE s/TIME_START e/TIME_END [MORE_DETAILS]`
+Format: `schedule EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
 
 ****
 * The event will be scheduled and reflected on the user's calendar
@@ -139,20 +139,20 @@ Examples:
 * `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800` +
 Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
 
-=== Emailing students
+=== Emailing students: `email`
 
-Allows the user to email a specified group or student. +
-Format: `email GROUP_NAME [MORE_GROUP_NAMES]`
+Allows the user to email a specified student. +
+Format: `email INDEX`
 
 ****
 * The content of the email is specified only after the command is called
-* The user can specify any number of groups or students.
+* The user can specify only one student
 ****
 
 Examples:
 
-* `email CS2103-Tutorial-W13` +
-Gathers all the email addresses of the students in `CS2103-Tutorial-W13` for emailing.
+* `email 2` +
+Gathers the email address of the student with index 2 for emailing.
 
 === Locating persons by name: `find`
 
@@ -298,7 +298,7 @@ _{explain how the user can enable/disable data encryption}_
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ConTAct folder.
 
 == Command Summary
 
@@ -313,7 +313,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `sort NAME`
 * *Attendance* : `attd GROUP_NAME`
 e.g. `attd CS2103-Tutorial-W13`
-* *Schedule* : `schedule EVENT_NAME d/DATE s/TIME_START e/TIME_END [MORE_DETAILS]` +
+* *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800`
 * *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
 e.g. `email CS2103-Tutorial-W13`

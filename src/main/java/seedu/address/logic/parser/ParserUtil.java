@@ -9,6 +9,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.EndTime;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.StartTime;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -120,5 +125,80 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String eventName} into an {@code EventName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code eventName} is invalid.
+     */
+    public static EventName parseEventName(String eventName) throws ParseException {
+        requireNonNull(eventName);
+        String trimmedEventName = eventName.trim();
+        if (!EventName.isValidEventName(trimmedEventName)) {
+            throw new ParseException(EventName.EVENT_NAME_CONSTRAINTS);
+        }
+        return new EventName(trimmedEventName);
+    }
+
+    /**
+     * Parses a {@code String date} into an {@code Date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code date} is invalid.
+     */
+    public static Date parseDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Date.isValidDate(trimmedDate)) {
+            throw new ParseException(Date.DATE_NAME_CONSTRAINTS);
+        }
+        return new Date(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String startTime} into an {@code StartTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code startTime} is invalid.
+     */
+    public static StartTime parseStartTime(String startTime) throws ParseException {
+        requireNonNull(startTime);
+        String trimmedStartTime = startTime.trim();
+        if (!StartTime.isValidStartTime(trimmedStartTime)) {
+            throw new ParseException(StartTime.START_TIME_CONSTRAINTS);
+        }
+        return new StartTime(trimmedStartTime);
+    }
+
+    /**
+     * Parses a {@code String endTime} into an {@code endTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code endTime} is invalid.
+     */
+    public static EndTime parseEndTime(String endTime) throws ParseException {
+        requireNonNull(endTime);
+        String trimmedEndTime = endTime.trim();
+        if (!EndTime.isValidEndTime(trimmedEndTime)) {
+            throw new ParseException(EndTime.END_TIME_CONSTRAINTS);
+        }
+        return new EndTime(trimmedEndTime);
+    }
+
+    /**
+     * Parses a {@code String description} into an {@code Description}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code description} is invalid.
+     */
+    public static Description parseDescription(String description) throws ParseException {
+        requireNonNull(description);
+        String trimmedDescription = description.trim();
+        if (!Description.isValidDescription(trimmedDescription)) {
+            throw new ParseException(Description.DESCRIPTION_STRING_CONSTRAINTS);
+        }
+        return new Description(trimmedDescription);
     }
 }
