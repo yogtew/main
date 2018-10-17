@@ -25,6 +25,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.mark.MarkManager;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -49,6 +50,7 @@ public class MainApp extends Application {
     protected Logic logic;
     protected Storage storage;
     protected Model model;
+    protected MarkManager markManager;
     protected Config config;
     protected UserPrefs userPrefs;
 
@@ -73,6 +75,8 @@ public class MainApp extends Application {
         logic = new LogicManager(model);
 
         ui = new UiManager(logic, config, userPrefs);
+
+        markManager = new MarkManager();
 
         initEventsCenter();
     }
