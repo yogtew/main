@@ -56,6 +56,22 @@ public class Event {
         return description;
     }
 
+    /**
+     * Returns true if both events have the same event name, date, start time, and end time.
+     * This defines a weaker notion of equality between two events.
+     */
+    public boolean isSameEvent(Event otherEvent) {
+        if (otherEvent == this) {
+            return true;
+        }
+
+        return otherEvent != null
+                && otherEvent.getEventName().equals(getEventName())
+                && otherEvent.getDate().equals(getDate())
+                && otherEvent.getStartTime().equals(getStartTime())
+                && otherEvent.getEndTime().equals(getEndTime());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

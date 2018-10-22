@@ -7,12 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.logging.Level;
-
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -40,6 +34,7 @@ public class ScheduleCommand extends Command {
             + PREFIX_DESCRIPTION + "Week 3 CS2103 tutorial";
 
     public static final String MESSAGE_SUCCESS = "New event added: %1$s";
+    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the calendar";
 
     private final Event toSchedule;
 
@@ -54,18 +49,13 @@ public class ScheduleCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        try {
-            // Simply writes to a text file in data for now.
-            BufferedWriter writer = new BufferedWriter(new FileWriter("data\\calendar.txt", true));
-            writer.append(toSchedule.toString() + "\n");
-            writer.close();
-        } catch (IOException exception) {
-            LogsCenter.getLogger("ScheduleCommand").log(Level.WARNING, "File Not Found");
+
+        if (model.hasEvent(toSchedule)) {
+            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
         }
 
-        // for now just write to a simple output file
-        // model.addEvent(toAdd);
-        // model.commitAddressBook();
+        model.addEvent(toSchedule);
+        model.commitCalendar();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toSchedule));
     }
 

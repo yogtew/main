@@ -13,47 +13,47 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendar;
 
 /**
- * A class to access AddressBook data stored as an xml file on the hard disk.
+ * A class to access Calendar data stored as an xml file on the hard disk.
  */
-public class XmlAddressBookStorage implements AddressBookStorage {
+public class XmlCalendarStorage implements CalendarStorage {
 
     private static final Logger logger = LogsCenter.getLogger(XmlAddressBookStorage.class);
 
     private Path filePath;
 
-    public XmlAddressBookStorage(Path filePath) {
+    public XmlCalendarStorage(Path filePath) {
         this.filePath = filePath;
     }
 
-    public Path getAddressBookFilePath() {
+    public Path getCalendarFilePath() {
         return filePath;
     }
 
     @Override
-    public Optional<ReadOnlyAddressBook> readAddressBook() throws DataConversionException, IOException {
-        return readAddressBook(filePath);
+    public Optional<ReadOnlyCalendar> readCalendar() throws DataConversionException, IOException {
+        return readCalendar(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}
+     * Similar to {@link #readCalendar()}
      * @param filePath location of the data. Cannot be null
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyAddressBook> readAddressBook(Path filePath) throws DataConversionException,
-                                                                                 FileNotFoundException {
+    public Optional<ReadOnlyCalendar> readCalendar(Path filePath) throws DataConversionException,
+            FileNotFoundException {
         requireNonNull(filePath);
 
         if (!Files.exists(filePath)) {
-            logger.info("AddressBook file " + filePath + " not found");
+            logger.info("Calendar file " + filePath + " not found");
             return Optional.empty();
         }
 
-        XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadAddressBookDataFromSaveFile(filePath);
+        XmlSerializableCalendar xmlCalendar = XmlFileStorage.loadCalendarDataFromSaveFile(filePath);
         try {
-            return Optional.of(xmlAddressBook.toModelType());
+            return Optional.of(xmlCalendar.toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);
@@ -61,20 +61,20 @@ public class XmlAddressBookStorage implements AddressBookStorage {
     }
 
     @Override
-    public void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException {
-        saveAddressBook(addressBook, filePath);
+    public void saveCalendar(ReadOnlyCalendar calendar) throws IOException {
+        saveCalendar(calendar, filePath);
     }
 
     /**
-     * Similar to {@link #saveAddressBook(ReadOnlyAddressBook)}
+     * Similar to {@link #saveCalendar(ReadOnlyCalendar)}
      * @param filePath location of the data. Cannot be null
      */
-    public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath) throws IOException {
-        requireNonNull(addressBook);
+    public void saveCalendar(ReadOnlyCalendar calendar, Path filePath) throws IOException {
+        requireNonNull(calendar);
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        XmlFileStorage.saveAddressBookDataToFile(filePath, new XmlSerializableAddressBook(addressBook));
+        XmlFileStorage.saveCalendarDataToFile(filePath, new XmlSerializableCalendar(calendar));
     }
 
 }
