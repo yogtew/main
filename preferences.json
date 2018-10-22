@@ -1,0 +1,12 @@
+{
+  "guiSettings" : {
+    "windowWidth" : 1366.2857666015625,
+    "windowHeight" : 600.0,
+    "windowCoordinates" : {
+      "x" : 97,
+      "y" : 113
+    }
+  },
+  "addressBookFilePath" : "data\\addressbook.xml",
+  "calendarFilePath" : "data\\calendar.xml"
+}
