@@ -139,6 +139,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     //=========== Event and Scheduling ======================================================================
 
+    @Override
+    public ReadOnlyCalendar getCalendar() {
+        return versionedCalendar;
+    }
+
     /** Raises an event to indicate the model has changed */
     private void indicateCalendarChanged() {
         raise(new CalendarChangedEvent(versionedCalendar));

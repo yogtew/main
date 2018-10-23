@@ -80,6 +80,9 @@ public interface Model {
      */
     void commitAddressBook();
 
+    /** Returns the Calendar */
+    ReadOnlyCalendar getCalendar();
+
     /**
      * Returns true if a event with the same identity as {@code event} exists in the Event.
      */
