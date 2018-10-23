@@ -5,7 +5,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.Calendar;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendar;
+import seedu.address.model.event.Date;
+import seedu.address.model.event.Description;
+import seedu.address.model.event.EndTime;
+import seedu.address.model.event.Event;
+import seedu.address.model.event.EventName;
+import seedu.address.model.event.StartTime;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -14,7 +22,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code AddressBook} and (@code Calendar) with sample data.
  */
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
@@ -55,6 +63,25 @@ public class SampleDataUtil {
         return Arrays.stream(strings)
                 .map(Tag::new)
                 .collect(Collectors.toSet());
+    }
+
+    public static Event[] getSampleEvents() {
+        return new Event[] {
+            new Event(new EventName("John's Birthday"), new Date("24-12-2018"), new StartTime("18:00"),
+                    new EndTime("20:00"), new Description("Bring gifts")),
+            new Event(new EventName("Google Technical Interview"), new Date("08-12-2018"), new StartTime("10:00"),
+                    new EndTime("11:00"), new Description("Revise algorithms")),
+            new Event(new EventName("The Dundies"), new Date("30-11-2018"), new StartTime("17:00"),
+                    new EndTime("22:00"), new Description("Book reservation at Chili's")),
+        };
+    }
+
+    public static ReadOnlyCalendar getSampleCalendar() {
+        Calendar sampleCalendar = new Calendar();
+        for (Event sampleEvent : getSampleEvents()) {
+            sampleCalendar.addEvent(sampleEvent);
+        }
+        return sampleCalendar;
     }
 
 }
