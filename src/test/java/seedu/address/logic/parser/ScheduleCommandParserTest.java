@@ -28,7 +28,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_TUTO
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalEvents.CONSULTATION;
-import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 
 import org.junit.Test;
 
