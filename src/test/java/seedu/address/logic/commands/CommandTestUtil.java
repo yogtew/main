@@ -81,7 +81,8 @@ public class CommandTestUtil {
     public static final String END_TIME_DESC_TUTORIAL = " " + PREFIX_END + VALID_END_TIME_TUTORIAL;
     public static final String END_TIME_DESC_CONSULTATION = " " + PREFIX_END + VALID_END_TIME_CONSULTATION;
     public static final String DESCRIPTION_DESC_TUTORIAL = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TUTORIAL;
-    public static final String DESCRIPTION_DESC_CONSULTATION = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_CONSULTATION;
+    public static final String DESCRIPTION_DESC_CONSULTATION = " " + PREFIX_DESCRIPTION +
+            VALID_DESCRIPTION_CONSULTATION;
 
     public static final String INVALID_EVENT_NAME_DESC = " " + PREFIX_EVENT_NAME;
     public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "12122018";
