@@ -1,7 +1,12 @@
 package seedu.address.model.mark;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Stores the named marks
+ */
 public class MarkManager {
     private Map<String, Mark> marks;
     public MarkManager() {

@@ -5,6 +5,9 @@ import seedu.address.model.person.Person;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Stores a list of marked Persons.
+ */
 public class Mark {
     public static String DEFAULT_NAME = "default";
     private ArrayList<Person> list;
