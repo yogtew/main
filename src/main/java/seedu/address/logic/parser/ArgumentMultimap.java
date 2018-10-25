@@ -57,4 +57,11 @@ public class ArgumentMultimap {
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
     }
+
+    /**
+     * Gets the number of non-empty keys
+     */
+    public int countNonEmptyArgs() {
+        return argMultimap.values().stream().mapToInt(x -> x.size() == 0?0:1).sum();
+    }
 }
