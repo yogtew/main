@@ -212,10 +212,14 @@ public class ScheduleCommandTest {
         }
 
         @Override
-        public Mark getMark(String markName) { throw new AssertionError("This method should not be called."); }
+        public Mark getMark(String markName) {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
-        public void setMark(String markName, Mark mark) { throw new AssertionError("This method should not be called."); }
+        public void setMark(String markName, Mark mark) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**
