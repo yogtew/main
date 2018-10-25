@@ -9,7 +9,7 @@ import java.util.List;
  * Stores a list of marked Persons.
  */
 public class Mark {
-    public static String DEFAULT_NAME = "default";
+    public static final String DEFAULT_NAME = "default";
     private ArrayList<Person> list;
     private String name;
 
