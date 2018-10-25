@@ -21,6 +21,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCalendar;
 import seedu.address.model.event.Event;
+import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.PersonBuilder;
 
@@ -154,6 +155,12 @@ public class AddCommandTest {
         public void commitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public Mark getMark(String markName) { throw new AssertionError("This method should not be called."); }
+
+        @Override
+        public void setMark(String markName, Mark mark) { throw new AssertionError("This method should not be called."); }
 
         @Override
         public ReadOnlyCalendar getCalendar() {
