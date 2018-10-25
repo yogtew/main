@@ -25,6 +25,10 @@ public class MarkCommand extends Command{
         predicate = p;
     }
 
+    public MarkCommand() {
+        predicate = person -> true;
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
