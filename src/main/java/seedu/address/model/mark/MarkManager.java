@@ -13,8 +13,5 @@ public class MarkManager {
         return marks.get(markName);
     }
 
-    public void setMark() {
-
-    }
-
+    public void setMark(String markName, Mark mark) { marks.put(markName, mark); }
 }

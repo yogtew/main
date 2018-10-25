@@ -12,6 +12,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.mark.Mark;
+import seedu.address.model.mark.MarkManager;
 import seedu.address.model.person.Person;
 
 /**
@@ -22,6 +24,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final MarkManager markManager;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -34,6 +37,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        markManager = new MarkManager();
     }
 
     public ModelManager() {
@@ -147,4 +151,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    public Mark getMark(String markName) {
+        return markManager.getMark(markName);
+    }
+
+    public void setMark(String markName, Mark mark) {
+        markManager.setMark(markName, mark);
+    }
 }
