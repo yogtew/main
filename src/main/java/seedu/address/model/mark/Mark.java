@@ -1,9 +1,9 @@
 package seedu.address.model.mark;
 
-import seedu.address.model.person.Person;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import seedu.address.model.person.Person;
 
 /**
  * Stores a list of marked Persons.

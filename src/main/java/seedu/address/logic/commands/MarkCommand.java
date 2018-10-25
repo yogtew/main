@@ -12,6 +12,9 @@ import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 
+/**
+ * Marks Persons based on supplied Predicates
+ */
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
