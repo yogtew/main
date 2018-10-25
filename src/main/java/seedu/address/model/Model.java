@@ -78,6 +78,6 @@ public interface Model {
     void commitAddressBook();
 
     Mark getMark(String markName);
-    
+
     void setMark(String markName, Mark mark);
 }
