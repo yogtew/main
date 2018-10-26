@@ -62,7 +62,7 @@ public class ArgumentMultimap {
      * Gets the number of non-empty keys
      */
     public int countNonEmptyArgs() {
-        return argMultimap.values().stream().
-                mapToInt(x -> x.size() == 0 ? 0 : 1).sum() - getAllValues(new Prefix("")).size();
+        return argMultimap.values().stream()
+                .mapToInt(x -> x.size() == 0 ? 0 : 1).sum() - getAllValues(new Prefix("")).size();
     }
 }

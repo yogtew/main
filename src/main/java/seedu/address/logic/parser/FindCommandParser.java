@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,14 +38,15 @@ public class FindCommandParser implements Parser<FindCommand> {
             return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         }
 
-        if (argumentMultimap.getAllValues(PREFIX_TAG).size() == 0)
+        if (argumentMultimap.getAllValues(PREFIX_TAG).size() == 0) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
 
         // tag prefixes found
         try {
-            List<Tag> tags = argumentMultimap.getAllValues(PREFIX_TAG).
-                    stream().map(Tag::new).collect(Collectors.toList());
+            List<Tag> tags = argumentMultimap.getAllValues(PREFIX_TAG)
+                    .stream().map(Tag::new).collect(Collectors.toList());
             return new FindCommand(new IsTaggedPredicate(tags));
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
