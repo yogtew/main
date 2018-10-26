@@ -10,9 +10,11 @@ import com.google.common.eventbus.Subscribe;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendar;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -22,12 +24,15 @@ public class StorageManager extends ComponentManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
+    private CalendarStorage calendarStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(AddressBookStorage addressBookStorage, CalendarStorage calendarStorage,
+                          UserPrefsStorage userPrefsStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
+        this.calendarStorage = calendarStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -85,6 +90,47 @@ public class StorageManager extends ComponentManager implements Storage {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
         try {
             saveAddressBook(event.data);
+        } catch (IOException e) {
+            raise(new DataSavingExceptionEvent(e));
+        }
+    }
+
+    // ================ Calendar methods ==============================
+
+    @Override
+    public Path getCalendarFilePath() {
+        return calendarStorage.getCalendarFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyCalendar> readCalendar() throws DataConversionException, IOException {
+        return readCalendar(calendarStorage.getCalendarFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyCalendar> readCalendar(Path filePath) throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return calendarStorage.readCalendar(filePath);
+    }
+
+    @Override
+    public void saveCalendar(ReadOnlyCalendar calendar) throws IOException {
+        saveCalendar(calendar, calendarStorage.getCalendarFilePath());
+    }
+
+    @Override
+    public void saveCalendar(ReadOnlyCalendar calendar, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        calendarStorage.saveCalendar(calendar, filePath);
+    }
+
+
+    @Override
+    @Subscribe
+    public void handleCalendarChangedEvent(CalendarChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
+        try {
+            saveCalendar(event.data);
         } catch (IOException e) {
             raise(new DataSavingExceptionEvent(e));
         }
