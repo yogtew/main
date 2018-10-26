@@ -1,8 +1,8 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BODY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BODY;
 
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.model.email.EmailDraft;

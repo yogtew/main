@@ -33,9 +33,9 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.email.EmailDraft;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.model.email.Subject;
 import seedu.address.model.email.Body;
+import seedu.address.model.email.Subject;
+import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.EmailDraftUtil;
 import seedu.address.testutil.PersonBuilder;
@@ -88,7 +88,7 @@ public class AddressBookParserTest {
     public void parseCommand_email() throws Exception {
         Subject subject = new Subject(" ");
         Body body = new Body(" ");
-        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_PERSON,subject, body);
+        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_PERSON, subject, body);
         EmailCommand command = (EmailCommand) parser.parseCommand(EmailDraftUtil.getEmailCommand(emailDraft));
         assertEquals(new EmailCommand(emailDraft), command);
     }
