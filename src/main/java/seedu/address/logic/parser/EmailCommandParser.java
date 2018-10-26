@@ -35,7 +35,7 @@ public class EmailCommandParser implements Parser<EmailCommand> {
         }
 
         Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
-        Subject subject  = ParserUtil.parseSubject(argMultimap.getValue(PREFIX_SUBJECT).get());
+        Subject subject = ParserUtil.parseSubject(argMultimap.getValue(PREFIX_SUBJECT).get());
         Body body = ParserUtil.parseBody(argMultimap.getValue(PREFIX_BODY).get());
 
         EmailDraft emailDraft = new EmailDraft(index, subject, body);
