@@ -3,6 +3,9 @@ package seedu.address.model.email;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents the subject of the email.
+ */
 public class Subject {
 
     public static final String MESSAGE_SUBJECT_CONSTRAINTS =

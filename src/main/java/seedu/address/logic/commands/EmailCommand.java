@@ -1,8 +1,11 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BODY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BODY;
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
@@ -12,11 +15,6 @@ import seedu.address.model.Model;
 import seedu.address.model.email.EmailDraft;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Person;
-
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-
 
 /**
  * Extracts email address from person identified using it's displayed index from the list of students.

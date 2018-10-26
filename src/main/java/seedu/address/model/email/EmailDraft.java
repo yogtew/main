@@ -1,6 +1,7 @@
 package seedu.address.model.email;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import seedu.address.commons.core.index.Index;
 
 /**
