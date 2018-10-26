@@ -5,11 +5,8 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.junit.Test;
-
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.person.IsTaggedPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
