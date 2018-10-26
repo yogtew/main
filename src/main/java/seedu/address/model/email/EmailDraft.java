@@ -9,7 +9,7 @@ import seedu.address.commons.core.index.Index;
  */
 public class EmailDraft {
 
-   // Identity fields
+    // Identity fields
     private final Index index;
     private final Subject subject;
     private final Body body;
