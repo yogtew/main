@@ -33,4 +33,13 @@ public class Subject {
         return test.matches(SUBJECT_VALIDATION_REGEX);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof Subject
+                && value.equals(((Subject
+
+                ) other).value));
+    }
+
 }

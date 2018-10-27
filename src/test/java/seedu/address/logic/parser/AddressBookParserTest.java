@@ -3,8 +3,9 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BODY_EMAIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -16,7 +17,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AttendanceCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -90,8 +90,8 @@ public class AddressBookParserTest {
     public void parseCommand_email() throws Exception {
         thrown.expect(ParseException.class);
         thrown.expectMessage(ParserUtil.MESSAGE_INVALID_INDEX);
-        Subject subject = new Subject("subject");
-        Body body = new Body("body");
+        Subject subject = new Subject(VALID_SUBJECT_EMAIL);
+        Body body = new Body(VALID_BODY_EMAIL);
         EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_PERSON, subject, body);
         EmailCommand command = (EmailCommand) parser.parseCommand(EmailDraftUtil.getEmailCommand(emailDraft));
         assertEquals(new EmailCommand(emailDraft), command);

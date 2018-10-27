@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BODY_EMAIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_EMAIL;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -23,8 +25,8 @@ public class EmailCommandTest {
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        Subject subjectStub = new Subject("subject");
-        Body bodyStub = new Body("body");
+        Subject subjectStub = new Subject(VALID_SUBJECT_EMAIL);
+        Body bodyStub = new Body(VALID_BODY_EMAIL);
         EmailDraft emailDraft = new EmailDraft(outOfBoundIndex, subjectStub, bodyStub);
         EmailCommand emailCommand = new EmailCommand(emailDraft);
         assertCommandFailure(emailCommand, model, commandHistory,

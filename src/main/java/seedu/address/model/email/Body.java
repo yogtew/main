@@ -37,4 +37,11 @@ public class Body {
     public static boolean isValidBody(String test) {
         return test.matches(BODY_VALIDATION_REGEX);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof Body
+                && value.equals(((Body) other).value));
+    }
 }
