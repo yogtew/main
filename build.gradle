@@ -68,6 +68,12 @@ dependencies {
     implementation group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
     implementation group: 'javax.activation', name: 'activation', version: '1.1.1'
 
+    //Joda-Time for calendar time
+    implementation 'joda-time:joda-time:2.7'
+
+    // gson for JSON parsing
+    implementation 'com.google.code.gson:gson:2.8.5'
+
     testImplementation group: 'junit', name: 'junit', version: '4.12'
     testImplementation group: 'org.testfx', name: 'testfx-core', version: testFxVersion, {
         exclude group: 'org.testfx', module: 'testfx-internal-java8'
