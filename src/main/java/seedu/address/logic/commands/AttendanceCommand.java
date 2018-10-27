@@ -52,6 +52,8 @@ public class AttendanceCommand extends Command implements IMarkExecutable {
      * @return result of executing commands
      */
     public CommandResult executeMark(Mark mark) {
+        // example
+        // mark.getList().forEach(markAttendance);
         return new CommandResult(MESSAGE_WIP_COMMAND);
     }
 
