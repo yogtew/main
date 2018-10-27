@@ -4,10 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BODY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
@@ -68,6 +73,35 @@ public class CommandTestUtil {
     public static final String INVALID_SUBJECT_DESC = " " + PREFIX_SUBJECT; //empty string not allowed for subject
     public static final String INVALID_BODY_DESC = " " + PREFIX_BODY; //empty string not allowed for body of email
     public static final String INVALID_INDEX_DESC = " " + PREFIX_INDEX + "1a"; //'a' not allowed in index
+
+    public static final String VALID_EVENT_NAME_TUTORIAL = "Tutorial";
+    public static final String VALID_EVENT_NAME_CONSULTATION = "Consultation";
+    public static final String VALID_DATE_TUTORIAL = "24-10-2019";
+    public static final String VALID_DATE_CONSULTATION = "01-11-2019";
+    public static final String VALID_START_TIME_TUTORIAL = "13:00";
+    public static final String VALID_START_TIME_CONSULTATION = "10:00";
+    public static final String VALID_END_TIME_TUTORIAL = "14:00";
+    public static final String VALID_END_TIME_CONSULTATION = "10:30";
+    public static final String VALID_DESCRIPTION_TUTORIAL = "Prepare tutorial answers";
+    public static final String VALID_DESCRIPTION_CONSULTATION = "Review midterm script";
+
+    public static final String EVENT_NAME_DESC_TUTORIAL = " " + PREFIX_EVENT_NAME + VALID_EVENT_NAME_TUTORIAL;
+    public static final String EVENT_NAME_DESC_CONSULTATION = " " + PREFIX_EVENT_NAME + VALID_EVENT_NAME_CONSULTATION;
+    public static final String DATE_DESC_TUTORIAL = " " + PREFIX_DATE + VALID_DATE_TUTORIAL;
+    public static final String DATE_DESC_CONSULTATION = " " + PREFIX_DATE + VALID_DATE_CONSULTATION;
+    public static final String START_TIME_DESC_TUTORIAL = " " + PREFIX_START + VALID_START_TIME_TUTORIAL;
+    public static final String START_TIME_DESC_CONSULTATION = " " + PREFIX_START + VALID_START_TIME_CONSULTATION;
+    public static final String END_TIME_DESC_TUTORIAL = " " + PREFIX_END + VALID_END_TIME_TUTORIAL;
+    public static final String END_TIME_DESC_CONSULTATION = " " + PREFIX_END + VALID_END_TIME_CONSULTATION;
+    public static final String DESCRIPTION_DESC_TUTORIAL = " " + PREFIX_DESCRIPTION + VALID_DESCRIPTION_TUTORIAL;
+    public static final String DESCRIPTION_DESC_CONSULTATION = " " + PREFIX_DESCRIPTION
+            + VALID_DESCRIPTION_CONSULTATION;
+
+    public static final String INVALID_EVENT_NAME_DESC = " " + PREFIX_EVENT_NAME;
+    public static final String INVALID_DATE_DESC = " " + PREFIX_DATE + "12122018";
+    public static final String INVALID_START_TIME_DESC = " " + PREFIX_START + "1000";
+    public static final String INVALID_END_TIME_DESC = " " + PREFIX_END + "25:00";
+    public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,6 +13,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CalendarChangedEvent;
+import seedu.address.model.event.Event;
+import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 
 /**
@@ -22,11 +26,15 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final HashMap<String, Mark> marks;
+
+    private final VersionedCalendar versionedCalendar;
+    private final FilteredList<Event> filteredEvents;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyCalendar calendar, UserPrefs userPrefs) {
         super();
         requireAllNonNull(addressBook, userPrefs);
 
@@ -34,10 +42,14 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        marks = new HashMap<>();
+
+        versionedCalendar = new VersionedCalendar(calendar);
+        filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AddressBook(), new Calendar(), new UserPrefs());
     }
 
     @Override
@@ -100,7 +112,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    //=========== Undo/Redo =================================================================================
+    //=========== Undo/Redo Address Book =====================================================================
 
     @Override
     public boolean canUndoAddressBook() {
@@ -129,6 +141,84 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.commit();
     }
 
+    //=========== Event and Scheduling ======================================================================
+
+    @Override
+    public ReadOnlyCalendar getCalendar() {
+        return versionedCalendar;
+    }
+
+    /** Raises an event to indicate the model has changed */
+    private void indicateCalendarChanged() {
+        raise(new CalendarChangedEvent(versionedCalendar));
+    }
+
+
+    @Override
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return versionedCalendar.hasEvent(event);
+    }
+
+    @Override
+    public void deleteEvent(Event event) {
+        versionedCalendar.removeEvent(event);
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void addEvent(Event event) {
+        versionedCalendar.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateCalendarChanged();
+    }
+
+    //=========== Undo/Redo Calendar =======================================================================
+
+    @Override
+    public boolean canUndoCalendar() {
+        return versionedCalendar.canUndo();
+    }
+
+    @Override
+    public boolean canRedoCalendar() {
+        return versionedCalendar.canRedo();
+    }
+
+    @Override
+    public void undoCalendar() {
+        versionedCalendar.undo();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void redoCalendar() {
+        versionedCalendar.redo();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void commitCalendar() {
+        versionedCalendar.commit();
+    }
+
+    //=========== Filtered Event List Accessors ==============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Event} backed by the internal list of
+     * {@code versionedCalendar}
+     */
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<Event> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -147,4 +237,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    public Mark getMark(String markName) {
+        return marks.get(markName);
+    }
+
+    public void setMark(String markName, Mark mark) {
+        marks.put(markName, mark);
+    }
 }

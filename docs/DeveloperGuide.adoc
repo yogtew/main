@@ -294,6 +294,16 @@ Furthermore, the schedule command ensures that all the fields specified must be 
 The GUI itself will have a calendar component which will display the user's current list of events that they have
 scheduled, while adjusting for the current date.
 
+The sequence diagram below shows how the components interact for the scenario where the user issues the command `schedule EVENT`, where `EVENT` is the event as specified by the input parameters.
+
+.Component interactions for `delete EVENT` command (part 1)
+image::ScheduleEventSequenceDiagram.png[width="800"]
+
+The diagram below shows how the EventsCenter reacts to the CalendarChangedEvent, which also results in updates to the storage and the UI.
+
+.Component interactions for `delete EVENT` command (part 2)
+image::EventStorageSequenceDiagram.png[width="800"]
+
 ==== Design Considerations
 
 ===== Aspect: How schedule handles the event model and storage
@@ -399,6 +409,27 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
+
+// tag::markfeature[]
+=== Mark feature
+==== Planned Implementation
+The mark feature will be implemented as a utility class `Mark`. It will store a series of lists of `Person`, accessible by name and/or index. The user will be able to run batch commands on marked targets.
+
+==== Constructors:
+* `Mark(List<Person> inputList, [String listName])` -- marks the Persons in inputList under listName
+* `Mark(Tag tag, [String listName])` -- marks the Persons that match the tag under listName
+* `Mark(Predicate<Person> predicate, [String listName])` -- marks all Persons that match the supplied predicate under listName
+==== Methods:
+* `Mark#getList([String listName])` -- returns a list of Persons marked under listName
+* `Mark#union(Mark)` -- returns a new Mark that contains the union of the two Marks
+* `Mark#intersect(Mark)` -- returns a new Mark that contains the intersection of the two Marks
+* `Mark#execute(Consumer<Person>)` -- applies the Consumer function on all Persons in the Mark (how to resolve multiple CommandResult)?
+
+The Marks will be managed by `MarkManager`, which stores the named Marks and is responsible for managing them and calling methods from functions.
+==== Design Considerations
+The mark feature needs to be versatile yet robust.
+
+// end::markfeature[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

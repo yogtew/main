@@ -3,6 +3,9 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+
+import seedu.address.model.event.Event;
+import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 
 /**
@@ -11,6 +14,9 @@ import seedu.address.model.person.Person;
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+
+    /** {@code Predicate} that always evaluate to true */
+    Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
     void resetData(ReadOnlyAddressBook newData);
@@ -75,4 +81,62 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+
+    Mark getMark(String markName);
+
+    void setMark(String markName, Mark mark);
+
+    /** Returns the Calendar */
+    ReadOnlyCalendar getCalendar();
+
+    /**
+     * Returns true if a event with the same identity as {@code event} exists in the Event.
+     */
+    boolean hasEvent(Event event);
+
+    /**
+     * Deletes the given event.
+     * The event must exist in the address book.
+     */
+    void deleteEvent(Event target);
+
+    /**
+     * Adds the given event.
+     * {@code event} must not already exist in the address book.
+     */
+    void addEvent(Event event);
+
+    /** Returns an unmodifiable view of the filtered event list */
+    ObservableList<Event> getFilteredEventList();
+
+    /**
+     * Updates the filter of the filtered event list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredEventList(Predicate<Event> predicate);
+
+    /**
+     * Returns true if the model has previous calendar states to restore.
+     */
+    boolean canUndoCalendar();
+
+    /**
+     * Returns true if the model has undone calendar states to restore.
+     */
+    boolean canRedoCalendar();
+
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    void undoCalendar();
+
+    /**
+     * Restores the model's calendar to its previously undone state.
+     */
+    void redoCalendar();
+
+    /**
+     * Saves the current calendar state for undo/redo.
+     */
+    void commitCalendar();
 }
