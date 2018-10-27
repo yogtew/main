@@ -3,7 +3,6 @@ package seedu.address.model.email;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.model.person.Email;
 
 /**
  * Represents an email message with a subject and a body in addressbook.
