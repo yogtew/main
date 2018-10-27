@@ -9,6 +9,7 @@ package seedu.address.commons.core.index;
  * convert it back to an int if the index will not be passed to a different component again.
  */
 public class Index {
+
     private int zeroBasedIndex;
 
     /**
@@ -51,4 +52,5 @@ public class Index {
                 || (other instanceof Index // instanceof handles nulls
                 && zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
     }
+
 }

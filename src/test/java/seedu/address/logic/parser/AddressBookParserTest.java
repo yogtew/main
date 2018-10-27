@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BODY_EMAIL;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -31,9 +33,13 @@ import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.email.Body;
+import seedu.address.model.email.EmailDraft;
+import seedu.address.model.email.Subject;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.testutil.EmailDraftUtil;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
 
@@ -82,9 +88,13 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_email() throws Exception {
-        EmailCommand command = (EmailCommand) parser.parseCommand(
-                EmailCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new EmailCommand(INDEX_FIRST_PERSON), command);
+        thrown.expect(ParseException.class);
+        thrown.expectMessage(ParserUtil.MESSAGE_INVALID_INDEX);
+        Subject subject = new Subject(VALID_SUBJECT_EMAIL);
+        Body body = new Body(VALID_BODY_EMAIL);
+        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_PERSON, subject, body);
+        EmailCommand command = (EmailCommand) parser.parseCommand(EmailDraftUtil.getEmailCommand(emailDraft));
+        assertEquals(new EmailCommand(emailDraft), command);
     }
 
     @Test

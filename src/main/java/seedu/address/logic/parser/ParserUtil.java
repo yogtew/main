@@ -9,6 +9,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.email.Body;
+import seedu.address.model.email.Subject;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
@@ -98,6 +100,37 @@ public class ParserUtil {
             throw new ParseException(Email.MESSAGE_EMAIL_CONSTRAINTS);
         }
         return new Email(trimmedEmail);
+    }
+
+    /**
+     * Parses a {@code String body} into an {@code Body}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code body} is invalid.
+     */
+    public static Body parseBody(String body) throws ParseException {
+        requireNonNull(body);
+        String trimmedBody = body.trim();
+        if (!Body.isValidBody(trimmedBody)) {
+            throw new ParseException(Body.MESSAGE_BODY_CONSTRAINTS);
+        }
+        return new Body(trimmedBody);
+
+    }
+
+    /**
+     * Parses a {@code String subject} into an {@code Subject}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code subject} is invalid.
+     */
+    public static Subject parseSubject(String subject) throws ParseException {
+        requireNonNull(subject);
+        String trimmedSubject = subject.trim();
+        if (!Subject.isValidSubject(trimmedSubject)) {
+            throw new ParseException(Subject.MESSAGE_SUBJECT_CONSTRAINTS);
+        }
+        return new Subject(trimmedSubject);
     }
 
     /**
