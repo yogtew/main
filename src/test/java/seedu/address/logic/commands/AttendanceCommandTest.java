@@ -17,6 +17,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Attendance;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AttendanceCommand.
@@ -28,16 +29,18 @@ public class AttendanceCommandTest {
 
     @Test
     public void execute() {
-        final String attendance = "Some attendance";
+        final Attendance attendance = new Attendance("Some attendance");
         assertCommandFailure(new AttendanceCommand(INDEX_FIRST_PERSON, attendance), model, new CommandHistory(),
                 String.format(MESSAGE_ARGUMENTS, INDEX_FIRST_PERSON.getOneBased(), attendance));
     }
 
     @Test
     public void equals() {
-        final AttendanceCommand standardCommand = new AttendanceCommand(INDEX_FIRST_PERSON, VALID_ATTENDANCE_AMY);
+        final AttendanceCommand standardCommand = new AttendanceCommand(INDEX_FIRST_PERSON,
+                new Attendance(VALID_ATTENDANCE_AMY));
         // same values -> returns true
-        AttendanceCommand commandWithSameValues = new AttendanceCommand(INDEX_FIRST_PERSON, VALID_ATTENDANCE_AMY);
+        AttendanceCommand commandWithSameValues = new AttendanceCommand(INDEX_FIRST_PERSON,
+                new Attendance(VALID_ATTENDANCE_AMY));
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -50,9 +53,11 @@ public class AttendanceCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_SECOND_PERSON, VALID_ATTENDANCE_AMY)));
+        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_SECOND_PERSON,
+                new Attendance(VALID_ATTENDANCE_AMY))));
 
         // different attendance -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_FIRST_PERSON, VALID_ATTENDANCE_BOB)));
+        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_FIRST_PERSON,
+                new Attendance(VALID_ATTENDANCE_BOB))));
     }
 }

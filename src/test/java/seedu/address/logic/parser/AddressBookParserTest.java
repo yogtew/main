@@ -36,6 +36,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.email.Body;
 import seedu.address.model.email.EmailDraft;
 import seedu.address.model.email.Subject;
+import seedu.address.model.person.Attendance;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
@@ -58,9 +59,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_attendance() throws Exception {
-        final String attendance = "Some attendance.";
+        final Attendance attendance = new Attendance("Some attendance.");
         AttendanceCommand command = (AttendanceCommand) parser.parseCommand(AttendanceCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_ATTENDANCE + attendance);
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_ATTENDANCE + attendance.value);
         assertEquals(new AttendanceCommand(INDEX_FIRST_PERSON, attendance), command);
     }
 
