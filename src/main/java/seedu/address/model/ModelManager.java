@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashMap;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.model.event.Event;
+import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 
 /**
@@ -24,6 +26,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
+    private final HashMap<String, Mark> marks;
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
@@ -39,6 +42,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        marks = new HashMap<>();
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
@@ -233,4 +237,11 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    public Mark getMark(String markName) {
+        return marks.get(markName);
+    }
+
+    public void setMark(String markName, Mark mark) {
+        marks.put(markName, mark);
+    }
 }
