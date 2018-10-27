@@ -21,12 +21,13 @@ public class AttendanceCommandParserTest {
         // have attendance
         Index targetIndex = INDEX_FIRST_PERSON;
         String userInput = targetIndex.getOneBased() + " " + PREFIX_ATTENDANCE + nonEmptyAttendance;
-        AttendanceCommand expectedCommand = new AttendanceCommand(INDEX_FIRST_PERSON, new Attendance(nonEmptyAttendance));
+        AttendanceCommand expectedCommand = new AttendanceCommand(INDEX_FIRST_PERSON,
+                new Attendance(nonEmptyAttendance));
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // no attendance
         userInput = targetIndex.getOneBased() + " " + PREFIX_ATTENDANCE;
-        expectedCommand = new AttendanceCommand(INDEX_FIRST_PERSON,new Attendance(""));
+        expectedCommand = new AttendanceCommand(INDEX_FIRST_PERSON, new Attendance(""));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 
