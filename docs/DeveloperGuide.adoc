@@ -294,6 +294,16 @@ Furthermore, the schedule command ensures that all the fields specified must be 
 The GUI itself will have a calendar component which will display the user's current list of events that they have
 scheduled, while adjusting for the current date.
 
+The sequence diagram below shows how the components interact for the scenario where the user issues the command `schedule EVENT`, where `EVENT` is the event as specified by the input parameters.
+
+.Component interactions for `delete EVENT` command (part 1)
+image::ScheduleEventSequenceDiagram.png[width="800"]
+
+The diagram below shows how the EventsCenter reacts to the CalendarChangedEvent, which also results in updates to the storage and the UI.
+
+.Component interactions for `delete EVENT` command (part 2)
+image::EventStorageSequenceDiagram.png[width="800"]
+
 ==== Design Considerations
 
 ===== Aspect: How schedule handles the event model and storage
