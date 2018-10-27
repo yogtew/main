@@ -7,6 +7,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Attendance;
 
 /**
  * UPDATES ATTENDANCE OF A STUDENT IN THE ADDRESS BOOK.
@@ -25,13 +26,13 @@ public class AttendanceCommand extends Command {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Attendance: %2$s";
 
     private final Index index;
-    private final String attendance;
+    private final Attendance attendance;
 
     /**
      * @param index of the student to mark the attendance of
      * @param attendance of the student
      */
-    public AttendanceCommand(Index index, String attendance) {
+    public AttendanceCommand(Index index, Attendance attendance) {
         requireAllNonNull(index, attendance);
 
         this.index = index;
