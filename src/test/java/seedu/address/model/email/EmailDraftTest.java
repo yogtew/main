@@ -7,5 +7,6 @@ public class EmailDraftTest {
     @Test
     public void isValidEmailDraft() {
 
+
     }
 }

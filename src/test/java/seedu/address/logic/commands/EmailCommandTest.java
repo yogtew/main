@@ -27,6 +27,7 @@ public class EmailCommandTest {
         Body bodyStub = new Body("body");
         EmailDraft emailDraft = new EmailDraft(outOfBoundIndex, subjectStub, bodyStub);
         EmailCommand emailCommand = new EmailCommand(emailDraft);
-        assertCommandFailure(emailCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(emailCommand, model, commandHistory,
+                                Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 }
