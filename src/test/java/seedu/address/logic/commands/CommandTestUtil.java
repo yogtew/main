@@ -44,7 +44,7 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_ATTENDANCE_AMY = "1";
+    public static final String VALID_ATTENDANCE_AMY = "0";
     public static final String VALID_ATTENDANCE_BOB = "0";
     public static final String VALID_SUBJECT_EMAIL = "Subject";
     public static final String VALID_BODY_EMAIL = "Body";
