@@ -17,12 +17,17 @@ public class Attendance {
      */
     public static final String ATTENDANCE_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String value;
+    public AttendanceEnum value = AttendanceEnum.UNDEFINED;
+
+    public Attendance(AttendanceEnum attendance) {
+        requireNonNull(attendance);
+        // checkArgument(isValidAttendance(attendance), MESSAGE_ATTENDANCE_CONSTRAINTS);
+        value = attendance;
+    }
 
     public Attendance(String attendance) {
         requireNonNull(attendance);
-        checkArgument(isValidAttendance(attendance), MESSAGE_ATTENDANCE_CONSTRAINTS);
-        value = attendance;
+        value = fromString(attendance);
     }
 
     /**
@@ -34,7 +39,7 @@ public class Attendance {
 
     @Override
     public String toString() {
-        return value;
+        return value.toString();
     }
 
     @Override
@@ -46,5 +51,15 @@ public class Attendance {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    public static AttendanceEnum fromString(String s) {
+        if (s.equalsIgnoreCase("absent") || s.equals("0")) {
+            return AttendanceEnum.ABSENT;
+        } else if (s.equalsIgnoreCase("present") || s.equals("1")) {
+            return AttendanceEnum.PRESENT;
+        } else {
+            return AttendanceEnum.UNDEFINED;
+        }
     }
 }
