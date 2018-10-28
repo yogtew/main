@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import seedu.address.testutil.Assert;
 
 public class AttendanceTest {
 
@@ -27,5 +28,19 @@ public class AttendanceTest {
         // if it is different attendance, return false
         Attendance diffAttd = new Attendance("absent");
         assertFalse(attendance.equals(diffAttd));
+    }
+
+    @Test
+    public void isValidAttendance() {
+        // null attendance
+        Assert.assertThrows(NullPointerException.class, () -> Attendance.isValidAttendance(null));
+
+        // invalid attendance
+        assertFalse(Attendance.isValidAttendance("")); // empty string
+        assertFalse(Attendance.isValidAttendance(" ")); // spaces only
+
+        // valid attendance
+        assertTrue(Attendance.isValidAttendance("Present")); // one word
+        assertTrue(Attendance.isValidAttendance("1")); // one character
     }
 }
