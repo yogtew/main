@@ -13,8 +13,6 @@ public class EmailDraft {
     private final Index index;
     private final Subject subject;
     private final Body body;
-    public final String bodyString;
-    public final String subjectString;
 
     public EmailDraft(Index index, Subject subject, Body body) {
         requireAllNonNull(index, subject, body);
@@ -22,8 +20,6 @@ public class EmailDraft {
         this.subject = subject;
         this.body = body;
 
-        bodyString = body.toString();
-        subjectString = subject.toString();
     }
 
     public Index getIndex() {
