@@ -27,15 +27,15 @@ public class SubjectTest {
 
         //invalid body
         assertFalse(Subject.isValidSubject("")); //empty string
-        //assertFalse(Subject.isValidSubject(" ")); //spaces only
-        assertFalse(Subject.isValidSubject("^")); //only non-alphanumeric characters
-        assertFalse(Subject.isValidSubject("peter*")); // contains non-alphanumeric characters
+        assertFalse(Subject.isValidSubject(" ")); //spaces only
 
         //valid body
         assertTrue(Subject.isValidSubject("peter jack")); // alphabets only
         assertTrue(Subject.isValidSubject("peter the 2nd")); // alphanumeric characters
         assertTrue(Subject.isValidSubject("Capital Tan")); // with capital letters
         assertTrue(Subject.isValidSubject("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Body.isValidBody("^")); // non-alphanumeric characters
+        assertTrue(Body.isValidBody("peter*")); // contains non-alphanumeric characters
 
 
     }
