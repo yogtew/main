@@ -8,9 +8,9 @@ import java.net.URL;
 
 public class OutlookRequest {
 
-    String emailAdd;
-    String subject;
-    String body;
+    private String emailAdd;
+    private String subject;
+    private String body;
 
     public OutlookRequest(String emailAdd, String subject, String body) {
         this.emailAdd = emailAdd;
@@ -56,7 +56,6 @@ public class OutlookRequest {
             os.write( outputInBytes );
             os.close();
 
-
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(conn.getInputStream()));
             String inputLine;
@@ -70,7 +69,5 @@ public class OutlookRequest {
         }
 
     }
-
-
 
 }
