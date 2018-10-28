@@ -9,7 +9,9 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.model.person.IsTaggedPredicate;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
 
 public class FindCommandParserTest {
 
@@ -29,6 +31,20 @@ public class FindCommandParserTest {
 
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_tag_valid() {
+        FindCommand expectedFindCommand =
+                new FindCommand(new IsTaggedPredicate(Arrays.asList(new Tag("friends"), new Tag("colleagues"))));
+        // multiple tags
+        assertParseSuccess(parser, " t/friends t/colleagues", expectedFindCommand);
+    }
+
+    @Test
+    public void parse_tag_invalid() {
+        // empty tag name
+        assertParseFailure(parser, " t/", Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
 }
