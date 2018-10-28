@@ -21,7 +21,7 @@ public class OutlookRequest {
         this.body = body;
     }
 
-    public String getEmailAdd() {
+    private String getEmailAdd() {
         return emailAdd;
     }
 
@@ -47,19 +47,19 @@ public class OutlookRequest {
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
 
-            String basicAuth = "Bearer EwA4A+l3BAAUv0lYxoez7x2t6RowHa2liVeLW/wAAZv01ygjLaIsxm+" +
-                    "uty3OAuwW0rqZEKW1mTT5dDr/GuAx3zDGSrVl5o/CgN6BeS9U7mesRgnkUNsLwYRoVDcoz/hA2yvz204My" +
-                    "FnXo86xT4PmkbshXrpkl2cSkbyy8DxzQTO60K3qRXYsEI5Ypn0Kqvx4OC+hAo7QnWSrQcNkMPry5BpI3/50f8P4" +
-                    "GUu3G0E2tlsEEOQtRmaUu0udvJHonSXmGLIJN6zC7N2+LQ6w/SneP474D/Zn1ujGcpVDBMJWEns44V0S5/q5eKxgc1" +
-                    "zlnAFf6GbWYJMJ/VOVSHxGAG9BjZ4OlCENPA8K2oNj7jjzc8GCC9Su4hDdxBbYx4Z/yS4DZgAACDJWRudcrPxBCAI3" +
-                    "vNfEGZwb091B6iRzpToU+F+uc6EMqspQ5SmXHzgF0qYi1e1pSSRbnKWYjUd5zWnbXu46s9VT1EfmCZ0CM1NrIsw0lpmr" +
-                    "5KWHqAwJPXCuENsXJ8iVnFbdNix3JRKGqgP/4PXu8fd8ICO29JmoeDNKlmmSuB0iFXBzR75ETmLNd3mZ26sN0x91ICxc" +
-                    "xSu/fFwyZzx39byFg1VgTULVH4PHvwc1jSEUO8oV8T2fidb3WAwFoePWc/HyR7PRPa0r99uUtPK5BuXyUpE66Cy0RjL4o" +
-                    "B+GKw5LR4flKwPHuZAqUa0NjPqu1Wur8TmmQrJwqDNc9FjHNvum95muBtIUKrP7tmIB74uIwVYK2zk4gURyM3yqdjbuj" +
-                    "8+RvAVFykqhu/bNVhJMI7Beg3+xlkDHGB9qhHrCTolwZ7VfVR6+9P/nV2rOASt5pK9PBZ5wZSucAjjMQ04MhtokWJAA" +
-                    "7mKpn5F0pakxi4LnQLU90vwD68B+OrEBtCj9FSbOtD1vQCwU51HKtI1QW40kzEddsbfyzrDqw0+1iEDt0PyEuoVzit2" +
-                    "d5uiwL/ABxPQwEGY4g33wzgBceinG2clZeriOWAbaGAG7e6O99ZaeM2XcE3/5/236i7K9Wqq0/yDELDWklmQD2X8UFq" +
-                    "s/4C8fHjsuSU+8lAwQvfIuYA1FFE2LWX/tAK4Tazy5uF4N68vtMwI=";
+            String basicAuth = "Bearer EwA4A+l3BAAUv0lYxoez7x2t6RowHa2liVeLW/wAAZv01ygjLaIsxm+"
+                    + "uty3OAuwW0rqZEKW1mTT5dDr/GuAx3zDGSrVl5o/CgN6BeS9U7mesRgnkUNsLwYRoVDcoz/hA2yvz204My"
+                    + "FnXo86xT4PmkbshXrpkl2cSkbyy8DxzQTO60K3qRXYsEI5Ypn0Kqvx4OC+hAo7QnWSrQcNkMPry5BpI3/50f8P4"
+                    + "GUu3G0E2tlsEEOQtRmaUu0udvJHonSXmGLIJN6zC7N2+LQ6w/SneP474D/Zn1ujGcpVDBMJWEns44V0S5/q5eKxgc1"
+                    + "zlnAFf6GbWYJMJ/VOVSHxGAG9BjZ4OlCENPA8K2oNj7jjzc8GCC9Su4hDdxBbYx4Z/yS4DZgAACDJWRudcrPxBCAI3"
+                    + "vNfEGZwb091B6iRzpToU+F+uc6EMqspQ5SmXHzgF0qYi1e1pSSRbnKWYjUd5zWnbXu46s9VT1EfmCZ0CM1NrIsw0lpmr"
+                    + "5KWHqAwJPXCuENsXJ8iVnFbdNix3JRKGqgP/4PXu8fd8ICO29JmoeDNKlmmSuB0iFXBzR75ETmLNd3mZ26sN0x91ICxc"
+                    + "xSu/fFwyZzx39byFg1VgTULVH4PHvwc1jSEUO8oV8T2fidb3WAwFoePWc/HyR7PRPa0r99uUtPK5BuXyUpE66Cy0RjL4o"
+                    + "B+GKw5LR4flKwPHuZAqUa0NjPqu1Wur8TmmQrJwqDNc9FjHNvum95muBtIUKrP7tmIB74uIwVYK2zk4gURyM3yqdjbuj"
+                    + "8+RvAVFykqhu/bNVhJMI7Beg3+xlkDHGB9qhHrCTolwZ7VfVR6+9P/nV2rOASt5pK9PBZ5wZSucAjjMQ04MhtokWJAA"
+                    + "7mKpn5F0pakxi4LnQLU90vwD68B+OrEBtCj9FSbOtD1vQCwU51HKtI1QW40kzEddsbfyzrDqw0+1iEDt0PyEuoVzit2"
+                    + "d5uiwL/ABxPQwEGY4g33wzgBceinG2clZeriOWAbaGAG7e6O99ZaeM2XcE3/5/236i7K9Wqq0/yDELDWklmQD2X8UFq"
+                    + "s/4C8fHjsuSU+8lAwQvfIuYA1FFE2LWX/tAK4Tazy5uF4N68vtMwI=";
 
             conn.setRequestProperty ("Authorization", basicAuth);
             conn.setRequestProperty("Accept", "application/json; odata.metadata=none");
