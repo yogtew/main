@@ -89,10 +89,9 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String attendance} into a {@code Attendance}.
      *
-     * @param attendance
-     * @return
-     * @throws ParseException
+     * @throws ParseException if given {@code attendance} is invalid
      */
     public static Attendance parseAttendance(String attendance) throws ParseException {
         requireNonNull(attendance);
