@@ -21,7 +21,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_ATTENDANCE = "";
+    public static final String DEFAULT_ATTENDANCE = "Absent";
 
     private Name name;
     private Phone phone;
@@ -72,6 +72,14 @@ public class PersonBuilder {
      */
     public PersonBuilder withAddress(String address) {
         this.address = new Address(address);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Attendance} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAttendance(String attendance) {
+        this.attendance = new Attendance(attendance);
         return this;
     }
 

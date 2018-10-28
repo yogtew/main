@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Attendance {
 
     public static final String MESSAGE_ATTENDANCE_CONSTRAINTS =
-            "Attendance can take be either 1 (Present) or 0 (Absent), and it should not be blank";
+            "Attendance can take be either 1 (Present) or 0 (Absent)";
 
     /*
      * The first character of the attendance must not be a whitespace,

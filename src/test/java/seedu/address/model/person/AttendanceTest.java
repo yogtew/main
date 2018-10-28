@@ -38,9 +38,9 @@ public class AttendanceTest {
 
         // invalid attendance
         assertFalse(Attendance.isValidAttendance("")); // empty string
-        assertFalse(Attendance.isValidAttendance(" ")); // spaces only
 
         // valid attendance
+        assertTrue(Attendance.isValidAttendance(" ")); // spaces only
         assertTrue(Attendance.isValidAttendance("Present")); // one word
         assertTrue(Attendance.isValidAttendance("1")); // one character
     }
