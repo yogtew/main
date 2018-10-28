@@ -13,12 +13,17 @@ public class EmailDraft {
     private final Index index;
     private final Subject subject;
     private final Body body;
+    public final String bodyString;
+    public final String subjectString;
 
     public EmailDraft(Index index, Subject subject, Body body) {
         requireAllNonNull(index, subject, body);
         this.index = index;
         this.subject = subject;
         this.body = body;
+
+        bodyString = body.toString();
+        subjectString = subject.toString();
     }
 
     public Index getIndex() {
@@ -32,6 +37,7 @@ public class EmailDraft {
     public Subject getSubject() {
         return subject;
     }
+
 
     @Override
     public boolean equals(Object other) {
@@ -47,5 +53,9 @@ public class EmailDraft {
         return otherEmailDraft.getBody().equals(getBody())
                 && otherEmailDraft.getSubject().equals(getSubject())
                 && otherEmailDraft.getIndex().equals(getIndex());
+    }
+
+    public String toString(Object object) {
+        return object.toString();
     }
 }
