@@ -17,11 +17,11 @@ public class Attendance {
      */
     public static final String ATTENDANCE_VALIDATION_REGEX = "[^\\s].*";
 
-    public AttendanceEnum value = AttendanceEnum.UNDEFINED;
+    public AttendanceEnum value;
 
     public Attendance(AttendanceEnum attendance) {
         requireNonNull(attendance);
-        // checkArgument(isValidAttendance(attendance), MESSAGE_ATTENDANCE_CONSTRAINTS);
+        checkArgument(isValidAttendance(attendance.toString()), MESSAGE_ATTENDANCE_CONSTRAINTS);
         value = attendance;
     }
 
