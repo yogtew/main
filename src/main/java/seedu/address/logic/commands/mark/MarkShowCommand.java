@@ -8,7 +8,7 @@ import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 
 /**
- * Mark "show" subcommand 
+ * Mark "show" subcommand
  */
 public class MarkShowCommand extends MarkSubCommand {
     private static final String MESSAGE_SUCCESS = "Listed %d marked Persons in %s";
