@@ -13,17 +13,8 @@ import java.util.Objects;
  */
 public class Event {
 
-    // Identity fields
-    private final EventName eventName;
-    private final Date date;
-    private final StartTime startTime;
-    private final EndTime endTime;
-
-    // Data fields
-    private final Description description;
-
     // Comparator for events
-    public static final Comparator<Event> comparator = new Comparator<Event>() {
+    public static final Comparator<Event> COMPARATOR = new Comparator<Event>() {
         @Override
         public int compare(Event e1, Event e2) {
             try {
@@ -37,6 +28,15 @@ public class Event {
             }
         }
     };
+
+    // Identity fields
+    private final EventName eventName;
+    private final Date date;
+    private final StartTime startTime;
+    private final EndTime endTime;
+
+    // Data fields
+    private final Description description;
 
     /**
      * Constructs a (@code Event).
