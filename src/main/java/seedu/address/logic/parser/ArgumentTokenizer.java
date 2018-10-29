@@ -29,7 +29,7 @@ public class ArgumentTokenizer {
         String[] splitArgs = argsString.split(PREFIX_FINAL.getPrefix(), 1);
         List<PrefixPosition> positions = findAllPrefixPositions(splitArgs[0], prefixes);
         ArgumentMultimap result = extractArguments(splitArgs[0], positions);
-        result.trailingArgs = splitArgs.length > 1 ? splitArgs[1] : "";
+        result.setTrailingArgs(splitArgs.length > 1 ? splitArgs[1] : "");
         return result;
     }
 

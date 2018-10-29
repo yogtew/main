@@ -9,9 +9,12 @@ import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 
+/**
+ * Mark "find" subcommand
+ */
 public class MarkFindCommand extends MarkSubCommand {
     private static final String MESSAGE_SUCCESS = "Successfully marked %d people under %s";
-    Predicate<Person> p;
+    private Predicate<Person> p;
     public MarkFindCommand(Predicate<Person> p, String alias1) {
         this.p = p;
         this.alias1 = alias1;

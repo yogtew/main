@@ -86,7 +86,7 @@ public class StringUtil {
      * @throws IllegalArgumentException if s does not contain expected prefix
      */
     public static String extractArgument(String s, Prefix prefix) {
-        if(!s.contains(prefix.getPrefix())) {
+        if (!s.contains(prefix.getPrefix())) {
             throw new IllegalArgumentException("Expecting prefixed argument");
         }
         return s.split(prefix.getPrefix())[1];

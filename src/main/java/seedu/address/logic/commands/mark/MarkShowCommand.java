@@ -7,8 +7,11 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 
+/**
+ * Mark "show" subcommand
+ */
 public class MarkShowCommand extends MarkSubCommand {
-    private final String MESSAGE_SUCCESS = "Listed %d marked Persons in %s";
+    private static final String MESSAGE_SUCCESS = "Listed %d marked Persons in %s";
 
     public MarkShowCommand(String alias1) {
         this.alias1 = alias1;
