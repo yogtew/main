@@ -1,12 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.mark.Mark.DEFAULT_NAME;
 
 import java.util.ArrayList;
@@ -48,9 +43,9 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             and - intersection of two Marks
          */
         ArrayList<String> splitArgs = new ArrayList<>(Arrays.asList(args.trim().split(" ")));
-        String alias1, alias2, alias3;
-        alias1 = DEFAULT_NAME;
-        alias3 = DEFAULT_NAME;
+        String alias1 = DEFAULT_NAME;
+        String alias2;
+        String alias3 = DEFAULT_NAME;
 
         // [alias1] todo: make this unaliased
         if (StringUtil.isPrefixedArg(splitArgs.get(0), PREFIX_ALIAS)) {
@@ -61,10 +56,10 @@ public class MarkCommandParser implements Parser<MarkCommand> {
         //<command>
         String subCommand = splitArgs.get(0);
         switch (subCommand) {
-            case MarkSubCommands.SHOW:
+        case MarkSubCommands.SHOW:
             // show
             return new MarkShowCommand(alias1);
-            case MarkSubCommands.FIND:
+        case MarkSubCommands.FIND:
             // find
             String findArgs;
             int index = splitArgs.indexOf("f/");
@@ -76,7 +71,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             FindCommand findCommand =  new FindCommandParser().parse(findArgs);
             Predicate<Person> p = findCommand.getPredicate();
             return new MarkFindCommand(p, alias1);
-            case MarkSubCommands.JOIN:
+        case MarkSubCommands.JOIN:
             // mark [alias1] join [alias2] [alias3]
             splitArgs.remove(0); // removes "join"
             if (splitArgs.size() == 0) {
@@ -87,7 +82,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
                 alias3 = splitArgs.get(1);
             }
             return new MarkJoinCommand(alias1, alias2, alias3);
-            case MarkSubCommands.AND:
+        case MarkSubCommands.AND:
             // mark [alias1] join [alias2] [alias3]
             splitArgs.remove(0); // removes "join"
             if (splitArgs.size() == 0) {
@@ -98,7 +93,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
                 alias3 = splitArgs.get(1);
             }
             return new MarkAndCommand(alias1, alias2, alias3);
-            default:
+        default:
             // invalid command
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
         }

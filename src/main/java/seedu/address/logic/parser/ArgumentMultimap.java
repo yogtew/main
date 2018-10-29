@@ -18,7 +18,7 @@ public class ArgumentMultimap {
 
     /** Prefixes mapped to their respective arguments**/
     private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
-    public String trailingArgs = "";
+    private String trailingArgs = "";
 
     /**
      * Associates the specified argument value with {@code prefix} key in this map.
@@ -74,5 +74,9 @@ public class ArgumentMultimap {
      */
     public boolean hasTrailing() {
         return !Objects.equals(trailingArgs, "");
+    }
+
+    public String getTrailingArgs() {
+        return trailingArgs;
     }
 }
