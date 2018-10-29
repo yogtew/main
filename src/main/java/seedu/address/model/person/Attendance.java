@@ -53,6 +53,9 @@ public class Attendance {
         return value.hashCode();
     }
 
+    /**
+     * Takes a string attendance and returns a AttendanceEnum
+     */
     public static AttendanceEnum fromString(String s) {
         if (s.equalsIgnoreCase("absent") || s.equals("0")) {
             return AttendanceEnum.ABSENT;

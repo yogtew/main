@@ -17,8 +17,8 @@ import java.util.Optional;
 public class ArgumentMultimap {
 
     /** Prefixes mapped to their respective arguments**/
-    private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
     public String trailingArgs = "";
+    private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
 
     /**
      * Associates the specified argument value with {@code prefix} key in this map.
