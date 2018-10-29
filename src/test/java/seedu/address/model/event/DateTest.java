@@ -36,7 +36,9 @@ public class DateTest {
 
         // valid Date numbers
         assertTrue(Date.isValidDate("31-12-2021")); // valid date
-        assertTrue(Date.isValidDate("1-12-2018")); // valid date, single digit date
+        assertTrue(Date.isValidDate("1-12-2018")); // valid date, single digit day
+        assertTrue(Date.isValidDate("22-1-2018")); // valid date, single digit month
+        assertTrue(Date.isValidDate("1-1-2018")); // valid date, single digit day and month
         assertTrue(Date.isValidDate("29-02-2016")); // valid date, leap year
     }
 }
