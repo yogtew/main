@@ -6,8 +6,8 @@ import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 
 /**
- * Sub-command of Mark: Join
- * mark [alias1] join <alias2> [alias3]
+ * Mark "join" subcommand
+ * mark [alias1] join {alias2} [alias3]
  */
 public class MarkJoinCommand extends MarkSubCommand {
     private static final String MESSAGE_SUCCESS = "Successfully marked %d people in either %s or %s";

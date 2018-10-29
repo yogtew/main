@@ -36,9 +36,6 @@ public class MarkCommandParser implements Parser<MarkCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public MarkCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
-
         /*
             Expected format: mark [alias1] <command> [alias2] [alias3]
             alias1 defaults to DEFAULT_NAME
@@ -52,7 +49,8 @@ public class MarkCommandParser implements Parser<MarkCommand> {
          */
         ArrayList<String> splitArgs = new ArrayList<>(Arrays.asList(args.trim().split(" ")));
         String alias1, alias2, alias3;
-        alias1 = alias3 = DEFAULT_NAME;
+        alias1 = DEFAULT_NAME;
+        alias3 = DEFAULT_NAME;
 
         // [alias1] todo: make this unaliased
         if (StringUtil.isPrefixedArg(splitArgs.get(0), PREFIX_ALIAS)) {

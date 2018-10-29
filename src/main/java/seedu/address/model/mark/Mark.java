@@ -1,7 +1,6 @@
 package seedu.address.model.mark;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -12,7 +11,7 @@ import seedu.address.model.person.Person;
  */
 public class Mark {
     public static final String DEFAULT_NAME = "default";
-    public static final Mark empty = new Mark();
+    public static final Mark EMPTY = new Mark();
     private ArrayList<Person> list;
     private String name;
 

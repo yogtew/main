@@ -27,7 +27,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
-    private final HashMap<String, Optional<Mark>> marks;
+    private final HashMap<String, Mark> marks;
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
@@ -239,10 +239,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public Mark getMark(String markName) {
-        return marks.get(markName).orElse(Mark.empty);
+        return marks.getOrDefault(markName, Mark.EMPTY);
     }
 
     public void setMark(String markName, Mark mark) {
-        marks.put(markName, Optional.of(mark));
+        marks.put(markName, mark);
     }
 }

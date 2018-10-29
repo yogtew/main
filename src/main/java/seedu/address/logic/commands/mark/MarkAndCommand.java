@@ -5,6 +5,9 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 
+/**
+ * Mark "and" subcommand
+ */
 public class MarkAndCommand extends MarkSubCommand {
     private static final String MESSAGE_SUCCESS = "Successfully marked %d people in both %s and %s";
     private final String alias1;
