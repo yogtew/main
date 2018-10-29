@@ -2,6 +2,10 @@ package seedu.address.model.event;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -17,6 +21,22 @@ public class Event {
 
     // Data fields
     private final Description description;
+
+    // Comparator for events
+    public static final Comparator<Event> comparator = new Comparator<Event>() {
+        @Override
+        public int compare(Event e1, Event e2) {
+            try {
+                java.util.Date start = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                        .parse(e1.date.date + " " + e1.startTime.startTime);
+                java.util.Date end = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                        .parse(e2.date.date + " " + e2.startTime.startTime);
+                return start.compareTo(end);
+            } catch (ParseException e) {
+                return 0; // Ideally the parsers should be doing their job. If not then simply leave it be
+            }
+        }
+    };
 
     /**
      * Constructs a (@code Event).
