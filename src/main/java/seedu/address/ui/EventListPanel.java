@@ -1,11 +1,8 @@
 package seedu.address.ui;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -58,7 +55,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code EventCard just after the given {@code date}.
+     * Scrolls to the {@code EventCard} just after the given {@code date} and selects it.
      */
     private void scrollTo(LocalDateTime time, ObservableList<Event> eventList) {
         String date = time.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
