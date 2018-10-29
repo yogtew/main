@@ -30,14 +30,13 @@ public class DateTest {
         assertFalse(Date.isValidDate(" ")); // spaces only
         assertFalse(Date.isValidDate("12")); // not a date
         assertFalse(Date.isValidDate("Date")); // non-numeric
-        assertFalse(Date.isValidDate("23/MM/2013")); // alphabets used
+        assertFalse(Date.isValidDate("22-MM-2013")); // alphabets used
         assertFalse(Date.isValidDate("22 02 2000")); // spaces as delimiter
         assertFalse(Date.isValidDate("29-02-2011")); // impossible date
 
         // valid Date numbers
-        assertTrue(Date.isValidDate("21/05/1990")); // valid date, "/" delimiter
-        assertTrue(Date.isValidDate("1/12/2018")); // valid date, single digit date
-        assertTrue(Date.isValidDate("31-12-2021")); // valid date, "-" delimiter
-        assertTrue(Date.isValidDate("01.1.2000")); // valid date, "." delimiter
+        assertTrue(Date.isValidDate("31-12-2021")); // valid date
+        assertTrue(Date.isValidDate("1-12-2018")); // valid date, single digit date
+        assertTrue(Date.isValidDate("29-02-2016")); // valid date, leap year
     }
 }
