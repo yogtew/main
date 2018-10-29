@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -26,7 +27,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
-    private final HashMap<String, Mark> marks;
+    private final HashMap<String, Optional<Mark>> marks;
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
@@ -238,10 +239,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public Mark getMark(String markName) {
-        return marks.get(markName);
+        return marks.get(markName).orElse(Mark.empty);
     }
 
     public void setMark(String markName, Mark mark) {
-        marks.put(markName, mark);
+        marks.put(markName, Optional.of(mark));
     }
 }

@@ -1,7 +1,9 @@
 package seedu.address.model.mark;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.function.Predicate;
 
 import seedu.address.model.person.Person;
 
@@ -10,6 +12,7 @@ import seedu.address.model.person.Person;
  */
 public class Mark {
     public static final String DEFAULT_NAME = "default";
+    public static final Mark empty = new Mark();
     private ArrayList<Person> list;
     private String name;
 
@@ -23,8 +26,30 @@ public class Mark {
         this(inputList, DEFAULT_NAME);
     }
 
+    public Mark() {
+        list = new ArrayList<>();
+        name = DEFAULT_NAME;
+    }
+
     public ArrayList<Person> getList() {
         return list;
+    }
+
+    public Predicate<Person> getPredicate() {
+        return person -> list.contains(person);
+    }
+
+    public Mark join(Mark other) {
+        ArrayList<Person> copy = new ArrayList<>(list);
+        copy.removeAll(other.getList());
+        copy.addAll(other.getList());
+        return new Mark(copy);
+    }
+
+    public Mark intersect(Mark other) {
+        ArrayList<Person> copy = new ArrayList<>(list);
+        copy.retainAll(other.getList());
+        return new Mark(copy);
     }
 
 
