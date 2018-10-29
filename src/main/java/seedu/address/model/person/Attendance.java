@@ -17,7 +17,7 @@ public class Attendance {
      */
     public static final String ATTENDANCE_VALIDATION_REGEX = "[^\\s].*";
 
-    public AttendanceEnum value;
+    public final AttendanceEnum value;
 
     public Attendance(AttendanceEnum attendance) {
         requireNonNull(attendance);
