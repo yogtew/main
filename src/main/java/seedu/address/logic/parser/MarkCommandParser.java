@@ -68,7 +68,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             } else {
                 findArgs = String.join(" ", splitArgs);
             }
-            FindCommand findCommand =  new FindCommandParser().parse(findArgs);
+            FindCommand findCommand = new FindCommandParser().parse(findArgs);
             Predicate<Person> p = findCommand.getPredicate();
             return new MarkFindCommand(p, alias1);
         case MarkSubCommands.JOIN:

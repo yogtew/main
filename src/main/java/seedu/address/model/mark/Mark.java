@@ -38,6 +38,11 @@ public class Mark {
         return person -> list.contains(person);
     }
 
+    /**
+     * Joins two marks (union)
+     * @param other other mark to union
+     * @return new mark containing union
+     */
     public Mark join(Mark other) {
         ArrayList<Person> copy = new ArrayList<>(list);
         copy.removeAll(other.getList());
@@ -45,6 +50,11 @@ public class Mark {
         return new Mark(copy);
     }
 
+    /**
+     * Common elements of two marks (intersect)
+     * @param other other mark to check
+     * @return new mark containing intersection
+     */
     public Mark intersect(Mark other) {
         ArrayList<Person> copy = new ArrayList<>(list);
         copy.retainAll(other.getList());
