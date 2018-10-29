@@ -79,4 +79,8 @@ public class ArgumentMultimap {
     public String getTrailingArgs() {
         return trailingArgs;
     }
+
+    public void setTrailingArgs(String trailingArgs) {
+        this.trailingArgs = trailingArgs;
+    }
 }
