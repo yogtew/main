@@ -324,7 +324,7 @@ image::EventStorageSequenceDiagram.png[width="800"]
 ** Cons: Significantly harder to implement, and current java libraries are not feasible to utilize.
 
 ==== Aspect: How to display events
-* **Alternative 1 (current choice):** Simply display all events.
+* **Alternative 1 (current choice):** Simply display all events, and scroll to nearest upcoming event.
 ** Pros: Allows the user to see the entire list of events, past and future.
 ** Cons: Will definitely get cluttered over time.
 
