@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.AttendanceCommand.MESSAGE_ARGUMENTS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendar;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
