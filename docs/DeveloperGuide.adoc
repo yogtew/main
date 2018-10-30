@@ -243,7 +243,16 @@ This section describes some noteworthy details on how certain features are imple
 === Email feature
 ==== Current implementation - Emailing a single student
 
-The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. The Outlook mail interface appears in the browserpanel, and is activated when the email command is typed, instead of when a personcard is clicked. The email command itself takes in an index as a parameter (e.g email 2), and fetches the email address of the student at that index. It then opens up the Outlook UI, with the email address of the student in the 'to:' section. The CommandResult object that is returned by the email command lets the user know if the email address has been successfully added to the the 'to:' field. The email subject and content is also entered throuhg the CLI.
+The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. Since the Outlook mail API is a RESTful API, this feature uses the `POST` request to send the email specified in the user-input to the student specified in the user-input.
+
+The email command itself takes a few parameters:
+
+e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
+
+It fetches the email address of the student at that index, and passes the email `subject` and  email `body` inputted by the user as the `body` of the `POST` request. The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the person whose index is specified.
+
+.Component interactions for email command
+image::EmailCommand Sequence Diagram.png[width="800"]
 
 ==== Using Outlook's Mail API
 
