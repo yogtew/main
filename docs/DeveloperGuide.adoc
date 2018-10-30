@@ -260,13 +260,9 @@ In the `POST` request, a access token is required in order to be able to communi
 
 image::UML REST API.png[width="400"]
 
-==== Future features/implementations - Emailing an entire class/group
-
-Use the 'select' feature to select an entire class, based on the tag that each student has of which class they are in. After selecting, the email command would extract all of their emails and open up the Outlook UI, with the email addressess of the students in the 'to:' section. (e.g 'select tutgroup4', 'email')
-
 ==== Alternative implementations:
 
-Since the outlook mail API is being used, the only alternatives in implementation come about in the extracting of emails from the person object, and the shifting of the user input for the subject/content from the CLI to appear in the empty 'compose mail' box.
+Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one. 
 
 //tag::schedule[]
 === Schedule feature
