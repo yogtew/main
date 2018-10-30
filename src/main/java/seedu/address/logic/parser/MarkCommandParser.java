@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ALIAS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
 import static seedu.address.model.mark.Mark.DEFAULT_NAME;
 
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class MarkCommandParser implements Parser<MarkCommand> {
         String alias3 = DEFAULT_NAME;
 
         // [alias1] todo: make this unaliased
-        if (StringUtil.isPrefixedArg(splitArgs.get(0), PREFIX_ALIAS)) {
-            alias1 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_ALIAS);
+        if (StringUtil.isPrefixedArg(splitArgs.get(0), PREFIX_MARK)) {
+            alias1 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
             splitArgs.remove(0);
         }
 
