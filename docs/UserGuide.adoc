@@ -110,19 +110,22 @@ Returns a list of students sorted by their name
 *`sort GRADES` +
 Returns a list of students sorted by their grades, which is a field of each student.
 
-=== Marking attendance: `attd`
+=== Marking attendance: `attendance`
 
-Allows the user to mark the attendance of students in a given class. +
-Format: `attd CLASS_NAME`
+Allows the user to mark the attendance of students using the index number. +
+Format: `attendance INDEX_NUMBER at/ATTENDANCE`
 
 ****
-* The attendance marking as present is done for the entire class, which is decided by whoever has the tag with the CLASS_NAME,  and the user can individually mark those absent as 'absent'.
+* The attendance marking as present is done individually, by using the index number of the student, and the user can individually mark students who are absent as 'absent'/'0' and who are present as 'present'/'1'.
 ****
 
 Examples:
 
-*`attd CS2103-W13` +
-Outputs the list of students in the class, and waits for the user to input the attendance accordingly.
+*`attendance 1 at/present` +
+Marks the attendance of the student with index number 1 as present.
+
+*`attendance 3 at/0` +
+Marks the attendance of the student with index number 3 as absent.
 
 === Schedule timetables: `schedule`
 
@@ -311,7 +314,7 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Sort* : `sort PARAMETER` +
 e.g. `sort NAME`
-* *Attendance* : `attd GROUP_NAME`
+* *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
 e.g. `attd CS2103-Tutorial-W13`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule CS2103-Tutorial-W13 d/22-3-2018 s/1600 e/1800`
