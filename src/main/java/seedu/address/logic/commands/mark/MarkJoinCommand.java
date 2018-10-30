@@ -9,7 +9,7 @@ import seedu.address.model.mark.Mark;
  * Mark "join" subcommand
  * mark [alias1] join {alias2} [alias3]
  */
-public class MarkJoinCommand extends MarkSubCommand {
+public class MarkJoinCommand extends MarkCommand {
     private static final String MESSAGE_SUCCESS = "Successfully marked %d people in either %s or %s";
     private final String alias2;
     private final String alias3;

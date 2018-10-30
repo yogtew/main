@@ -20,7 +20,17 @@ import seedu.address.model.person.Person;
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": WIP";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " [m/m1] [show|join|find|and] [m/m2] [m/m3]";
+    public static final String SHOW = "show";
+    public static final String FIND = "find";
+    public static final String JOIN = "join";
+    public static final String AND = "and";
+    public static final String EXEC = "exec";
+    public static final String SET_TAG = "tag";
+
+    protected String alias1;
+    protected String alias2;
+    protected String alias3;
 
     private Predicate<Person> predicate;
 
