@@ -298,6 +298,30 @@ There is no need to save manually.
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+// tag::mark[]
+=== Mark
+Format: `mark [m/m1] <subCommand> [m/m2] [m/m3]`
+
+List of subcommands
+
+* `find [name|t/tag]` - finds persons matching criteria and mark under _m1_
+* `join m/m2 m/m3` - sets m1 to be the *union* of _m2_ and _m3_
+* `and m/m2 m/m3` -- sets m1 to be the *intersection* of _m2_ and _m3_
+* `show` -- displays persons from _m1_ in the GUI
+
+Notes:
+
+* _m1_ defaults to "default" if omitted
+
+Examples:
+
+* `mark find t/friends` -- marks persons with tag _friends_ under _default_
+* `mark m/abc find t/colleagues` -- marks persons with tag _colleagues_ under _abc_
+* `mark join m/a m/b` -- marks people in either _a_ or _b_ under _default_ (union a, b)
+* `mark and m/a m/b` -- marks people in both _a_ and _b_ under _default_ (intersection a, b)
+* `mark m/test show` -- shows people marked under _test_ in the GUI
+// end::mark[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
