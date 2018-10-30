@@ -127,10 +127,10 @@ Outputs the list of students in the class, and waits for the user to input the a
 === Schedule timetables: `schedule`
 
 Schedules an event for the user to keep track of. +
-Format: `schedule EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
+Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
 
 ****
-* The event will be scheduled and reflected on the user's calendar
+* The event will be scheduled and reflected on the user's list of events
 * Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event
 ****
 
