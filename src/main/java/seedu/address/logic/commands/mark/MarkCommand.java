@@ -25,6 +25,8 @@ public class MarkCommand extends Command {
     public static final String FIND = "find";
     public static final String JOIN = "join";
     public static final String AND = "and";
+    public static final String EXEC = "exec";
+    public static final String SET_TAG = "tag";
 
     protected String alias1;
     protected String alias2;

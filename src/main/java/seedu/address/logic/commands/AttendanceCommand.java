@@ -15,7 +15,7 @@ import seedu.address.model.person.Attendance;
 /**
  * UPDATES ATTENDANCE OF A STUDENT IN THE ADDRESS BOOK.
  */
-public class AttendanceCommand extends Command implements IMarkExecutable {
+public class AttendanceCommand extends Command {
 
     public static final String COMMAND_WORD = "attendance";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the attendance of a student. "
@@ -45,17 +45,6 @@ public class AttendanceCommand extends Command implements IMarkExecutable {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), attendance));
-    }
-
-    /**
-     * Batch attendance updating using Marks
-     * @param mark mark containing Persons to apply command on
-     * @return result of executing commands
-     */
-    public CommandResult executeMark(Mark mark) {
-        // example
-        // mark.getList().forEach(markAttendance);
-        return new CommandResult(MESSAGE_WIP_COMMAND);
     }
 
     @Override
