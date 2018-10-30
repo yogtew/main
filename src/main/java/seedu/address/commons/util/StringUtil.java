@@ -7,6 +7,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
 
+import seedu.address.logic.parser.Prefix;
+
 /**
  * Helper functions for handling strings.
  */
@@ -64,5 +66,29 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    /**
+     * Returns true if {@code s} is a prefixed argument
+     * @param s string to check if prefixed
+     * @param prefixes list of prefixes to check against
+     * @return whether string contains prefix
+     */
+    public static boolean isPrefixedArg(String s, Prefix... prefixes) {
+        return Arrays.stream(prefixes).anyMatch(p -> s.contains(p.getPrefix()));
+    }
+
+    /**
+     * Returns argument part from a prefixed argument
+     * @param s prefixed string
+     * @param prefix prefix to extract
+     * @return argument
+     * @throws IllegalArgumentException if s does not contain expected prefix
+     */
+    public static String extractArgument(String s, Prefix prefix) {
+        if (!s.contains(prefix.getPrefix())) {
+            throw new IllegalArgumentException("Expecting prefixed argument");
+        }
+        return s.split(prefix.getPrefix())[1];
     }
 }

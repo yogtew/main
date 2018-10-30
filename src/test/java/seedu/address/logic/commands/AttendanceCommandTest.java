@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.AttendanceCommand.MESSAGE_ARGUMENTS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ATTENDANCE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendar;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -18,6 +18,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Attendance;
+import seedu.address.model.person.AttendanceEnum;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for AttendanceCommand.
@@ -56,8 +57,16 @@ public class AttendanceCommandTest {
         assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_SECOND_PERSON,
                 new Attendance(VALID_ATTENDANCE_AMY))));
 
+        assertEquals(new Attendance(AttendanceEnum.UNDEFINED), new Attendance(AttendanceEnum.UNDEFINED));
+        assertEquals(new Attendance(AttendanceEnum.ABSENT), new Attendance(AttendanceEnum.ABSENT));
+        assertEquals(new Attendance(AttendanceEnum.PRESENT), new Attendance(AttendanceEnum.PRESENT));
+
+        assertEquals(new Attendance("0"), new Attendance(AttendanceEnum.ABSENT));
+        assertEquals(new Attendance("1"), new Attendance(AttendanceEnum.PRESENT));
+        assertEquals(new Attendance(" "), new Attendance(AttendanceEnum.UNDEFINED));
+
         // different attendance -> returns false
         assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_FIRST_PERSON,
-                new Attendance(VALID_ATTENDANCE_BOB))));
+                new Attendance("1"))));
     }
 }

@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_FINAL;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,8 +26,11 @@ public class ArgumentTokenizer {
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
-        List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
-        return extractArguments(argsString, positions);
+        String[] splitArgs = argsString.split(PREFIX_FINAL.getPrefix(), 1);
+        List<PrefixPosition> positions = findAllPrefixPositions(splitArgs[0], prefixes);
+        ArgumentMultimap result = extractArguments(splitArgs[0], positions);
+        result.setTrailingArgs(splitArgs.length > 1 ? splitArgs[1] : "");
+        return result;
     }
 
     /**
