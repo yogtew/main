@@ -236,23 +236,30 @@ This section describes some noteworthy details on how certain features are imple
 === Email feature
 ==== Current implementation - Emailing a single student
 
-The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. The Outlook mail interface appears in the browserpanel, and is activated when the email command is typed, instead of when a personcard is clicked. The email command itself takes in an index as a parameter (e.g email 2), and fetches the email address of the student at that index. It then opens up the Outlook UI, with the email address of the student in the 'to:' section. The CommandResult object that is returned by the email command lets the user know if the email address has been successfully added to the the 'to:' field. The email subject and content is also entered throuhg the CLI.
+The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. This API is a RESTful API, made for server-client communication. Since the Outlook mail API is a RESTful API, this feature uses the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message) to send the email specified in the user-input to the student specified in the user-input.
+The email command itself takes a few parameters:
 
-==== Using Outlook's Mail API
+* `Index`: Index number of student in list. Only positive numbers present in list are valid.(`i/`)
+* `Subject`: Subject of email to be sent, valid if not an empty string.(`s/`)
+* `Body`: Subject of email to be sent, valid if not an empty string.(`b/`)
 
-This API is a RESTful API, made for server-client communication.
+e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-image::REST api.png[width="800"]
+When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
 
-Using the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message), the users email content/subject is converted to JSON format and forms the body of the email.
+The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the person whose index is specified.
 
-==== Future features/implementations - Emailing an entire class/group
+.Component interactions for email command
+image::EmailCommand Sequence Diagram.png[width="800"]
 
-Use the 'select' feature to select an entire class, based on the tag that each student has of which class they are in. After selecting, the email command would extract all of their emails and open up the Outlook UI, with the email addressess of the students in the 'to:' section. (e.g 'select tutgroup4', 'email')
+In the 'POST' request, a access token is required in order to be able to communicate to the web server, which is `Outlook` in this case. To get this access token from Outlook, a authorization code must be used, which is also provided when applicatoin is registered and authorized under Outlook. Only with this access token, can the email that is created be sent to Outlook as a 'POST' request.
+
+.App interactions with Outlook for email command
+image::UML REST API.png[width="400"]
 
 ==== Alternative implementations:
 
-Since the outlook mail API is being used, the only alternatives in implementation come about in the extracting of emails from the person object, and the shifting of the user input for the subject/content from the CLI to appear in the empty 'compose mail' box.
+Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
 
 //tag::schedule[]
 === Schedule feature

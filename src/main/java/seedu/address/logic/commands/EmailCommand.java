@@ -10,6 +10,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.OutlookRequest;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.email.EmailDraft;
@@ -56,6 +57,13 @@ public class EmailCommand extends Command {
 
         Person personToEmail = lastShownList.get(targetIndex.getZeroBased());
         Email addressToEmail = personToEmail.getEmail();
+        String emailAdd = addressToEmail.toString();
+        String subject = emailDraft.getSubject().toString();
+
+        String body = emailDraft.getBody().toString();
+        OutlookRequest outlookRequest = new OutlookRequest(emailAdd, subject, body);
+        OutlookRequest.sendMail(outlookRequest);
+
 
         return new CommandResult(String.format(MESSAGE_SENT_SUCCESS, addressToEmail));
     }

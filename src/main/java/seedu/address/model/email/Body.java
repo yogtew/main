@@ -15,7 +15,7 @@ public class Body {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String BODY_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String BODY_VALIDATION_REGEX = "[^\\s].*";
 
     public final String value;
 
@@ -43,5 +43,10 @@ public class Body {
         return other == this
                 || (other instanceof Body
                 && value.equals(((Body) other).value));
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }
