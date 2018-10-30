@@ -412,22 +412,43 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::markfeature[]
 === Mark feature
-==== Planned Implementation
-The mark feature will be implemented as a utility class `Mark`. It will store a series of lists of `Person`, accessible by name and/or index. The user will be able to run batch commands on marked targets.
+==== Implementation
+The mark feature will be implemented as a utility class `Mark`. It will store a list of `Person`. The user will be able to run batch commands on marked targets.
 
-==== Constructors:
-* `Mark(List<Person> inputList, [String listName])` -- marks the Persons in inputList under listName
-* `Mark(Tag tag, [String listName])` -- marks the Persons that match the tag under listName
-* `Mark(Predicate<Person> predicate, [String listName])` -- marks all Persons that match the supplied predicate under listName
-==== Methods:
-* `Mark#getList([String listName])` -- returns a list of Persons marked under listName
-* `Mark#union(Mark)` -- returns a new Mark that contains the union of the two Marks
-* `Mark#intersect(Mark)` -- returns a new Mark that contains the intersection of the two Marks
-* `Mark#execute(Consumer<Person>)` -- applies the Consumer function on all Persons in the Mark (how to resolve multiple CommandResult)?
+The feature is exposed as a command with the following patterns:
 
-The Marks will be managed by `MarkManager`, which stores the named Marks and is responsible for managing them and calling methods from functions.
-==== Design Considerations
-The mark feature needs to be versatile yet robust.
+* `mark [m1] subcommand [m2] [m3]` -- for mark subcommands
+* `mark [m1] exec commandname [args]` -- for commands implementing IMarkExecutable
+
+The command is parsed under `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed. It is designed in this way to be easily extensible in the future.
+
+==== Use Case:
+Suppose a tutor wants to mark the attendance of all students from tutorial groups W13-3 and W13-4. Instead of manually typing `attendance index attd/1` manually for all the students, the tutor can use the mark feature:
+
+. `mark m/a find t/W13-3` -- marks Persons with tag "W13-3" under alias "a"
+. `mark m/b find t/W13-4` -- marks Persons with tag "W13-4" under alias "b"
+. `mark m/res join m/a m/b` -- joins marks a and b and puts result under "res"
+. `mark m/res exec attd 1` -- executes command(attd) with args(1) on "res"
+
+Suppose the tutor then wants to send an email to the aforementioned group of students. They can do that with a simple command: `mark m/res exec email [emailText]`
+
+==== Sub-commands
+* `find [name|tag]` -- marks Persons matched by find command
+* `join m1 m2` -- returns union of m1 and m2
+* `and m1 m2` -- returns intersection of m1 and m2
+* `show` -- shows marked Persons in GUI
+
+==== Planned Sub-commands (1.4)
+* `tag [tagName]` -- tags marked Persons with tagName
+* `attd [0|1]` -- marks attendance of marked Persons
+* `email [emailText]` -- sends email to marked Persons
+
+==== Interface
+Commands can implement an interface `IMarkExecutable` with the following method
+
+* `executeMark(Mark m, String[] args)`
+
+Marks are stored under `ModelManager`, which stores a HashMap of Marks and is responsible for managing them (read/write).
 
 // end::markfeature[]
 
