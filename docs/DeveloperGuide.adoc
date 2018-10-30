@@ -250,7 +250,7 @@ The email command itself takes a few parameters:
 * `Subject`: Subject of email to be sent, valid if not an empty string.(`s/`)
 * `Body`: Subject of email to be sent, valid if not an empty string.(`b/`)
 
-e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Isthere a problem?`
+e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
 When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook. 
 
