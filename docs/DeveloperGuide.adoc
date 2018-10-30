@@ -205,13 +205,9 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores the Calendar data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
-
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:ModelClassBetterOopDiagram.png[width="800"]
 
 [[Design-Storage]]
 === Storage component
@@ -225,6 +221,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Calendar data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -302,6 +299,11 @@ The diagram below shows how the EventsCenter reacts to the CalendarChangedEvent,
 
 .Component interactions for `delete EVENT` command (part 2)
 image::EventStorageSequenceDiagram.png[width="800"]
+
+The diagram below shows how the schedule command is parsed in the Logic component. Here again, `EVENT` is the event as specified by the input parameters.
+
+.Logic diagram for `schedule EVENT` command
+image::ScheduleEventSdForLogic.png[width="800"]
 
 ==== Design Considerations
 
