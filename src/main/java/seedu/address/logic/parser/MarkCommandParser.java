@@ -47,7 +47,6 @@ public class MarkCommandParser implements Parser<MarkCommand> {
         String alias2;
         String alias3 = DEFAULT_NAME;
 
-        // [alias1] todo: make this unaliased
         if (StringUtil.isPrefixedArg(splitArgs.get(0), PREFIX_MARK)) {
             alias1 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
             splitArgs.remove(0);
@@ -77,9 +76,9 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             if (splitArgs.size() == 0) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
             }
-            alias2 = splitArgs.get(0);
+            alias2 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
             if (splitArgs.size() == 2) {
-                alias3 = splitArgs.get(1);
+                alias3 = StringUtil.extractArgument(splitArgs.get(1), PREFIX_MARK);
             }
             return new MarkJoinCommand(alias1, alias2, alias3);
         case MarkSubCommands.AND:
@@ -88,9 +87,9 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             if (splitArgs.size() == 0) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
             }
-            alias2 = splitArgs.get(0);
+            alias2 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
             if (splitArgs.size() == 2) {
-                alias3 = splitArgs.get(1);
+                alias3 = StringUtil.extractArgument(splitArgs.get(1), PREFIX_MARK);
             }
             return new MarkAndCommand(alias1, alias2, alias3);
         default:
