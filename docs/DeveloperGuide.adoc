@@ -247,16 +247,20 @@ The email feature is faciliated by Outlook Mail API, since most NUS teaching ass
 
 The email command itself takes a few parameters:
 
-e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
+* `Index`: Index number of student in list. Only positive numbers present in list are valid. (`i/`)
+* `Subject`: Subject of email to be sent, valid if not an empty string. (`s/`)
+* `Body`: Subject of email to be sent, valid if not an empty string. (`b/`) 
 
-When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified (`i/`) and the subject (`s/`) and body (`b/`) of the email specified. This is converted to JSON, and passed as the `body` of the `POST` request to Outlook. 
+e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Isthere a problem?`
+
+When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the `POST` request to Outlook. 
 
 The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the person whose index is specified.
 
 .Component interactions for email command
 image::EmailCommand Sequence Diagram.png[width="800"]
 
-In the `POST` request, a access token is required in order to be able to communicate to the web server, which is `Outlook` in this case. To get this access token from Outlook, a authorization code must be used, which is also provided when applicatoin is registered and authorized under Outlook.
+In the `POST` request, a access token is required in order to be able to communicate to the web server, which is `Outlook` in this case. To get this access token from Outlook, a authorization code must be used, which is also provided when applicatoin is registered and authorized under Outlook. Only with this access token, can the email that is created be sent to Outlook as a 'POST' request.
 
 image::UML REST API.png[width="400"]
 
