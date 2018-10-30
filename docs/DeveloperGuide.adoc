@@ -246,9 +246,9 @@ This section describes some noteworthy details on how certain features are imple
 The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. This API is a RESTful API, made for server-client communication. Since the Outlook mail API is a RESTful API, this feature uses the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message) to send the email specified in the user-input to the student specified in the user-input.
 The email command itself takes a few parameters:
 
-* `Index`: Index number of student in list. Only positive numbers present in list are valid. (`i/`)
-* `Subject`: Subject of email to be sent, valid if not an empty string. (`s/`)
-* `Body`: Subject of email to be sent, valid if not an empty string. (`b/`)
+* `Index`: Index number of student in list. Only positive numbers present in list are valid.(`i/`)
+* `Subject`: Subject of email to be sent, valid if not an empty string.(`s/`)
+* `Body`: Subject of email to be sent, valid if not an empty string.(`b/`)
 
 e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Isthere a problem?`
 
@@ -260,6 +260,8 @@ The `CommandResult` object that is returned by the email command lets the user k
 image::EmailCommand Sequence Diagram.png[width="800"]
 
 In the 'POST' request, a access token is required in order to be able to communicate to the web server, which is `Outlook` in this case. To get this access token from Outlook, a authorization code must be used, which is also provided when applicatoin is registered and authorized under Outlook. Only with this access token, can the email that is created be sent to Outlook as a 'POST' request.
+
+.App interactions with Outlook for email command
 image::UML REST API.png[width="400"]
 
 ==== Alternative implementations:
