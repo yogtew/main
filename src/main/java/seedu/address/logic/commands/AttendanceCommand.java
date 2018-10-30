@@ -1,15 +1,12 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_WIP_COMMAND;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.mark.IMarkExecutable;
 import seedu.address.model.Model;
-import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Attendance;
 
 /**

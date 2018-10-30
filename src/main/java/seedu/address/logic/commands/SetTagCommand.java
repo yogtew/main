@@ -14,6 +14,9 @@ import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
+/**
+ * Command that adds tags to marked Persons
+ */
 public class SetTagCommand extends Command implements IMarkExecutable {
 
     public static final String COMMAND_WORD = "tag";
@@ -51,8 +54,8 @@ public class SetTagCommand extends Command implements IMarkExecutable {
         List<Person> updatedList = m.getList().stream().map(p -> {
             Set<Tag> updatedTags = new HashSet<>(p.getTags());
             updatedTags.addAll(tags);
-            Person newPerson =  new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(), updatedTags);
-            model.updatePerson(p,newPerson);
+            Person newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(), updatedTags);
+            model.updatePerson(p, newPerson);
             return newPerson;
         }).collect(Collectors.toList());
         model.setMark(m.getName(), new Mark(updatedList, m.getName()));
