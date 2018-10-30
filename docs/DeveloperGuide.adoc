@@ -347,6 +347,42 @@ is distinct.
 ** Pros: Will not interfere greatly with the implementation of the addressbook itself
 ** Cons: Will be detached from the original architecture
 
+// tag::attendance[]
+=== Attendance feature
+==== Current Implementation
+
+The attendance command is a completely new feature that allows the user to mark the attendance of students
+within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
+storage of the other commands. To facilitate this command, a new data type is introduced: the Attendance class.
+The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class
+uses another class called the AttendanceEnum class. This AttendanceEnum class is used to declare the Attendance Enums:
+PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class. The attendance class has an overloaded
+constructor which takes in different parameters.
+
+Field of first constructor:
+* Attendance: takes in an AttendanceEnum, can be PRESENT, ABSENT or UNDEFINED
+
+Field of second constructor:
+* Attendance: takes in a String attendance, where absent/0 is changed to ABSENT enum, present/1 to PRESENT enum and an empty string is changed to UNDEFINED enum
+
+Currently, the main operation is the `attendance` command, and it is implemented as such:
+
+* `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
+
+Currently, this operation exists within the logic component of ConTAct.
+
+Below is an example of how the attendance command behaves:
+
+`attendance 1 at/present`
+
+This will simply specify the attendance field of the Person with the specified attendance and store it similar to how the addressbook stores a person.
+Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
+
+The sequence diagram below shows how the components interact for the scenario where the user issues the attendance command.
+
+.Component interactions for `attendance` command
+image::attendance_diagram.png[width="800"]
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
