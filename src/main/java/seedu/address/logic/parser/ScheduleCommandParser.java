@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TIMES_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
@@ -44,6 +45,10 @@ public class ScheduleCommandParser implements Parser<ScheduleCommand> {
         EndTime end = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_END).get());
         Description description = ParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
 
+        // If the start time is later than the end time
+        if (start.startTime.compareTo(end.endTime) > 0) {
+            throw new ParseException(MESSAGE_INVALID_TIMES_FORMAT);
+        }
         Event event = new Event(eventName, date, start, end, description);
 
         return new ScheduleCommand(event);

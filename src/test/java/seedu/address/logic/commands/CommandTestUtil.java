@@ -103,6 +103,10 @@ public class CommandTestUtil {
     public static final String INVALID_END_TIME_DESC = " " + PREFIX_END + "25:00";
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION;
 
+    public static final String INVALID_START_AND_END_DESC =
+            " " + PREFIX_START + VALID_END_TIME_TUTORIAL
+            + " " + PREFIX_END + VALID_START_TIME_TUTORIAL;
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 

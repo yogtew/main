@@ -44,6 +44,7 @@ public class UniqueEventList implements Iterable<Event> {
             throw new DuplicateEventException();
         }
         internalList.add(toAdd);
+        internalList.sort(Event.COMPARATOR);
     }
 
     /**
