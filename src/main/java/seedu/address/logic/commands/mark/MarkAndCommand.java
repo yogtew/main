@@ -8,7 +8,7 @@ import seedu.address.model.mark.Mark;
 /**
  * Mark "and" subcommand
  */
-public class MarkAndCommand extends MarkSubCommand {
+public class MarkAndCommand extends MarkCommand {
     private static final String MESSAGE_SUCCESS = "Successfully marked %d people in both %s and %s";
     private final String alias1;
     private final String alias2;

@@ -27,9 +27,8 @@ public class BodyTest {
 
         //invalid body
         assertFalse(Body.isValidBody("")); //empty string
-        //assertFalse(Body.isValidBody(" ")); //spaces only
-        assertFalse(Body.isValidBody("^")); //only non-alphanumeric characters
-        assertFalse(Body.isValidBody("peter*")); // contains non-alphanumeric characters
+        assertFalse(Body.isValidBody(" ")); //spaces only
+
 
         //valid body
         assertTrue(Body.isValidBody("peter jack")); // alphabets only
@@ -37,6 +36,8 @@ public class BodyTest {
         assertTrue(Body.isValidBody("peter the 2nd")); // alphanumeric characters
         assertTrue(Body.isValidBody("Capital Tan")); // with capital letters
         assertTrue(Body.isValidBody("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Body.isValidBody("^")); // non-alphanumeric characters
+        assertTrue(Body.isValidBody("peter*")); // contains non-alphanumeric characters
 
 
     }

@@ -205,13 +205,9 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores the Calendar data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
-
-[NOTE]
-As a more OOP model, we can store a `Tag` list in `Address Book`, which `Person` can reference. This would allow `Address Book` to only require one `Tag` object per unique `Tag`, instead of each `Person` needing their own `Tag` object. An example of how such a model may look like is given below. +
- +
-image:ModelClassBetterOopDiagram.png[width="800"]
 
 [[Design-Storage]]
 === Storage component
@@ -225,6 +221,7 @@ The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
+* can save the Calendar data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -239,23 +236,30 @@ This section describes some noteworthy details on how certain features are imple
 === Email feature
 ==== Current implementation - Emailing a single student
 
-The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. The Outlook mail interface appears in the browserpanel, and is activated when the email command is typed, instead of when a personcard is clicked. The email command itself takes in an index as a parameter (e.g email 2), and fetches the email address of the student at that index. It then opens up the Outlook UI, with the email address of the student in the 'to:' section. The CommandResult object that is returned by the email command lets the user know if the email address has been successfully added to the the 'to:' field. The email subject and content is also entered throuhg the CLI.
+The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. This API is a RESTful API, made for server-client communication. Since the Outlook mail API is a RESTful API, this feature uses the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message) to send the email specified in the user-input to the student specified in the user-input.
+The email command itself takes a few parameters:
 
-==== Using Outlook's Mail API
+* `Index`: Index number of student in list. Only positive numbers present in list are valid.(`i/`)
+* `Subject`: Subject of email to be sent, valid if not an empty string.(`s/`)
+* `Body`: Subject of email to be sent, valid if not an empty string.(`b/`)
 
-This API is a RESTful API, made for server-client communication.
+e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-image::REST api.png[width="800"]
+When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
 
-Using the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message), the users email content/subject is converted to JSON format and forms the body of the email.
+The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the person whose index is specified.
 
-==== Future features/implementations - Emailing an entire class/group
+.Component interactions for email command
+image::EmailCommand Sequence Diagram.png[width="800"]
 
-Use the 'select' feature to select an entire class, based on the tag that each student has of which class they are in. After selecting, the email command would extract all of their emails and open up the Outlook UI, with the email addressess of the students in the 'to:' section. (e.g 'select tutgroup4', 'email')
+In the 'POST' request, a access token is required in order to be able to communicate to the web server, which is `Outlook` in this case. To get this access token from Outlook, a authorization code must be used, which is also provided when applicatoin is registered and authorized under Outlook. Only with this access token, can the email that is created be sent to Outlook as a 'POST' request.
+
+.App interactions with Outlook for email command
+image::UML REST API.png[width="400"]
 
 ==== Alternative implementations:
 
-Since the outlook mail API is being used, the only alternatives in implementation come about in the extracting of emails from the person object, and the shifting of the user input for the subject/content from the CLI to appear in the empty 'compose mail' box.
+Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
 
 //tag::schedule[]
 === Schedule feature
@@ -302,6 +306,11 @@ The diagram below shows how the EventsCenter reacts to the CalendarChangedEvent,
 
 .Component interactions for `delete EVENT` command (part 2)
 image::EventStorageSequenceDiagram.png[width="800"]
+
+The diagram below shows how the schedule command is parsed in the Logic component. Here again, `EVENT` is the event as specified by the input parameters.
+
+.Logic diagram for `schedule EVENT` command
+image::ScheduleEventSdForLogic.png[width="800"]
 
 ==== Design Considerations
 
@@ -465,22 +474,43 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::markfeature[]
 === Mark feature
-==== Planned Implementation
-The mark feature will be implemented as a utility class `Mark`. It will store a series of lists of `Person`, accessible by name and/or index. The user will be able to run batch commands on marked targets.
+==== Implementation
+The mark feature will be implemented as a utility class `Mark`. It will store a list of `Person`. The user will be able to run batch commands on marked targets.
 
-==== Constructors:
-* `Mark(List<Person> inputList, [String listName])` -- marks the Persons in inputList under listName
-* `Mark(Tag tag, [String listName])` -- marks the Persons that match the tag under listName
-* `Mark(Predicate<Person> predicate, [String listName])` -- marks all Persons that match the supplied predicate under listName
-==== Methods:
-* `Mark#getList([String listName])` -- returns a list of Persons marked under listName
-* `Mark#union(Mark)` -- returns a new Mark that contains the union of the two Marks
-* `Mark#intersect(Mark)` -- returns a new Mark that contains the intersection of the two Marks
-* `Mark#execute(Consumer<Person>)` -- applies the Consumer function on all Persons in the Mark (how to resolve multiple CommandResult)?
+The feature is exposed as a command with the following patterns:
 
-The Marks will be managed by `MarkManager`, which stores the named Marks and is responsible for managing them and calling methods from functions.
-==== Design Considerations
-The mark feature needs to be versatile yet robust.
+* `mark [m1] subcommand [m2] [m3]` -- for mark subcommands
+* `mark [m1] exec commandname [args]` -- for commands implementing IMarkExecutable
+
+The command is parsed under `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed. It is designed in this way to be easily extensible in the future.
+
+==== Use Case:
+Suppose a tutor wants to mark the attendance of all students from tutorial groups W13-3 and W13-4. Instead of manually typing `attendance index attd/1` manually for all the students, the tutor can use the mark feature:
+
+. `mark m/a find t/W13-3` -- marks Persons with tag "W13-3" under alias "a"
+. `mark m/b find t/W13-4` -- marks Persons with tag "W13-4" under alias "b"
+. `mark m/res join m/a m/b` -- joins marks a and b and puts result under "res"
+. `mark m/res exec attd 1` -- executes command(attd) with args(1) on "res"
+
+Suppose the tutor then wants to send an email to the aforementioned group of students. They can do that with a simple command: `mark m/res exec email [emailText]`
+
+==== Sub-commands
+* `find [name|tag]` -- marks Persons matched by find command
+* `join m1 m2` -- returns union of m1 and m2
+* `and m1 m2` -- returns intersection of m1 and m2
+* `show` -- shows marked Persons in GUI
+
+==== Planned Sub-commands (1.4)
+* `tag [tagName]` -- tags marked Persons with tagName
+* `attd [0|1]` -- marks attendance of marked Persons
+* `email [emailText]` -- sends email to marked Persons
+
+==== Interface
+Commands can implement an interface `IMarkExecutable` with the following method
+
+* `executeMark(Mark m, String[] args)`
+
+Marks are stored under `ModelManager`, which stores a HashMap of Marks and is responsible for managing them (read/write).
 
 // end::markfeature[]
 

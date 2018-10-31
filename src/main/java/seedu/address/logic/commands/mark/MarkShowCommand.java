@@ -10,7 +10,7 @@ import seedu.address.model.mark.Mark;
 /**
  * Mark "show" subcommand
  */
-public class MarkShowCommand extends MarkSubCommand {
+public class MarkShowCommand extends MarkCommand {
     private static final String MESSAGE_SUCCESS = "Listed %d marked Persons in %s";
 
     public MarkShowCommand(String alias1) {

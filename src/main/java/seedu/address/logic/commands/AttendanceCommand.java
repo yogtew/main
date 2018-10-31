@@ -1,21 +1,18 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.commons.core.Messages.MESSAGE_WIP_COMMAND;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.mark.IMarkExecutable;
 import seedu.address.model.Model;
-import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Attendance;
 
 /**
  * UPDATES ATTENDANCE OF A STUDENT IN THE ADDRESS BOOK.
  */
-public class AttendanceCommand extends Command implements IMarkExecutable {
+public class AttendanceCommand extends Command {
 
     public static final String COMMAND_WORD = "attendance";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the attendance of a student. "
@@ -45,17 +42,6 @@ public class AttendanceCommand extends Command implements IMarkExecutable {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         throw new CommandException(String.format(MESSAGE_ARGUMENTS, index.getOneBased(), attendance));
-    }
-
-    /**
-     * Batch attendance updating using Marks
-     * @param mark mark containing Persons to apply command on
-     * @return result of executing commands
-     */
-    public CommandResult executeMark(Mark mark) {
-        // example
-        // mark.getList().forEach(markAttendance);
-        return new CommandResult(MESSAGE_WIP_COMMAND);
     }
 
     @Override

@@ -19,6 +19,7 @@ public class EmailDraft {
         this.index = index;
         this.subject = subject;
         this.body = body;
+
     }
 
     public Index getIndex() {
@@ -32,6 +33,7 @@ public class EmailDraft {
     public Subject getSubject() {
         return subject;
     }
+
 
     @Override
     public boolean equals(Object other) {
@@ -47,5 +49,9 @@ public class EmailDraft {
         return otherEmailDraft.getBody().equals(getBody())
                 && otherEmailDraft.getSubject().equals(getSubject())
                 && otherEmailDraft.getIndex().equals(getIndex());
+    }
+
+    public String toString(Object object) {
+        return object.toString();
     }
 }

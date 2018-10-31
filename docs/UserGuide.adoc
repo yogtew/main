@@ -145,17 +145,17 @@ Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00p
 === Emailing students: `email`
 
 Allows the user to email a specified student. +
-Format: `email INDEX`
+Format: `email i/INDEX s/SUBJECT b/BODY`
 
 ****
-* The content of the email is specified only after the command is called
-* The user can specify only one student
+* The subject of the email is specified after the s/ and the body after the b/.
+* The user can specify only one student index, after the 'i/'.
 ****
 
 Examples:
 
-* `email 2` +
-Gathers the email address of the student with index 2 for emailing.
+* `email i/2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
+Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
 
 === Locating persons by name: `find`
 
@@ -297,6 +297,30 @@ There is no need to save manually.
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
+
+// tag::mark[]
+=== Mark
+Format: `mark [m/m1] <subCommand> [m/m2] [m/m3]`
+
+List of subcommands
+
+* `find [name|t/tag]` - finds persons matching criteria and mark under _m1_
+* `join m/m2 m/m3` - sets m1 to be the *union* of _m2_ and _m3_
+* `and m/m2 m/m3` -- sets m1 to be the *intersection* of _m2_ and _m3_
+* `show` -- displays persons from _m1_ in the GUI
+
+Notes:
+
+* _m1_ defaults to "default" if omitted
+
+Examples:
+
+* `mark find t/friends` -- marks persons with tag _friends_ under _default_
+* `mark m/abc find t/colleagues` -- marks persons with tag _colleagues_ under _abc_
+* `mark join m/a m/b` -- marks people in either _a_ or _b_ under _default_ (union a, b)
+* `mark and m/a m/b` -- marks people in both _a_ and _b_ under _default_ (intersection a, b)
+* `mark m/test show` -- shows people marked under _test_ in the GUI
+// end::mark[]
 
 == FAQ
 
