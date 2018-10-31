@@ -76,12 +76,4 @@ public class Mark {
     public String getName() {
         return name;
     }
-
-    public Set<Person> getSet() {
-        return set;
-    }
-
-    public boolean contains(Person oldPerson) {
-        return set.contains(oldPerson);
-    }
 }
