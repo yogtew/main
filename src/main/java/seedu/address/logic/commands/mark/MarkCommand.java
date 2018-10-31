@@ -1,4 +1,4 @@
-package seedu.address.logic.commands;
+package seedu.address.logic.commands.mark;
 
 import static java.util.Objects.requireNonNull;
 
@@ -8,6 +8,8 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
@@ -18,7 +20,17 @@ import seedu.address.model.person.Person;
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": WIP";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " [m/m1] [show|join|find|and] [m/m2] [m/m3]";
+    public static final String SHOW = "show";
+    public static final String FIND = "find";
+    public static final String JOIN = "join";
+    public static final String AND = "and";
+    public static final String EXEC = "exec";
+    public static final String SET_TAG = "tag";
+
+    protected String alias1;
+    protected String alias2;
+    protected String alias3;
 
     private Predicate<Person> predicate;
 
@@ -31,6 +43,7 @@ public class MarkCommand extends Command {
 
     public MarkCommand() {
         predicate = person -> true;
+
     }
 
     @Override

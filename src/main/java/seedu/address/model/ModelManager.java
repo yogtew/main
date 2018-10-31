@@ -238,7 +238,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public Mark getMark(String markName) {
-        return marks.get(markName);
+        return marks.getOrDefault(markName, Mark.EMPTY);
     }
 
     public void setMark(String markName, Mark mark) {

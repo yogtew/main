@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_TIMES_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_CONSULTATION;
 import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_CONSULTATION;
@@ -13,6 +14,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DESCRIPTION_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_EVENT_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_AND_END_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
@@ -203,5 +205,15 @@ public class ScheduleCommandParserTest {
                 PREAMBLE_NON_EMPTY + EVENT_NAME_DESC_CONSULTATION + DATE_DESC_CONSULTATION
                         + START_TIME_DESC_CONSULTATION + END_TIME_DESC_CONSULTATION + DESCRIPTION_DESC_CONSULTATION,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidStartEndTimes_failure() {
+        // start time after the end time
+        assertParseFailure(parser,
+                EVENT_NAME_DESC_TUTORIAL
+                + DATE_DESC_TUTORIAL
+                + INVALID_START_AND_END_DESC
+                + DESCRIPTION_DESC_TUTORIAL, MESSAGE_INVALID_TIMES_FORMAT);
     }
 }

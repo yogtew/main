@@ -17,6 +17,7 @@ import seedu.address.model.event.EndTime;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.StartTime;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Attendance;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -85,6 +86,20 @@ public class ParserUtil {
             throw new ParseException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         return new Address(trimmedAddress);
+    }
+
+    /**
+     * Parses a {@code String attendance} into a {@code Attendance}.
+     *
+     * @throws ParseException if given {@code attendance} is invalid
+     */
+    public static Attendance parseAttendance(String attendance) throws ParseException {
+        requireNonNull(attendance);
+        String trimmedAttendance = attendance.trim();
+        if (!Attendance.isValidAttendance(trimmedAttendance)) {
+            throw new ParseException(Attendance.MESSAGE_ATTENDANCE_CONSTRAINTS);
+        }
+        return new Attendance(trimmedAttendance);
     }
 
     /**

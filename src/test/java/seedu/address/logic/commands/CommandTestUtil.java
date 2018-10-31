@@ -44,8 +44,8 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
-    public static final String VALID_ATTENDANCE_AMY = "present";
-    public static final String VALID_ATTENDANCE_BOB = "absent";
+    public static final String VALID_ATTENDANCE_AMY = "0";
+    public static final String VALID_ATTENDANCE_BOB = "0";
     public static final String VALID_SUBJECT_EMAIL = "Subject";
     public static final String VALID_BODY_EMAIL = "Body";
     public static final String VALID_INDEX_AMY = "1";
@@ -102,6 +102,10 @@ public class CommandTestUtil {
     public static final String INVALID_START_TIME_DESC = " " + PREFIX_START + "1000";
     public static final String INVALID_END_TIME_DESC = " " + PREFIX_END + "25:00";
     public static final String INVALID_DESCRIPTION_DESC = " " + PREFIX_DESCRIPTION;
+
+    public static final String INVALID_START_AND_END_DESC =
+            " " + PREFIX_START + VALID_END_TIME_TUTORIAL
+            + " " + PREFIX_END + VALID_START_TIME_TUTORIAL;
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
