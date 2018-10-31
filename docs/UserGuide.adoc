@@ -300,13 +300,44 @@ _{explain how the user can enable/disable data encryption}_
 
 // tag::mark[]
 === Mark
-Format: `mark [m/m1] <subCommand> [m/m2] [m/m3]`
+A Mark represents a group of Persons in the app. Some commands accept Marks as an alternative to INDEX as a parameter to quickly perform batch operations.
 
-List of subcommands
+==== Mark Creation
+Format: `mark find t/TAGNAME` or `mark find KEYWORD`
 
-* `find [name|t/tag]` - finds persons matching criteria and mark under _m1_
-* `join m/m2 m/m3` - sets m1 to be the *union* of _m2_ and _m3_
-* `and m/m2 m/m3` -- sets m1 to be the *intersection* of _m2_ and _m3_
+This creates a Mark containing the Persons returned by the find command with the supplied arguments.
+
+E.g. `mark find t/friends` will find all Persons in the Address Book tagged with "friends" and add them to a Mark.
+
+==== Named Marks
+Marks can be named by using the prefix `m/MARKNAME`. If not specified, the name of the created Mark will default to "m/default".
+
+E.g. `mark m/myMarkName t/friends` will add the Persons tagged with "friends" to a Mark called "myMarkName"
+
+Note: Mark names must be alphanumeric and do not contain spaces.
+
+==== Manipulating Marks
+Marks are able to be manipulated in the same way as sets, namely, they support the following operations: `union (join)`, `intersection (and)`, `complement (NYI)`
+
+Format: `mark [m/DEST_MARK] <operation> m/OPERANDMARK1 [m/OPERANDMARK2]`
+
+E.g. `mark m/students join m/tut1 m/tut2` m/students will contain the Persons of m/tut1 and m/tut2 merged together
+
+E.g. `mark m/canRetake and m/absentFromTest m/validReason` -- m/canRetake will contain Persons that are in both m/absentFromTest and m/validReason
+
+Note: The first operand is compulsory while the second operand is optional and will default to "m/default"
+
+==== Displaying Marks
+The Persons in a Mark can be shown in the GUI wit the following command:
+
+`mark [m/MARKTOBESHOWN] show`
+
+==== Reference
+`mark [m/m1] ...`
+
+* `find [name|t/tag]` -- finds persons matching criteria and mark under _m1_
+* `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
+* `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
 * `show` -- displays persons from _m1_ in the GUI
 
 Notes:
@@ -315,11 +346,11 @@ Notes:
 
 Examples:
 
-* `mark find t/friends` -- marks persons with tag _friends_ under _default_
-* `mark m/abc find t/colleagues` -- marks persons with tag _colleagues_ under _abc_
-* `mark join m/a m/b` -- marks people in either _a_ or _b_ under _default_ (union a, b)
-* `mark and m/a m/b` -- marks people in both _a_ and _b_ under _default_ (intersection a, b)
-* `mark m/test show` -- shows people marked under _test_ in the GUI
+* `mark find t/friends` -- adds all people with tag _t/friends_ under _m/default_
+* `mark m/abc find t/colleagues` -- marks all people with tag _t/colleagues_ under _m/abc_
+* `mark join m/a m/b` -- marks people in either _m/a_ or _m/b_ under _m/default_ (union of a and b)
+* `mark and m/a m/b` -- marks people in both _m/a_ and _m/b_ under _m/default_ (intersection of a and b)
+* `mark m/test show` -- shows people marked under _m/test_ in the GUI
 // end::mark[]
 
 == FAQ
