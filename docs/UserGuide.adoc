@@ -157,7 +157,7 @@ Examples:
 * `email i/2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
 Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
 
-=== Locating persons by name: `find`
+=== Locating persons by name/tag: `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -170,12 +170,25 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
+Finds persons tagged with specified tag. +
+Format: `find t/TAG [MORE_TAGS]`
+
+****
+* Tags are case sensitive
+* The order of the tags does not matter
+* Persons matching at least one tag will be returned (i.e. `OR` search)
+****
+
 Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find t/students` +
+Returns people tagged with `t/students`
+* `find t/students t/colleagues` +
+Returns people tagged with `t/students` or `t/colleagues`
 
 === Deleting a person : `delete`
 
