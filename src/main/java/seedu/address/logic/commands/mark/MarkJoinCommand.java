@@ -10,7 +10,7 @@ import seedu.address.model.mark.Mark;
  * mark [alias1] join {alias2} [alias3]
  */
 public class MarkJoinCommand extends MarkCommand {
-    private static final String MESSAGE_SUCCESS = "Successfully marked %d people in either %s or %s";
+    private static final String MESSAGE_SUCCESS = "Successfully added %d people in either %s or %s to %s";
     private final String alias2;
     private final String alias3;
 
@@ -24,6 +24,6 @@ public class MarkJoinCommand extends MarkCommand {
     public CommandResult execute(Model model, CommandHistory history) {
         Mark mark1 = model.getMark(alias2);
         model.setMark(alias1, mark1.join(model.getMark(alias3)));
-        return new CommandResult(String.format(MESSAGE_SUCCESS, mark1.getList().size(), alias2, alias3));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, mark1.getList().size(), alias2, alias3, alias1));
     }
 }
