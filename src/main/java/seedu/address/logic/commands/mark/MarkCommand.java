@@ -1,6 +1,7 @@
 package seedu.address.logic.commands.mark;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +21,16 @@ import seedu.address.model.person.Person;
 public class MarkCommand extends Command {
 
     public static final String COMMAND_WORD = "mark";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " [m/m1] [show|join|find|and] [m/m2] [m/m3]";
     public static final String SHOW = "show";
     public static final String FIND = "find";
     public static final String JOIN = "join";
     public static final String AND = "and";
-    public static final String EXEC = "exec";
-    public static final String SET_TAG = "tag";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a Mark." +
+            "Parameters: " +
+            "[" + PREFIX_MARK + "MARK1] " +
+            "[" + SHOW + "|" + FIND + "|" + JOIN + "|" + AND + "] " +
+            "[" + PREFIX_MARK + "MARK2] " +
+            "[" + PREFIX_MARK + "MARK3]";
 
     protected String alias1;
     protected String alias2;
