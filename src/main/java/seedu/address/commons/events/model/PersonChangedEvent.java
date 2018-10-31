@@ -16,6 +16,9 @@ public class PersonChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "person changed: " + oldPerson.toString() + " -> " + newPerson.toString();
+        if (newPerson != null) {
+            return "person changed: " + oldPerson.toString() + " -> " + newPerson.toString();
+        }
+        return "person deleted: " + oldPerson.toString();
     }
 }
