@@ -41,7 +41,8 @@ public class AttendanceCommandTest {
 
         String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new Calendar(), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
         expectedModel.commitAddressBook();
 
@@ -58,7 +59,8 @@ public class AttendanceCommandTest {
 
         String expectedMessage = String.format(AttendanceCommand.MESSAGE_REMOVE_ATTENDANCE_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new Calendar(), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
         expectedModel.commitAddressBook();
 
@@ -78,7 +80,8 @@ public class AttendanceCommandTest {
 
         String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedPerson);
 
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
+                new Calendar(), new UserPrefs());
         expectedModel.updatePerson(firstPerson, editedPerson);
         expectedModel.commitAddressBook();
 
@@ -88,7 +91,8 @@ public class AttendanceCommandTest {
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex, new Attendance(VALID_ATTENDANCE_BOB));
+        AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex,
+                new Attendance(VALID_ATTENDANCE_BOB));
 
         assertCommandFailure(attendanceCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -104,7 +108,8 @@ public class AttendanceCommandTest {
         // ensures that outOfBoundIndex is still in bounds of conTAct list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex, new Attendance(VALID_ATTENDANCE_BOB));
+        AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex,
+                new Attendance(VALID_ATTENDANCE_BOB));
 
         assertCommandFailure(attendanceCommand, model, commandHistory, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -114,7 +119,8 @@ public class AttendanceCommandTest {
         Person personToModify = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person modifiedPerson = new PersonBuilder(personToModify).withAttendance(ATTENDANCE_STUB).build();
 
-        AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_PERSON, new Attendance(ATTENDANCE_STUB));
+        AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_PERSON,
+                new Attendance(ATTENDANCE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new Calendar(), new UserPrefs());
         expectedModel.updatePerson(personToModify, modifiedPerson);
         expectedModel.commitAddressBook();
@@ -153,7 +159,8 @@ public class AttendanceCommandTest {
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
-        AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_PERSON, new Attendance(ATTENDANCE_STUB));
+        AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_PERSON,
+                new Attendance(ATTENDANCE_STUB));
         Model expectedModel = new ModelManager(model.getAddressBook(), new Calendar(), new UserPrefs());
 
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
