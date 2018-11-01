@@ -27,7 +27,7 @@ public class ScheduleCommand extends Command {
             + PREFIX_END + "TIME_END "
             + PREFIX_DESCRIPTION + "DESCRIPTION\n"
             + "Example: " + COMMAND_WORD + " "
-            + "CS2103 Tutorial W13 "
+            + PREFIX_EVENT_NAME + "CS2103 Tutorial W13 "
             + PREFIX_DATE + "22-3-2018 "
             + PREFIX_START + "16:00 "
             + PREFIX_END + "18:00 "
