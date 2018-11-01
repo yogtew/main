@@ -49,7 +49,7 @@ public class AttendanceCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         List<Person> lastShownList = model.getFilteredPersonList();
 
-        if(index.getZeroBased() >= lastShownList.size()) {
+        if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
@@ -69,8 +69,8 @@ public class AttendanceCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        String message = !attendance.value.toString().isEmpty() ?
-                MESSAGE_ADD_ATTENDANCE_SUCCESS : MESSAGE_REMOVE_ATTENDANCE_SUCCESS;
+        String message = !attendance.value.toString().isEmpty()
+                ? MESSAGE_ADD_ATTENDANCE_SUCCESS : MESSAGE_REMOVE_ATTENDANCE_SUCCESS;
         return String.format(message, personToEdit);
     }
 
