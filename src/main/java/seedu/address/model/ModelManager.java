@@ -4,16 +4,22 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
+import seedu.address.commons.events.model.PersonChangedEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.person.Person;
@@ -26,7 +32,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Person> filteredPersons;
-    private final HashMap<String, Mark> marks;
+    private final HashMap<String, Mark> marks = new HashMap<>();
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
@@ -42,7 +48,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
-        marks = new HashMap<>();
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
@@ -78,6 +83,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void deletePerson(Person target) {
         versionedAddressBook.removePerson(target);
         indicateAddressBookChanged();
+        indicatePersonDeleted(target);
     }
 
     @Override
@@ -93,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
+        indicatePersonUpdated(target, editedPerson);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -151,6 +158,17 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateCalendarChanged() {
         raise(new CalendarChangedEvent(versionedCalendar));
+    }
+
+
+    /** Raises an event to indicate a person has been changed */
+    private void indicatePersonDeleted(Person target) {
+        raise(new PersonChangedEvent(target, null));
+    }
+
+    /** Raises an event to indicate a person has been changed */
+    private void indicatePersonUpdated(Person target, Person newPerson) {
+        raise(new PersonChangedEvent(target, newPerson));
     }
 
 
@@ -243,5 +261,19 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void setMark(String markName, Mark mark) {
         marks.put(markName, mark);
+    }
+
+    @Subscribe
+    public void personChangedEventHandler(PersonChangedEvent event) {
+        marks.forEach((name, mark) -> {
+            Set<Person> set = new HashSet<>(mark.getSet());
+            if (set.contains(event.oldPerson)) {
+                set.remove(event.oldPerson);
+                if (event.newPerson != null) {
+                    set.add(event.newPerson);
+                }
+                setMark(name, new Mark(set, name));
+            }
+        });
     }
 }
