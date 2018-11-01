@@ -58,24 +58,6 @@ public class AttendanceCommandTest {
     }
 
     @Test
-    public void execute_deleteAttendanceUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withAttendance("").build();
-
-        AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_PERSON,
-                new Attendance(editedPerson.getAttendance().toString()));
-
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_REMOVE_ATTENDANCE_SUCCESS, editedPerson);
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new Calendar(), new UserPrefs());
-        expectedModel.updatePerson(firstPerson, editedPerson);
-        expectedModel.commitAddressBook();
-
-        assertCommandSuccess(attendanceCommand, model, commandHistory, expectedMessage, expectedModel);
-    }
-
-    @Test
     public void execute_filteredList_success() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
