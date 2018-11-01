@@ -27,27 +27,25 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
 
-    public static final Attendance EMPTY_ATTENDANCE = new Attendance(" ");
-
     public static Person[] getSamplePersons() {
         return new Person[] {
             new Person(new Name("Damith Rajapakse"), new Phone("110100110"), new Email("damith@comp.nus.edu"),
-                new Address("School of Computing"), EMPTY_ATTENDANCE,
+                new Address("School of Computing"), new Attendance("absent"),
                 getTagSet("student", "computerscience")),
             new Person(new Name("Alan Turing"), new Phone("100100110"), new Email("aturing@comp.com"),
-                new Address("School of Computing"), EMPTY_ATTENDANCE,
+                new Address("School of Computing"), new Attendance("absent"),
                 getTagSet("student", "computerscience")),
             new Person(new Name("Von Neumann"), new Phone("100100101"), new Email("neumann@comp.com"),
-                new Address("School of Computing"), EMPTY_ATTENDANCE,
+                new Address("School of Computing"), new Attendance("absent"),
                 getTagSet("student", "softwareengineering")),
             new Person(new Name("Bob Ross"), new Phone("12345678"), new Email("bobross@painting.com"),
-                new Address("Faculty of Arts and Social Sciences"), EMPTY_ATTENDANCE,
+                new Address("Faculty of Arts and Social Sciences"), new Attendance("absent"),
                 getTagSet("student", "humanities")),
             new Person(new Name("Isaac Newton"), new Phone("9810000"), new Email("isaac@phy.com"),
-                new Address("Faculty of Science"), EMPTY_ATTENDANCE,
+                new Address("Faculty of Science"), new Attendance("absent"),
                 getTagSet("student", "physics")),
             new Person(new Name("George Washington"), new Phone("04071776"), new Email("george@usa.com"),
-                new Address("Faculty of Arts and Social Sciences"), EMPTY_ATTENDANCE,
+                new Address("Faculty of Arts and Social Sciences"), new Attendance("absent"),
                 getTagSet("student", "politicalscience"))
         };
     }
