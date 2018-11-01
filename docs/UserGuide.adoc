@@ -121,10 +121,10 @@ Format: `attendance INDEX_NUMBER at/ATTENDANCE`
 
 Examples:
 
-*`attendance 1 at/present` +
+* `attendance 1 at/present` +
 Marks the attendance of the student with index number 1 as present.
 
-*`attendance 3 at/0` +
+* `attendance 3 at/0` +
 Marks the attendance of the student with index number 3 as absent.
 
 === Schedule timetables: `schedule`
