@@ -73,7 +73,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             // mark [alias1] join [alias2] [alias3]
             splitArgs.remove(0); // removes "join"
             if (splitArgs.size() == 0) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkJoinCommand.MESSAGE_USAGE));
             }
             alias2 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
             if (splitArgs.size() == 2) {
@@ -84,7 +84,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             // mark [alias1] join [alias2] [alias3]
             splitArgs.remove(0); // removes "join"
             if (splitArgs.size() == 0) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAndCommand.MESSAGE_USAGE));
             }
             alias2 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
             if (splitArgs.size() == 2) {

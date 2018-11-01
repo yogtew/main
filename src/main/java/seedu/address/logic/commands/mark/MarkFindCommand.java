@@ -13,7 +13,7 @@ import seedu.address.model.person.Person;
  * Mark "find" subcommand
  */
 public class MarkFindCommand extends MarkCommand {
-    private static final String MESSAGE_SUCCESS = "Successfully marked %d people under %s";
+    private static final String MESSAGE_SUCCESS = "Successfully added %d people to %s";
     private Predicate<Person> p;
     public MarkFindCommand(Predicate<Person> p, String alias1) {
         this.p = p;
