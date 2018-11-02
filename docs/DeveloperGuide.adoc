@@ -272,7 +272,7 @@ This Event class has it's own unique fields that the user can specify to schedul
 
 * Event Name: The name of the event, valid if it is not an empty string.
 * Date: The date of the event, valid if expressed in this forms:  `DD-MM-YYYY`.
-It must also be a date that actually falls within a calendar (i.e. dates such as 25-13-2000 are invalid).
+It must also be a date that actually falls within a calendar and between the years 1600 to 9999 (i.e. dates such as 25-13-2000 are invalid).
 * Start Time: The start time of the event, valid in this form: `HH:MM`, in 24-hour format.
 * End Time: The end time of the event, valid if it is in this form: `HH:MM`, in 24-hour format.
 The end time must also come after the start time.

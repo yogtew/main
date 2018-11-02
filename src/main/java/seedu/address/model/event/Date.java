@@ -9,10 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Date {
 
     public static final String DATE_NAME_CONSTRAINTS =
-            "Dates should only be a valid date formatted as dd/mm/yyyy, dd-mm-yyyy, or dd.mm.yyyy";
+            "Dates should only be a valid date between the years 1600 and 9999, formatted as dd-mm-yyyy";
 
     /**
-     * This regex checks if the date is valid and is formatted as dd/mm/yyy, dd-mm-yyyy, or dd.mm.yyyy
+     * This regex checks if the date is valid and is formatted as dd-mm-yyyy
      */
     public static final String DATE_VALIDATION_REGEX =
             "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(-)"
