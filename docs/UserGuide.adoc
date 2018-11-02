@@ -292,7 +292,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the address book while still maintaining the calendar. +
 Format: `clear`
 
 === Exiting the program : `exit`
