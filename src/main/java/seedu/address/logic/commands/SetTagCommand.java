@@ -11,11 +11,11 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.commands.mark.IMarkExecutable;
 import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 import seedu.address.model.tag.Tag;
 
 /**
- * Command that adds tags to marked Persons
+ * Command that adds tags to marked Students
  */
 public class SetTagCommand extends Command implements IMarkExecutable {
 
@@ -43,7 +43,7 @@ public class SetTagCommand extends Command implements IMarkExecutable {
         if (useMark) {
             return executeMark(model, history);
         }
-        EditCommand.EditPersonDescriptor descriptor = new EditCommand.EditPersonDescriptor();
+        EditCommand.EditStudentDescriptor descriptor = new EditCommand.EditStudentDescriptor();
         descriptor.setTags(tags);
         return new EditCommand(index, descriptor).execute(model, history);
     }
@@ -51,12 +51,12 @@ public class SetTagCommand extends Command implements IMarkExecutable {
     @Override
     public CommandResult executeMark(Model model, CommandHistory history) {
         Mark m = model.getMark(markName);
-        List<Person> updatedList = m.getList().stream().map(p -> {
+        List<Student> updatedList = m.getList().stream().map(p -> {
             Set<Tag> updatedTags = new HashSet<>(p.getTags());
             updatedTags.addAll(tags);
-            Person newPerson = new Person(p.getName(), p.getPhone(), p.getEmail(), p.getAddress(), updatedTags);
-            model.updatePerson(p, newPerson);
-            return newPerson;
+            Student newStudent = new Student(p.getName(), p.getStudentNumber(), p.getEmail(), p.getFaculty(), updatedTags);
+            model.updateStudent(p, newStudent);
+            return newStudent;
         }).collect(Collectors.toList());
         model.setMark(m.getName(), new Mark(updatedList, m.getName()));
         model.commitAddressBook();

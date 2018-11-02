@@ -13,7 +13,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.model.email.Body.MESSAGE_BODY_CONSTRAINTS;
 import static seedu.address.model.email.Subject.MESSAGE_SUBJECT_CONSTRAINTS;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 
 import org.junit.Test;
 
@@ -30,7 +30,7 @@ public class EmailCommandParserTest {
     public void parse_validArgs_returnsEmailCommand() {
         Subject subject = new Subject(VALID_SUBJECT_EMAIL);
         Body body = new Body(VALID_BODY_EMAIL);
-        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_PERSON, subject, body);
+        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_STUDENT, subject, body);
 
         assertParseSuccess(parser, INDEX_DESC_AMY + SUBJECT_DESC + BODY_DESC, new EmailCommand(emailDraft));
     }

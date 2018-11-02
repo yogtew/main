@@ -21,7 +21,7 @@ public class MarkShowCommand extends MarkCommand {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         Mark mark = model.getMark(alias1);
-        model.updateFilteredPersonList(mark.getPredicate());
+        model.updateFilteredStudentList(mark.getPredicate());
         return new CommandResult(String.format(MESSAGE_SUCCESS, mark.getList().size(), alias1));
     }
 }

@@ -71,7 +71,7 @@ public class OutlookRequest {
 
             String str = "{\"Message\":{\"Subject\":\""
                     + subject + "\",\"Body\":{\"ContentType\":\"Text\",\"Content\":\""
-                    + body + "\"},\"ToRecipients\":[{\"EmailAddress\":{\"Address\":\""
+                    + body + "\"},\"ToRecipients\":[{\"EmailAddress\":{\"Faculty\":\""
                     + emailAdd + "\"}}]},\"SaveToSentItems\":\"true\"}";
             byte[] outputInBytes = str.getBytes("UTF-8");
             OutputStream os = conn.getOutputStream();

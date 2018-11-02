@@ -19,10 +19,10 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
-import seedu.address.commons.events.model.PersonChangedEvent;
+import seedu.address.commons.events.model.StudentChangedEvent;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -31,7 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedAddressBook versionedAddressBook;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Student> filteredStudents;
     private final HashMap<String, Mark> marks = new HashMap<>();
 
     private final VersionedCalendar versionedCalendar;
@@ -47,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        filteredStudents = new FilteredList<>(versionedAddressBook.getStudentList());
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
@@ -74,52 +74,52 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return versionedAddressBook.hasPerson(person);
+    public boolean hasStudent(Student student) {
+        requireNonNull(student);
+        return versionedAddressBook.hasStudent(student);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        versionedAddressBook.removePerson(target);
+    public void deleteStudent(Student target) {
+        versionedAddressBook.removeStudent(target);
         indicateAddressBookChanged();
-        indicatePersonDeleted(target);
+        indicateStudentDeleted(target);
     }
 
     @Override
-    public void addPerson(Person person) {
-        versionedAddressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public void addStudent(Student student) {
+        versionedAddressBook.addStudent(student);
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void updateStudent(Student target, Student editedStudent) {
+        requireAllNonNull(target, editedStudent);
 
-        versionedAddressBook.updatePerson(target, editedPerson);
+        versionedAddressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
-        indicatePersonUpdated(target, editedPerson);
+        indicateStudentUpdated(target, editedStudent);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Student List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Student} backed by the internal list of
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Student> getFilteredStudentList() {
+        return FXCollections.unmodifiableObservableList(filteredStudents);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredStudentList(Predicate<Student> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredStudents.setPredicate(predicate);
     }
 
-    //=========== Undo/Redo Address Book =====================================================================
+    //=========== Undo/Redo Faculty Book =====================================================================
 
     @Override
     public boolean canUndoAddressBook() {
@@ -161,14 +161,14 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-    /** Raises an event to indicate a person has been changed */
-    private void indicatePersonDeleted(Person target) {
-        raise(new PersonChangedEvent(target, null));
+    /** Raises an event to indicate a student has been changed */
+    private void indicateStudentDeleted(Student target) {
+        raise(new StudentChangedEvent(target, null));
     }
 
-    /** Raises an event to indicate a person has been changed */
-    private void indicatePersonUpdated(Person target, Person newPerson) {
-        raise(new PersonChangedEvent(target, newPerson));
+    /** Raises an event to indicate a student has been changed */
+    private void indicateStudentUpdated(Student target, Student newStudent) {
+        raise(new StudentChangedEvent(target, newStudent));
     }
 
 
@@ -252,7 +252,7 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredStudents.equals(other.filteredStudents);
     }
 
     public Mark getMark(String markName) {
@@ -264,13 +264,13 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Subscribe
-    public void personChangedEventHandler(PersonChangedEvent event) {
+    public void studentChangedEventHandler(StudentChangedEvent event) {
         marks.forEach((name, mark) -> {
-            Set<Person> set = new HashSet<>(mark.getSet());
-            if (set.contains(event.oldPerson)) {
-                set.remove(event.oldPerson);
-                if (event.newPerson != null) {
-                    set.add(event.newPerson);
+            Set<Student> set = new HashSet<>(mark.getSet());
+            if (set.contains(event.oldStudent)) {
+                set.remove(event.oldStudent);
+                if (event.newStudent != null) {
+                    set.add(event.newStudent);
                 }
                 setMark(name, new Mark(set, name));
             }

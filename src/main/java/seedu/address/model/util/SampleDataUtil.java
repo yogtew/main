@@ -14,12 +14,12 @@ import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.StartTime;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Attendance;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.student.Faculty;
+import seedu.address.model.student.Attendance;
+import seedu.address.model.student.Email;
+import seedu.address.model.student.Name;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.StudentNumber;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,33 +27,33 @@ import seedu.address.model.tag.Tag;
  */
 public class SampleDataUtil {
 
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Damith Rajapakse"), new Phone("110100110"), new Email("damith@comp.nus.edu"),
-                new Address("School of Computing"), new Attendance("absent"),
+    public static Student[] getSampleStudents() {
+        return new Student[] {
+            new Student(new Name("Damith Rajapakse"), new StudentNumber("110100110"), new Email("damith@comp.nus.edu"),
+                new Faculty("School of Computing"), new Attendance("absent"),
                 getTagSet("student", "computerscience")),
-            new Person(new Name("Alan Turing"), new Phone("100100110"), new Email("aturing@comp.com"),
-                new Address("School of Computing"), new Attendance("absent"),
+            new Student(new Name("Alan Turing"), new StudentNumber("100100110"), new Email("aturing@comp.com"),
+                new Faculty("School of Computing"), new Attendance("absent"),
                 getTagSet("student", "computerscience")),
-            new Person(new Name("Von Neumann"), new Phone("100100101"), new Email("neumann@comp.com"),
-                new Address("School of Computing"), new Attendance("absent"),
+            new Student(new Name("Von Neumann"), new StudentNumber("100100101"), new Email("neumann@comp.com"),
+                new Faculty("School of Computing"), new Attendance("absent"),
                 getTagSet("student", "softwareengineering")),
-            new Person(new Name("Bob Ross"), new Phone("12345678"), new Email("bobross@painting.com"),
-                new Address("Faculty of Arts and Social Sciences"), new Attendance("absent"),
+            new Student(new Name("Bob Ross"), new StudentNumber("12345678"), new Email("bobross@painting.com"),
+                new Faculty("Faculty of Arts and Social Sciences"), new Attendance("absent"),
                 getTagSet("student", "humanities")),
-            new Person(new Name("Isaac Newton"), new Phone("9810000"), new Email("isaac@phy.com"),
-                new Address("Faculty of Science"), new Attendance("absent"),
+            new Student(new Name("Isaac Newton"), new StudentNumber("9810000"), new Email("isaac@phy.com"),
+                new Faculty("Faculty of Science"), new Attendance("absent"),
                 getTagSet("student", "physics")),
-            new Person(new Name("George Washington"), new Phone("04071776"), new Email("george@usa.com"),
-                new Address("Faculty of Arts and Social Sciences"), new Attendance("absent"),
+            new Student(new Name("George Washington"), new StudentNumber("04071776"), new Email("george@usa.com"),
+                new Faculty("Faculty of Arts and Social Sciences"), new Attendance("absent"),
                 getTagSet("student", "politicalscience"))
         };
     }
 
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
-        for (Person samplePerson : getSamplePersons()) {
-            sampleAb.addPerson(samplePerson);
+        for (Student sampleStudent : getSampleStudents()) {
+            sampleAb.addStudent(sampleStudent);
         }
         return sampleAb;
     }

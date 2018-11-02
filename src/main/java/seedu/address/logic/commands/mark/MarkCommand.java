@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
 import seedu.address.logic.commands.Command;
 
 /**
- * Marks Persons based on supplied Predicates
+ * Marks Students based on supplied Predicates
  */
 public abstract class MarkCommand extends Command {
 

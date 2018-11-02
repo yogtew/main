@@ -6,34 +6,34 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 
 /**
- * Stores a set of marked Persons.
+ * Stores a set of marked Students.
  */
 public class Mark {
     public static final String DEFAULT_NAME = "default";
     public static final Mark EMPTY = new Mark();
-    private HashSet<Person> set;
+    private HashSet<Student> set;
     private String name;
 
-    public Mark(List<Person> inputList, String markName) {
+    public Mark(List<Student> inputList, String markName) {
         set = new HashSet<>();
         set.addAll(inputList);
         name = markName;
     }
 
-    public Mark(Set<Person> set, String markName) {
+    public Mark(Set<Student> set, String markName) {
         this.set = new HashSet<>();
         this.set.addAll(set);
         name = markName;
     }
 
-    public Mark(List<Person> inputList) {
+    public Mark(List<Student> inputList) {
         this(inputList, DEFAULT_NAME);
     }
 
-    public Mark(Set<Person> set) {
+    public Mark(Set<Student> set) {
         this(set, DEFAULT_NAME);
     }
 
@@ -42,12 +42,12 @@ public class Mark {
         name = DEFAULT_NAME;
     }
 
-    public ArrayList<Person> getList() {
+    public ArrayList<Student> getList() {
         return new ArrayList<>(set);
     }
 
-    public Predicate<Person> getPredicate() {
-        return person -> set.contains(person);
+    public Predicate<Student> getPredicate() {
+        return student -> set.contains(student);
     }
 
     /**
@@ -56,7 +56,7 @@ public class Mark {
      * @return new mark containing union
      */
     public Mark join(Mark other) {
-        Set<Person> copy = new HashSet<>(set);
+        Set<Student> copy = new HashSet<>(set);
         copy.addAll(other.getList());
         return new Mark(copy);
     }
@@ -67,7 +67,7 @@ public class Mark {
      * @return new mark containing intersection
      */
     public Mark intersect(Mark other) {
-        ArrayList<Person> copy = new ArrayList<>(set);
+        ArrayList<Student> copy = new ArrayList<>(set);
         copy.retainAll(other.getList());
         return new Mark(copy);
     }
@@ -77,11 +77,11 @@ public class Mark {
         return name;
     }
 
-    public Set<Person> getSet() {
+    public Set<Student> getSet() {
         return set;
     }
 
-    public boolean contains(Person oldPerson) {
-        return set.contains(oldPerson);
+    public boolean contains(Student oldStudent) {
+        return set.contains(oldStudent);
     }
 }

@@ -49,7 +49,7 @@ This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.faculty.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -107,7 +107,7 @@ The *_Architecture Diagram_* given above explains the high-level design of the A
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/faculty/MainApp.java[`MainApp`]. It is responsible for,
 
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
@@ -161,11 +161,11 @@ The sections below give more details of each component.
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API* : link:{repoURL}/src/main/java/seedu/faculty/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/faculty/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -181,11 +181,11 @@ The `UI` component,
 image::LogicClassDiagram.png[width="800"]
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:{repoURL}/src/main/java/seedu/faculty/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a student) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
@@ -199,14 +199,14 @@ image::DeletePersonSdForLogic.png[width="800"]
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:{repoURL}/src/main/java/seedu/faculty/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * stores the Calendar data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -215,7 +215,7 @@ The `Model`,
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API* : link:{repoURL}/src/main/java/seedu/faculty/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
@@ -245,9 +245,9 @@ The email command itself takes a few parameters:
 
 e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
+When the user inputs the email in the CLI, the app fetches the email faculty of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
 
-The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the person whose index is specified.
+The `CommandResult` object that is returned by the email command lets the user know if the email faculty has been successfully send to the student whose index is specified.
 
 .Component interactions for email command
 image::EmailCommand Sequence Diagram.png[width="800"]
@@ -266,7 +266,7 @@ Including UI features to make Outlook's mail drafting screen appear in the `Brow
 ==== Current Implementation
 
 The schedule command is a completely new feature that allows the user to schedule events within ConTAct.
-It follows a similar command flow as that of the address book, but it will have it's own separate model and
+It follows a similar command flow as that of the faculty book, but it will have it's own separate model and
 .xml file for storage. Furthermore, to facilitate this command, a new data type is introduced: the Event class.
 This Event class has it's own unique fields that the user can specify to schedule an event:
 
@@ -289,7 +289,7 @@ Below is an example of how the schedule command behaves:
 
 `schedule event/Office Christmas Party date/23-12-2018 start/18:00 end/20:00 descr/Party at Scranton Branch`
 
-This will simply create an event with the specified fields and store it similar to how the addressbook stores a person.
+This will simply create an event with the specified fields and store it similar to how the addressbook stores a student.
 Furthermore, the schedule command ensures that all the fields specified must be valid for it to be a success.
 
 Once scheduled, the list of events will be sorted by chronological order (taking the date and the start time).
@@ -361,7 +361,7 @@ is distinct.
 ==== Current Implementation
 
 The attendance command is a completely new feature that allows the user to mark the attendance of students
-within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
+within ConTAct. It follows a similar command flow as that of the faculty book, and the command will uses the model and
 storage of the other commands. To facilitate this command, a new data type is introduced: the Attendance class.
 The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class
 uses another class called the AttendanceEnum class. This AttendanceEnum class is used to declare the Attendance Enums:
@@ -384,7 +384,7 @@ Below is an example of how the attendance command behaves:
 
 `attendance 1 at/present`
 
-This will simply specify the attendance field of the Person with the specified attendance and store it similar to how the addressbook stores a person.
+This will simply specify the attendance field of the Student with the specified attendance and store it similar to how the addressbook stores a student.
 Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
 
 The sequence diagram below shows how the components interact for the scenario where the user issues the attendance command.
@@ -400,50 +400,50 @@ The undo/redo mechanism is facilitated by `VersionedAddressBook`.
 It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
 Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` -- Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` -- Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` -- Restores a previously undone address book state from its history.
+* `VersionedAddressBook#commit()` -- Saves the current faculty book state in its history.
+* `VersionedAddressBook#undo()` -- Restores the previous faculty book state from its history.
+* `VersionedAddressBook#redo()` -- Restores a previously undone faculty book state from its history.
 
 These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial faculty book state, and the `currentStatePointer` pointing to that single faculty book state.
 
 image::UndoRedoStartingStateListDiagram.png[width="800"]
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th student in the faculty book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the faculty book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted faculty book state.
 
 image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
 
-Step 3. The user executes `add n/David ...` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David ...` to add a new student. The `add` command also calls `Model#commitAddressBook()`, causing another modified faculty book state to be saved into the `addressBookStateList`.
 
 image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
 
 [NOTE]
-If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+If a command fails its execution, it will not call `Model#commitAddressBook()`, so the faculty book state will not be saved into the `addressBookStateList`.
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the student was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous faculty book state, and restores the faculty book to that state.
 
 image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
 
 [NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial address book state, then there are no previous address book states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If the `currentStatePointer` is at index 0, pointing to the initial faculty book state, then there are no previous faculty book states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The `redo` command does the opposite -- it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite -- it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the faculty book to that state.
 
 [NOTE]
-If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest faculty book state, then there are no undone faculty book states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the faculty book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
 
 image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all faculty book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
 
 image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
 
@@ -455,16 +455,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire faculty book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the student being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use a list to store the history of address book states.
+* **Alternative 1 (current choice):** Use a list to store the history of faculty book states.
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
 ** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
@@ -479,7 +479,7 @@ It is designed to work well with the existing `Tag` system, and designed with co
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
 ==== Implementation
-`Mark` is a container class which stores a `Set<Person>` and exposes getter and setter methods, as well as methods for union and intersection of `Marks`.
+`Mark` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Marks`.
 
 Marks are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Mark` for commands.
 
@@ -493,15 +493,15 @@ The commands adhere to the following pattern:
 The arguments `m/m1`, `m/m2`, `m/m3` may be optional in some cases and default to `Mark.DEFAULT_NAME`
 
 ==== Sub-commands
-* `find [name|tag]` -- marks Persons matched by find command
+* `find [name|tag]` -- marks Students matched by find command
 * `join m/m2 [m/m3]` -- returns union of m2 and m3
 * `and m/m2 [m/m3]` -- returns intersection of m2 and m3
-* `show` -- shows marked Persons in GUI
+* `show` -- shows marked Students in GUI
 
 ==== Planned Sub-commands (1.4)
-* `tag [tagName]` -- tags marked Persons with tagName
-* `attd [0|1]` -- marks attendance of marked Persons
-* `email [emailText]` -- sends email to marked Persons
+* `tag [tagName]` -- tags marked Students with tagName
+* `attd [0|1]` -- marks attendance of marked Students
+* `email [emailText]` -- sends email to marked Students
 
 ==== Use Cases:
 Suppose a tutor wants to mark the attendance of all students from tutorial groups W13 and W14.
@@ -694,14 +694,14 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.faculty.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
+e.g. `seedu.faculty.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
+e.g. `seedu.faculty.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+e.g. `seedu.faculty.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
@@ -731,7 +731,7 @@ When a pull request has changes to asciidoc files, you can use https://www.netli
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link:{repoURL}/src/main/java/seedu/faculty/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
@@ -796,7 +796,7 @@ _{More to be added}_
 *MSS*
 
 1. User requests to add a student with specified details
-2. ConTAct adds the person into the system
+2. ConTAct adds the student into the system
 +
 Use case ends.
 
@@ -816,7 +816,7 @@ Use case ends.
 *MSS*
 
 1. User requests to a list of students matching an input string
-2. ConTAct shows a list of persons
+2. ConTAct shows a list of students
 +
 Use case ends.
 
@@ -836,7 +836,7 @@ Use case ends.
 *MSS*
 
 1. User requests to add a student with specified details
-2. ConTAct adds the person into the system
+2. ConTAct adds the student into the system
 +
 Use case ends.
 
@@ -1005,7 +1005,7 @@ Use case ends.
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 students without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 _{More to be added}_
@@ -1060,15 +1060,15 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a student
 
-. Deleting a person while all persons are listed
+. Deleting a student while all students are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all students using the `list` command. Multiple students in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 

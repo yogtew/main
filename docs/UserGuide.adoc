@@ -56,43 +56,43 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a student: `add`
 
-Adds a person to the address book +
+Adds a student to the faculty book +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A student can have any number of tags (including 0)
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Listing all students : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all students in the faculty book. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a student : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing student in the faculty book. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the student at the specified `INDEX`. The index refers to the index number shown in the displayed student list. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the student will be removed i.e adding of tags is not cumulative.
+* You can remove all the student's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the studentNumber number and email faculty of the 1st student to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
 === Sorting students: `sort`
 
@@ -155,11 +155,11 @@ Format: `email i/INDEX s/SUBJECT b/BODY`
 Examples:
 
 * `email i/2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
-Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
+Gathers the email faculty of the student with index 2 for emailing, and sets the subject and body respectively.
 
-=== Locating persons by name/tag: `find`
+=== Locating students by name/tag: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds students whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -167,16 +167,16 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
-Finds persons tagged with specified tag. +
+Finds students tagged with specified tag. +
 Format: `find t/TAG [MORE_TAGS]`
 
 ****
 * Tags are case sensitive
 * The order of the tags does not matter
-* Persons matching at least one tag will be returned (i.e. `OR` search)
+* Students matching at least one tag will be returned (i.e. `OR` search)
 ****
 
 Examples:
@@ -184,20 +184,20 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any student having names `Betsy`, `Tim`, or `John`
 * `find t/students` +
 Returns people tagged with `t/students`
 * `find t/students t/colleagues` +
 Returns people tagged with `t/students` or `t/colleagues`
 
-=== Deleting a person : `delete`
+=== Deleting a student : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified student from the faculty book. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the student at the specified `INDEX`.
+* The index refers to the index number shown in the displayed student list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -205,19 +205,19 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd student in the faculty book.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st student in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a student : `select`
 
-Selects the person identified by the index number used in the displayed person list. +
+Selects the student identified by the index number used in the displayed student list. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Selects the student and loads the Google search page the student at the specified `INDEX`.
+* The index refers to the index number shown in the displayed student list.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -225,10 +225,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd student in the faculty book.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st student in the results of the `find` command.
 
 === Listing entered commands : `history`
 
@@ -243,12 +243,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the faculty book to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the faculty book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -292,7 +292,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book while still maintaining the calendar. +
+Clears all entries from the faculty book while still maintaining the calendar. +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -313,19 +313,19 @@ _{explain how the user can enable/disable data encryption}_
 
 // tag::mark[]
 === Mark
-A Mark represents a group of Persons in the app. Some commands accept Marks as an alternative to INDEX as a parameter to quickly perform batch operations.
+A Mark represents a group of Students in the app. Some commands accept Marks as an alternative to INDEX as a parameter to quickly perform batch operations.
 
 ==== Mark Creation
 Format: `mark find t/TAGNAME` or `mark find KEYWORD`
 
-This creates a Mark containing the Persons returned by the find command with the supplied arguments.
+This creates a Mark containing the Students returned by the find command with the supplied arguments.
 
-E.g. `mark find t/friends` will find all Persons in the Address Book tagged with "friends" and add them to a Mark.
+E.g. `mark find t/friends` will find all students in the Address Book tagged with "friends" and add them to a Mark.
 
 ==== Named Marks
 Marks can be named by using the prefix `m/MARKNAME`. If not specified, the name of the created Mark will default to "m/default".
 
-E.g. `mark m/myMarkName t/friends` will add the Persons tagged with "friends" to a Mark called "myMarkName"
+E.g. `mark m/myMarkName t/friends` will add the Students tagged with "friends" to a Mark called "myMarkName"
 
 Note: Mark names must be alphanumeric and do not contain spaces.
 
@@ -334,24 +334,24 @@ Marks are able to be manipulated in the same way as sets, namely, they support t
 
 Format: `mark [m/DEST_MARK] <operation> m/OPERANDMARK1 [m/OPERANDMARK2]`
 
-E.g. `mark m/students join m/tut1 m/tut2` m/students will contain the Persons of m/tut1 and m/tut2 merged together
+E.g. `mark m/students join m/tut1 m/tut2` m/students will contain the Students of m/tut1 and m/tut2 merged together
 
-E.g. `mark m/canRetake and m/absentFromTest m/validReason` -- m/canRetake will contain Persons that are in both m/absentFromTest and m/validReason
+E.g. `mark m/canRetake and m/absentFromTest m/validReason` -- m/canRetake will contain Students that are in both m/absentFromTest and m/validReason
 
 Note: The first operand is compulsory while the second operand is optional and will default to "m/default"
 
 ==== Displaying Marks
-The Persons in a Mark can be shown in the GUI wit the following command:
+The Students in a Mark can be shown in the GUI wit the following command:
 
 `mark [m/MARKTOBESHOWN] show`
 
 ==== Reference
 `mark [m/m1] ...`
 
-* `find [name|t/tag]` -- finds persons matching criteria and mark under _m1_
+* `find [name|t/tag]` -- finds students matching criteria and mark under _m1_
 * `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
 * `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
-* `show` -- displays persons from _m1_ in the GUI
+* `show` -- displays students from _m1_ in the GUI
 
 Notes:
 
