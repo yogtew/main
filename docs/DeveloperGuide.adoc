@@ -474,30 +474,28 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::markfeature[]
 === Mark feature
+Marks allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
+It is designed to work well with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
+It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
+
 ==== Implementation
-The mark feature will be implemented as a utility class `Mark`. It will store a list of `Person`. The user will be able to run batch commands on marked targets.
+`Mark` is a container class which stores a `Set<Person>` and exposes getter and setter methods, as well as methods for union and intersection of `Marks`.
 
-The feature is exposed as a command with the following patterns:
+Marks are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Mark` for commands.
 
-* `mark [m1] subcommand [m2] [m3]` -- for mark subcommands
-* `mark [m1] exec commandname [args]` -- for commands implementing IMarkExecutable
+Commands relating to the creation and manipulations of Marks are parsed by `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed.
+It is designed in this way to be easily extensible in the future as more sub-commands are added.
 
-The command is parsed under `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed. It is designed in this way to be easily extensible in the future.
+The commands adhere to the following pattern:
 
-==== Use Case:
-Suppose a tutor wants to mark the attendance of all students from tutorial groups W13-3 and W13-4. Instead of manually typing `attendance index attd/1` manually for all the students, the tutor can use the mark feature:
+ mark [m/m1] <subcommand> [m/m2] [m/m3]`
 
-. `mark m/a find t/W13-3` -- marks Persons with tag "W13-3" under alias "a"
-. `mark m/b find t/W13-4` -- marks Persons with tag "W13-4" under alias "b"
-. `mark m/res join m/a m/b` -- joins marks a and b and puts result under "res"
-. `mark m/res exec attd 1` -- executes command(attd) with args(1) on "res"
-
-Suppose the tutor then wants to send an email to the aforementioned group of students. They can do that with a simple command: `mark m/res exec email [emailText]`
+The arguments `m/m1`, `m/m2`, `m/m3` may be optional in some cases and default to `Mark.DEFAULT_NAME`
 
 ==== Sub-commands
 * `find [name|tag]` -- marks Persons matched by find command
-* `join m1 m2` -- returns union of m1 and m2
-* `and m1 m2` -- returns intersection of m1 and m2
+* `join m/m2 [m/m3]` -- returns union of m2 and m3
+* `and m/m2 [m/m3]` -- returns intersection of m2 and m3
 * `show` -- shows marked Persons in GUI
 
 ==== Planned Sub-commands (1.4)
@@ -505,12 +503,35 @@ Suppose the tutor then wants to send an email to the aforementioned group of stu
 * `attd [0|1]` -- marks attendance of marked Persons
 * `email [emailText]` -- sends email to marked Persons
 
-==== Interface
-Commands can implement an interface `IMarkExecutable` with the following method
+==== Use Cases:
+Suppose a tutor wants to mark the attendance of all students from tutorial groups W13 and W14.
 
-* `executeMark(Mark m, String[] args)`
+Instead of:
 
-Marks are stored under `ModelManager`, which stores a HashMap of Marks and is responsible for managing them (read/write).
+ find t/W13
+ attendance 1 at/Present
+ attendance 2 at/Present
+ attendance 3 at/Present
+ ...
+ find t/W14
+ attendance 1 at/Present
+ attendance 2 at/Present
+ attendance 3 at/Present
+ ...
+
+The tutor can type in:
+
+ mark m/a find t/W13` // adds students tagged with "W13" to mark m/a
+ mark m/b find t/W14` // adds students tagged with "W14" to mark m/b
+ mark m/res join m/a m/b` // merges students in m/a and m/b to mark m/res
+ attendance m/res at/Present` // updates the marked students' attendance
+
+Suppose the tutor then wants to send an email to the aforementioned group of students.
+They can do that with a simple command:
+
+ email m/res b/[emailText]
+
+==== Design considerations
 
 // end::markfeature[]
 
