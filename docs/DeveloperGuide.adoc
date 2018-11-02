@@ -245,9 +245,9 @@ The email command itself takes a few parameters:
 
 e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-When the user inputs the email in the CLI, the app fetches the email faculty of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
+When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
 
-The `CommandResult` object that is returned by the email command lets the user know if the email faculty has been successfully send to the student whose index is specified.
+The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the student whose index is specified.
 
 .Component interactions for email command
 image::EmailCommand Sequence Diagram.png[width="800"]
