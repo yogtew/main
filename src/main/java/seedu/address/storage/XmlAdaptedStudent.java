@@ -48,11 +48,12 @@ public class XmlAdaptedStudent {
     /**
      * Constructs an {@code XmlAdaptedStudent} with the given student details.
      */
-    public XmlAdaptedStudent(String name, String studentNumber, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedStudent(String name, String studentNumber,
+                             String email, String faculty, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.studentNumber = studentNumber;
         this.email = email;
-        this.faculty = address;
+        this.faculty = faculty;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -94,7 +95,8 @@ public class XmlAdaptedStudent {
         final Name modelName = new Name(name);
 
         if (studentNumber == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, StudentNumber.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    StudentNumber.class.getSimpleName()));
         }
         if (!StudentNumber.isValidPhone(studentNumber)) {
             throw new IllegalValueException(StudentNumber.MESSAGE_PHONE_CONSTRAINTS);

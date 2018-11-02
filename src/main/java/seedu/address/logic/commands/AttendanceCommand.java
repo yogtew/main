@@ -53,7 +53,8 @@ public class AttendanceCommand extends Command {
         }
 
         Student studentToEdit = lastShownList.get(index.getZeroBased());
-        Student editedStudent = new Student(studentToEdit.getName(), studentToEdit.getStudentNumber(), studentToEdit.getEmail(),
+        Student editedStudent = new Student(studentToEdit.getName(),
+                studentToEdit.getStudentNumber(), studentToEdit.getEmail(),
                 studentToEdit.getFaculty(), attendance, studentToEdit.getTags());
 
         model.updateStudent(studentToEdit, editedStudent);

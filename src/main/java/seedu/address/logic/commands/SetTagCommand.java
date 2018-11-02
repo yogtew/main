@@ -54,7 +54,8 @@ public class SetTagCommand extends Command implements IMarkExecutable {
         List<Student> updatedList = m.getList().stream().map(p -> {
             Set<Tag> updatedTags = new HashSet<>(p.getTags());
             updatedTags.addAll(tags);
-            Student newStudent = new Student(p.getName(), p.getStudentNumber(), p.getEmail(), p.getFaculty(), updatedTags);
+            Student newStudent = new Student(p.getName(), p.getStudentNumber(),
+                    p.getEmail(), p.getFaculty(), updatedTags);
             model.updateStudent(p, newStudent);
             return newStudent;
         }).collect(Collectors.toList());

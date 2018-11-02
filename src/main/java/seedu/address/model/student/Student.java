@@ -42,7 +42,8 @@ public class Student {
      *
      * Overloaded Constructor
      */
-    public Student(Name name, StudentNumber studentNumber, Email email, Faculty faculty, Attendance attendance, Set<Tag> tags) {
+    public Student(Name name, StudentNumber studentNumber,
+                   Email email, Faculty faculty, Attendance attendance, Set<Tag> tags) {
         requireAllNonNull(name, studentNumber, email, faculty, attendance, tags);
         this.name = name;
         this.studentNumber = studentNumber;
@@ -91,7 +92,8 @@ public class Student {
 
         return otherStudent != null
                 && otherStudent.getName().equals(getName())
-                && (otherStudent.getStudentNumber().equals(getStudentNumber()) || otherStudent.getEmail().equals(getEmail()));
+                && (otherStudent.getStudentNumber().equals(getStudentNumber())
+                || otherStudent.getEmail().equals(getEmail()));
     }
 
     /**
