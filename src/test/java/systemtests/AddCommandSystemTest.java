@@ -105,7 +105,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         showStudentsWithName(KEYWORD_MATCHING_MEIER);
         assertCommandSuccess(IDA);
 
-        /* ------------------------ Perform add operation while a student card is selected --------------------------- */
+        /* ------------------------ Perform add operation while a student card is selected -------------------------- */
 
         /* Case: selects first card in the student list, add a student -> added, card selection remains unchanged */
         selectStudent(Index.fromOneBased(1));

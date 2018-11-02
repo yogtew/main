@@ -60,7 +60,8 @@ public class AttendanceCommandTest {
     @Test
     public void execute_filteredList_success() {
         Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
-        Student editedStudent = new StudentBuilder(model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased()))
+        Student editedStudent = new StudentBuilder(model.getFilteredStudentList()
+                .get(INDEX_FIRST_STUDENT.getZeroBased()))
                 .withAttendance(ATTENDANCE_STUB).build();
 
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
@@ -82,7 +83,8 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex,
                 new Attendance(VALID_ATTENDANCE_BOB));
 
-        assertCommandFailure(attendanceCommand, model, commandHistory, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        assertCommandFailure(attendanceCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
 
     /**
@@ -99,7 +101,8 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex,
                 new Attendance(VALID_ATTENDANCE_BOB));
 
-        assertCommandFailure(attendanceCommand, model, commandHistory, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        assertCommandFailure(attendanceCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -131,7 +134,8 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(outOfBoundIndex, new Attendance(""));
 
         // execution failed -> address book state not added into model
-        assertCommandFailure(attendanceCommand, model, commandHistory, Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
+        assertCommandFailure(attendanceCommand, model, commandHistory,
+                Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
 
         // single address book state in model -> undoCommand and redoCommand fail
         assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
