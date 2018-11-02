@@ -35,7 +35,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.attendance = new Attendance("");
+        this.attendance = new Attendance("absent");
     }
 
     /**
