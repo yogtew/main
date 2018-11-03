@@ -62,8 +62,8 @@ public class GuiTestAssert {
      * Asserts the size of the list in {@code studentListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(StudentListPanelHandle studentListPanelHandle, int size) {
-        int numberOfPeople = studentListPanelHandle.getListSize();
-        assertEquals(size, numberOfPeople);
+        int numberOfstudents = studentListPanelHandle.getListSize();
+        assertEquals(size, numberOfStudents);
     }
 
     /**

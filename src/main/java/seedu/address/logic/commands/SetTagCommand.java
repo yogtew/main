@@ -61,6 +61,6 @@ public class SetTagCommand extends Command implements IMarkExecutable {
         }).collect(Collectors.toList());
         model.setMark(m.getName(), new Mark(updatedList, m.getName()));
         model.commitAddressBook();
-        return new CommandResult(String.format("Successfully tagged %d people", updatedList.size()));
+        return new CommandResult(String.format("Successfully tagged %d students", updatedList.size()));
     }
 }

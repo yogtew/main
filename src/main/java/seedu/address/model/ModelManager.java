@@ -119,7 +119,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredStudents.setPredicate(predicate);
     }
 
-    //=========== Undo/Redo Faculty Book =====================================================================
+    //=========== Undo/Redo Address Book =====================================================================
 
     @Override
     public boolean canUndoAddressBook() {

@@ -29,7 +29,7 @@ import seedu.address.model.student.StudentNumber;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing student in the faculty book.
+ * Edits the details of an existing student in the address book.
  */
 public class EditCommand extends Command {
 
@@ -50,7 +50,7 @@ public class EditCommand extends Command {
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited Student: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the faculty book.";
+    public static final String MESSAGE_DUPLICATE_STUDENT = "This student already exists in the address book.";
 
     private final Index index;
     private final EditStudentDescriptor editStudentDescriptor;
