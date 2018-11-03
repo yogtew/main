@@ -157,28 +157,28 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure(command, Messages.MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: invalid name -> rejected */
-        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC +
-                STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY + FACULTY_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + INVALID_NAME_DESC
+                + STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY + FACULTY_DESC_AMY;
         assertCommandFailure(command, Name.MESSAGE_NAME_CONSTRAINTS);
 
         /* Case: invalid student number -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY +
-                INVALID_STUDENT_NUMBER_DESC + EMAIL_DESC_AMY + FACULTY_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                + INVALID_STUDENT_NUMBER_DESC + EMAIL_DESC_AMY + FACULTY_DESC_AMY;
         assertCommandFailure(command, StudentNumber.MESSAGE_STUDENT_NUMBER_CONSTRAINTS);
 
         /* Case: invalid email -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY +
-                STUDENT_NUMBER_DESC_AMY + INVALID_EMAIL_DESC + FACULTY_DESC_AMY;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                + STUDENT_NUMBER_DESC_AMY + INVALID_EMAIL_DESC + FACULTY_DESC_AMY;
         assertCommandFailure(command, Email.MESSAGE_EMAIL_CONSTRAINTS);
 
         /* Case: invalid address -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY +
-                STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY + INVALID_FACULTY_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                + STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY + INVALID_FACULTY_DESC;
         assertCommandFailure(command, Faculty.MESSAGE_FACULTY_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY +
-                STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY + FACULTY_DESC_AMY + INVALID_TAG_DESC;
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY
+                + STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY + FACULTY_DESC_AMY + INVALID_TAG_DESC;
         assertCommandFailure(command, Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 

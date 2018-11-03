@@ -61,7 +61,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          */
         Index index = INDEX_FIRST_STUDENT;
         String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + NAME_DESC_BOB + "  "
-                + STUDENT_NUMBER_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + FACULTY_DESC_BOB + " " + TAG_DESC_HUSBAND + " ";
+                + STUDENT_NUMBER_DESC_BOB + " " + EMAIL_DESC_BOB + "  " + FACULTY_DESC_BOB + " "
+                + TAG_DESC_HUSBAND + " ";
         Student editedStudent = new StudentBuilder(BOB).withTags(VALID_TAG_PHYSICS).build();
         assertCommandSuccess(command, index, editedStudent);
 
@@ -78,7 +79,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a student with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB
+                + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandSuccess(command, index, BOB);
 
@@ -86,7 +88,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertTrue(getModel().getAddressBook().getStudentList().contains(BOB));
         index = INDEX_SECOND_STUDENT;
         assertNotEquals(getModel().getFilteredStudentList().get(index.getZeroBased()), BOB);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY
+                + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         editedStudent = new StudentBuilder(BOB).withName(VALID_NAME_AMY).build();
         assertCommandSuccess(command, index, editedStudent);
@@ -96,8 +99,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
          * -> edited
          */
         index = INDEX_SECOND_STUDENT;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB +
-                STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB
+                + STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         editedStudent = new StudentBuilder(BOB).withStudentNumber(VALID_STUDENT_NUMBER_AMY)
                 .withEmail(VALID_EMAIL_AMY).build();
@@ -137,7 +140,8 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         showAllStudents();
         index = INDEX_FIRST_STUDENT;
         selectStudent(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_AMY
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_AMY + STUDENT_NUMBER_DESC_AMY
+                + EMAIL_DESC_AMY
                 + FACULTY_DESC_AMY + TAG_DESC_FRIEND;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new student's name
@@ -192,31 +196,31 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         assertTrue(getModel().getAddressBook().getStudentList().contains(BOB));
         index = INDEX_FIRST_STUDENT;
         assertFalse(getModel().getFilteredStudentList().get(index.getZeroBased()).equals(BOB));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
-                + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB
+                + EMAIL_DESC_BOB + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_STUDENT);
 
         /* Case: edit a student with new values same as another student's values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
-                + FACULTY_DESC_BOB + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB
+                + EMAIL_DESC_BOB + FACULTY_DESC_BOB + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_STUDENT);
 
         /* Case: edit a student with new values same as another student's values
         but with different address -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
-                + FACULTY_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB
+                + EMAIL_DESC_BOB + FACULTY_DESC_AMY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_STUDENT);
 
         /* Case: edit a student with new values same as another student's values but with
          different student number -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB +
-                STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_BOB
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB
+                + STUDENT_NUMBER_DESC_AMY + EMAIL_DESC_BOB
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_STUDENT);
 
         /* Case: edit a student with new values same as another student's values but with different email -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB +
-                STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_AMY
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + NAME_DESC_BOB
+                + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_AMY
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND + TAG_DESC_HUSBAND;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_STUDENT);
     }

@@ -36,7 +36,8 @@ public class StudentTest {
         assertFalse(ALICE.isSameStudent(null));
 
         // different student number and email -> returns false
-        Student editedAlice = new StudentBuilder(ALICE).withStudentNumber(VALID_STUDENT_NUMBER_BOB).withEmail(VALID_EMAIL_BOB).build();
+        Student editedAlice = new StudentBuilder(ALICE).withStudentNumber(VALID_STUDENT_NUMBER_BOB)
+                .withEmail(VALID_EMAIL_BOB).build();
         assertFalse(ALICE.isSameStudent(editedAlice));
 
         // different name -> returns false
@@ -49,7 +50,8 @@ public class StudentTest {
         assertTrue(ALICE.isSameStudent(editedAlice));
 
         // same name, same email, different attributes -> returns true
-        editedAlice = new StudentBuilder(ALICE).withStudentNumber(VALID_STUDENT_NUMBER_BOB).withFaculty(VALID_FACULTY_BOB)
+        editedAlice = new StudentBuilder(ALICE).withStudentNumber(VALID_STUDENT_NUMBER_BOB)
+                .withFaculty(VALID_FACULTY_BOB)
                 .withTags(VALID_TAG_PHYSICS).build();
         assertTrue(ALICE.isSameStudent(editedAlice));
 

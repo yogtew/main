@@ -183,7 +183,8 @@ public class EditCommandParserTest {
                 + TAG_DESC_FRIEND + STUDENT_NUMBER_DESC_AMY + FACULTY_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND
                 + STUDENT_NUMBER_DESC_BOB + FACULTY_DESC_BOB + EMAIL_DESC_BOB + TAG_DESC_HUSBAND;
 
-        EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder().withStudentNumber(VALID_STUDENT_NUMBER_BOB)
+        EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder()
+                .withStudentNumber(VALID_STUDENT_NUMBER_BOB)
                 .withEmail(VALID_EMAIL_BOB).withFaculty(VALID_FACULTY_BOB).withTags(VALID_TAG_MATH, VALID_TAG_PHYSICS)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
@@ -204,7 +205,8 @@ public class EditCommandParserTest {
         // other valid values specified
         userInput = targetIndex.getOneBased() + EMAIL_DESC_BOB + INVALID_STUDENT_NUMBER_DESC + FACULTY_DESC_BOB
                 + STUDENT_NUMBER_DESC_BOB;
-        descriptor = new EditStudentDescriptorBuilder().withStudentNumber(VALID_STUDENT_NUMBER_BOB).withEmail(VALID_EMAIL_BOB)
+        descriptor = new EditStudentDescriptorBuilder().withStudentNumber(VALID_STUDENT_NUMBER_BOB)
+                .withEmail(VALID_EMAIL_BOB)
                 .withFaculty(VALID_FACULTY_BOB).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
