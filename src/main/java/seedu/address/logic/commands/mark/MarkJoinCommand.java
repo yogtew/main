@@ -10,7 +10,7 @@ import seedu.address.model.mark.Mark;
  * mark [alias1] join {alias2} [alias3]
  */
 public class MarkJoinCommand extends MarkCommand {
-    private static final String MESSAGE_SUCCESS = "Successfully added %d people in either %s or %s to %s";
+    private static final String MESSAGE_SUCCESS = "Successfully added %d students in either %s or %s to %s";
     private final String alias2;
     private final String alias3;
 

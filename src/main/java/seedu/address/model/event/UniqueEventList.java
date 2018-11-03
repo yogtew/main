@@ -27,7 +27,7 @@ public class UniqueEventList implements Iterable<Event> {
     private final ObservableList<Event> internalList = FXCollections.observableArrayList();
 
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains an equivalent student as the given argument.
      */
     public boolean contains(Event toCheck) {
         requireNonNull(toCheck);
@@ -48,8 +48,8 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Removes the equivalent person from the list.
-     * The person must exist in the list.
+     * Removes the equivalent student from the list.
+     * The student must exist in the list.
      */
     public void remove(Event toRemove) {
         requireNonNull(toRemove);
@@ -101,7 +101,7 @@ public class UniqueEventList implements Iterable<Event> {
     }
 
     /**
-     * Returns true if {@code events} contains only unique persons.
+     * Returns true if {@code events} contains only unique students.
      */
     private boolean eventsAreUnique(List<Event> events) {
         for (int i = 0; i < events.size() - 1; i++) {

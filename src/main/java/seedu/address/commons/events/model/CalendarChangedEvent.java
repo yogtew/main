@@ -14,7 +14,7 @@ public class CalendarChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "number of persons " + data.getEventList().size();
+        return "number of students " + data.getEventList().size();
     }
 }
 

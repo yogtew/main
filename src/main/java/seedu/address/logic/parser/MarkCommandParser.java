@@ -16,7 +16,7 @@ import seedu.address.logic.commands.mark.MarkFindCommand;
 import seedu.address.logic.commands.mark.MarkJoinCommand;
 import seedu.address.logic.commands.mark.MarkShowCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 
 
 /**
@@ -36,8 +36,8 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             alias2, alias3 are required for certain commands
 
             command list:
-            show - shows the marked Persons in the GUI
-            find - marks Persons matching find
+            show - shows the marked Students in the GUI
+            find - marks Students matching find
             join - union of two Marks
             and - intersection of two Marks
          */
@@ -67,7 +67,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
                 findArgs = String.join(" ", splitArgs);
             }
             FindCommand findCommand = new FindCommandParser().parse(findArgs);
-            Predicate<Person> p = findCommand.getPredicate();
+            Predicate<Student> p = findCommand.getPredicate();
             return new MarkFindCommand(p, alias1);
         case MarkCommand.JOIN:
             // mark [alias1] join [alias2] [alias3]
