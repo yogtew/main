@@ -34,7 +34,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe sn/A98765432 e/johnd@example.com f/School of Computing` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -49,7 +49,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in any order e.g. if the command specifies `n/NAME sn/STUDENT_NUMBER`, `sn/STUDENT_NUMBER n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
@@ -59,15 +59,15 @@ Format: `help`
 === Adding a student: `add`
 
 Adds a student to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME sn/STUDENT_NUMBER e/EMAIL f/FACULTY [t/TAG]...`
 
 [TIP]
 A student can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Damith Rajapakse sn/A98765432 e/johnd@example.com f/School of Computing`
+* `add n/Bob Ross t/student e/betsycrowe@example.com f/Faculty of Science sn/U1234567 t/physics`
 
 === Listing all students : `list`
 
@@ -77,7 +77,7 @@ Format: `list`
 === Editing a student : `edit`
 
 Edits an existing student in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [sn/STUDENT_NUMBER] [e/EMAIL] [f/FACULTY] [t/TAG]...`
 
 ****
 * Edits the student at the specified `INDEX`. The index refers to the index number shown in the displayed student list. The index *must be a positive integer* 1, 2, 3, ...
@@ -89,8 +89,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the student number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
+* `edit 1 sn/A91234567 e/johndoe@example.com` +
+Edits the student number and email address of the 1st student to be `A91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
@@ -373,12 +373,12 @@ Examples:
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME sn/STUDENT_NUMBER e/EMAIL f/FACULTY [t/TAG]...` +
+e.g. `add n/James Ho sn/A22224444 e/jamesho@example.com f/School of Computing t/student t/computerscience`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [sn/STUDENT_NUMBER] [e/EMAIL] [f/FACULTY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Sort* : `sort PARAMETER` +
 e.g. `sort NAME`
