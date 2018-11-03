@@ -11,7 +11,7 @@ public class StudentNumber {
 
 
     public static final String MESSAGE_STUDENT_NUMBER_CONSTRAINTS =
-            "Student Number numbers should only contain letters or numbers and no spaces.";
+            "Student Number should only be alphanumeric, and not be blank or contain white spaces.";
     public static final String STUDENT_NUMBER_VALIDATION_REGEX = "^[a-zA-Z0-9][a-zA-Z0-9]*$";
     public final String value;
 
