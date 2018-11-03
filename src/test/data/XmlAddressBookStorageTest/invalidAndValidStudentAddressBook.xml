@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Valid Student -->
+    <students>
+        <name>Hans Muster</name>
+        <studentNumber isPrivate="false">9482424</studentNumber>
+        <email isPrivate="false">hans@example.com</email>
+        <faculty isPrivate="false">4th street</faculty>
+        <attendance isPrivate="false"> some attendance </attendance>
+    </students>
+    <!-- Student with invalid studentNumber field -->
+    <students>
+        <name>Hans Muster</name>
+        <studentNumber isPrivate="false">948asdf2424</studentNumber>
+        <email isPrivate="false">hans@example.com</email>
+        <faculty isPrivate="false">4th street</faculty>
+        <attendance isPrivate="false"> some attendance </attendance>
+    </students>
+</addressbook>

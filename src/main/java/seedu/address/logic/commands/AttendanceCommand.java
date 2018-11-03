@@ -10,8 +10,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Attendance;
+import seedu.address.model.student.Student;
+import seedu.address.model.student.Attendance;
 
 /**
  * UPDATES ATTENDANCE OF A STUDENT IN THE ADDRESS BOOK.
@@ -20,7 +20,7 @@ public class AttendanceCommand extends Command {
 
     public static final String COMMAND_WORD = "attendance";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the attendance of a student. "
-            + "by the index number used in the displayed person list. "
+            + "by the index number used in the displayed student list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_ATTENDANCE + "[ATTENDANCE]\n"
@@ -46,30 +46,31 @@ public class AttendanceCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Student> lastShownList = model.getFilteredStudentList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), attendance, personToEdit.getTags());
+        Student studentToEdit = lastShownList.get(index.getZeroBased());
+        Student editedStudent = new Student(studentToEdit.getName(),
+                studentToEdit.getStudentNumber(), studentToEdit.getEmail(),
+                studentToEdit.getFaculty(), attendance, studentToEdit.getTags());
 
-        model.updatePerson(personToEdit, editedPerson);
+        model.updateStudent(studentToEdit, editedStudent);
         model.commitAddressBook();
 
-        return new CommandResult(generateSuccessMessage(editedPerson));
+        return new CommandResult(generateSuccessMessage(editedStudent));
     }
 
     /**
      * Generates a command execution success message based on whether the attendance is updated to or removed from
-     * {@code personToEdit}.
+     * {@code studentToEdit}.
      */
-    private String generateSuccessMessage(Person personToEdit) {
+    private String generateSuccessMessage(Student studentToEdit) {
         String message = !attendance.value.toString().isEmpty()
                 ? MESSAGE_ADD_ATTENDANCE_SUCCESS : MESSAGE_REMOVE_ATTENDANCE_SUCCESS;
-        return String.format(message, personToEdit);
+        return String.format(message, studentToEdit);
     }
 
     @Override

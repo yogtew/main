@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+
+    <students>
+        <name>Alice Pauline</name>
+        <studentNumber>94351253</studentNumber>
+        <email>alice@example.com</email>
+        <faculty>123, Jurong West Ave 6, #08-111</faculty>
+        <attendance></attendance>
+        <tagged>friends</tagged>
+    </students>
+
+    <!-- Student with same identity as Alice Pauline -->
+    <students>
+        <name>Alice Pauline</name>
+        <studentNumber>94351253</studentNumber>
+        <email>pauline@example.com</email>
+        <faculty>4th street</faculty>
+        <attendance></attendance>
+    </students>
+
+</addressbook>

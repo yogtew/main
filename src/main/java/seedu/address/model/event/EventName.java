@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class EventName {
 
     public static final String EVENT_NAME_CONSTRAINTS =
-            "Event names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Event name can take any values, and it should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,
