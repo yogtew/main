@@ -40,9 +40,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
-        StudentNumber studentNumber = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_STUDENT_NUMBER).get());
+        StudentNumber studentNumber = ParserUtil.parseStudentNumber(argMultimap.getValue(PREFIX_STUDENT_NUMBER).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
-        Faculty faculty = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_FACULTY).get());
+        Faculty faculty = ParserUtil.parseFaculty(argMultimap.getValue(PREFIX_FACULTY).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Student student = new Student(name, studentNumber, email, faculty, tagList);

@@ -186,9 +186,9 @@ Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any student having names `Betsy`, `Tim`, or `John`
 * `find t/students` +
-Returns people tagged with `t/students`
+Returns students tagged with `t/students`
 * `find t/students t/colleagues` +
-Returns people tagged with `t/students` or `t/colleagues`
+Returns students tagged with `t/students` or `t/colleagues`
 
 === Deleting a student : `delete`
 
@@ -359,11 +359,11 @@ Notes:
 
 Examples:
 
-* `mark find t/friends` -- adds all people with tag _t/friends_ under _m/default_
-* `mark m/abc find t/colleagues` -- marks all people with tag _t/colleagues_ under _m/abc_
-* `mark join m/a m/b` -- marks people in either _m/a_ or _m/b_ under _m/default_ (union of a and b)
-* `mark and m/a m/b` -- marks people in both _m/a_ and _m/b_ under _m/default_ (intersection of a and b)
-* `mark m/test show` -- shows people marked under _m/test_ in the GUI
+* `mark find t/friends` -- adds all students with tag _t/friends_ under _m/default_
+* `mark m/abc find t/colleagues` -- marks all students with tag _t/colleagues_ under _m/abc_
+* `mark join m/a m/b` -- marks students in either _m/a_ or _m/b_ under _m/default_ (union of a and b)
+* `mark and m/a m/b` -- marks students in both _m/a_ and _m/b_ under _m/default_ (intersection of a and b)
+* `mark m/test show` -- shows students marked under _m/test_ in the GUI
 // end::mark[]
 
 == FAQ

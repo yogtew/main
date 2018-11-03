@@ -56,11 +56,11 @@ public class StudentCardHandle extends NodeHandle<Node> {
         return nameLabel.getText();
     }
 
-    public String getAddress() {
+    public String getFaculty() {
         return facultyLabel.getText();
     }
 
-    public String getPhone() {
+    public String getStudentNumber() {
         return studentNumberLabel.getText();
     }
 
@@ -83,8 +83,8 @@ public class StudentCardHandle extends NodeHandle<Node> {
      */
     public boolean equals(Student student) {
         return getName().equals(student.getName().fullName)
-                && getAddress().equals(student.getFaculty().value)
-                && getPhone().equals(student.getStudentNumber().value)
+                && getFaculty().equals(student.getFaculty().value)
+                && getStudentNumber().equals(student.getStudentNumber().value)
                 && getEmail().equals(student.getEmail().value)
                 && ImmutableMultiset.copyOf(getTags()).equals(ImmutableMultiset.copyOf(student.getTags().stream()
                         .map(tag -> tag.tagName)

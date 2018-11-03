@@ -18,7 +18,7 @@ import seedu.address.model.util.SampleDataUtil;
 public class StudentBuilder {
 
     public static final String DEFAULT_NAME = "Alice Pauline";
-    public static final String DEFAULT_PHONE = "85355255";
+    public static final String DEFAULT_STUDENT_NUMBER = "A85355255";
     public static final String DEFAULT_EMAIL = "alice@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_ATTENDANCE = "Absent";
@@ -32,7 +32,7 @@ public class StudentBuilder {
 
     public StudentBuilder() {
         name = new Name(DEFAULT_NAME);
-        studentNumber = new StudentNumber(DEFAULT_PHONE);
+        studentNumber = new StudentNumber(DEFAULT_STUDENT_NUMBER);
         email = new Email(DEFAULT_EMAIL);
         faculty = new Faculty(DEFAULT_ADDRESS);
         attendance = new Attendance(DEFAULT_ATTENDANCE);
@@ -70,7 +70,7 @@ public class StudentBuilder {
     /**
      * Sets the {@code Faculty} of the {@code Student} that we are building.
      */
-    public StudentBuilder withAddress(String address) {
+    public StudentBuilder withFaculty(String address) {
         this.faculty = new Faculty(address);
         return this;
     }
@@ -86,8 +86,8 @@ public class StudentBuilder {
     /**
      * Sets the {@code StudentNumber} of the {@code Student} that we are building.
      */
-    public StudentBuilder withPhone(String phone) {
-        this.studentNumber = new StudentNumber(phone);
+    public StudentBuilder withStudentNumber(String studentNumber) {
+        this.studentNumber = new StudentNumber(studentNumber);
         return this;
     }
 

@@ -98,8 +98,8 @@ public class XmlAdaptedStudent {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     StudentNumber.class.getSimpleName()));
         }
-        if (!StudentNumber.isValidPhone(studentNumber)) {
-            throw new IllegalValueException(StudentNumber.MESSAGE_PHONE_CONSTRAINTS);
+        if (!StudentNumber.isValidStudentNumber(studentNumber)) {
+            throw new IllegalValueException(StudentNumber.MESSAGE_STUDENT_NUMBER_CONSTRAINTS);
         }
         final StudentNumber modelStudentNumber = new StudentNumber(studentNumber);
 
@@ -114,8 +114,8 @@ public class XmlAdaptedStudent {
         if (faculty == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Faculty.class.getSimpleName()));
         }
-        if (!Faculty.isValidAddress(faculty)) {
-            throw new IllegalValueException(Faculty.MESSAGE_ADDRESS_CONSTRAINTS);
+        if (!Faculty.isValidFaculty(faculty)) {
+            throw new IllegalValueException(Faculty.MESSAGE_FACULTY_CONSTRAINTS);
         }
         final Faculty modelFaculty = new Faculty(faculty);
 

@@ -19,10 +19,10 @@ public class GuiTestAssert {
      */
     public static void assertCardEquals(StudentCardHandle expectedCard, StudentCardHandle actualCard) {
         assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
+        assertEquals(expectedCard.getFaculty(), actualCard.getFaculty());
         assertEquals(expectedCard.getEmail(), actualCard.getEmail());
         assertEquals(expectedCard.getName(), actualCard.getName());
-        assertEquals(expectedCard.getPhone(), actualCard.getPhone());
+        assertEquals(expectedCard.getStudentNumber(), actualCard.getStudentNumber());
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
@@ -31,9 +31,9 @@ public class GuiTestAssert {
      */
     public static void assertCardDisplaysStudent(Student expectedStudent, StudentCardHandle actualCard) {
         assertEquals(expectedStudent.getName().fullName, actualCard.getName());
-        assertEquals(expectedStudent.getStudentNumber().value, actualCard.getPhone());
+        assertEquals(expectedStudent.getStudentNumber().value, actualCard.getStudentNumber());
         assertEquals(expectedStudent.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedStudent.getFaculty().value, actualCard.getAddress());
+        assertEquals(expectedStudent.getFaculty().value, actualCard.getFaculty());
         assertEquals(expectedStudent.getAttendance().value.toString(), actualCard.getAttendance());
         assertEquals(expectedStudent.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
@@ -59,10 +59,11 @@ public class GuiTestAssert {
     }
 
     /**
-     * Asserts the size of the list in {@code studentListPanelHandle} equals to {@code size}.
+     * Asserts the size of the list in {@code studentListPanelHandle
+     * } equals to {@code size}.
      */
     public static void assertListSize(StudentListPanelHandle studentListPanelHandle, int size) {
-        int numberOfstudents = studentListPanelHandle.getListSize();
+        int numberOfStudents = studentListPanelHandle.getListSize();
         assertEquals(size, numberOfStudents);
     }
 

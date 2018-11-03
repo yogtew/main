@@ -59,33 +59,33 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String phone} into a {@code StudentNumber}.
+     * Parses a {@code String studentNumber} into a {@code StudentNumber}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code phone} is invalid.
+     * @throws ParseException if the given {@code studentNumber} is invalid.
      */
-    public static StudentNumber parsePhone(String phone) throws ParseException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!StudentNumber.isValidPhone(trimmedPhone)) {
-            throw new ParseException(StudentNumber.MESSAGE_PHONE_CONSTRAINTS);
+    public static StudentNumber parseStudentNumber(String studentNumber) throws ParseException {
+        requireNonNull(studentNumber);
+        String trimmedStudentNumber = studentNumber.trim();
+        if (!StudentNumber.isValidStudentNumber(trimmedStudentNumber)) {
+            throw new ParseException(StudentNumber.MESSAGE_STUDENT_NUMBER_CONSTRAINTS);
         }
-        return new StudentNumber(trimmedPhone);
+        return new StudentNumber(trimmedStudentNumber);
     }
 
     /**
-     * Parses a {@code String address} into an {@code Faculty}.
+     * Parses a {@code String faculty} into an {@code Faculty}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code address} is invalid.
+     * @throws ParseException if the given {@code faculty} is invalid.
      */
-    public static Faculty parseAddress(String address) throws ParseException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Faculty.isValidAddress(trimmedAddress)) {
-            throw new ParseException(Faculty.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Faculty parseFaculty(String faculty) throws ParseException {
+        requireNonNull(faculty);
+        String trimmedFaculty = faculty.trim();
+        if (!Faculty.isValidFaculty(trimmedFaculty)) {
+            throw new ParseException(Faculty.MESSAGE_FACULTY_CONSTRAINTS);
         }
-        return new Faculty(trimmedAddress);
+        return new Faculty(trimmedFaculty);
     }
 
     /**

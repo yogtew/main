@@ -4,33 +4,33 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Student's phone number in the address book.
- * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
+ * Represents a Student's student number in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidStudentNumber(String)}
  */
 public class StudentNumber {
 
 
-    public static final String MESSAGE_PHONE_CONSTRAINTS =
-            "StudentNumber numbers should only contain numbers, and it should be at least 3 digits long";
-    public static final String PHONE_VALIDATION_REGEX = "\\d{3,}";
+    public static final String MESSAGE_STUDENT_NUMBER_CONSTRAINTS =
+            "Student Number numbers should only contain letters or numbers and no spaces.";
+    public static final String STUDENT_NUMBER_VALIDATION_REGEX = "^[a-zA-Z0-9][a-zA-Z0-9]*$";
     public final String value;
 
     /**
      * Constructs a {@code StudentNumber}.
      *
-     * @param phone A valid phone number.
+     * @param studentNumber A valid student number.
      */
-    public StudentNumber(String phone) {
-        requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_PHONE_CONSTRAINTS);
-        value = phone;
+    public StudentNumber(String studentNumber) {
+        requireNonNull(studentNumber);
+        checkArgument(isValidStudentNumber(studentNumber), MESSAGE_STUDENT_NUMBER_CONSTRAINTS);
+        value = studentNumber;
     }
 
     /**
-     * Returns true if a given string is a valid phone number.
+     * Returns true if a given string is a valid student number.
      */
-    public static boolean isValidPhone(String test) {
-        return test.matches(PHONE_VALIDATION_REGEX);
+    public static boolean isValidStudentNumber(String test) {
+        return test.matches(STUDENT_NUMBER_VALIDATION_REGEX);
     }
 
     @Override

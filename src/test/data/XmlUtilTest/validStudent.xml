@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <student>
     <name>Hans Muster</name>
-    <studentNumber>9482424</studentNumber>
+    <studentNumber>A9482424</studentNumber>
     <email>hans@example</email>
-    <faculty>4th street</faculty>
-    <tagged>friends</tagged>
+    <faculty>School of Computing</faculty>
+    <tagged>computerscience</tagged>
 </student>

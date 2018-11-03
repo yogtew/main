@@ -3,55 +3,55 @@
 <addressbook>
     <students>
         <name>Alice Pauline</name>
-        <studentNumber>94351253</studentNumber>
+        <studentNumber>A94351253</studentNumber>
         <email>alice@example.com</email>
-        <faculty>123, Jurong West Ave 6, #08-111</faculty>
+        <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
-        <tagged>friends</tagged>
+        <tagged>computerscience</tagged>
     </students>
     <students>
         <name>Benson Meier</name>
-        <studentNumber>98765432</studentNumber>
+        <studentNumber>U98765432</studentNumber>
         <email>johnd@example.com</email>
-        <faculty>311, Clementi Ave 2, #02-25</faculty>
+        <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
-        <tagged>owesMoney</tagged>
-        <tagged>friends</tagged>
+        <tagged>informationsystems</tagged>
+        <tagged>student</tagged>
     </students>
     <students>
         <name>Carl Kurz</name>
-        <studentNumber>95352563</studentNumber>
+        <studentNumber>A95352563</studentNumber>
         <email>heinz@example.com</email>
-        <faculty>wall street</faculty>
+        <faculty>Faculty of Engineering</faculty>
         <attendance>absent</attendance>
     </students>
     <students>
         <name>Daniel Meier</name>
-        <studentNumber>87652533</studentNumber>
+        <studentNumber>A87652533</studentNumber>
         <email>cornelia@example.com</email>
-        <faculty>10th street</faculty>
+        <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
-        <tagged>friends</tagged>
+        <tagged>businessanalytics</tagged>
     </students>
     <students>
         <name>Elle Meyer</name>
-        <studentNumber>9482224</studentNumber>
+        <studentNumber>A9482224</studentNumber>
         <email>werner@example.com</email>
-        <faculty>michegan ave</faculty>
+        <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
     </students>
     <students>
         <name>Fiona Kunz</name>
-        <studentNumber>9482427</studentNumber>
+        <studentNumber>A9482427</studentNumber>
         <email>lydia@example.com</email>
-        <faculty>little tokyo</faculty>
+        <faculty>Faculty of Engineering</faculty>
         <attendance>absent</attendance>
     </students>
     <students>
         <name>George Best</name>
-        <studentNumber>9482442</studentNumber>
+        <studentNumber>A9482442</studentNumber>
         <email>anna@example.com</email>
-        <faculty>4th street</faculty>
+        <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
     </students>
 </addressbook>

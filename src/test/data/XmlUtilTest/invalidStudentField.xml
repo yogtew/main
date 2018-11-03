@@ -2,8 +2,8 @@
 <!-- Student with an invalid studentNumber field -->
 <student>
     <name>Hans Muster</name>
-    <studentNumber>9482asf424</studentNumber>
+    <studentNumber>9482as*f424</studentNumber>
     <email>hans@example</email>
-    <faculty>4th street</faculty>
-    <tagged>friends</tagged>
+    <faculty>School of Computing</faculty>
+    <tagged>computerscience</tagged>
 </student>

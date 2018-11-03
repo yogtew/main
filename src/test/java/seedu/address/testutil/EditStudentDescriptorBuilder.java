@@ -52,8 +52,8 @@ public class EditStudentDescriptorBuilder {
     /**
      * Sets the {@code StudentNumber} of the {@code EditStudentDescriptor} that we are building.
      */
-    public EditStudentDescriptorBuilder withPhone(String phone) {
-        descriptor.setStudentNumber(new StudentNumber(phone));
+    public EditStudentDescriptorBuilder withStudentNumber(String studentNumber) {
+        descriptor.setStudentNumber(new StudentNumber(studentNumber));
         return this;
     }
 
@@ -68,7 +68,7 @@ public class EditStudentDescriptorBuilder {
     /**
      * Sets the {@code Faculty} of the {@code EditStudentDescriptor} that we are building.
      */
-    public EditStudentDescriptorBuilder withAddress(String address) {
+    public EditStudentDescriptorBuilder withFaculty(String address) {
         descriptor.setFaculty(new Faculty(address));
         return this;
     }

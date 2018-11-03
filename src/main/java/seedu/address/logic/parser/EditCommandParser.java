@@ -49,13 +49,13 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
         if (argMultimap.getValue(PREFIX_STUDENT_NUMBER).isPresent()) {
             editStudentDescriptor.setStudentNumber(ParserUtil
-                    .parsePhone(argMultimap.getValue(PREFIX_STUDENT_NUMBER).get()));
+                    .parseStudentNumber(argMultimap.getValue(PREFIX_STUDENT_NUMBER).get()));
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
             editStudentDescriptor.setEmail(ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_FACULTY).isPresent()) {
-            editStudentDescriptor.setFaculty(ParserUtil.parseAddress(argMultimap.getValue(PREFIX_FACULTY).get()));
+            editStudentDescriptor.setFaculty(ParserUtil.parseFaculty(argMultimap.getValue(PREFIX_FACULTY).get()));
         }
         parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editStudentDescriptor::setTags);
 

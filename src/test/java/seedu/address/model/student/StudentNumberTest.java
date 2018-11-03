@@ -15,27 +15,28 @@ public class StudentNumberTest {
     }
 
     @Test
-    public void constructor_invalidPhone_throwsIllegalArgumentException() {
-        String invalidPhone = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new StudentNumber(invalidPhone));
+    public void constructor_invalidStudentNumber_throwsIllegalArgumentException() {
+        String invalidStudentNumber = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new StudentNumber(invalidStudentNumber));
     }
 
     @Test
-    public void isValidPhone() {
-        // null phone number
-        Assert.assertThrows(NullPointerException.class, () -> StudentNumber.isValidPhone(null));
+    public void isValidStudentNumber() {
+        // null student number
+        Assert.assertThrows(NullPointerException.class, () -> StudentNumber.isValidStudentNumber(null));
 
-        // invalid phone numbers
-        assertFalse(StudentNumber.isValidPhone("")); // empty string
-        assertFalse(StudentNumber.isValidPhone(" ")); // spaces only
-        assertFalse(StudentNumber.isValidPhone("91")); // less than 3 numbers
-        assertFalse(StudentNumber.isValidPhone("phone")); // non-numeric
-        assertFalse(StudentNumber.isValidPhone("9011p041")); // alphabets within digits
-        assertFalse(StudentNumber.isValidPhone("9312 1534")); // spaces within digits
+        // invalid student numbers
+        assertFalse(StudentNumber.isValidStudentNumber("")); // empty string
+        assertFalse(StudentNumber.isValidStudentNumber(" ")); // spaces only
+        assertFalse(StudentNumber.isValidStudentNumber("student number")); // non-numeric
+        assertFalse(StudentNumber.isValidStudentNumber("9312 1534")); // spaces within digits
+        assertFalse(StudentNumber.isValidStudentNumber("$AA")); // non alphanumeric
+        assertFalse(StudentNumber.isValidStudentNumber("$**AA")); // non alphanumeric
 
-        // valid phone numbers
-        assertTrue(StudentNumber.isValidPhone("911")); // exactly 3 numbers
-        assertTrue(StudentNumber.isValidPhone("93121534"));
-        assertTrue(StudentNumber.isValidPhone("124293842033123")); // long phone numbers
+        // valid student numbers
+        assertTrue(StudentNumber.isValidStudentNumber("9")); // only one digit
+        assertTrue(StudentNumber.isValidStudentNumber("A")); // only one letter
+        assertTrue(StudentNumber.isValidStudentNumber("93121FD534"));
+        assertTrue(StudentNumber.isValidStudentNumber("A124293842033123")); // long student numbers
     }
 }
