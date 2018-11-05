@@ -42,6 +42,9 @@ public class ModelManager extends ComponentManager implements Model {
     private final Stack<ModelType> undoStack = new Stack<>();
     private final Stack<ModelType> redoStack = new Stack<>();
 
+    /**
+     * Denotes the operations carried out on the model.
+     */
     private enum ModelType {
         ADDRESSBOOK, CALENDAR
     }
@@ -263,6 +266,8 @@ public class ModelManager extends ComponentManager implements Model {
             undoCalendar();
             redoStack.push(ModelType.CALENDAR);
             break;
+        default:
+            break;
         }
     }
 
@@ -276,6 +281,8 @@ public class ModelManager extends ComponentManager implements Model {
         case CALENDAR:
             redoCalendar();
             undoStack.push(ModelType.CALENDAR);
+            break;
+        default:
             break;
         }
     }

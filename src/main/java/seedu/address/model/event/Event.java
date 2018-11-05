@@ -14,31 +14,31 @@ import java.util.Objects;
 public class Event {
 
     // Comparator for events
-    public static final Comparator<Event> COMPARATOR = (e1, e2) ->  {
-            try {
-                // compare start times
-                java.util.Date start1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                        .parse(e1.date.date + " " + e1.startTime.startTime);
-                java.util.Date start2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                        .parse(e2.date.date + " " + e2.startTime.startTime);
+    public static final Comparator<Event> COMPARATOR = (e1, e2) -> {
+        try {
+            // compare start times
+            java.util.Date start1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e1.date.date + " " + e1.startTime.startTime);
+            java.util.Date start2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e2.date.date + " " + e2.startTime.startTime);
 
-                // if start times are the same, compare end times
-                java.util.Date end1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                        .parse(e1.date.date + " " + e1.endTime.endTime);
-                java.util.Date end2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                        .parse(e2.date.date + " " + e2.endTime.endTime);
+            // if start times are the same, compare end times
+            java.util.Date end1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e1.date.date + " " + e1.endTime.endTime);
+            java.util.Date end2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e2.date.date + " " + e2.endTime.endTime);
 
-                if (start1.compareTo(start2) != 0) {
-                    return start1.compareTo(start2);
-                } else if (end1.compareTo(end2) != 0) {
-                    return end1.compareTo(end2);
-                } else {
-                    return e1.eventName.eventName.compareTo(e2.eventName.eventName);
-                }
-
-            } catch (ParseException e) {
-                return 0; // Ideally the parsers should be doing their job. If not then simply leave it be
+            if (start1.compareTo(start2) != 0) {
+                return start1.compareTo(start2);
+            } else if (end1.compareTo(end2) != 0) {
+                return end1.compareTo(end2);
+            } else {
+                return e1.eventName.eventName.compareTo(e2.eventName.eventName);
             }
+
+        } catch (ParseException e) {
+            return 0; // Ideally the parsers should be doing their job. If not then simply leave it be
+        }
     };
 
     // Identity fields

@@ -18,6 +18,9 @@ import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
 import seedu.address.model.event.StartTime;
 
+/**
+ * Parses user input.
+ */
 public class CancelCommandParser {
 
     /**
