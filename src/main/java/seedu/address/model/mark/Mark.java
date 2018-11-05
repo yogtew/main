@@ -1,6 +1,7 @@
 package seedu.address.model.mark;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.function.Predicate;
 
 import seedu.address.model.student.Student;
 
+// todo: REGEX validation on name: alphanumeric & no spaces
 /**
  * Stores a set of marked Students.
  */
@@ -17,16 +19,25 @@ public class Mark {
     private HashSet<Student> set;
     private String name;
 
-    public Mark(List<Student> inputList, String markName) {
-        set = new HashSet<>();
-        set.addAll(inputList);
+    public static final String MARK_NAME_CONSTRAINTS =
+            "Mark names should only contain alphanumeric characters, and it should not be blank";
+
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String MARK_VALIDATION_REGEX = "[\\p{Alnum}]+";
+
+    public Mark(Collection<Student> inputCollection, String markName) {
+        this.set = new HashSet<>(inputCollection);
+        checkArguments(markName);
         name = markName;
     }
 
-    public Mark(Set<Student> set, String markName) {
-        this.set = new HashSet<>();
-        this.set.addAll(set);
-        name = markName;
+    public static void checkArguments(String markName) {
+        if (!isValidMark(markName)) {
+            throw new IllegalArgumentException(MARK_NAME_CONSTRAINTS);
+        }
     }
 
     public Mark(List<Student> inputList) {
@@ -40,6 +51,13 @@ public class Mark {
     public Mark() {
         set = new HashSet<>();
         name = DEFAULT_NAME;
+    }
+
+    /**
+            * Returns true if a given string is a valid name.
+     */
+    public static boolean isValidMark(String test) {
+        return test.matches(MARK_VALIDATION_REGEX);
     }
 
     public ArrayList<Student> getList() {
