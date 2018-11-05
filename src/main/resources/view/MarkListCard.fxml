@@ -27,11 +27,7 @@
                 </Label>
                 <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
             </HBox>
-            <FlowPane fx:id="tags" />
-            <Label fx:id="studentNumber" styleClass="cell_small_label" text="\$studentNumber" />
-            <Label fx:id="faculty" styleClass="cell_small_label" text="\$faculty" />
-            <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-            <Label fx:id="attendance" styleClass="cell_small_label" text="\$attendance" />
+            <Label fx:id="studentCount" styleClass="cell_small_label" text="\$studentCount" />
         </VBox>
     </GridPane>
 </HBox>

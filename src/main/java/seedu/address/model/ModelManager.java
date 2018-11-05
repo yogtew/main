@@ -3,8 +3,6 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -33,7 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Student> filteredStudents;
-    private final HashMap<String, Mark> marks = new HashMap<>();
+    private final ObservableList<Mark> marks;
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
@@ -49,6 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredStudents = new FilteredList<>(versionedAddressBook.getStudentList());
+        marks = FXCollections.observableArrayList();
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
@@ -257,28 +256,33 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     public Mark getMark(String markName) {
-        return marks.getOrDefault(markName, Mark.EMPTY);
+        return marks.stream().filter(m -> m.getName().equals(markName)).findFirst().orElse(Mark.EMPTY);
     }
 
     public void setMark(String markName, Mark mark) {
-        marks.put(markName, mark);
+        Mark old = getMark(mark.getName());
+        if (!old.equals(Mark.EMPTY)) {
+            marks.remove(old);
+        }
+        mark.setName(markName);
+        marks.add(mark);
     }
 
     @Override
     public ObservableList<Mark> getFilteredMarkList() {
-        return FXCollections.observableList(new ArrayList<>(marks.values()));
+        return marks;
     }
 
     @Subscribe
     public void studentChangedEventHandler(StudentChangedEvent event) {
-        marks.forEach((name, mark) -> {
+        marks.forEach((mark) -> {
             Set<Student> set = new HashSet<>(mark.getSet());
             if (set.contains(event.oldStudent)) {
                 set.remove(event.oldStudent);
                 if (event.newStudent != null) {
                     set.add(event.newStudent);
                 }
-                setMark(name, new Mark(set, name));
+                setMark(mark.getName(), new Mark(set, mark.getName()));
             }
         });
     }

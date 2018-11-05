@@ -130,7 +130,7 @@ public class MainWindow extends UiPart<Stage> {
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         markListPanel = new MarkListPanel(logic.getFilteredMarkList());
-        markListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        markListPanelPlaceholder.getChildren().add(markListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());

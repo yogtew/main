@@ -10,11 +10,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.MarkPanelSelectionChangedEvent;
 import seedu.address.model.mark.Mark;
-import seedu.address.model.student.Student;
 
 /**
  * Panel containing the list of students.
@@ -43,7 +43,7 @@ public class MarkListPanel extends UiPart<Region> {
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         logger.fine("Selection in mark list panel changed to : '" + newValue + "'");
-                        // raise(new StudentPanelSelectionChangedEvent(newValue));
+                        raise(new MarkPanelSelectionChangedEvent(newValue));
                     }
                 });
     }

@@ -75,6 +75,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             } else {
                 findArgs = String.join(" ", splitArgs);
             }
+            findArgs = " " + findArgs; // because parser expects " t/tags" but not "t/tags"
             FindCommand findCommand = new FindCommandParser().parse(findArgs);
             Predicate<Student> p = findCommand.getPredicate();
             return new MarkFindCommand(p, alias1);

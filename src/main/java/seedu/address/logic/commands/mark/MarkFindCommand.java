@@ -23,7 +23,7 @@ public class MarkFindCommand extends MarkCommand {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         List<Student> marked = model.getAddressBook().getStudentList().filtered(p);
-        Mark mark = new Mark(marked);
+        Mark mark = new Mark(marked, alias1);
         model.setMark(alias1, mark);
         return new CommandResult(String.format(MESSAGE_SUCCESS, marked.size(), alias1));
     }
