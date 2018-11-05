@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -261,6 +262,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     public void setMark(String markName, Mark mark) {
         marks.put(markName, mark);
+    }
+
+    @Override
+    public ObservableList<Mark> getFilteredMarkList() {
+        return FXCollections.observableList(new ArrayList<>(marks.values()));
     }
 
     @Subscribe
