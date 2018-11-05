@@ -6,6 +6,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -36,6 +37,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
+
+    // maintain an internal undo/redo stack to keep track of which model to undo/redo
+    private final Stack<Model> undoStack = new Stack<Model>();
+    private final Stack<Model> redoStack = new Stack<Model>();
+
+    private enum Model {
+        ADDRESSBOOK, CALENDAR
+    }
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -145,6 +154,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void commitAddressBook() {
+        undoStack.push(Model.ADDRESSBOOK);
+        redoStack.clear();
         versionedAddressBook.commit();
     }
 
@@ -217,6 +228,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void commitCalendar() {
+        undoStack.push(Model.CALENDAR);
+        redoStack.clear();
         versionedCalendar.commit();
     }
 
@@ -235,6 +248,46 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredEventList(Predicate<Event> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
+    }
+
+    //=========== Undo/Redo Controllers ==============================================================
+
+    @Override
+    public void undo() {
+        switch (undoStack.pop()) {
+        case ADDRESSBOOK:
+            undoAddressBook();
+            redoStack.push(Model.ADDRESSBOOK);
+            break;
+        case CALENDAR:
+            undoCalendar();
+            redoStack.push(Model.CALENDAR);
+            break;
+        }
+    }
+
+    @Override
+    public void redo() {
+        switch (redoStack.pop()) {
+        case ADDRESSBOOK:
+            redoAddressBook();
+            undoStack.push(Model.ADDRESSBOOK);
+            break;
+        case CALENDAR:
+            redoCalendar();
+            undoStack.push(Model.CALENDAR);
+            break;
+        }
+    }
+
+    @Override
+    public boolean canUndo() {
+        return !undoStack.empty();
+    }
+
+    @Override
+    public boolean canRedo() {
+        return !redoStack.empty();
     }
 
     @Override

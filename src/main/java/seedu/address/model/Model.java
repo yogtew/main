@@ -137,6 +137,26 @@ public interface Model {
     void redoCalendar();
 
     /**
+     * Controls the main logic for undo
+     */
+    void undo();
+
+    /**
+     * Controls the main logic for redo
+     */
+    void redo();
+
+    /**
+     * Returns true if the model has an previous state to restore
+     */
+    boolean canUndo();
+
+    /**
+     * Returns true if the model has an undone state to restore.
+     */
+    boolean canRedo();
+
+    /**
      * Saves the current calendar state for undo/redo.
      */
     void commitCalendar();
