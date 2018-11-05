@@ -39,10 +39,10 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Event> filteredEvents;
 
     // maintain an internal undo/redo stack to keep track of which model to undo/redo
-    private final Stack<Model> undoStack = new Stack<Model>();
-    private final Stack<Model> redoStack = new Stack<Model>();
+    private final Stack<ModelType> undoStack = new Stack<>();
+    private final Stack<ModelType> redoStack = new Stack<>();
 
-    private enum Model {
+    private enum ModelType {
         ADDRESSBOOK, CALENDAR
     }
 
@@ -154,7 +154,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void commitAddressBook() {
-        undoStack.push(Model.ADDRESSBOOK);
+        undoStack.push(ModelType.ADDRESSBOOK);
         redoStack.clear();
         versionedAddressBook.commit();
     }
@@ -228,7 +228,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void commitCalendar() {
-        undoStack.push(Model.CALENDAR);
+        undoStack.push(ModelType.CALENDAR);
         redoStack.clear();
         versionedCalendar.commit();
     }
@@ -257,11 +257,11 @@ public class ModelManager extends ComponentManager implements Model {
         switch (undoStack.pop()) {
         case ADDRESSBOOK:
             undoAddressBook();
-            redoStack.push(Model.ADDRESSBOOK);
+            redoStack.push(ModelType.ADDRESSBOOK);
             break;
         case CALENDAR:
             undoCalendar();
-            redoStack.push(Model.CALENDAR);
+            redoStack.push(ModelType.CALENDAR);
             break;
         }
     }
@@ -271,11 +271,11 @@ public class ModelManager extends ComponentManager implements Model {
         switch (redoStack.pop()) {
         case ADDRESSBOOK:
             redoAddressBook();
-            undoStack.push(Model.ADDRESSBOOK);
+            undoStack.push(ModelType.ADDRESSBOOK);
             break;
         case CALENDAR:
             redoCalendar();
-            undoStack.push(Model.CALENDAR);
+            undoStack.push(ModelType.CALENDAR);
             break;
         }
     }
