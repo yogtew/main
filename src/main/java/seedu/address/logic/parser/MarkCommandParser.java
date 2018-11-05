@@ -91,7 +91,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             return new MarkJoinCommand(alias1, alias2, alias3);
         case MarkCommand.AND:
             // mark [alias1] join [alias2] [alias3]
-            splitArgs.remove(0); // removes "join"
+            splitArgs.remove(0); // removes "and"
             if (splitArgs.size() == 0) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAndCommand.MESSAGE_USAGE));
             }

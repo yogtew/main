@@ -348,7 +348,7 @@ The Students in a Mark can be shown in the GUI wit the following command:
 ==== Reference
 `mark [m/m1] ...`
 
-* `find [name|t/tag]` -- finds students matching criteria and mark under _m1_
+* `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and mark under _m1_
 * `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
 * `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
 * `show` -- displays students from _m1_ in the GUI
