@@ -136,12 +136,12 @@ public class DeleteCommandTest {
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(studentToDelete, model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased()));
         // redo -> deletes same second student in unfiltered student list
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
