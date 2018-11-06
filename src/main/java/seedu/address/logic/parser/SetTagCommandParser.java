@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.SetTagCommand;
+import seedu.address.logic.commands.TagCommandMode;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.tag.Tag;
@@ -26,17 +27,30 @@ public class SetTagCommandParser implements Parser<SetTagCommand> {
     @Override
     public SetTagCommand parse(String args) throws ParseException {
         /*
-        Usage: tag [index|mark] t/tagName ...
+        Usage: tag add|set|del index|m/mark [t/tagName...]
         */
         ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_MARK, PREFIX_TAG);
         Set<Tag> tags = argMultiMap.getAllValues(PREFIX_TAG).stream().map(Tag::new).collect(Collectors.toSet());
-        if (argMultiMap.getPreamble().length() == 0) {
+        TagCommandMode mode;
+
+        String firstKeyword = args.split(" ")[1].trim();
+        if (firstKeyword.equals("add")) {
+            mode = TagCommandMode.ADD;
+        } else if (firstKeyword.equals("set")) {
+            mode = TagCommandMode.SET;
+        } else if (firstKeyword.equals("del")) {
+            mode = TagCommandMode.DEL;
+        } else {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, SetTagCommand.MESSAGE_USAGE));
+        }
+
+        if (argMultiMap.getAllValues(PREFIX_MARK).size() == 1) {
             String markName = argMultiMap.getValue(PREFIX_MARK).orElse(Mark.DEFAULT_NAME);
-            return new SetTagCommand(markName, tags);
+            return new SetTagCommand(markName, tags, mode);
         } else {
             try {
-                Index index = ParserUtil.parseIndex(argMultiMap.getPreamble());
-                return new SetTagCommand(index, tags);
+                Index index = ParserUtil.parseIndex(argMultiMap.getPreamble().split(" ")[0]);
+                return new SetTagCommand(index, tags, mode);
             } catch (NumberFormatException e) {
                 throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                         SetTagCommand.MESSAGE_USAGE));

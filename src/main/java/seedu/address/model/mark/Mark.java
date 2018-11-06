@@ -103,6 +103,10 @@ public class Mark {
         return set;
     }
 
+    public int count() {
+        return set.size();
+    }
+
     public boolean contains(Student oldStudent) {
         return set.contains(oldStudent);
     }
