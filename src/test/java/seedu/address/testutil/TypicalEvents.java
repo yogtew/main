@@ -44,7 +44,12 @@ public class TypicalEvents {
             .withEndTime(VALID_END_TIME_TUTORIAL)
             .withDescription(VALID_DESCRIPTION_TUTORIAL)
             .build();
-
+    public static final Event TUTORIAL_NO_DESCRIPTION = new EventBuilder()
+            .withEventName(VALID_EVENT_NAME_TUTORIAL)
+            .withDate(VALID_DATE_TUTORIAL)
+            .withStartTime(VALID_START_TIME_TUTORIAL)
+            .withEndTime(VALID_END_TIME_TUTORIAL)
+            .build();
     private TypicalEvents() {} // prevents instantiation
 
     /**

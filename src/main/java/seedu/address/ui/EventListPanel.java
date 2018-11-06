@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
@@ -59,8 +60,7 @@ public class EventListPanel extends UiPart<Region> {
         String startTime = time.format(DateTimeFormatter.ofPattern("HH:mm"));
         int index = 0;
         // Creating a dummy event to compare to
-        Event event = new Event(new EventName("index"), new Date(date), new StartTime(startTime), new EndTime("23:59"),
-                new Description("nil"));
+        Event event = new Event(new EventName("index"), new Date(date), new StartTime(startTime), new EndTime("23:59"));
         Comparator<Event> comparator = Event.COMPARATOR;
         // Finding the index of the nearest upcoming event to scroll to
         while (index < eventList.size() && comparator.compare(event, eventList.get(index)) > 0) {

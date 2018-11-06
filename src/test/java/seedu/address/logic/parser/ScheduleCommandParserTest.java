@@ -30,6 +30,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_TUTO
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalEvents.CONSULTATION;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL_NO_DESCRIPTION;
 
 import org.junit.Test;
 
@@ -86,6 +88,17 @@ public class ScheduleCommandParserTest {
     }
 
     @Test
+    public void parse_optionalFieldMissing_success() {
+        Event expectedEvent = new EventBuilder(TUTORIAL_NO_DESCRIPTION).build();
+        assertParseSuccess(parser,
+                EVENT_NAME_DESC_TUTORIAL
+                        + DATE_DESC_TUTORIAL
+                        + START_TIME_DESC_TUTORIAL
+                        + END_TIME_DESC_TUTORIAL,
+                new ScheduleCommand(expectedEvent));
+    }
+
+    @Test
     public void parse_compulsoryFieldMissing_failure() {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE);
 
@@ -123,15 +136,6 @@ public class ScheduleCommandParserTest {
                         + START_TIME_DESC_TUTORIAL
                         + VALID_END_TIME_TUTORIAL
                         + DESCRIPTION_DESC_TUTORIAL,
-                expectedMessage);
-
-        // missing description prefix
-        assertParseFailure(parser,
-                EVENT_NAME_DESC_TUTORIAL
-                        + DATE_DESC_TUTORIAL
-                        + START_TIME_DESC_TUTORIAL
-                        + END_TIME_DESC_TUTORIAL
-                        + VALID_DESCRIPTION_TUTORIAL,
                 expectedMessage);
 
         // all prefixes missing

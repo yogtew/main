@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -27,7 +28,7 @@ public class XmlAdaptedEvent {
     private String startTime;
     @XmlElement(required = true)
     private String endTime;
-    @XmlElement(required = true)
+    @XmlElement
     private String description;
 
     /**
@@ -57,7 +58,9 @@ public class XmlAdaptedEvent {
         date = source.getDate().date;
         startTime = source.getStartTime().startTime;
         endTime = source.getEndTime().endTime;
-        description = source.getDescription().description;
+        source.getDescription().ifPresent(desc -> {
+            description = desc.description;
+        });
     }
 
     /**
@@ -100,14 +103,14 @@ public class XmlAdaptedEvent {
         }
         final EndTime modelEndTime = new EndTime(endTime);
 
-        if (description == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Description.class.getSimpleName()));
-        }
-        if (!Description.isValidDescription(description)) {
+        final Optional<Description> modelDescription;
+        if (description != null && !Description.isValidDescription(description)) {
             throw new IllegalValueException(Description.DESCRIPTION_STRING_CONSTRAINTS);
+        } else if (description != null && Description.isValidDescription(description)) {
+            modelDescription = Optional.of(new Description(description));
+        } else {
+            modelDescription = Optional.empty();
         }
-        final Description modelDescription = new Description(description);
 
         return new Event(modelEventName, modelDate, modelStartTime, modelEndTime, modelDescription);
     }

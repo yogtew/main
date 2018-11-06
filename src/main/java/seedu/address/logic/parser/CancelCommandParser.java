@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.CancelCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Date;
-import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
@@ -44,14 +43,11 @@ public class CancelCommandParser {
         StartTime start = ParserUtil.parseStartTime(argMultimap.getValue(PREFIX_START).get());
         EndTime end = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_END).get());
 
-        // We make description arbitrary
-        Description description = new Description("-");
-
         // If the start time is later than the end time
         if (start.startTime.compareTo(end.endTime) > 0) {
             throw new ParseException(MESSAGE_INVALID_TIMES_FORMAT);
         }
-        Event event = new Event(eventName, date, start, end, description);
+        Event event = new Event(eventName, date, start, end);
 
         return new CancelCommand(event);
     }

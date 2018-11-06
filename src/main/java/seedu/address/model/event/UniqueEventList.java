@@ -34,7 +34,7 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public boolean contains(Event toCheck) {
         requireNonNull(toCheck);
-        return (Collections.binarySearch(internalSortedList, toCheck, Event.COMPARATOR) > 0);
+        return (Collections.binarySearch(internalSortedList, toCheck, Event.COMPARATOR) >= 0);
     }
 
     /**
@@ -45,6 +45,7 @@ public class UniqueEventList implements Iterable<Event> {
         requireNonNull(toAdd);
         int index = Collections.binarySearch(internalSortedList, toAdd, Event.COMPARATOR);
         if (index >= 0) {
+
             throw new DuplicateEventException();
         } else {
             internalSortedList.add(-index - 1, toAdd);

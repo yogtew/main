@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents an event in the calendar.
@@ -48,7 +49,7 @@ public class Event {
     private final EndTime endTime;
 
     // Data fields
-    private final Description description;
+    private final Optional<Description> description;
 
     /**
      * Constructs a (@code Event).
@@ -59,13 +60,31 @@ public class Event {
      * @param endTime a valid end time in 24 hour format.
      * @param description valid details of the event.
      */
-    public Event(EventName eventName, Date date, StartTime startTime, EndTime endTime, Description description) {
+    public Event(EventName eventName, Date date, StartTime startTime,
+                 EndTime endTime, Optional<Description> description) {
         requireAllNonNull(eventName, date, startTime, endTime, description);
         this.eventName = eventName;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
+    }
+
+    /**
+     * Constructs a (@code Event) without a description.
+     *
+     * @param eventName a valid event name.
+     * @param date a valid date in dd-mm-yyyy format.
+     * @param startTime a valid start time in 24 hour format.
+     * @param endTime a valid end time in 24 hour format.
+     */
+    public Event(EventName eventName, Date date, StartTime startTime, EndTime endTime) {
+        requireAllNonNull(eventName, date, startTime, endTime);
+        this.eventName = eventName;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = Optional.empty();
     }
 
     public EventName getEventName() {
@@ -84,7 +103,7 @@ public class Event {
         return endTime;
     }
 
-    public Description getDescription() {
+    public Optional<Description> getDescription() {
         return description;
     }
 
@@ -117,7 +136,7 @@ public class Event {
                 && Objects.equals(getDate(), event.getDate())
                 && Objects.equals(getStartTime(), event.getStartTime())
                 && Objects.equals(getEndTime(), event.getEndTime())
-                && Objects.equals(getDescription(), event.getDescription());
+                && Objects.equals(getDescription().orElse(null), event.getDescription().orElse(null));
     }
 
     @Override

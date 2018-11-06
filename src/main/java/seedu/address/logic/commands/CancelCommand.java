@@ -2,10 +2,12 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * Cancels an event in the Calendar.
@@ -31,8 +33,12 @@ public class CancelCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        model.deleteEvent(targetEvent);
-        model.commitAddressBook();
+        if (model.hasEvent(targetEvent)) {
+            model.deleteEvent(targetEvent);
+            model.commitAddressBook();
+        } else {
+            throw new CommandException(Messages.MESSAGE_INVALID_EVENT);
+        }
         return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS, targetEvent));
     }
 
