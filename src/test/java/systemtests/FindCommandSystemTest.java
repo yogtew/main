@@ -3,7 +3,6 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalEvents.TUTORIAL;
 import static seedu.address.testutil.TypicalStudents.BENSON;
 import static seedu.address.testutil.TypicalStudents.CARL;
 import static seedu.address.testutil.TypicalStudents.DANIEL;
