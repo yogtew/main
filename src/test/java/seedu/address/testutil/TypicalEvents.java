@@ -19,7 +19,7 @@ import seedu.address.model.Calendar;
 import seedu.address.model.event.Event;
 
 /**
- * A utility class containing a list o {@code Event} objects to be used in tests.
+ * A utility class containing a list of {@code Event} objects to be used in tests.
  */
 public class TypicalEvents {
     public static final Event BIRTHDAY = new EventBuilder().withEventName("Birthday")
@@ -28,6 +28,11 @@ public class TypicalEvents {
     public static final Event INTERVIEW = new EventBuilder().withEventName("Interview")
             .withDate("15-10-2018").withStartTime("15:00").withEndTime("15:30")
             .withDescription("At Google HQ").build();
+
+    // Events not present in the Calendar
+    public static final Event EVENT_NOT_PRESENT = new EventBuilder().withEventName("EventNotPresent")
+            .withDate("01-01-2018").withStartTime("00:00").withEndTime("23:59")
+            .withDescription("nil").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}
     public static final Event CONSULTATION = new EventBuilder()
