@@ -38,6 +38,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
 
+
     // maintain an internal undo/redo stack to keep track of which model to undo/redo
     private final Stack<ModelType> undoStack = new Stack<>();
     private final Stack<ModelType> redoStack = new Stack<>();
@@ -143,14 +144,18 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.canRedo();
     }
 
-    @Override
-    public void undoAddressBook() {
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    private void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void redoAddressBook() {
+    /**
+     * Restores the model's address book to its previously undone state.
+     */
+    private void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
     }
@@ -217,14 +222,18 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedCalendar.canRedo();
     }
 
-    @Override
-    public void undoCalendar() {
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    private void undoCalendar() {
         versionedCalendar.undo();
         indicateCalendarChanged();
     }
 
-    @Override
-    public void redoCalendar() {
+    /**
+     * Restores the model's calendar to its previously undone state.
+     */
+    private void redoCalendar() {
         versionedCalendar.redo();
         indicateCalendarChanged();
     }

@@ -69,16 +69,6 @@ public interface Model {
     boolean canRedoAddressBook();
 
     /**
-     * Restores the model's address book to its previous state.
-     */
-    void undoAddressBook();
-
-    /**
-     * Restores the model's address book to its previously undone state.
-     */
-    void redoAddressBook();
-
-    /**
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
@@ -127,22 +117,12 @@ public interface Model {
     boolean canRedoCalendar();
 
     /**
-     * Restores the model's calendar to its previous state.
-     */
-    void undoCalendar();
-
-    /**
-     * Restores the model's calendar to its previously undone state.
-     */
-    void redoCalendar();
-
-    /**
-     * Controls the main logic for undo
+     * Controls undoing of the calendar and address book.
      */
     void undo();
 
     /**
-     * Controls the main logic for redo
+     * Controls redoing of the calendar and address book.
      */
     void redo();
 

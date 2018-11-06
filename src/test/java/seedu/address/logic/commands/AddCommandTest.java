@@ -141,13 +141,11 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void undoAddressBook() {
+        private void undoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void redoAddressBook() {
+        private void redoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -206,13 +204,11 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void undoCalendar() {
+        private void undoCalendar() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void redoCalendar() {
+        private void redoCalendar() {
             throw new AssertionError("This method should not be called.");
         }
 

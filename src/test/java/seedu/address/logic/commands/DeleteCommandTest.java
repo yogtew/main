@@ -94,11 +94,11 @@ public class DeleteCommandTest {
         deleteCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first student deleted again
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
