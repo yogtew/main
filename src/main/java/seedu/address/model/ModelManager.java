@@ -312,7 +312,9 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredStudents.equals(other.filteredStudents);
+                && filteredStudents.equals(other.filteredStudents)
+                && versionedCalendar.equals(other.versionedCalendar)
+                && filteredEvents.equals(other.filteredEvents);
     }
 
     public Mark getMark(String markName) {

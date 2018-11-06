@@ -20,7 +20,7 @@ public class CancelCommand extends Command {
             + "Parameters: event/EVENT_NAME date/DATE start/START_TIME end/END_TIME\n"
             + "Example: " + COMMAND_WORD + " event/CS2103 finals date/5-12-2018 start/17:00 end/18:00";
 
-    public static final String MESSAGE_DELETE_STUDENT_SUCCESS = "Cancelled Event: %1$s";
+    public static final String MESSAGE_DELETE_EVENT_SUCCESS = "Cancelled Event: %1$s";
 
     private final Event targetEvent;
 
@@ -34,11 +34,11 @@ public class CancelCommand extends Command {
 
         if (model.hasEvent(targetEvent)) {
             model.deleteEvent(targetEvent);
-            model.commitAddressBook();
+            model.commitCalendar();
         } else {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT);
         }
-        return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS, targetEvent));
+        return new CommandResult(String.format(MESSAGE_DELETE_EVENT_SUCCESS, targetEvent));
     }
 
     @Override
