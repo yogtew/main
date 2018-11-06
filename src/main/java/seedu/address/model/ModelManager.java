@@ -47,7 +47,7 @@ public class ModelManager extends ComponentManager implements Model {
      * Denotes the operations carried out on the model.
      */
     private enum ModelType {
-        ADDRESSBOOK, CALENDAR
+        ADDRESSBOOK, CALENDAR, ALL
     }
 
     /**
@@ -71,9 +71,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        versionedAddressBook.resetData(newData);
+    public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar) {
+        versionedAddressBook.resetData(newAddressBook);
+        versionedCalendar.resetData(newCalendar);
+        commitModel();
         indicateAddressBookChanged();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void commitModel() {
+        undoStack.push(ModelType.ALL);
+        redoStack.clear();
+        versionedAddressBook.commit();
+        versionedCalendar.commit();
     }
 
     @Override
@@ -275,6 +286,10 @@ public class ModelManager extends ComponentManager implements Model {
             undoCalendar();
             redoStack.push(ModelType.CALENDAR);
             break;
+        case ALL:
+            undoAddressBook();
+            undoCalendar();
+            redoStack.push(ModelType.ALL);
         default:
             break;
         }
@@ -291,6 +306,10 @@ public class ModelManager extends ComponentManager implements Model {
             redoCalendar();
             undoStack.push(ModelType.CALENDAR);
             break;
+        case ALL:
+            redoAddressBook();
+            redoCalendar();
+            undoStack.push(ModelType.ALL);
         default:
             break;
         }

@@ -19,7 +19,10 @@ public interface Model {
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar);
+
+    /** Commits the entire model. */
+    void commitModel();
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();

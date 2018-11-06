@@ -12,6 +12,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
 import seedu.address.model.event.Date;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
@@ -38,6 +40,17 @@ public class EventListPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Event> eventList) {
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        eventListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        raise(new EventPanelSelectionChangedEvent(newValue));
+                    }
+                });
     }
 
     /**

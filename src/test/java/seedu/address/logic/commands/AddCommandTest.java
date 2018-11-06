@@ -97,7 +97,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitModel() {
             throw new AssertionError("This method should not be called.");
         }
 
