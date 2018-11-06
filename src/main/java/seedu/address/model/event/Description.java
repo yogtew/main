@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents the description of an event in the calendar.
+ * Represents the value of an event in the calendar.
  */
 public class Description {
 
@@ -12,22 +12,22 @@ public class Description {
             "Description can take any values, and it should not be blank";
 
     /*
-     * The first character of the description must not be a whitespace,
+     * The first character of the value must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String DESCRIPTION_STRING_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String description;
+    public final String value;
 
     /**
      * Constructs a (@code Description).
      *
-     * @param description a valid description.
+     * @param value a valid value.
      */
-    public Description(String description) {
-        requireNonNull(description);
-        checkArgument(isValidDescription(description), DESCRIPTION_STRING_CONSTRAINTS);
-        this.description = description;
+    public Description(String value) {
+        requireNonNull(value);
+        checkArgument(isValidDescription(value), DESCRIPTION_STRING_CONSTRAINTS);
+        this.value = value;
     }
 
     /**
@@ -39,18 +39,18 @@ public class Description {
 
     @Override
     public String toString() {
-        return description;
+        return value;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Description // instanceof handles nulls
-                && description.equals(((Description) other).description)); // state check
+                && value.equals(((Description) other).value)); // state check
     }
 
     @Override
     public int hashCode() {
-        return description.hashCode();
+        return value.hashCode();
     }
 }

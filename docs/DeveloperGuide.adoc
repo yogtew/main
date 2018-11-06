@@ -271,31 +271,31 @@ It follows a similar command flow as that of the address book, but it will have 
 This Event class has it's own unique fields that the user can specify to schedule an event:
 
 * Event Name: The name of the event, valid if it is not an empty string.
-* Date: The date of the event, valid if expressed in this forms:  `DD-MM-YYYY`.
-It must also be a date that actually falls within a calendar and between the years 1600 to 9999 (i.e. dates such as 25-13-2000 are invalid).
+* Date: The value of the event, valid if expressed in this forms:  `DD-MM-YYYY`.
+It must also be a value that actually falls within a calendar and between the years 1600 to 9999 (i.e. dates such as 25-13-2000 are invalid).
 * Start Time: The start time of the event, valid in this form: `HH:MM`, in 24-hour format.
 * End Time: The end time of the event, valid if it is in this form: `HH:MM`, in 24-hour format.
 The end time must also come after the start time.
-* Description: The description of the event, valid if it is not an empty string.
+* Description: The value of the event, valid if it is not an empty string.
 
 Currently, the main operation is the `schedule` command, and it is implemented as such:
 
-* `schedule event/EVENT_NAME date/DATE start/START_TIME end/END_TIME descr/DESCRIPTION`
+* `schedule event/EVENT_NAME value/DATE start/START_TIME end/END_TIME descr/DESCRIPTION`
 
 This operation exists within the logic component of ConTAct, with the Event data structure falling
 under the models component.
 
 Below is an example of how the schedule command behaves:
 
-`schedule event/Office Christmas Party date/23-12-2018 start/18:00 end/20:00 descr/Party at Scranton Branch`
+`schedule event/Office Christmas Party value/23-12-2018 start/18:00 end/20:00 descr/Party at Scranton Branch`
 
 This will simply create an event with the specified fields and store it similar to how the addressbook stores a student.
 Furthermore, the schedule command ensures that all the fields specified must be valid for it to be a success.
 
-Once scheduled, the list of events will be sorted by chronological order (taking the date and the start time).
+Once scheduled, the list of events will be sorted by chronological order (taking the value and the start time).
 
 The GUI itself will have a calendar component which will display the user's current list of events that they have
-scheduled, while adjusting for the current date.
+scheduled, while adjusting for the current value.
 
 The sequence diagram below shows how the components interact for the scenario where the user issues the command `schedule EVENT`, where `EVENT` is the event as specified by the input parameters.
 

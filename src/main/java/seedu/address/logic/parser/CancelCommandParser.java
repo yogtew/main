@@ -44,7 +44,7 @@ public class CancelCommandParser {
         EndTime end = ParserUtil.parseEndTime(argMultimap.getValue(PREFIX_END).get());
 
         // If the start time is later than the end time
-        if (start.startTime.compareTo(end.endTime) > 0) {
+        if (start.value.compareTo(end.value) > 0) {
             throw new ParseException(MESSAGE_INVALID_TIMES_FORMAT);
         }
         Event event = new Event(eventName, date, start, end);

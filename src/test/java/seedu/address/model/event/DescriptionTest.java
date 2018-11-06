@@ -22,14 +22,14 @@ public class DescriptionTest {
 
     @Test
     public void isValidDescription() {
-        // null description
+        // null value
         Assert.assertThrows(NullPointerException.class, () -> Description.isValidDescription(null));
 
-        // invalid description
+        // invalid value
         assertFalse(Description.isValidDescription(""));
         assertFalse(Description.isValidDescription(" "));
 
-        // valid description
+        // valid value
         assertTrue(Description.isValidDescription("25th Anniversary at Marina Bay Sands"));
         assertTrue(Description.isValidDescription("TODO: Prepare coursework"));
         assertTrue(Description.isValidDescription("-"));

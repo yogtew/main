@@ -3,7 +3,6 @@ package seedu.address.ui;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import javafx.application.Platform;
@@ -14,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.event.Date;
-import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
@@ -53,7 +51,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     /**
-     * Scrolls to the {@code EventCard} just after the given {@code date} and selects it.
+     * Scrolls to the {@code EventCard} just after the given {@code value} and selects it.
      */
     private void scrollTo(LocalDateTime time, ObservableList<Event> eventList) {
         String date = time.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));

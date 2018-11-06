@@ -19,22 +19,22 @@ public class Event {
         try {
             // compare start times
             java.util.Date start1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                    .parse(e1.date.date + " " + e1.startTime.startTime);
+                    .parse(e1.date.value + " " + e1.startTime.value);
             java.util.Date start2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                    .parse(e2.date.date + " " + e2.startTime.startTime);
+                    .parse(e2.date.value + " " + e2.startTime.value);
 
             // if start times are the same, compare end times
             java.util.Date end1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                    .parse(e1.date.date + " " + e1.endTime.endTime);
+                    .parse(e1.date.value + " " + e1.endTime.value);
             java.util.Date end2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                    .parse(e2.date.date + " " + e2.endTime.endTime);
+                    .parse(e2.date.value + " " + e2.endTime.value);
 
             if (start1.compareTo(start2) != 0) {
                 return start1.compareTo(start2);
             } else if (end1.compareTo(end2) != 0) {
                 return end1.compareTo(end2);
             } else {
-                return e1.eventName.eventName.compareTo(e2.eventName.eventName);
+                return e1.eventName.value.compareTo(e2.eventName.value);
             }
 
         } catch (ParseException e) {
@@ -55,7 +55,7 @@ public class Event {
      * Constructs a (@code Event).
      *
      * @param eventName a valid event name.
-     * @param date a valid date in dd-mm-yyyy format.
+     * @param date a valid value in dd-mm-yyyy format.
      * @param startTime a valid start time in 24 hour format.
      * @param endTime a valid end time in 24 hour format.
      * @param description valid details of the event.
@@ -71,10 +71,10 @@ public class Event {
     }
 
     /**
-     * Constructs a (@code Event) without a description.
+     * Constructs a (@code Event) without a value.
      *
      * @param eventName a valid event name.
-     * @param date a valid date in dd-mm-yyyy format.
+     * @param date a valid value in dd-mm-yyyy format.
      * @param startTime a valid start time in 24 hour format.
      * @param endTime a valid end time in 24 hour format.
      */
@@ -108,7 +108,7 @@ public class Event {
     }
 
     /**
-     * Returns true if both events have the same event name, date, start time, and end time.
+     * Returns true if both events have the same event name, value, start time, and end time.
      * This defines a weaker notion of equality between two events.
      */
     public boolean isSameEvent(Event otherEvent) {
