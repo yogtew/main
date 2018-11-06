@@ -9,10 +9,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Date {
 
     public static final String DATE_NAME_CONSTRAINTS =
-            "Dates should only be a valid value between the years 1600 and 9999, formatted as dd-mm-yyyy";
+            "Dates should only be a valid date between the years 1600 and 9999, formatted as dd-mm-yyyy";
 
     /**
-     * This regex checks if the value is valid and is formatted as dd-mm-yyyy
+     * This regex checks if the date is valid and is formatted as dd-mm-yyyy
      */
     public static final String DATE_VALIDATION_REGEX =
             "^(?:(?:31(\\/|-|\\.)(?:0?[13578]|1[02]))\\1|(?:(?:29|30)(-)"
@@ -21,21 +21,21 @@ public class Date {
             + "(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\\d|2[0-8])(-)"
             + "(?:(?:0?[1-9])|(?:1[0-2]))\\4(?:(?:1[6-9]|[2-9]\\d)?\\d{2})$";
 
-    public final String value;
+    public final String date;
 
     /**
      * Constructs a (@code Date).
      *
-     * @param value a valid start time.
+     * @param date a valid start time.
      */
-    public Date(String value) {
-        requireNonNull(value);
-        checkArgument(isValidDate(value), DATE_NAME_CONSTRAINTS);
-        this.value = value;
+    public Date(String date) {
+        requireNonNull(date);
+        checkArgument(isValidDate(date), DATE_NAME_CONSTRAINTS);
+        this.date = date;
     }
 
     /**
-     * Returns true if a given string is a valid value.
+     * Returns true if a given string is a valid date.
      */
     public static boolean isValidDate(String test) {
         return test.matches(DATE_VALIDATION_REGEX);
@@ -43,18 +43,18 @@ public class Date {
 
     @Override
     public String toString() {
-        return value;
+        return date;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
             || (other instanceof Date // instanceof handles null
-            && value.equals(((Date) other).value));
+            && date.equals(((Date) other).date));
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return date.hashCode();
     }
 }

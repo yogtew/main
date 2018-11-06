@@ -54,12 +54,12 @@ public class XmlAdaptedEvent {
      * @param source future changes to this will not affect the created XmlAdaptedEvent
      */
     public XmlAdaptedEvent(Event source) {
-        eventName = source.getEventName().value;
-        date = source.getDate().value;
-        startTime = source.getStartTime().value;
-        endTime = source.getEndTime().value;
+        eventName = source.getEventName().eventName;
+        date = source.getDate().date;
+        startTime = source.getStartTime().startTime;
+        endTime = source.getEndTime().endTime;
         source.getDescription().ifPresent(desc -> {
-            description = desc.value;
+            description = desc.description;
         });
     }
 

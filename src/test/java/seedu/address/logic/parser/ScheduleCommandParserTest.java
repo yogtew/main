@@ -62,7 +62,7 @@ public class ScheduleCommandParserTest {
                         + END_TIME_DESC_CONSULTATION + DESCRIPTION_DESC_CONSULTATION,
                 new ScheduleCommand(expectedEvent));
 
-        // multiple dates - last value accepted
+        // multiple dates - last date accepted
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + EVENT_NAME_DESC_CONSULTATION
                         + DATE_DESC_TUTORIAL + DATE_DESC_CONSULTATION + START_TIME_DESC_CONSULTATION
                         + END_TIME_DESC_CONSULTATION + DESCRIPTION_DESC_CONSULTATION,
@@ -80,7 +80,7 @@ public class ScheduleCommandParserTest {
                         + END_TIME_DESC_TUTORIAL + END_TIME_DESC_CONSULTATION + DESCRIPTION_DESC_CONSULTATION,
                 new ScheduleCommand(expectedEvent));
 
-        // multiple descriptions - last value accepted
+        // multiple descriptions - last description accepted
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + EVENT_NAME_DESC_CONSULTATION
                         + DATE_DESC_CONSULTATION + START_TIME_DESC_CONSULTATION
                         + END_TIME_DESC_CONSULTATION + DESCRIPTION_DESC_TUTORIAL + DESCRIPTION_DESC_CONSULTATION,
@@ -111,7 +111,7 @@ public class ScheduleCommandParserTest {
                         + DESCRIPTION_DESC_TUTORIAL,
                 expectedMessage);
 
-        // missing value prefix
+        // missing date prefix
         assertParseFailure(parser,
                 EVENT_NAME_DESC_TUTORIAL
                         + VALID_DATE_TUTORIAL
@@ -159,7 +159,7 @@ public class ScheduleCommandParserTest {
                         + DESCRIPTION_DESC_TUTORIAL,
                 EventName.EVENT_NAME_CONSTRAINTS);
 
-        // invalid value
+        // invalid date
         assertParseFailure(parser,
                 EVENT_NAME_DESC_TUTORIAL
                         + INVALID_DATE_DESC
@@ -186,7 +186,7 @@ public class ScheduleCommandParserTest {
                         + DESCRIPTION_DESC_TUTORIAL,
                 EndTime.END_TIME_CONSTRAINTS);
 
-        // invalid value
+        // invalid description
         assertParseFailure(parser,
                 EVENT_NAME_DESC_TUTORIAL
                         + DATE_DESC_TUTORIAL

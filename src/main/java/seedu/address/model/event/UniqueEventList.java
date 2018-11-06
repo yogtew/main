@@ -14,7 +14,7 @@ import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * A sorted list of events that enforces uniqueness between its elements and does not allow nulls.
- * The list uses the {@code Event#COMPARATOR} to compare events based on value, start time, end time, and name,
+ * The list uses the {@code Event#COMPARATOR} to compare events based on date, start time, end time, and name,
  * in that order.
  *
  * The order of the backing list is enforced by the methods themselves, with the use of

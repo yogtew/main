@@ -17,17 +17,17 @@ public class EventName {
      */
     public static final String EVENT_NAME_VALIDATION_REGEX = "[^\\s].*";
 
-    public final String value;
+    public final String eventName;
 
     /**
      * Constructs a (@code EventName).
      *
-     * @param value a valid event name.
+     * @param eventName a valid event name.
      */
-    public EventName(String value) {
-        requireNonNull(value);
-        checkArgument(isValidEventName(value), EVENT_NAME_CONSTRAINTS);
-        this.value = value;
+    public EventName(String eventName) {
+        requireNonNull(eventName);
+        checkArgument(isValidEventName(eventName), EVENT_NAME_CONSTRAINTS);
+        this.eventName = eventName;
     }
 
     /**
@@ -39,18 +39,18 @@ public class EventName {
 
     @Override
     public String toString() {
-        return value;
+        return eventName;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EventName // instanceof handles nulls
-                && value.equals(((EventName) other).value)); // state check
+                && eventName.equals(((EventName) other).eventName)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return eventName.hashCode();
     }
 }

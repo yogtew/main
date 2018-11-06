@@ -176,10 +176,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String value} into an {@code EventName}.
+     * Parses a {@code String eventName} into an {@code EventName}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code value} is invalid.
+     * @throws ParseException if the given {@code eventName} is invalid.
      */
     public static EventName parseEventName(String eventName) throws ParseException {
         requireNonNull(eventName);
@@ -191,10 +191,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String value} into an {@code Date}.
+     * Parses a {@code String date} into an {@code Date}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code value} is invalid.
+     * @throws ParseException if the given {@code date} is invalid.
      */
     public static Date parseDate(String date) throws ParseException {
         requireNonNull(date);
@@ -206,10 +206,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String value} into an {@code StartTime}.
+     * Parses a {@code String startTime} into an {@code StartTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code value} is invalid.
+     * @throws ParseException if the given {@code startTime} is invalid.
      */
     public static StartTime parseStartTime(String startTime) throws ParseException {
         requireNonNull(startTime);
@@ -221,10 +221,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String value} into an {@code value}.
+     * Parses a {@code String endTime} into an {@code endTime}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code value} is invalid.
+     * @throws ParseException if the given {@code endTime} is invalid.
      */
     public static EndTime parseEndTime(String endTime) throws ParseException {
         requireNonNull(endTime);
@@ -236,10 +236,10 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String value} into an {@code Description}.
+     * Parses a {@code String description} into an {@code Description}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code value} is invalid.
+     * @throws ParseException if the given {@code description} is invalid.
      */
     public static Description parseDescription(String description) throws ParseException {
         requireNonNull(description);

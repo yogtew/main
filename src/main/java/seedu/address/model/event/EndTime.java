@@ -16,17 +16,17 @@ public class EndTime {
      * The end time should be hh:mm and in a 24 hour format (leading zeroes optional).
      */
     public static final String END_TIME_VALIDATION_REGEX = "^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
-    public final String value;
+    public final String endTime;
 
     /**
      * Constructs a (@code EndTime).
      *
-     * @param value a valid end time.
+     * @param endTime a valid end time.
      */
-    public EndTime(String value) {
-        requireNonNull(value);
-        checkArgument(isValidEndTime(value), END_TIME_CONSTRAINTS);
-        this.value = value;
+    public EndTime(String endTime) {
+        requireNonNull(endTime);
+        checkArgument(isValidEndTime(endTime), END_TIME_CONSTRAINTS);
+        this.endTime = endTime;
     }
 
     /**
@@ -38,18 +38,18 @@ public class EndTime {
 
     @Override
     public String toString() {
-        return value;
+        return endTime;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof EndTime // instanceof handles nulls
-                && value.equals(((EndTime) other).value)); // state check
+                && endTime.equals(((EndTime) other).endTime)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return endTime.hashCode();
     }
 }

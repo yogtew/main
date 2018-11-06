@@ -7,6 +7,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
+import seedu.address.model.event.exceptions.EventNotFoundException;
 
 /**
  * Cancels an event in the Calendar.
@@ -16,9 +17,9 @@ public class CancelCommand extends Command {
     public static final String COMMAND_WORD = "cancel";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Cancels the event identified by the name, value, start time, and end time in the list of events.\n"
-            + "Parameters: event/EVENT_NAME value/DATE start/START_TIME end/END_TIME\n"
-            + "Example: " + COMMAND_WORD + " event/CS2103 finals value/5-12-2018 start/17:00 end/18:00";
+            + ": Cancels the event identified by the name, date, start time, and end time in the list of events.\n"
+            + "Parameters: event/EVENT_NAME date/DATE start/START_TIME end/END_TIME\n"
+            + "Example: " + COMMAND_WORD + " event/CS2103 finals date/5-12-2018 start/17:00 end/18:00";
 
     public static final String MESSAGE_DELETE_STUDENT_SUCCESS = "Cancelled Event: %1$s";
 

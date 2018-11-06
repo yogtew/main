@@ -16,17 +16,17 @@ public class StartTime {
      * The start time should be hh:mm and in a 24 hour format (leading zeroes optional).
      */
     public static final String START_TIME_VALIDATION_REGEX = "^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
-    public final String value;
+    public final String startTime;
 
     /**
      * Constructs a (@code StartTime).
      *
-     * @param value a valid start time.
+     * @param startTime a valid start time.
      */
-    public StartTime(String value) {
-        requireNonNull(value);
-        checkArgument(isValidStartTime(value), START_TIME_CONSTRAINTS);
-        this.value = value;
+    public StartTime(String startTime) {
+        requireNonNull(startTime);
+        checkArgument(isValidStartTime(startTime), START_TIME_CONSTRAINTS);
+        this.startTime = startTime;
     }
 
     /**
@@ -38,18 +38,18 @@ public class StartTime {
 
     @Override
     public String toString() {
-        return value;
+        return startTime;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof StartTime // instanceof handles nulls
-                && value.equals(((StartTime) other).value)); // state check
+                && startTime.equals(((StartTime) other).startTime)); // state check
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return startTime.hashCode();
     }
 }

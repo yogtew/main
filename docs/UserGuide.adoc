@@ -130,7 +130,7 @@ Marks the attendance of the student with index number 3 as absent.
 === Schedule timetables: `schedule`
 
 Schedules an event for the user to keep track of. +
-Format: `schedule event/EVENT_NAME value/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
+Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
 
 ****
 * The event will be scheduled and reflected on the user's list of events
@@ -139,7 +139,7 @@ Format: `schedule event/EVENT_NAME value/DATE start/TIME_START end/TIME_END desc
 
 Examples:
 
-* `schedule event/CS2103-Tutorial-W13 value/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
+* `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
 Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
 
 === Emailing students: `email`
@@ -384,8 +384,8 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `sort NAME`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
 e.g. `attd CS2103-Tutorial-W13`
-* *Schedule* : `schedule event/EVENT_NAME value/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
-e.g `schedule event/CS2103-Tutorial-W13 value/22-3-2018 start/16:00 end/18:00 descr/Product demo`
+* *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
+e.g `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo`
 * *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
 e.g. `email CS2103-Tutorial-W13`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +

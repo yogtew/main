@@ -69,7 +69,7 @@ We use a new user account to generate the token for team projects to prevent tea
 If you are the only one with write access to the repo, you can use your own account to generate the token.
 +
 --
-* Add a value for the token. (e.g. `Travis CI - deploy docs to gh-pages`)
+* Add a description for the token. (e.g. `Travis CI - deploy docs to gh-pages`)
 * Check the `public_repo` checkbox.
 * Click `Generate Token` and copy your new personal access token.
 --

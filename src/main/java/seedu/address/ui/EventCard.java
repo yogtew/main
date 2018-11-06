@@ -39,12 +39,12 @@ public class EventCard extends UiPart<Region> {
     public EventCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
-        eventName.setText(event.getEventName().value);
-        date.setText("Date: " + event.getDate().value);
-        startTime.setText("Start: " + event.getStartTime().value);
-        endTime.setText("End: " + event.getEndTime().value);
+        eventName.setText(event.getEventName().eventName);
+        date.setText("Date: " + event.getDate().date);
+        startTime.setText("Start: " + event.getStartTime().startTime);
+        endTime.setText("End: " + event.getEndTime().endTime);
         event.getDescription().ifPresentOrElse(desc -> {
-            description.setText(desc.value);
+            description.setText(desc.description);
         }, () -> description.setText(" "));
 
     }
