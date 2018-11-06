@@ -290,6 +290,7 @@ public class ModelManager extends ComponentManager implements Model {
             undoAddressBook();
             undoCalendar();
             redoStack.push(ModelType.ALL);
+            break;
         default:
             break;
         }
@@ -310,6 +311,7 @@ public class ModelManager extends ComponentManager implements Model {
             redoAddressBook();
             redoCalendar();
             undoStack.push(ModelType.ALL);
+            break;
         default:
             break;
         }
