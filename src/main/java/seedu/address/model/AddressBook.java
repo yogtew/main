@@ -109,7 +109,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
+        if (other == this) {
+            return true;
+        }
         if (other instanceof AddressBook) {
             if (students.equals(((AddressBook) other).students)) {
                 return true;

@@ -55,7 +55,8 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         if (argMultiMap.getAllValues(PREFIX_MARK).size() == 1) {
             if (splitArgs.length == 2) {
-                throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT
+                        , TagCommand.MESSAGE_USAGE));
             }
             String markName = checkAlias(argMultiMap.getValue(PREFIX_MARK).orElse(Mark.DEFAULT_NAME));
             return new TagCommand(markName, tags, mode);
@@ -74,8 +75,14 @@ public class TagCommandParser implements Parser<TagCommand> {
 
     }
 
+    /**
+     * checks if the mark name is valid otherwise throws an exception
+     * @param name
+     * @return
+     * @throws ParseException
+     */
     private String checkAlias(String name) throws ParseException {
-        if(!Mark.isValidMarkName(name)) {
+        if (!Mark.isValidMarkName(name)) {
             throw new ParseException(Mark.MARK_NAME_CONSTRAINTS);
         }
         return name;

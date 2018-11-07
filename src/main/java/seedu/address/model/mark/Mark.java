@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.student.Student;
 
 // todo: REGEX validation on name: alphanumeric & no spaces
@@ -17,17 +16,16 @@ import seedu.address.model.student.Student;
 public class Mark {
     public static final String DEFAULT_NAME = "default";
     public static final Mark EMPTY = new Mark();
-    private HashSet<Student> set;
-    private String name;
-
     public static final String MARK_NAME_CONSTRAINTS =
             "Mark names should only contain alphanumeric characters, and it should not be blank";
-
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String MARK_VALIDATION_REGEX = "[\\p{Alnum}]+";
+
+    private HashSet<Student> set;
+    private String name;
 
     public Mark(Collection<Student> inputCollection, String markName) {
         this.set = new HashSet<>(inputCollection);
@@ -38,12 +36,6 @@ public class Mark {
     public Mark(Mark mark) {
         this.set = new HashSet<>(mark.set);
         this.name = mark.name;
-    }
-
-    public static void checkArguments(String markName) {
-        if (!isValidMarkName(markName)) {
-            throw new IllegalArgumentException(MARK_NAME_CONSTRAINTS);
-        }
     }
 
     public Mark(List<Student> inputList) {
@@ -60,12 +52,28 @@ public class Mark {
     }
 
     /**
+     * checks the validity of the name and throws an exception otherwise
+     * @param markName
+     */
+    public static void checkArguments(String markName) {
+        if (!isValidMarkName(markName)) {
+            throw new IllegalArgumentException(MARK_NAME_CONSTRAINTS);
+        }
+    }
+
+    /**
             * Returns true if a given string is a valid name.
      */
     public static boolean isValidMarkName(String test) {
         return test.matches(MARK_VALIDATION_REGEX);
     }
 
+    /**
+     * checks if its a valid mark name. if it is return the name, otherwise throw an exception
+     * @param name
+     * @return
+     * @throws IllegalArgumentException
+     */
     public static String checkValidMarkName(String name) throws IllegalArgumentException {
         if (isValidMarkName(name)) {
             return name;

@@ -42,6 +42,12 @@ public class TagCommand extends Command implements IMarkExecutable {
         useMark = false;
     }
 
+    /**
+     * Performs the command on one person
+     * @param model
+     * @param history
+     * @param target
+     */
     private void processStudent(Model model, CommandHistory history, Student target) {
         Set<Tag> updatedTags = new HashSet<>(target.getTags());
         switch(mode) {
@@ -86,12 +92,17 @@ public class TagCommand extends Command implements IMarkExecutable {
     public CommandResult executeMark(Model model, CommandHistory history) {
         Mark m = model.getMark(markName);
         m.getList().forEach(p -> {
-                processStudent(model, history, p);
+            processStudent(model, history, p);
         });
         model.commitAddressBook();
         return formatCommandResult(m.count());
     }
 
+    /**
+     * Formats a CommandResult to be returned
+     * @param n
+     * @return
+     */
     private CommandResult formatCommandResult(int n) {
         String verb;
         switch(mode) {
@@ -109,19 +120,20 @@ public class TagCommand extends Command implements IMarkExecutable {
             break;
         }
 
-        String pluralName = n == 1 ? "student":"students";
+        String pluralName = n == 1 ? "student" : "students";
 
         return new CommandResult(String.format("Successfully %s %d %s", verb, n, pluralName));
     }
 
     @Override
     public boolean equals(Object other) {
-        return this == other ||
-                (other instanceof TagCommand &&
-                        markName.equals(((TagCommand) other).markName) &&
-                        tags.equals(((TagCommand) other).tags) &&
-                        useMark == ((TagCommand) other).useMark &&
-                        index.equals(((TagCommand) other).index) &&
-                        mode.equals(((TagCommand) other).mode));
+        return this == other
+                || (other instanceof TagCommand
+                && markName.equals(((TagCommand) other).markName)
+                && tags.equals(
+                        ((TagCommand) other).tags)
+                && useMark == ((TagCommand) other).useMark
+                && index.equals(((TagCommand) other).index)
+                && mode.equals(((TagCommand) other).mode));
     }
 }

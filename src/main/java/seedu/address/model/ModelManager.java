@@ -9,8 +9,6 @@ import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -20,7 +18,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.events.model.StudentChangedEvent;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.student.Student;
@@ -368,6 +365,11 @@ public class ModelManager extends ComponentManager implements Model {
         return marks;
     }
 
+    /**
+     * updates the marks whenever a student is updated
+     * @param oldStudent
+     * @param newStudent
+     */
     public void updateMarks(Student oldStudent, Student newStudent) {
         marks.forEach((mark) -> {
             Set<Student> set = new HashSet<>(mark.getSet());
