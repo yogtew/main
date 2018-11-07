@@ -1,5 +1,7 @@
 package seedu.address.testutil;
 
+import java.util.Optional;
+
 import seedu.address.model.event.Date;
 import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
@@ -16,20 +18,19 @@ public class EventBuilder {
     public static final String DEFAULT_DATE = "24-10-2018";
     public static final String DEFAULT_START_TIME = "13:00";
     public static final String DEFAULT_END_TIME = "14:00";
-    public static final String DEFAULT_DESCRIPTION = "Mid v1.3";
 
     private EventName eventName;
     private Date date;
     private StartTime startTime;
     private EndTime endTime;
-    private Description description;
+    private Optional<Description> description;
 
     public EventBuilder() {
         eventName = new EventName(DEFAULT_EVENT_NAME);
         date = new Date(DEFAULT_DATE);
         startTime = new StartTime(DEFAULT_START_TIME);
         endTime = new EndTime(DEFAULT_END_TIME);
-        description = new Description(DEFAULT_DESCRIPTION);
+        description = Optional.empty();
     }
 
     /**
@@ -79,7 +80,7 @@ public class EventBuilder {
      * Sets the {@code Description} of the {@code Event} that we are building
      */
     public EventBuilder withDescription(String description) {
-        this.description = new Description(description);
+        this.description = Optional.of(new Description(description));
         return this;
     }
 

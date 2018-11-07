@@ -1,7 +1,9 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.addTypicalEvent;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstEvent;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstStudent;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendar;
 import static seedu.address.testutil.TypicalStudents.getTypicalAddressBook;
@@ -25,27 +27,40 @@ public class RedoCommandTest {
     public void setUp() {
         // set up of both models' undo/redo history
         deleteFirstStudent(model);
-        deleteFirstStudent(model);
-        model.undoAddressBook();
-        model.undoAddressBook();
+        deleteFirstEvent(model);
+        model.undo();
+        model.undo();
 
         deleteFirstStudent(expectedModel);
-        deleteFirstStudent(expectedModel);
-        expectedModel.undoAddressBook();
-        expectedModel.undoAddressBook();
+        deleteFirstEvent(expectedModel);
+        expectedModel.undo();
+        expectedModel.undo();
     }
 
     @Test
-    public void execute() {
+    public void execute_redoAllStates_success() {
         // multiple redoable states in model
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single redoable state in model
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no redoable state in model
+        assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
+    }
+
+    @Test
+    public void execute_undoThenCommit() {
+        // multiple redoable states in model
+        expectedModel.redo();
+        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        addTypicalEvent(model);
+        addTypicalEvent(expectedModel);
+
+        // no redoable state in model as the model has been committed.
         assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
     }
 }

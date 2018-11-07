@@ -3,7 +3,7 @@ package seedu.address.commons.events.model;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.ReadOnlyCalendar;
 
-/** Indicates the AddressBook in the model has changed*/
+/** Indicates the Calendar in the model has changed*/
 public class CalendarChangedEvent extends BaseEvent {
 
     public final ReadOnlyCalendar data;
@@ -14,7 +14,7 @@ public class CalendarChangedEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return "number of students " + data.getEventList().size();
+        return "number of events " + data.getEventList().size();
     }
 }
 

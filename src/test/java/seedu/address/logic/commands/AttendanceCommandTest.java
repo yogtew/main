@@ -50,7 +50,7 @@ public class AttendanceCommandTest {
         String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new Calendar(), new UserPrefs());
+                new Calendar(model.getCalendar()), new UserPrefs());
         expectedModel.updateStudent(firstStudent, editedStudent);
         expectedModel.commitAddressBook();
 
@@ -70,7 +70,7 @@ public class AttendanceCommandTest {
         String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new Calendar(), new UserPrefs());
+                new Calendar(model.getCalendar()), new UserPrefs());
         expectedModel.updateStudent(firstStudent, editedStudent);
         expectedModel.commitAddressBook();
 
@@ -112,7 +112,7 @@ public class AttendanceCommandTest {
 
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(ATTENDANCE_STUB));
-        Model expectedModel = new ModelManager(model.getAddressBook(), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendar(), new UserPrefs());
         expectedModel.updateStudent(studentToModify, modifiedStudent);
         expectedModel.commitAddressBook();
 
@@ -120,11 +120,11 @@ public class AttendanceCommandTest {
         attendanceCommand.execute(model, commandHistory);
 
         // undo -> reverts conTAct back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first student modified again
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -153,7 +153,7 @@ public class AttendanceCommandTest {
     public void executeUndoRedo_validIndexFilteredList_sameStudentDeleted() throws Exception {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(ATTENDANCE_STUB));
-        Model expectedModel = new ModelManager(model.getAddressBook(), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendar(), new UserPrefs());
 
         showStudentAtIndex(model, INDEX_SECOND_STUDENT);
         Student studentToModify = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -165,11 +165,11 @@ public class AttendanceCommandTest {
         attendanceCommand.execute(model, commandHistory);
 
         // undo -> reverts address book back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> modifies same second student in unfiltered student list
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
