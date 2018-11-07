@@ -4,9 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BODY_EMAIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL_NO_DESCRIPTION;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 
 import java.util.Arrays;
@@ -19,6 +26,7 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AttendanceCommand;
+import seedu.address.logic.commands.CancelCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -29,6 +37,7 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -141,6 +150,31 @@ public class AddressBookParserTest {
         SelectCommand command = (SelectCommand) parser.parseCommand(
                 SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_STUDENT.getOneBased());
         assertEquals(new SelectCommand(INDEX_FIRST_STUDENT), command);
+    }
+
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
+                ScheduleCommand.COMMAND_WORD + " "
+                + EVENT_NAME_DESC_TUTORIAL
+                + DATE_DESC_TUTORIAL
+                + START_TIME_DESC_TUTORIAL
+                + END_TIME_DESC_TUTORIAL
+                + DESCRIPTION_DESC_TUTORIAL
+        );
+        assertEquals(new ScheduleCommand(TUTORIAL), command);
+    }
+
+    @Test
+    public void parseCommand_cancel() throws Exception {
+        CancelCommand command = (CancelCommand) parser.parseCommand(
+                CancelCommand.COMMAND_WORD + " "
+                + EVENT_NAME_DESC_TUTORIAL
+                + DATE_DESC_TUTORIAL
+                + START_TIME_DESC_TUTORIAL
+                + END_TIME_DESC_TUTORIAL
+        );
+        assertEquals(new CancelCommand(TUTORIAL_NO_DESCRIPTION), command);
     }
 
     @Test

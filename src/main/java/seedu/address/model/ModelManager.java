@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -37,6 +38,18 @@ public class ModelManager extends ComponentManager implements Model {
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
 
+
+    // maintain an internal undo/redo stack to keep track of which model to undo/redo
+    private final Stack<ModelType> undoStack = new Stack<>();
+    private final Stack<ModelType> redoStack = new Stack<>();
+
+    /**
+     * Denotes the operations carried out on the model.
+     */
+    private enum ModelType {
+        ADDRESSBOOK, CALENDAR, ALL
+    }
+
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
      */
@@ -59,9 +72,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        versionedAddressBook.resetData(newData);
+    public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar) {
+        versionedAddressBook.resetData(newAddressBook);
+        versionedCalendar.resetData(newCalendar);
+        commitModel();
         indicateAddressBookChanged();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void commitModel() {
+        undoStack.push(ModelType.ALL);
+        redoStack.clear();
+        versionedAddressBook.commit();
+        versionedCalendar.commit();
     }
 
     @Override
@@ -132,20 +156,26 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.canRedo();
     }
 
-    @Override
-    public void undoAddressBook() {
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    private void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void redoAddressBook() {
+    /**
+     * Restores the model's address book to its previously undone state.
+     */
+    private void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void commitAddressBook() {
+        undoStack.push(ModelType.ADDRESSBOOK);
+        redoStack.clear();
         versionedAddressBook.commit();
     }
 
@@ -205,20 +235,26 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedCalendar.canRedo();
     }
 
-    @Override
-    public void undoCalendar() {
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    private void undoCalendar() {
         versionedCalendar.undo();
         indicateCalendarChanged();
     }
 
-    @Override
-    public void redoCalendar() {
+    /**
+     * Restores the model's calendar to its previously undone state.
+     */
+    private void redoCalendar() {
         versionedCalendar.redo();
         indicateCalendarChanged();
     }
 
     @Override
     public void commitCalendar() {
+        undoStack.push(ModelType.CALENDAR);
+        redoStack.clear();
         versionedCalendar.commit();
     }
 
@@ -239,6 +275,60 @@ public class ModelManager extends ComponentManager implements Model {
         filteredEvents.setPredicate(predicate);
     }
 
+    //=========== Undo/Redo Controllers ==============================================================
+
+    @Override
+    public void undo() {
+        switch (undoStack.pop()) {
+        case ADDRESSBOOK:
+            undoAddressBook();
+            redoStack.push(ModelType.ADDRESSBOOK);
+            break;
+        case CALENDAR:
+            undoCalendar();
+            redoStack.push(ModelType.CALENDAR);
+            break;
+        case ALL:
+            undoAddressBook();
+            undoCalendar();
+            redoStack.push(ModelType.ALL);
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Override
+    public void redo() {
+        switch (redoStack.pop()) {
+        case ADDRESSBOOK:
+            redoAddressBook();
+            undoStack.push(ModelType.ADDRESSBOOK);
+            break;
+        case CALENDAR:
+            redoCalendar();
+            undoStack.push(ModelType.CALENDAR);
+            break;
+        case ALL:
+            redoAddressBook();
+            redoCalendar();
+            undoStack.push(ModelType.ALL);
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Override
+    public boolean canUndo() {
+        return !undoStack.empty();
+    }
+
+    @Override
+    public boolean canRedo() {
+        return !redoStack.empty();
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -253,17 +343,10 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-
-        if (!versionedAddressBook.equals(other.versionedAddressBook)) {
-            System.out.println("Diff versionedAddressBook");
-            return false;
-        }
-
-        if (!filteredStudents.equals(other.filteredStudents)) {
-            System.out.println("Diff filteredStudents");
-            return false;
-        }
-        return true;
+        return versionedAddressBook.equals(other.versionedAddressBook)
+                && filteredStudents.equals(other.filteredStudents)
+                && versionedCalendar.equals(other.versionedCalendar)
+                && filteredEvents.equals(other.filteredEvents);
     }
 
     public Mark getMark(String markName) throws IllegalArgumentException {

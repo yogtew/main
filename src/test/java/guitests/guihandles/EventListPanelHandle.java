@@ -6,38 +6,38 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.address.model.student.Student;
+import seedu.address.model.event.Event;
 
 /**
- * Provides a handle for {@code StudentListPanel} containing the list of {@code StudentCard}.
+ * Provides a handle for {@code EventListPanel} containing the list of {@code EventCard}.
  */
-public class StudentListPanelHandle extends NodeHandle<ListView<Student>> {
-    public static final String STUDENT_LIST_VIEW_ID = "#studentListView";
+public class EventListPanelHandle extends NodeHandle<ListView<Event>> {
+    public static final String EVENT_LIST_VIEW_ID = "#eventListView";
 
-    private static final String CARD_PANE_ID = "#cardStudentPane";
+    private static final String CARD_PANE_ID = "#cardEventPane";
 
-    private Optional<Student> lastRememberedSelectedStudentCard;
+    private Optional<Event> lastRememberedSelectedEventCard;
 
-    public StudentListPanelHandle(ListView<Student> studentListPanelNode) {
-        super(studentListPanelNode);
+    public EventListPanelHandle(ListView<Event> eventListPanelNode) {
+        super(eventListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code StudentCardHandle}.
+     * Returns a handle to the selected {@code EventCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public StudentCardHandle getHandleToSelectedCard() {
-        List<Student> selectedStudentList = getRootNode().getSelectionModel().getSelectedItems();
+    public EventCardHandle getHandleToSelectedCard() {
+        List<Event> selectedEventList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (selectedStudentList.size() != 1) {
+        if (selectedEventList.size() != 1) {
             throw new AssertionError("Student list size expected 1.");
         }
 
         return getAllCardNodes().stream()
-                .map(StudentCardHandle::new)
-                .filter(handle -> handle.equals(selectedStudentList.get(0)))
+                .map(EventCardHandle::new)
+                .filter(handle -> handle.equals(selectedEventList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -53,7 +53,7 @@ public class StudentListPanelHandle extends NodeHandle<ListView<Student>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<Student> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Event> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -63,15 +63,15 @@ public class StudentListPanelHandle extends NodeHandle<ListView<Student>> {
     }
 
     /**
-     * Navigates the listview to display {@code student}.
+     * Navigates the listview to display {@code event}.
      */
-    public void navigateToCard(Student student) {
-        if (!getRootNode().getItems().contains(student)) {
-            throw new IllegalArgumentException("Student does not exist.");
+    public void navigateToCard(Event event) {
+        if (!getRootNode().getItems().contains(event)) {
+            throw new IllegalArgumentException("Event does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(student);
+            getRootNode().scrollTo(event);
         });
         guiRobot.pauseForHuman();
     }
@@ -91,25 +91,25 @@ public class StudentListPanelHandle extends NodeHandle<ListView<Student>> {
     }
 
     /**
-     * Selects the {@code StudentCard} at {@code index} in the list.
+     * Selects the {@code EventCard} at {@code index} in the list.
      */
     public void select(int index) {
         getRootNode().getSelectionModel().select(index);
     }
 
     /**
-     * Returns the student card handle of a student associated with the {@code index} in the list.
+     * Returns the event card handle of an event associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public StudentCardHandle getStudentCardHandle(int index) {
+    public EventCardHandle getEventCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(StudentCardHandle::new)
-                .filter(handle -> handle.equals(getStudent(index)))
+                .map(EventCardHandle::new)
+                .filter(handle -> handle.equals(getEvent(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private Student getStudent(int index) {
+    private Event getEvent(int index) {
         return getRootNode().getItems().get(index);
     }
 
@@ -123,30 +123,30 @@ public class StudentListPanelHandle extends NodeHandle<ListView<Student>> {
     }
 
     /**
-     * Remembers the selected {@code StudentCard} in the list.
+     * Remembers the selected {@code EventCard} in the list.
      */
-    public void rememberSelectedStudentCard() {
-        List<Student> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public void rememberSelectedEventCard() {
+        List<Event> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedStudentCard = Optional.empty();
+            lastRememberedSelectedEventCard = Optional.empty();
         } else {
-            lastRememberedSelectedStudentCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedEventCard = Optional.of(selectedItems.get(0));
         }
     }
 
     /**
-     * Returns true if the selected {@code StudentCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedStudentCard()} call.
+     * Returns true if the selected {@code EventCard} is different from the value remembered by the most recent
+     * {@code rememberSelectedEventCard()} call.
      */
-    public boolean isSelectedStudentCardChanged() {
-        List<Student> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public boolean isSelectedEventCardChanged() {
+        List<Event> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedStudentCard.isPresent();
+            return lastRememberedSelectedEventCard.isPresent();
         } else {
-            return !lastRememberedSelectedStudentCard.isPresent()
-                    || !lastRememberedSelectedStudentCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedEventCard.isPresent()
+                    || !lastRememberedSelectedEventCard.get().equals(selectedItems.get(0));
         }
     }
 

@@ -49,6 +49,29 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void hasEvent_nullEvent_throwsNullPointer () {
+        thrown.expect(NullPointerException.class);
+        modelManager.hasEvent(null);
+    }
+
+    @Test
+    public void hasEvent_eventNotInCalendar_returnsFalse() {
+        assertFalse(modelManager.hasEvent(TUTORIAL));
+    }
+
+    @Test
+    public void hasEvent_eventInCalendar_returnsTrue() {
+        modelManager.addEvent(TUTORIAL);
+        assertTrue(modelManager.hasEvent(TUTORIAL));
+    }
+
+    @Test
+    public void getFilteredEventList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getFilteredEventList().remove(0);
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withStudent(ALICE).withStudent(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
@@ -71,9 +94,12 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, differentCalendar, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, calendar, userPrefs)));
 
-        // different filteredList -> returns false
+        // different calendar -> returns false
+        assertFalse(modelManager.equals(new ModelManager(addressBook, differentCalendar, userPrefs)));
+
+        // different filteredStudentList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
         modelManager.updateFilteredStudentList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         assertFalse(modelManager.equals(new ModelManager(addressBook, calendar, userPrefs)));
