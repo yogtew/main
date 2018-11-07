@@ -300,19 +300,29 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Tag Students: `tag`
+Adds, sets or deletes tags from students (by index or by name).
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Format: `tag add|set|del index|m/mark [t/tags...]`
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+Examples:
+```
+tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
+tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
+tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+tag add m/students t/cs2103 // Adds the tag "cs2103" to all students in the mark named "students"
+```
+
+Note:
+
+* The command accepts any number of tags (including 0), using `tag set` with no tags supplied will clear all tags
+* The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
+* The command will not fail even if the supplied tag is absent in the case of `tag delete`
+* The command will still display a success message if the above cases occur
 
 // tag::mark[]
-=== Mark
+=== Mark: `mark`
 A Mark represents a group of Students in the app. Some commands accept Marks as an alternative to INDEX as a parameter to quickly perform batch operations.
 
 ==== Mark Creation
@@ -366,6 +376,17 @@ Examples:
 * `mark m/test show` -- shows students marked under _m/test_ in the GUI
 // end::mark[]
 
+=== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+// tag::dataencryption[]
+=== Encrypting data files `[coming in v2.0]`
+
+_{explain how the user can enable/disable data encryption}_
+// end::dataencryption[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -397,3 +418,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Tag* : `tag add|set|del index|m/mark [t/tags...]`
+* *Mark* : `mark [m/m1] ...`
+** `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and mark under _m1_
+** `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
+** `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
+** `show` -- displays students from _m1_ in the GUI

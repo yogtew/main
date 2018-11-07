@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.student.Student;
 
 // todo: REGEX validation on name: alphanumeric & no spaces
@@ -35,7 +36,7 @@ public class Mark {
     }
 
     public static void checkArguments(String markName) {
-        if (!isValidMark(markName)) {
+        if (!isValidMarkName(markName)) {
             throw new IllegalArgumentException(MARK_NAME_CONSTRAINTS);
         }
     }
@@ -56,8 +57,15 @@ public class Mark {
     /**
             * Returns true if a given string is a valid name.
      */
-    public static boolean isValidMark(String test) {
+    public static boolean isValidMarkName(String test) {
         return test.matches(MARK_VALIDATION_REGEX);
+    }
+
+    public static String checkValidMarkName(String name) throws IllegalArgumentException {
+        if (isValidMarkName(name)) {
+            return name;
+        }
+        throw new IllegalArgumentException(Mark.MARK_NAME_CONSTRAINTS);
     }
 
     public ArrayList<Student> getList() {

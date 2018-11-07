@@ -108,7 +108,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
     }
 
     private String checkAlias(String name) throws ParseException {
-        if(!Mark.isValidMark(name)) {
+        if(!Mark.isValidMarkName(name)) {
             throw new ParseException(Mark.MARK_NAME_CONSTRAINTS);
         }
         return name;

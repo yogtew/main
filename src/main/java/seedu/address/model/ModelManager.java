@@ -19,6 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.events.model.StudentChangedEvent;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.student.Student;
@@ -255,7 +256,8 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredStudents.equals(other.filteredStudents);
     }
 
-    public Mark getMark(String markName) {
+    public Mark getMark(String markName) throws IllegalArgumentException {
+        Mark.checkValidMarkName(markName);
         return marks.stream().filter(m -> m.getName().equals(markName)).findFirst().orElse(Mark.EMPTY);
     }
 

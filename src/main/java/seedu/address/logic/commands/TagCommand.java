@@ -17,25 +17,25 @@ import seedu.address.model.tag.Tag;
 /**
  * Command that adds tags to marked Students
  */
-public class SetTagCommand extends Command implements IMarkExecutable {
+public class TagCommand extends Command implements IMarkExecutable {
 
     public static final String COMMAND_WORD = "tag";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " add|set|del index|mark tags...";
     private final Set<Tag> tags;
     private String markName = "";
     private Index index = Index.fromZeroBased(0);
-    private boolean useMark = false;
+    private boolean useMark;
     private TagCommandMode mode;
 
 
-    public SetTagCommand(String markName, Set<Tag> tags, TagCommandMode mode) {
+    public TagCommand(String markName, Set<Tag> tags, TagCommandMode mode) {
         this.markName = markName;
         this.tags = tags;
         this.mode = mode;
         useMark = true;
     }
 
-    public SetTagCommand(Index index, Set<Tag> tags, TagCommandMode mode) {
+    public TagCommand(Index index, Set<Tag> tags, TagCommandMode mode) {
         this.index = index;
         this.tags = tags;
         this.mode = mode;
@@ -111,5 +111,16 @@ public class SetTagCommand extends Command implements IMarkExecutable {
         String pluralName = n == 1 ? "student":"students";
 
         return new CommandResult(String.format("Successfully %s %d %s", verb, n, pluralName));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return this == other ||
+                (other instanceof TagCommand &&
+                        markName.equals(((TagCommand) other).markName) &&
+                        tags.equals(((TagCommand) other).tags) &&
+                        useMark == ((TagCommand) other).useMark &&
+                        index.equals(((TagCommand) other).index) &&
+                        mode.equals(((TagCommand) other).mode));
     }
 }
