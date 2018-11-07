@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendar;
@@ -15,12 +16,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javafx.util.Pair;
 import org.junit.Test;
+
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.mark.MarkCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -28,16 +28,16 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.student.Student;
 import seedu.address.model.tag.Tag;
-import seedu.address.testutil.EditStudentDescriptorBuilder;
-import seedu.address.logic.commands.EditCommand.EditStudentDescriptor;
 import seedu.address.testutil.StudentBuilder;
+
+import javafx.util.Pair;
 
 public class TagCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalCalendar(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_index_singleTag_success() {
+    public void execute_indexSingleTag_success() {
         // Set a tag to student
         HashSet<Tag> tagsToAdd = new HashSet<>();
         tagsToAdd.add(new Tag("tut1"));
@@ -83,7 +83,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_index_singleTag_fail() {
+    public void execute_indexSingleTag_fail() {
         // Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX;
         // Set a tag to student
         HashSet<Tag> tagsToAdd = new HashSet<>();
@@ -96,7 +96,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_index_multipleTag_success() {
+    public void execute_indexMultipleTag_success() {
         // Set a tag to student
         HashSet<Tag> tagsToAdd = new HashSet<>();
         tagsToAdd.add(new Tag("tut1"));
@@ -148,7 +148,7 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_mark_singleTag_success() {
+    public void execute_markSingleTag_success() {
         // Set a tag to student
         HashSet<Tag> tagsToAdd = new HashSet<>();
         tagsToAdd.add(new Tag("tut1"));
@@ -158,8 +158,8 @@ public class TagCommandTest {
         model.setMark(markName, new Mark(mark));
 
         List<Pair<Student, Student>> expectedStudents = mark.getList().stream().map(
-                student -> new Pair<>(student, new StudentBuilder(student).withTags("tut1").build()))
-                .collect(Collectors.toList());
+            student -> new Pair<>(student, new StudentBuilder(student).withTags("tut1").build()))
+            .collect(Collectors.toList());
         TagCommand tagCommand = new TagCommand(markName, tagsToAdd, TagCommandMode.SET);
 
         String expectedMessage = "Successfully updated tags of 2 students";
@@ -192,8 +192,8 @@ public class TagCommandTest {
         tagCommand = new TagCommand(markName, tagsToRemove, TagCommandMode.DEL);
 
         expectedStudents = expectedStudents.stream().map(pair -> new Pair<>(pair.getValue(),
-                new StudentBuilder(pair.getValue()).withTags("tut2").build()))
-                .collect(Collectors.toList());
+            new StudentBuilder(pair.getValue()).withTags("tut2").build()))
+            .collect(Collectors.toList());
 
         expectedMessage = "Successfully deleted tags from 2 students";
 

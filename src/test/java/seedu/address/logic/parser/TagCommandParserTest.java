@@ -14,10 +14,8 @@ import seedu.address.logic.commands.TagCommandMode;
 import seedu.address.model.mark.Mark;
 
 public class TagCommandParserTest {
-    private TagCommandParser parser = new TagCommandParser();
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE);
-
     private static final String VALID_ADD_COMMAND = "add ";
     private static final String VALID_SET_COMMAND = "set ";
     private static final String VALID_DEL_COMMAND = "del ";
@@ -25,6 +23,8 @@ public class TagCommandParserTest {
     private static final String VALID_MARK = "m/tut1 ";
     private static final String VALID_MARK_NAME = "tut1";
     private static final String INVALID_MARK = "m/tut@ ";
+
+    private TagCommandParser parser = new TagCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
