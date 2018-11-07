@@ -130,8 +130,7 @@ public class TagCommand extends Command implements IMarkExecutable {
         return this == other
                 || (other instanceof TagCommand
                 && markName.equals(((TagCommand) other).markName)
-                && tags.equals(
-                        ((TagCommand) other).tags)
+                && tags.equals(((TagCommand) other).tags)
                 && useMark == ((TagCommand) other).useMark
                 && index.equals(((TagCommand) other).index)
                 && mode.equals(((TagCommand) other).mode));
