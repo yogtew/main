@@ -12,8 +12,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.model.event.Date;
-import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
@@ -39,6 +39,17 @@ public class EventListPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Event> eventList) {
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        eventListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        raise(new EventPanelSelectionChangedEvent(newValue));
+                    }
+                });
     }
 
     /**
@@ -59,8 +70,7 @@ public class EventListPanel extends UiPart<Region> {
         String startTime = time.format(DateTimeFormatter.ofPattern("HH:mm"));
         int index = 0;
         // Creating a dummy event to compare to
-        Event event = new Event(new EventName("index"), new Date(date), new StartTime(startTime), new EndTime("23:59"),
-                new Description("nil"));
+        Event event = new Event(new EventName("index"), new Date(date), new StartTime(startTime), new EndTime("23:59"));
         Comparator<Event> comparator = Event.COMPARATOR;
         // Finding the index of the nearest upcoming event to scroll to
         while (index < eventList.size() && comparator.compare(event, eventList.get(index)) > 0) {
