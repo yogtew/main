@@ -169,7 +169,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate a student has been changed */
     private void indicateStudentUpdated(Student target, Student newStudent) {
-        raise(new StudentChangedEvent(target, newStudent));
+        // raise(new StudentChangedEvent(target, newStudent));
+        updateMarks(target, newStudent);
     }
 
 
@@ -252,8 +253,17 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredStudents.equals(other.filteredStudents);
+
+        if (!versionedAddressBook.equals(other.versionedAddressBook)) {
+            System.out.println("Diff versionedAddressBook");
+            return false;
+        }
+
+        if (!filteredStudents.equals(other.filteredStudents)) {
+            System.out.println("Diff filteredStudents");
+            return false;
+        }
+        return true;
     }
 
     public Mark getMark(String markName) throws IllegalArgumentException {
@@ -275,14 +285,13 @@ public class ModelManager extends ComponentManager implements Model {
         return marks;
     }
 
-    @Subscribe
-    public void studentChangedEventHandler(StudentChangedEvent event) {
+    public void updateMarks(Student oldStudent, Student newStudent) {
         marks.forEach((mark) -> {
             Set<Student> set = new HashSet<>(mark.getSet());
-            if (set.contains(event.oldStudent)) {
-                set.remove(event.oldStudent);
-                if (event.newStudent != null) {
-                    set.add(event.newStudent);
+            if (set.contains(oldStudent)) {
+                set.remove(oldStudent);
+                if (newStudent != null) {
+                    set.add(newStudent);
                 }
                 setMark(mark.getName(), new Mark(set, mark.getName()));
             }

@@ -35,6 +35,11 @@ public class Mark {
         name = markName;
     }
 
+    public Mark(Mark mark) {
+        this.set = new HashSet<>(mark.set);
+        this.name = mark.name;
+    }
+
     public static void checkArguments(String markName) {
         if (!isValidMarkName(markName)) {
             throw new IllegalArgumentException(MARK_NAME_CONSTRAINTS);

@@ -78,6 +78,7 @@ public class TagCommand extends Command implements IMarkExecutable {
         Student studentToEdit = lastShownList.get(index.getZeroBased());
 
         processStudent(model, history, studentToEdit);
+        model.commitAddressBook();
         return formatCommandResult(1);
     }
 
