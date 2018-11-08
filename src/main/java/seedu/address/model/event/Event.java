@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents an event in the calendar.
@@ -14,18 +15,30 @@ import java.util.Objects;
 public class Event {
 
     // Comparator for events
-    public static final Comparator<Event> COMPARATOR = new Comparator<Event>() {
-        @Override
-        public int compare(Event e1, Event e2) {
-            try {
-                java.util.Date start = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                        .parse(e1.date.date + " " + e1.startTime.startTime);
-                java.util.Date end = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
-                        .parse(e2.date.date + " " + e2.startTime.startTime);
-                return start.compareTo(end);
-            } catch (ParseException e) {
-                return 0; // Ideally the parsers should be doing their job. If not then simply leave it be
+    public static final Comparator<Event> COMPARATOR = (e1, e2) -> {
+        try {
+            // compare start times
+            java.util.Date start1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e1.date.date + " " + e1.startTime.startTime);
+            java.util.Date start2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e2.date.date + " " + e2.startTime.startTime);
+
+            // if start times are the same, compare end times
+            java.util.Date end1 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e1.date.date + " " + e1.endTime.endTime);
+            java.util.Date end2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH)
+                    .parse(e2.date.date + " " + e2.endTime.endTime);
+
+            if (start1.compareTo(start2) != 0) {
+                return start1.compareTo(start2);
+            } else if (end1.compareTo(end2) != 0) {
+                return end1.compareTo(end2);
+            } else {
+                return e1.eventName.eventName.compareTo(e2.eventName.eventName);
             }
+
+        } catch (ParseException e) {
+            return 0; // Ideally the parsers should be doing their job. If not then simply leave it be
         }
     };
 
@@ -36,7 +49,7 @@ public class Event {
     private final EndTime endTime;
 
     // Data fields
-    private final Description description;
+    private final Optional<Description> description;
 
     /**
      * Constructs a (@code Event).
@@ -47,13 +60,31 @@ public class Event {
      * @param endTime a valid end time in 24 hour format.
      * @param description valid details of the event.
      */
-    public Event(EventName eventName, Date date, StartTime startTime, EndTime endTime, Description description) {
+    public Event(EventName eventName, Date date, StartTime startTime,
+                 EndTime endTime, Optional<Description> description) {
         requireAllNonNull(eventName, date, startTime, endTime, description);
         this.eventName = eventName;
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
         this.description = description;
+    }
+
+    /**
+     * Constructs a (@code Event) without a description.
+     *
+     * @param eventName a valid event name.
+     * @param date a valid date in dd-mm-yyyy format.
+     * @param startTime a valid start time in 24 hour format.
+     * @param endTime a valid end time in 24 hour format.
+     */
+    public Event(EventName eventName, Date date, StartTime startTime, EndTime endTime) {
+        requireAllNonNull(eventName, date, startTime, endTime);
+        this.eventName = eventName;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.description = Optional.empty();
     }
 
     public EventName getEventName() {
@@ -72,7 +103,7 @@ public class Event {
         return endTime;
     }
 
-    public Description getDescription() {
+    public Optional<Description> getDescription() {
         return description;
     }
 
@@ -105,7 +136,7 @@ public class Event {
                 && Objects.equals(getDate(), event.getDate())
                 && Objects.equals(getStartTime(), event.getStartTime())
                 && Objects.equals(getEndTime(), event.getEndTime())
-                && Objects.equals(getDescription(), event.getDescription());
+                && Objects.equals(getDescription().orElse(null), event.getDescription().orElse(null));
     }
 
     @Override
@@ -122,9 +153,7 @@ public class Event {
                 .append(" Start Time: ")
                 .append(getStartTime())
                 .append(" End Time: ")
-                .append(getEndTime())
-                .append(" Description: ")
-                .append(getDescription());
+                .append(getEndTime());
         return builder.toString();
     }
 

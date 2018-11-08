@@ -173,11 +173,11 @@ public class EditCommandTest {
         editCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first student edited again
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -220,12 +220,12 @@ public class EditCommandTest {
         editCommand.execute(model, commandHistory);
 
         // undo -> reverts addressbook back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         assertNotEquals(model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased()), studentToEdit);
         // redo -> edits same second student in unfiltered student list
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

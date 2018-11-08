@@ -15,6 +15,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.testutil.TypicalEvents.EVENT_NOT_PRESENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +26,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.EditStudentDescriptorBuilder;
@@ -190,6 +192,23 @@ public class CommandTestUtil {
         Student firstStudent = model.getFilteredStudentList().get(0);
         model.deleteStudent(firstStudent);
         model.commitAddressBook();
+    }
+
+    /**
+     * Deletes the first event in {@code model}'s filtered list from {@code model}'s calendar.
+     */
+    public static void deleteFirstEvent(Model model) {
+        Event firstEvent = model.getFilteredEventList().get(0);
+        model.deleteEvent(firstEvent);
+        model.commitCalendar();
+    }
+
+    /**
+     * Adds a typical event to {@code model}'s calendar.
+     */
+    public static void addTypicalEvent(Model model) {
+        model.addEvent(EVENT_NOT_PRESENT);
+        model.commitCalendar();
     }
 
 }

@@ -19,7 +19,10 @@ public interface Model {
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar);
+
+    /** Commits the entire model. */
+    void commitModel();
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
@@ -69,16 +72,6 @@ public interface Model {
     boolean canRedoAddressBook();
 
     /**
-     * Restores the model's address book to its previous state.
-     */
-    void undoAddressBook();
-
-    /**
-     * Restores the model's address book to its previously undone state.
-     */
-    void redoAddressBook();
-
-    /**
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
@@ -86,6 +79,8 @@ public interface Model {
     Mark getMark(String markName);
 
     void setMark(String markName, Mark mark);
+
+    ObservableList<Mark> getFilteredMarkList();
 
     /** Returns the Calendar */
     ReadOnlyCalendar getCalendar();
@@ -127,14 +122,24 @@ public interface Model {
     boolean canRedoCalendar();
 
     /**
-     * Restores the model's calendar to its previous state.
+     * Controls undoing of the calendar and address book.
      */
-    void undoCalendar();
+    void undo();
 
     /**
-     * Restores the model's calendar to its previously undone state.
+     * Controls redoing of the calendar and address book.
      */
-    void redoCalendar();
+    void redo();
+
+    /**
+     * Returns true if the model has an previous state to restore
+     */
+    boolean canUndo();
+
+    /**
+     * Returns true if the model has an undone state to restore.
+     */
+    boolean canRedo();
 
     /**
      * Saves the current calendar state for undo/redo.

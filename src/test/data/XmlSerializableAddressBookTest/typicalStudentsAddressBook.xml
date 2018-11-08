@@ -8,6 +8,7 @@
         <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
         <tagged>computerscience</tagged>
+        <tagged>year1</tagged>
     </students>
     <students>
         <name>Benson Meier</name>
@@ -16,6 +17,7 @@
         <faculty>School of Computing</faculty>
         <attendance>absent</attendance>
         <tagged>informationsystems</tagged>
+        <tagged>year1</tagged>
         <tagged>student</tagged>
     </students>
     <students>
