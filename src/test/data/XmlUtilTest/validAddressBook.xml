@@ -5,62 +5,62 @@
         <studentNumber isPrivate="false">A9482424</studentNumber>
         <email isPrivate="false">hans@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Ruth Mueller</name>
         <studentNumber isPrivate="false">A87249245</studentNumber>
         <email isPrivate="false">ruth@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Heinz Kurz</name>
         <studentNumber isPrivate="false">A95352563</studentNumber>
         <email isPrivate="false">heinz@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Cornelia Meier</name>
         <studentNumber isPrivate="false">A87652533</studentNumber>
         <email isPrivate="false">cornelia@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Werner Meyer</name>
         <studentNumber isPrivate="false">A9482224</studentNumber>
         <email isPrivate="false">werner@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Lydia Kunz</name>
         <studentNumber isPrivate="false">A9482427</studentNumber>
         <email isPrivate="false">lydia@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Anna Best</name>
         <studentNumber isPrivate="false">A9482442</studentNumber>
         <email isPrivate="false">anna@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Stefan Meier</name>
         <studentNumber isPrivate="false">A8482424</studentNumber>
         <email isPrivate="false">stefan@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
     <students>
         <name>Martin Mueller</name>
         <studentNumber isPrivate="false">A8482131</studentNumber>
         <email isPrivate="false">hans@example.com</email>
         <faculty isPrivate="false">School of Computing</faculty>
-        <attendance isPrivate="false"></attendance>
+        <attendance isPrivate="false">0</attendance>
     </students>
 </addressbook>

@@ -14,7 +14,7 @@ import seedu.address.model.student.Attendance;
 
 public class AttendanceCommandParserTest {
     private AttendanceCommandParser parser = new AttendanceCommandParser();
-    private final String nonEmptyAttendance = "Some attendance.";
+    private final String nonEmptyAttendance = "0";
 
     @Test
     public void parse_indexSpecified_success() {
@@ -27,7 +27,7 @@ public class AttendanceCommandParserTest {
 
         // no attendance
         userInput = targetIndex.getOneBased() + " " + PREFIX_ATTENDANCE;
-        expectedCommand = new AttendanceCommand(INDEX_FIRST_STUDENT, new Attendance(""));
+        expectedCommand = new AttendanceCommand(INDEX_FIRST_STUDENT, new Attendance("0"));
         assertParseSuccess(parser, userInput, expectedCommand);
     }
 

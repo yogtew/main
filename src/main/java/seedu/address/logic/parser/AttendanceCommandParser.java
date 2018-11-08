@@ -24,13 +24,14 @@ public class AttendanceCommandParser implements Parser<AttendanceCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_ATTENDANCE);
         Index index;
+        String attendance;
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
+            attendance = String.valueOf(ParserUtil.parseAttendance(argMultimap.getValue(PREFIX_ATTENDANCE).get()));
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AttendanceCommand.MESSAGE_USAGE), ive);
         }
-        String attendance = argMultimap.getValue(PREFIX_ATTENDANCE).orElse("");
         return new AttendanceCommand(index, new Attendance(attendance));
     }
 }
