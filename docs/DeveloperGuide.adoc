@@ -261,14 +261,15 @@ image::UML REST API.png[width="400"]
 
 Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
 
-//tag::schedule[]
-=== Schedule feature
+//tag::event[]
+=== Event feature
 ==== Current Implementation
 
-The schedule command is a completely new feature that allows the user to schedule events within ConTAct.
-It follows a similar command flow as that of the address book, but it will have it's own separate model and
-.xml file for storage. Furthermore, to facilitate this command, a new data type is introduced: the Event class.
-This Event class has it's own unique fields that the user can specify to schedule an event:
+Th event feature is largely centered around the `Event` class, and is integrated into ConTAct in a similar fashion to the address book.
+The main commands supporting this feature is `schedule` and `cancel`, which both interact with the `Calendar` model.
+The `undo/redo` and `clear` commands were also modified to extend towards the calendar model.
+
+The Event class has these fields that the user can specify to schedule an event:
 
 * Event Name: The name of the event, valid if it is not an empty string.
 * Date: The date of the event, valid if expressed in this forms:  `DD-MM-YYYY`.
@@ -276,30 +277,34 @@ It must also be a date that actually falls within a calendar and between the yea
 * Start Time: The start time of the event, valid in this form: `HH:MM`, in 24-hour format.
 * End Time: The end time of the event, valid if it is in this form: `HH:MM`, in 24-hour format.
 The end time must also come after the start time.
-* Description: The description of the event, valid if it is not an empty string.
+* Description: (OPTIONAL) The description of the event, valid if it is not an empty string.
 
-Currently, the main operation is the `schedule` command, and it is implemented as such:
+During runtime, the events are stored in an observable list in the model architecture.
+This list is exposed to the UI to display the list accordingly.
+Furthermore, the event data is permanently stored in a `calendar.xml` file for use between sessions.
 
-* `schedule event/EVENT_NAME date/DATE start/START_TIME end/END_TIME descr/DESCRIPTION`
+Below are several commands that allow the user to interact with the events:
 
-This operation exists within the logic component of ConTAct, with the Event data structure falling
-under the models component.
+===== Schedule
+
+The `schedule` command allows the user to add a unique event to the calendar, and it is implemented as such:
+
+* `schedule event/EVENT_NAME date/DATE start/START_TIME end/END_TIME [descr/DESCRIPTION]`
 
 Below is an example of how the schedule command behaves:
 
-`schedule event/Office Christmas Party date/23-12-2018 start/18:00 end/20:00 descr/Party at Scranton Branch`
+`schedule event/CS2103 Tutorial 1 date/23-01-2018 start/15:00 end/16:00 descr/Introduction to Software Engineering`
 
-This will simply create an event with the specified fields and store it similar to how the addressbook stores a student.
-Furthermore, the schedule command ensures that all the fields specified must be valid for it to be a success.
+This will simply create an event with the specified fields and store it accordingly.
 
-Once scheduled, the list of events will be sorted by chronological order (taking the date and the start time).
+Once scheduled, the events will be inserted in its sorted position (by chronological order).
 
 The GUI itself will have a calendar component which will display the user's current list of events that they have
 scheduled, while adjusting for the current date.
 
 The sequence diagram below shows how the components interact for the scenario where the user issues the command `schedule EVENT`, where `EVENT` is the event as specified by the input parameters.
 
-.Component interactions for `delete EVENT` command (part 1)
+.Component interactions for `schedule EVENT` command (part 1)
 image::ScheduleEventSequenceDiagram.png[width="800"]
 
 The diagram below shows how the EventsCenter reacts to the CalendarChangedEvent, which also results in updates to the storage and the UI.
@@ -312,16 +317,58 @@ The diagram below shows how the schedule command is parsed in the Logic componen
 .Logic diagram for `schedule EVENT` command
 image::ScheduleEventSdForLogic.png[width="800"]
 
+===== Cancel
+
+The `cancel` command is essentially the reverse of the schedule command, allowing the user to delete events from the calendar. It is implemented as such:
+
+* `cancel event/EVENT_NAME date/DATE start/START_TIME end/END_TIME`
+
+An example usage would be
+
+`cancel event/CS2103 Tutorial 1 date/23-01-2018 start/15:00 end/16:00`
+
+From there, the event with the specified fields will be located in the event list, and deleted accordingly.
+
+If the event is not present within the calendar, the user will receive an error message.
+
+Also, the interactions between the components work in much the same way as the schedule command.
+
+===== Undo/Redo
+
+The `undo` and `redo` command was extended to include the actions made by the user while interacting with the calendar.
+
+The undo/redo feature is also facilitated by a VersionedCalendar, and further details are as described in the undo/redo feature.
+
+The most pertinent aspect of this feature is how the model component handles the undo/redo. The ModelManager simply keeps track of _which_
+model -- address book or calendar -- had committed a change, and handles it accordingly whenever the user wishes to undo or redo.
+
+As such, the user will be able to perform the following actions to yield the subsequent results:
+
+1. `schedule event/CS2103 Tutorial 1 date/23-01-2018 start/15:00 end/16:00 descr/Introduction to Software Engineering`
+will add the specified event to the calendar,
+2. `add n/Damith Rajapakse sn/A98765432 e/damith@nus.edu.sg f/School of Computing`
+will add the following person to the address book,
+3. `undo`
+will undo step 2 performed on the address book,
+4. `undo`
+will undo step 1 performed on the calendar,
+5. `redo`
+will redo the changes made at step 4, which in turn redoes step 1.
+
+===== Clear
+
+Previously, the clear command only cleared the address book. Now, it clears both the address book and the calendar, and
+interacts as expected with the undo/redo command as well.
+
 ==== Design Considerations
 
 ===== Aspect: Storing the sorted list of events
-* **Alternative 1 (current choice):** Store the list of events as a list, while sorting after each addition of an event.
-** Pros: Consistent with the overall design of the model, and also not as significant an overhead due to the small size of the list.
-** Cons: Is slower than other possible methods of implementation.
+* **Alternative 1 (current choice):** Store the list of events in a sorted list, with adding, removing, and finding all done through binary search.
+** Pros: Consistent with the overall design of the model, and also significantly reduces the overhead in performing the above operations.
 
 * **Alternative 2:** Store the list of events in a binary search tree.
 ** Pros: More efficient addition and removal of events.
-** Cons: Is unfeasible with the current design.
+** Cons: Is unfeasible with the current design due to constraints with how JavaFX interacts with the data.
 
 ==== Aspect: Displaying the events in the GUI
 * **Alternative 1 (current choice):** Display it as a sorted list of events.
@@ -778,6 +825,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |tutor |schedule events |keep track of class timings and consultations
 
+|`* * *` |tutor |cancel events |manage scheduled classes and events
+
 |`* *` |tutor |sort students |identify groups of students
 
 |`* *` |tutor |email students |let them know of any announcements
@@ -960,6 +1009,34 @@ Use case ends.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Cancel events
+
+*MSS*
+
+1. User cancels an event with the specified details
+2. ConTAct confirms the deletion of said event
++
+Use case ends.
+
+*Extensions*
+
+[noe]
+* 1a. The parameter(s) is invalid.
++
+[none]
+** 1a1. ConTAct shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. The event is not found.
++
+[none]
+** 2a1. ConTAct shows an error message.
 +
 Use case ends.
 
