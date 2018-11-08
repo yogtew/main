@@ -241,6 +241,11 @@ public class ScheduleCommandTest {
         public void setMark(String markName, Mark mark) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public ObservableList<Mark> getFilteredMarkList() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

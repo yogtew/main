@@ -3,14 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,7 +30,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Student> filteredStudents;
-    private final HashMap<String, Mark> marks = new HashMap<>();
+    private final ObservableList<Mark> marks;
 
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
@@ -61,6 +58,7 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredStudents = new FilteredList<>(versionedAddressBook.getStudentList());
+        marks = FXCollections.observableArrayList();
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
@@ -198,7 +196,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate a student has been changed */
     private void indicateStudentUpdated(Student target, Student newStudent) {
-        raise(new StudentChangedEvent(target, newStudent));
+        // raise(new StudentChangedEvent(target, newStudent));
+        updateMarks(target, newStudent);
     }
 
 
@@ -347,24 +346,39 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredEvents.equals(other.filteredEvents);
     }
 
-    public Mark getMark(String markName) {
-        return marks.getOrDefault(markName, Mark.EMPTY);
+    public Mark getMark(String markName) throws IllegalArgumentException {
+        Mark.checkValidMarkName(markName);
+        return marks.stream().filter(m -> m.getName().equals(markName)).findFirst().orElse(Mark.EMPTY);
     }
 
     public void setMark(String markName, Mark mark) {
-        marks.put(markName, mark);
+        Mark old = getMark(mark.getName());
+        if (!old.equals(Mark.EMPTY)) {
+            marks.remove(old);
+        }
+        mark.setName(markName);
+        marks.add(mark);
     }
 
-    @Subscribe
-    public void studentChangedEventHandler(StudentChangedEvent event) {
-        marks.forEach((name, mark) -> {
+    @Override
+    public ObservableList<Mark> getFilteredMarkList() {
+        return marks;
+    }
+
+    /**
+     * updates the marks whenever a student is updated
+     * @param oldStudent
+     * @param newStudent
+     */
+    public void updateMarks(Student oldStudent, Student newStudent) {
+        marks.forEach((mark) -> {
             Set<Student> set = new HashSet<>(mark.getSet());
-            if (set.contains(event.oldStudent)) {
-                set.remove(event.oldStudent);
-                if (event.newStudent != null) {
-                    set.add(event.newStudent);
+            if (set.contains(oldStudent)) {
+                set.remove(oldStudent);
+                if (newStudent != null) {
+                    set.add(newStudent);
                 }
-                setMark(name, new Mark(set, name));
+                setMark(mark.getName(), new Mark(set, mark.getName()));
             }
         });
     }

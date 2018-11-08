@@ -170,6 +170,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Mark> getFilteredMarkList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyCalendar getCalendar() {
             throw new AssertionError("This method should not be called.");
         }

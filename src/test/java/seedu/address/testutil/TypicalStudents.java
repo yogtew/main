@@ -28,11 +28,11 @@ public class TypicalStudents {
     public static final Student ALICE = new StudentBuilder().withName("Alice Pauline")
             .withFaculty("School of Computing").withEmail("alice@example.com")
             .withStudentNumber("A94351253").withAttendance("0")
-            .withTags("computerscience").build();
+            .withTags("computerscience", "year1").build();
     public static final Student BENSON = new StudentBuilder().withName("Benson Meier")
             .withFaculty("School of Computing")
             .withEmail("johnd@example.com").withStudentNumber("U98765432").withAttendance("0")
-            .withTags("informationsystems", "student").build();
+            .withTags("informationsystems", "student", "year1").build();
     public static final Student CARL = new StudentBuilder().withName("Carl Kurz").withStudentNumber("A95352563")
             .withEmail("heinz@example.com").withFaculty("Faculty of Engineering").withAttendance("0").build();
     public static final Student DANIEL = new StudentBuilder().withName("Daniel Meier").withStudentNumber("A87652533")

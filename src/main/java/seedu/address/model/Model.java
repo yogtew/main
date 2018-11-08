@@ -80,6 +80,8 @@ public interface Model {
 
     void setMark(String markName, Mark mark);
 
+    ObservableList<Mark> getFilteredMarkList();
+
     /** Returns the Calendar */
     ReadOnlyCalendar getCalendar();
 
