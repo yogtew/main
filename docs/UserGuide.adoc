@@ -127,21 +127,40 @@ Marks the attendance of the student with index number 1 as present.
 * `attendance 3 at/0` +
 Marks the attendance of the student with index number 3 as absent.
 
-=== Schedule timetables: `schedule`
+// tag::schedule[]
+=== Schedule events: `schedule`
 
 Schedules an event for the user to keep track of. +
-Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
+Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END [descr/DESCRIPTION]`
 
 ****
-* The event will be scheduled and reflected on the user's list of events
-* Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event. Also, the year range is between 1600 and 9999
+* The event will be scheduled and reflected on the user's list of events.
+* Events with the same event name, date, start time, and end time, will be considered as duplicates, and will not be scheduled again.
+* Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event. Also, the year range is between 1600 and 9999.
 ****
 
 Examples:
 
-* `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
-Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
+* `schedule event/CS2103 Tutorial W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
+Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm.
+// end::schedule[]
 
+// tag::cancel[]
+=== Cancel event: `cancel`
+
+Cancels an event already in the calendar. +
+Format: `cancel event/EVENT_NAME date/DATE start/TIME_START end/TIME_END`
+
+****
+* The event will be cancelled and be deleted from the user's list of events.
+* Like `schedule`, the format is the same, and the event with the exact details must exist within the calendar.
+****
+
+Examples:
+
+* `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
+Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
+// end::cancel[]
 === Emailing students: `email`
 
 Allows the user to email a specified student. +
@@ -243,12 +262,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book and/or calendar to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`) or the calendar's content (`schedule`, `cancel`, and `clear`)
 ====
 
 Examples:
@@ -263,8 +282,8 @@ Examples:
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
+`schedule event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
+`undo` (reverses the `schedule event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` command) +
 `undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
@@ -290,10 +309,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::clear[]
 === Clearing all entries : `clear`
 
-Clears all entries from the address book while still maintaining the calendar. +
+Clears all entries from the address book and calendar. +
 Format: `clear`
+// end::clear[]
 
 === Exiting the program : `exit`
 
@@ -407,6 +428,8 @@ e.g. `sort NAME`
 e.g. `attd CS2103-Tutorial-W13`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo`
+* *Cancel* : `cancel event/EVENT_NAME date/DATE start/TIME_START end/TIME_END` +
+e.g. `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00`
 * *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
 e.g. `email CS2103-Tutorial-W13`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
