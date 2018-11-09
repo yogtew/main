@@ -34,7 +34,7 @@ public class EmailCommand extends Command {
             + PREFIX_SUBJECT + "Tutorial time changed "
             + PREFIX_BODY + "Tutorial this week is on tuesday. ";
 
-    public static final String MESSAGE_SENT_SUCCESS = "Email sent to: %1$s";
+    private public static final String MESSAGE_SENT_SUCCESS = "Email sent to: %1$s";
 
     private final EmailDraft emailDraft;
 
@@ -62,7 +62,11 @@ public class EmailCommand extends Command {
 
         String body = emailDraft.getBody().toString();
         OutlookRequest outlookRequest = new OutlookRequest(emailAdd, subject, body);
-        OutlookRequest.sendMail(outlookRequest);
+        try {
+            OutlookRequest.sendMail(outlookRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
         return new CommandResult(String.format(MESSAGE_SENT_SUCCESS, addressToEmail));
