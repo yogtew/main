@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
 
 import java.util.List;
 
@@ -24,7 +25,8 @@ public class AttendanceCommand extends Command {
             + "by the index number used in the displayed student list or by using a mark name\n"
             + "Existing values will be overwritten by the input values.\n"
             + "Attendance can be 1 (Present) or 0 (Absent).\n"
-            + "Parameters: INDEX (must be a positive integer)| MARK "
+            + "Parameters: INDEX (must be a positive integer)|"
+            + PREFIX_MARK + " MARK "
             + PREFIX_ATTENDANCE + "[ATTENDANCE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ATTENDANCE + "1 OR "
