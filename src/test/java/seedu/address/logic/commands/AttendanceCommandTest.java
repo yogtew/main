@@ -47,7 +47,7 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(editedStudent.getAttendance().value.toString()));
 
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
+        String expectedMessage = "Successfully updated attendance of 1 student";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new Calendar(model.getCalendar()), new UserPrefs());
@@ -67,7 +67,7 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(editedStudent.getAttendance().value.toString()));
 
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
+        String expectedMessage = "Successfully updated attendance of 1 student";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new Calendar(model.getCalendar()), new UserPrefs());
