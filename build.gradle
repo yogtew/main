@@ -71,8 +71,11 @@ dependencies {
     //Joda-Time for calendar time
     implementation 'joda-time:joda-time:2.7'
 
-    // gson for JSON parsing
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation group: 'com.microsoft.azure', name: 'adal4j', version: '0.0.3'
+    implementation group: 'org.slf4j', name:'slf4j-api', version: '1.7.2'
+    implementation group: 'ch.qos.logback', name:'logback-classic', version: '1.0.9'
+    implementation group: 'ch.qos.logback', name:'logback-core', version: '1.0.9'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
     testImplementation group: 'org.testfx', name: 'testfx-core', version: testFxVersion, {
