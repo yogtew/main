@@ -404,7 +404,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Sort* : `sort PARAMETER` +
 e.g. `sort NAME`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
-e.g. `attd CS2103-Tutorial-W13`
+e.g. `attendance 1 at/1`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo`
 * *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
