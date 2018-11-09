@@ -127,6 +127,7 @@ Marks the attendance of the student with index number 1 as present.
 * `attendance 3 at/0` +
 Marks the attendance of the student with index number 3 as absent.
 
+// tag::schedule[]
 === Schedule events: `schedule`
 
 Schedules an event for the user to keep track of. +
@@ -134,6 +135,7 @@ Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END [desc
 
 ****
 * The event will be scheduled and reflected on the user's list of events.
+* Events with the same event name, date, start time, and end time, will be considered as duplicates, and will not be scheduled again.
 * Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event. Also, the year range is between 1600 and 9999.
 ****
 
@@ -141,7 +143,9 @@ Examples:
 
 * `schedule event/CS2103 Tutorial W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
 Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm.
+// end::schedule[]
 
+// tag::cancel[]
 === Cancel event: `cancel`
 
 Cancels an event already in the calendar. +
@@ -156,7 +160,7 @@ Examples:
 
 * `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
 Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
-
+// end::cancel[]
 === Emailing students: `email`
 
 Allows the user to email a specified student. +
@@ -263,7 +267,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`) or the calendar's content (`schedule`, `cancel`, and `clear)
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`) or the calendar's content (`schedule`, `cancel`, and `clear`)
 ====
 
 Examples:
@@ -305,10 +309,12 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::clear[]
 === Clearing all entries : `clear`
 
 Clears all entries from the address book and calendar. +
 Format: `clear`
+// end::clear[]
 
 === Exiting the program : `exit`
 
