@@ -414,7 +414,7 @@ is distinct.
 === Attendance feature
 ==== Current Implementation
 
-The attendance command is a completely new feature that allows the user to mark the attendance of students
+The `attendance` command is a completely new feature that allows the user to mark the attendance of students
 within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
 storage of the other commands. 
 To facilitate this command, a new data type is introduced: the Attendance class.
@@ -454,10 +454,12 @@ The sequence diagram below shows how the components interact for the scenario wh
 .Component interactions for `attendance` command (part1)
 image::attendance_diagram1.png[width="800"]
 
+
 The diagram below shows how the EventsCenter reacts to the AddressBookChangedEvent, which also results in updates to the storage and the UI.
 
 .Component interactions for `attendance` command (part2)
 image::attendance_diagram2.png[width="800"]
+
 
 The diagram below shows how the `attendance` command is parsed in the Logic component.
 
