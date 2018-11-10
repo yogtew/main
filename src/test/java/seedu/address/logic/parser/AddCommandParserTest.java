@@ -55,7 +55,7 @@ public class AddCommandParserTest {
         assertParseSuccess(parser, NAME_DESC_AMY + NAME_DESC_BOB + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedStudent));
 
-        // multiple stuudent numbers - last student number accepted
+        // multiple student numbers - last student number accepted
         assertParseSuccess(parser, NAME_DESC_BOB + STUDENT_NUMBER_DESC_AMY + STUDENT_NUMBER_DESC_BOB + EMAIL_DESC_BOB
                 + FACULTY_DESC_BOB + TAG_DESC_FRIEND, new AddCommand(expectedStudent));
 
