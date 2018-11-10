@@ -109,22 +109,6 @@ Edits the student number and email address of the 1st student to be `A91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
-=== Sorting students: `sort`
-
-Sorts students according to a given parameter. +
-Format: `sort PARAMETER`
-
-****
-* The sorting itself is only performed on the already exisiting fields.
-****
-
-Examples:
-
-*`sort NAME` +
-Returns a list of students sorted by their name
-*`sort GRADES` +
-Returns a list of students sorted by their grades, which is a field of each student.
-
 === Marking attendance: `attendance`
 
 Allows the user to mark the attendance of students using the index number as well as mark name. +
@@ -441,8 +425,6 @@ e.g. `add n/James Ho sn/A22224444 e/jamesho@example.com f/School of Computing t/
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [sn/STUDENT_NUMBER] [e/EMAIL] [f/FACULTY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Sort* : `sort PARAMETER` +
-e.g. `sort NAME`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
 e.g. `attendance 1 at/1` or `attendance m/tutorial1 at/1`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
