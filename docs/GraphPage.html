@@ -93,7 +93,7 @@
 				.rangeRound([0, w-padding.left-padding.right]);
 
 			var yScale = d3.scale.linear()
-				.domain([0,				
+				.domain([0,
 					d3.max(dataset, function(d) {
 						return d3.max(d, function(d) {
 							return d.y0 + d.y;
@@ -217,14 +217,14 @@
 
 			svg.append("text")
 	        .attr("class","title")
-	        .attr("x", (w / 2))             
+	        .attr("x", (w / 2))
 	        .attr("y", 20)
-	        .attr("text-anchor", "middle")  
-	        .style("font-size", "16px") 
-	        .style("text-decoration", "underline")  
+	        .attr("text-anchor", "middle")
+	        .style("font-size", "16px")
+	        .style("text-decoration", "underline")
 	        .text("Attendance per day.");
 
-			//On click, update with new data			
+			//On click, update with new data
 			d3.selectAll(".m")
 				.on("click", function() {
 					var date = this.getAttribute("value");
@@ -252,7 +252,7 @@
 						xScale.domain([new Date(0, 0, 0,dataset[0][0].time,0, 0, 0),new Date(0, 0, 0,dataset[0][dataset[0].length-1].time,0, 0, 0)])
 						.rangeRound([0, w-padding.left-padding.right]);
 
-						yScale.domain([0,				
+						yScale.domain([0,
 										d3.max(dataset, function(d) {
 											return d3.max(d, function(d) {
 												return d.y0 + d.y;
@@ -336,7 +336,7 @@
 
 						svg.select(".title")
 				        .text("Attendance per hour on " + date + ".");
-					});			
+					});
 				});
 
 
