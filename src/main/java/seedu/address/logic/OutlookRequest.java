@@ -45,7 +45,7 @@ public class OutlookRequest {
 
         try {
             // Opens microsoft authentication page in a browser tab
-            Desktop.getDesktop().browse(new URI(ApplicationDetails.authURL));
+            Desktop.getDesktop().browse(new URI(ApplicationDetails.getAuthURL()));
 
             // setup a http listener on localhost:8000 to wait for the returned authcode
             ServerSocket serverSocket = new ServerSocket(8000);
@@ -67,11 +67,12 @@ public class OutlookRequest {
                             + "&scope=mail.send"
                             + "&code=%s"
                             + "&redirect_uri=%s",
-                    ApplicationDetails.appID,
+                    ApplicationDetails.getAppID(),
                     authCode,
-                    ApplicationDetails.redirectURI);
+                    ApplicationDetails.getRedirectURI());
 
-            HttpURLConnection tokenRequest = seedu.address.logic.Request.send(ApplicationDetails.tokenEndpoint, "POST", tokenParams);
+            HttpURLConnection tokenRequest = seedu.address.logic.Request.tokenRequest(ApplicationDetails.getTokenEndpoint(),
+                    "POST", tokenParams);
             List<String> response = seedu.address.logic.Request.read(tokenRequest);
 
             String s = response.get(0);
@@ -94,7 +95,8 @@ public class OutlookRequest {
                     + emailAdd + "\"}}]},\"SaveToSentItems\":\"true\"}";
 
 
-            HttpURLConnection emailRequest = Request.sendMail(token, ApplicationDetails.mailEndpoint, "POST", emailBody);
+            HttpURLConnection emailRequest = Request.sendMail(token, ApplicationDetails.getMailEndpoint(),
+                    "POST", emailBody);
             emailRequest.connect();
             int responseCode = emailRequest.getResponseCode();
             String responseMsg = emailRequest.getResponseMessage();
