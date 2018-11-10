@@ -154,6 +154,9 @@ public class Event {
                 .append(getStartTime())
                 .append(" End Time: ")
                 .append(getEndTime());
+        description.ifPresent(desc ->
+                builder.append(" Description: ")
+                       .append(desc.description));
         return builder.toString();
     }
 
