@@ -41,11 +41,11 @@ import seedu.address.ui.UiManager;
 
 /**
  * The main entry point to the application.
- * Added milestone tag v1.3
+ * Added milestone tag v1.3.1
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 3, 0, true);
+    public static final Version VERSION = new Version(1, 3, 1, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 

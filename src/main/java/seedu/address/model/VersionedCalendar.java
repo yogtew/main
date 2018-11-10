@@ -77,7 +77,7 @@ public class VersionedCalendar extends Calendar {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof VersionedAddressBook)) {
+        if (!(other instanceof VersionedCalendar)) {
             return false;
         }
 

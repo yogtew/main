@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- AddressBook save file which contains the same Student values as in TypicalPersons#getTypicalAddressBook() -->
+<addressbook>
+    <students>
+        <name>Alice Pauline</name>
+        <studentNumber>A94351253</studentNumber>
+        <email>alice@example.com</email>
+        <faculty>School of Computing</faculty>
+        <attendance>absent</attendance>
+        <tagged>computerscience</tagged>
+        <tagged>year1</tagged>
+    </students>
+    <students>
+        <name>Benson Meier</name>
+        <studentNumber>U98765432</studentNumber>
+        <email>johnd@example.com</email>
+        <faculty>School of Computing</faculty>
+        <attendance>absent</attendance>
+        <tagged>informationsystems</tagged>
+        <tagged>year1</tagged>
+        <tagged>student</tagged>
+    </students>
+    <students>
+        <name>Carl Kurz</name>
+        <studentNumber>A95352563</studentNumber>
+        <email>heinz@example.com</email>
+        <faculty>Faculty of Engineering</faculty>
+        <attendance>absent</attendance>
+    </students>
+    <students>
+        <name>Daniel Meier</name>
+        <studentNumber>A87652533</studentNumber>
+        <email>cornelia@example.com</email>
+        <faculty>School of Computing</faculty>
+        <attendance>absent</attendance>
+        <tagged>businessanalytics</tagged>
+    </students>
+    <students>
+        <name>Elle Meyer</name>
+        <studentNumber>A9482224</studentNumber>
+        <email>werner@example.com</email>
+        <faculty>School of Computing</faculty>
+        <attendance>absent</attendance>
+    </students>
+    <students>
+        <name>Fiona Kunz</name>
+        <studentNumber>A9482427</studentNumber>
+        <email>lydia@example.com</email>
+        <faculty>Faculty of Engineering</faculty>
+        <attendance>absent</attendance>
+    </students>
+    <students>
+        <name>George Best</name>
+        <studentNumber>A9482442</studentNumber>
+        <email>anna@example.com</email>
+        <faculty>School of Computing</faculty>
+        <attendance>absent</attendance>
+    </students>
+</addressbook>

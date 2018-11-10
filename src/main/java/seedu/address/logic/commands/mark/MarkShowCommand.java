@@ -11,7 +11,7 @@ import seedu.address.model.mark.Mark;
  * Mark "show" subcommand
  */
 public class MarkShowCommand extends MarkCommand {
-    private static final String MESSAGE_SUCCESS = "Listed %d marked Persons in %s";
+    private static final String MESSAGE_SUCCESS = "Listed %d students in %s";
 
     public MarkShowCommand(String alias1) {
         this.alias1 = alias1;
@@ -21,7 +21,7 @@ public class MarkShowCommand extends MarkCommand {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         Mark mark = model.getMark(alias1);
-        model.updateFilteredPersonList(mark.getPredicate());
+        model.updateFilteredStudentList(mark.getPredicate());
         return new CommandResult(String.format(MESSAGE_SUCCESS, mark.getList().size(), alias1));
     }
 }

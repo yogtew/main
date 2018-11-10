@@ -6,7 +6,7 @@ import seedu.address.model.event.Event;
 /**
  * A utility class to help with building Calendar objects.
  * Example usage: <br>
- *     {@code Calendar cal = new CalendarBuilder().withPerson("Consultation", "Tutorial").build();}
+ *     {@code Calendar cal = new CalendarBuilder().withStudent("Consultation", "Tutorial").build();}
  */
 public class CalendarBuilder {
 

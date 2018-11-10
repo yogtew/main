@@ -91,7 +91,7 @@ public class OutlookRequest {
 
             String emailBody = "{\"Message\":{\"Subject\":\""
                     + subject + "\",\"Body\":{\"ContentType\":\"Text\",\"Content\":\""
-                    + body + "\"},\"ToRecipients\":[{\"EmailAddress\":{\"Address\":\""
+                    + body + "\"},\"ToRecipients\":[{\"EmailAddress\":{\"Faculty\":\""
                     + emailAdd + "\"}}]},\"SaveToSentItems\":\"true\"}";
 
 

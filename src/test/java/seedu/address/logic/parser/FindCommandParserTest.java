@@ -9,8 +9,8 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.person.IsTaggedPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.student.IsTaggedPredicate;
+import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 
 public class FindCommandParserTest {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Student with missing name field -->
+<student>
+    <studentNumber>A9482424</studentNumber>
+    <email>hans@example</email>
+    <faculty>School of Computing</faculty>
+    <tagged>computerscience</tagged>
+</student>

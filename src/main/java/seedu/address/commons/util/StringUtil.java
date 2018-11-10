@@ -89,6 +89,10 @@ public class StringUtil {
         if (!s.contains(prefix.getPrefix())) {
             throw new IllegalArgumentException("Expecting prefixed argument");
         }
+
+        if (s.equals(prefix.getPrefix())) {
+            return "";
+        }
         return s.split(prefix.getPrefix())[1];
     }
 }
