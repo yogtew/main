@@ -19,10 +19,10 @@ Tutors interact with the application through the CLI, and the GUI is implemented
 * *Major Enhancement*: added Email feature in ConTAct
 ** What it does: allows the user to email a student directly from the application through a command
 ** Justification: this feature significantly enhances the product by easing the process of emailing a student,
-making it quicker.  
-** Highlights: The feature includes a simple `email` command with which the subject and content can all be set, 
-just through a single command. It required an in-depth anaylsis of how working with REST-ful API worked, 
-and how to integrate it with a native application. It was a challenge to make it allow any NUS Outlook user be 
+making it quicker.
+** Highlights: The feature includes a simple `email` command with which the subject and content can all be set,
+just through a single command. It required an in-depth anaylsis of how working with REST-ful API worked,
+and how to integrate it with a native application. It was a challenge to make it allow any NUS Outlook user be
 able to sign-in with his/her email and send an email to their student.
 ** Credits: The Outlook API usage online provided by Outlook itself served as a good guidance in implementing this.
 
