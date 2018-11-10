@@ -6,7 +6,7 @@
 
 == Overview
 
-ConTAct is a desktop application that is aimed at making a teaching assistant's (TA) job easier. The application provides a variety of features to help the TA with managing students and student contacts. 
+ConTAct is a desktop application that is aimed at making a teaching assistant's (TA) job easier. The application provides a variety of features to help the TA with managing students and student contacts.
 
 The application is written is Java, with the Graphical User Interface (GUI) implemented using JavaFX. The user interacts with the application through Command-Line Interface (CLI).
 
@@ -15,12 +15,12 @@ The application is written is Java, with the Graphical User Interface (GUI) impl
 * Code Contributed: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=yogtew&sort=displayName&since=2018-09-12&until=2018-11-09&timeframe=day&reverse=false&repoSort=true[RepoSense Report for Contribution]
 
 * *Main Feature Implemented:* Added Attendance feature to ConTAct
-** What is does: The attendance feature allows the user to update the attendance of students in their class. 
+** What is does: The attendance feature allows the user to update the attendance of students in their class.
 ** Justification: This feature is important and useful to the user i.e the TA as it is necessary for a TA to keep track of the attendance of their students and this feature, integrated with the various other features in the application, allows an easy way to do so.
-** Highlights: This feature is implemented using the `attendance` command. It allows attendance to be updated in two types of ways. The user can either individually update the attendance of each student in their class or can collectively update the attendance of a whole class and then individually update the students' attendance that does not follow the majority. 
+** Highlights: This feature is implemented using the `attendance` command. It allows attendance to be updated in two types of ways. The user can either individually update the attendance of each student in their class or can collectively update the attendance of a whole class and then individually update the students' attendance that does not follow the majority.
 ** Credits: The initial addressbook-level4 provided a good basis for the implementation of this feature.
 
-* *Other Contributions:* 
+* *Other Contributions:*
 ** Project Managment:
 *** Managed Documentation for project
 
@@ -52,6 +52,3 @@ https://github.com/CS2103-AY1819S1-W13-3/main/pull/87[#87]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/88[#88]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/103[#103]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126])
-
-
-
