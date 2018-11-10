@@ -414,37 +414,57 @@ is distinct.
 === Attendance feature
 ==== Current Implementation
 
-The attendance command is a completely new feature that allows the user to mark the attendance of students
+The `attendance` command is a completely new feature that allows the user to mark the attendance of students
 within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
-storage of the other commands. To facilitate this command, a new data type is introduced: the Attendance class.
+storage of the other commands.
+To facilitate this command, a new data type is introduced: the Attendance class.
 The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class
-uses another class called the AttendanceEnum class. This AttendanceEnum class is used to declare the Attendance Enums:
-PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class. The attendance class has an overloaded
-constructor which takes in different parameters.
+uses another class called the AttendanceEnum class.
+This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class.
+The attendance class has an overloaded constructor which takes in different parameters.
 
 Field of first constructor:
+
 * Attendance: takes in an AttendanceEnum, can be PRESENT, ABSENT or UNDEFINED
 
 Field of second constructor:
+
 * Attendance: takes in a String attendance, where absent/0 is changed to ABSENT enum, present/1 to PRESENT enum and an empty string is changed to UNDEFINED enum
 
 Currently, the main operation is the `attendance` command, and it is implemented as such:
 
 * `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
 
+The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such:
+
+* `attendance PREFIX_MARK/markName PREFIX_ATTENDANCE/attendance`
+
 Currently, this operation exists within the logic component of ConTAct.
 
 Below is an example of how the attendance command behaves:
 
-`attendance 1 at/present`
+* `attendance 1 at/0`
+* `attendance m/tutorial1 at/1`
 
-This will simply specify the attendance field of the Student with the specified attendance and store it similar to how the addressbook stores a student.
+This will simply specify the attendance field of the Student/Students with the specified attendance and store it similar to how the addressbook stores a student.
 Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
 
 The sequence diagram below shows how the components interact for the scenario where the user issues the attendance command.
 
-.Component interactions for `attendance` command
-image::attendance_diagram.png[width="800"]
+.Component interactions for `attendance` command (part1)
+image::attendance_diagram1.png[width="800"]
+
+
+The diagram below shows how the EventsCenter reacts to the AddressBookChangedEvent, which also results in updates to the storage and the UI.
+
+.Component interactions for `attendance` command (part2)
+image::attendance_diagram2.png[width="800"]
+
+
+The diagram below shows how the `attendance` command is parsed in the Logic component.
+
+.Logic Diagram for `attendance` command
+image::attendance_diagram_logic.png[width="800"]
 
 // tag::undoredo[]
 === Undo/Redo feature

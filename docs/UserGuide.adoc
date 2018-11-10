@@ -112,11 +112,11 @@ Returns a list of students sorted by their grades, which is a field of each stud
 
 === Marking attendance: `attendance`
 
-Allows the user to mark the attendance of students using the index number. +
-Format: `attendance INDEX_NUMBER at/ATTENDANCE`
+Allows the user to mark the attendance of students using the index number as well as mark name. +
+Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance m/MARK_NAME at/ATTENDANCE`
 
 ****
-* The attendance marking as present is done individually, by using the index number of the student, and the user can individually mark students who are absent as 'absent'/'0' and who are present as 'present'/'1'.
+* The attendance marking as present is done individually, by using the index number of the student, and the user can individually mark students who are absent as 'absent'/'0' and who are present as 'present'/'1'. The user can also collectively mark the attendance using the MARK feature. Then, the user can update the attendance of the students who do not follow the majority specifically.
 ****
 
 Examples:
@@ -127,6 +127,10 @@ Marks the attendance of the student with index number 1 as present.
 * `attendance 3 at/0` +
 Marks the attendance of the student with index number 3 as absent.
 
+* `attendance m/tutorial1 at/1` +
+Marks the attendance of all the students in mark-tutorial1 as present.
+
+=== Schedule timetables: `schedule`
 // tag::schedule[]
 === Schedule events: `schedule`
 
@@ -425,7 +429,7 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Sort* : `sort PARAMETER` +
 e.g. `sort NAME`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
-e.g. `attd CS2103-Tutorial-W13`
+e.g. `attendance 1 at/1` or `attendance m/tutorial1 at/1`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo`
 * *Cancel* : `cancel event/EVENT_NAME date/DATE start/TIME_START end/TIME_END` +
