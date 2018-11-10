@@ -23,7 +23,7 @@ public class MarkShowCommand extends MarkCommand {
         requireNonNull(model);
         try {
             Mark mark = model.getMark(alias1);
-            model.updateFilteredStudentList(mark.getPredicate());
+            model.setMarkPredicate(alias1);
             return new CommandResult(String.format(MESSAGE_SUCCESS, mark.getList().size(), alias1));
         } catch (IllegalArgumentException e) {
             throw new MarkNotFoundException(e.getMessage());

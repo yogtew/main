@@ -22,8 +22,7 @@ public class MarkCard extends UiPart<Region> {
      */
 
     public final Mark mark;
-    @FXML
-    private Label id;
+
     @FXML
     private HBox cardPane;
     @FXML
@@ -34,9 +33,8 @@ public class MarkCard extends UiPart<Region> {
     public MarkCard(Mark mark, int displayedIndex) {
         super(FXML);
         this.mark = mark;
-        id.setText(displayedIndex + ". ");
         name.setText(mark.getName());
-        studentCount.setText(String.valueOf(mark.getSet().size()));
+        studentCount.setText(String.valueOf(mark.getSet().size()) + " students");
     }
 
     @Override
@@ -53,7 +51,6 @@ public class MarkCard extends UiPart<Region> {
 
         // state check
         MarkCard card = (MarkCard) other;
-        return id.getText().equals(card.id.getText())
-                && mark.equals(card.mark);
+        return mark.equals(card.mark);
     }
 }

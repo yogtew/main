@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.commons.events.ui.MarkPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ResetStudentViewEvent;
 import seedu.address.model.mark.Mark;
 
 /**
@@ -62,6 +63,14 @@ public class MarkListPanel extends UiPart<Region> {
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    @Subscribe
+    private void handleResetStudentViewEvent(ResetStudentViewEvent event) {
+        System.out.println("Clear selection");
+        Platform.runLater(() -> {
+            genericListView.getSelectionModel().clearSelection();
+        });
     }
 
     /**

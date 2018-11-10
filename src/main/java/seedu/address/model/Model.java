@@ -83,6 +83,10 @@ public interface Model {
 
     ObservableList<Mark> getFilteredMarkList();
 
+    void setMarkPredicate(String markName) throws MarkNotFoundException;
+
+    void resetView ();
+
     /** Returns the Calendar */
     ReadOnlyCalendar getCalendar();
 

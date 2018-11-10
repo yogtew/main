@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.events.model.StudentChangedEvent;
+import seedu.address.commons.events.ui.ResetStudentViewEvent;
 import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
@@ -32,6 +33,8 @@ public class ModelManager extends ComponentManager implements Model {
     protected final VersionedAddressBook versionedAddressBook;
     protected final FilteredList<Student> filteredStudents;
     private final ObservableList<Mark> marks;
+    private Mark watchedMark;
+    private boolean isWatchingMark;
 
     protected final VersionedCalendar versionedCalendar;
     protected final FilteredList<Event> filteredEvents;
@@ -125,6 +128,9 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
         indicateStudentUpdated(target, editedStudent);
+        if (!isWatchingMark) {
+            updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        }
     }
 
     //=========== Filtered Student List Accessors =============================================================
@@ -142,6 +148,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredStudentList(Predicate<Student> predicate) {
         requireNonNull(predicate);
         filteredStudents.setPredicate(predicate);
+        isWatchingMark = false;
     }
 
     //=========== Undo/Redo Address Book =====================================================================
@@ -370,11 +377,36 @@ public class ModelManager extends ComponentManager implements Model {
         }
         mark.setName(markName);
         marks.add(mark);
+        if (isWatchingMark && mark.getName().equals(watchedMark.getName())) {
+            watchedMark = mark;
+            refreshMarkPredicate();
+        }
     }
 
     @Override
     public ObservableList<Mark> getFilteredMarkList() {
         return marks;
+    }
+
+    @Override
+    public void setMarkPredicate(String markName) throws MarkNotFoundException {
+        // should only be called from MarkShowCommand
+        watchedMark = getMark(markName);
+        refreshMarkPredicate();
+    }
+
+    @Override
+    public void resetView() {
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        raise(new ResetStudentViewEvent(""));
+    }
+
+    /**
+     * Updates the predicate when a student is edited
+     */
+    private void refreshMarkPredicate() {
+        updateFilteredStudentList(watchedMark.getPredicate());
+        isWatchingMark = true;
     }
 
     /**
@@ -390,7 +422,8 @@ public class ModelManager extends ComponentManager implements Model {
                 if (newStudent != null) {
                     set.add(newStudent);
                 }
-                setMark(mark.getName(), new Mark(set, mark.getName()));
+                Mark newMark = new Mark(set, mark.getName());
+                setMark(mark.getName(), newMark);
             }
         });
     }
