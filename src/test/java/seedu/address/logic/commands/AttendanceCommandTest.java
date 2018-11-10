@@ -175,24 +175,24 @@ public class AttendanceCommandTest {
 
     @Test
     public void equals() {
-        final AttendanceCommand standardCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
+        final AttendanceCommand standardIndexCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY));
         // same values -> returns true
-        AttendanceCommand commandWithSameValues = new AttendanceCommand(INDEX_FIRST_STUDENT,
+        AttendanceCommand indexCommandWithSameValues = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY));
-        assertTrue(standardCommand.equals(commandWithSameValues));
+        assertTrue(standardIndexCommand.equals(indexCommandWithSameValues));
 
         // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
+        assertTrue(standardIndexCommand.equals(standardIndexCommand));
 
         // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        assertFalse(standardIndexCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardIndexCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_SECOND_STUDENT,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_SECOND_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY))));
 
         assertEquals(new Attendance(AttendanceEnum.UNDEFINED), new Attendance(AttendanceEnum.UNDEFINED));
@@ -204,7 +204,34 @@ public class AttendanceCommandTest {
         assertEquals(new Attendance(" "), new Attendance(AttendanceEnum.UNDEFINED));
 
         // different attendance -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
+                new Attendance("1"))));
+
+        String markName = "tut1";
+        final AttendanceCommand standardMarkCommand = new AttendanceCommand(markName,
+                new Attendance(VALID_ATTENDANCE_AMY));
+
+        // same values -> returns true
+        AttendanceCommand markCommandWithSameValues = new AttendanceCommand(markName,
+                new Attendance(VALID_ATTENDANCE_AMY));
+        assertTrue(standardMarkCommand.equals(markCommandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardMarkCommand.equals(standardMarkCommand));
+
+        // null -> returns false
+        assertFalse(standardMarkCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardMarkCommand.equals(new ClearCommand()));
+
+        // different markName -> return false
+        String otherMarkName = "tut2";
+        assertFalse(standardMarkCommand.equals(new AttendanceCommand(otherMarkName,
+                new Attendance(VALID_ATTENDANCE_AMY))));
+
+        // different attendance -> return false
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(markName,
                 new Attendance("1"))));
     }
 }
