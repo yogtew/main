@@ -21,9 +21,6 @@ public class Request {
     public Request(String address, String requestMethod) {
         try {
             HttpURLConnection conn = openConnection(address, requestMethod);
-            //URL url = new URL(address);
-            //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            //conn.setRequestMethod(requestMethod);
 
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             BufferedWriter out = new BufferedWriter(new FileWriter("tmp.html"));
@@ -48,11 +45,8 @@ public class Request {
     public static HttpURLConnection tokenRequest(String address, String requestMethod, String data) {
         try {
             HttpURLConnection conn = openConnection(address, requestMethod);
-            //URL url = new URL(address);
-            //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             byte[] postData;
             postData = data.getBytes(StandardCharsets.UTF_8);
-            //conn.setRequestMethod(requestMethod);
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("charset", "utf-8");
             conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
@@ -76,11 +70,8 @@ public class Request {
     public static HttpURLConnection sendMail(String accessToken, String address, String requestMethod, String data) {
         try {
             HttpURLConnection conn = openConnection(address, requestMethod);
-            //URL url = new URL(address);
-            //HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             byte[] postData;
             postData = data.getBytes(StandardCharsets.UTF_8);
-            //conn.setRequestMethod(requestMethod);
             conn.setRequestProperty ("Authorization", "Bearer " + accessToken);
             conn.setRequestProperty("Accept", "application/json; odata.metadata=none");
             conn.setRequestProperty("Content-Type", "application/json");
