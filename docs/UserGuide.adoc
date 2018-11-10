@@ -410,8 +410,6 @@ e.g. `add n/James Ho sn/A22224444 e/jamesho@example.com f/School of Computing t/
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [sn/STUDENT_NUMBER] [e/EMAIL] [f/FACULTY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Sort* : `sort PARAMETER` +
-e.g. `sort NAME`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
 e.g. `attendance 1 at/1` or `attendance m/tutorial1 at/1`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
