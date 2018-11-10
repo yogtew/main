@@ -34,12 +34,16 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private GraphPanel GraphPanel;
     private StudentListPanel studentListPanel;
     private EventListPanel eventListPanel;
     private MarkListPanel markListPanel;
     private Config config;
     private UserPrefs prefs;
     private HelpWindow helpWindow;
+
+    @FXML
+    private StackPane graphPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -123,8 +127,13 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        GraphPanel = new GraphPanel();
+        graphPlaceholder.getChildren().add(GraphPanel.getRoot());
+
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
+
 
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
         eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
@@ -194,8 +203,13 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
+
     public StudentListPanel getStudentListPanel() {
         return studentListPanel;
+    }
+
+    void releaseResources() {
+        GraphPanel.freeResources();
     }
 
     @Subscribe
