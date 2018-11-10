@@ -74,6 +74,21 @@ Examples:
 Shows a list of all students in the address book. +
 Format: `list`
 
+=== Emailing a student : `email`
+
+ Allows the user to email a specified student. +
+ Format: `email INDEX s/SUBJECT b/BODY`
+
+ ****
+ * The subject of the email is specified after the s/ and the body after the b/.
+ * The user can specify only one student index, after the 'email' command word.
+ ****
+
+ Examples:
+
+ * `email 2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
+ Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
+
 === Editing a student : `edit`
 
 Edits an existing student in the address book. +
@@ -94,29 +109,13 @@ Edits the student number and email address of the 1st student to be `A91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
-=== Sorting students: `sort`
-
-Sorts students according to a given parameter. +
-Format: `sort PARAMETER`
-
-****
-* The sorting itself is only performed on the already exisiting fields.
-****
-
-Examples:
-
-*`sort NAME` +
-Returns a list of students sorted by their name
-*`sort GRADES` +
-Returns a list of students sorted by their grades, which is a field of each student.
-
 === Marking attendance: `attendance`
 
-Allows the user to mark the attendance of students using the index number. +
-Format: `attendance INDEX_NUMBER at/ATTENDANCE`
+Allows the user to mark the attendance of students using the index number as well as mark name. +
+Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance m/MARK_NAME at/ATTENDANCE`
 
 ****
-* The attendance marking as present is done individually, by using the index number of the student, and the user can individually mark students who are absent as 'absent'/'0' and who are present as 'present'/'1'.
+* The attendance marking as present is done individually, by using the index number of the student, and the user can individually mark students who are absent as 'absent'/'0' and who are present as 'present'/'1'. The user can also collectively mark the attendance using the MARK feature. Then, the user can update the attendance of the students who do not follow the majority specifically.
 ****
 
 Examples:
@@ -127,21 +126,44 @@ Marks the attendance of the student with index number 1 as present.
 * `attendance 3 at/0` +
 Marks the attendance of the student with index number 3 as absent.
 
+* `attendance m/tutorial1 at/1` +
+Marks the attendance of all the students in mark-tutorial1 as present.
+
 === Schedule timetables: `schedule`
+// tag::schedule[]
+=== Schedule events: `schedule`
 
 Schedules an event for the user to keep track of. +
-Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION`
+Format: `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END [descr/DESCRIPTION]`
 
 ****
-* The event will be scheduled and reflected on the user's list of events
-* Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event. Also, the year range is between 1600 and 9999
+* The event will be scheduled and reflected on the user's list of events.
+* Events with the same event name, date, start time, and end time, will be considered as duplicates, and will not be scheduled again.
+* Invalid dates and times will not be scheduled e.g. `32-12-2018` will not schedule any event. Also, the year range is between 1600 and 9999.
 ****
 
 Examples:
 
-* `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
-Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm
+* `schedule event/CS2103 Tutorial W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo` +
+Schedules an event named `CS2103-Tutorial-W13` on 22-3-2018 from 4:00pm to 6:00pm.
+// end::schedule[]
 
+// tag::cancel[]
+=== Cancel event: `cancel`
+
+Cancels an event already in the calendar. +
+Format: `cancel event/EVENT_NAME date/DATE start/TIME_START end/TIME_END`
+
+****
+* The event will be cancelled and be deleted from the user's list of events.
+* Like `schedule`, the format is the same, and the event with the exact details must exist within the calendar.
+****
+
+Examples:
+
+* `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
+Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
+// end::cancel[]
 === Emailing students: `email`
 
 Allows the user to email a specified student. +
@@ -243,12 +265,12 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book and/or calendar to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`) or the calendar's content (`schedule`, `cancel`, and `clear`)
 ====
 
 Examples:
@@ -263,8 +285,8 @@ Examples:
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
+`schedule event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
+`undo` (reverses the `schedule event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` command) +
 `undo` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
@@ -290,29 +312,41 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::clear[]
 === Clearing all entries : `clear`
 
-Clears all entries from the address book while still maintaining the calendar. +
+Clears all entries from the address book and calendar. +
 Format: `clear`
+// end::clear[]
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Tag Students: `tag`
+Adds, sets or deletes tags from students (by index or by name).
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+Format: `tag add|set|del index|m/mark [t/tags...]`
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+Examples:
+```
+tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
+tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
+tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+tag add m/students t/cs2103 // Adds the tag "cs2103" to all students in the mark named "students"
+```
+
+Note:
+
+* The command accepts any number of tags (including 0), using `tag set` with no tags supplied will clear all tags
+* The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
+* The command will not fail even if the supplied tag is absent in the case of `tag delete`
+* The command will still display a success message if the above cases occur
 
 // tag::mark[]
-=== Mark
+=== Mark: `mark`
 A Mark represents a group of Students in the app. Some commands accept Marks as an alternative to INDEX as a parameter to quickly perform batch operations.
 
 ==== Mark Creation
@@ -366,6 +400,17 @@ Examples:
 * `mark m/test show` -- shows students marked under _m/test_ in the GUI
 // end::mark[]
 
+=== Saving the data
+
+Address book data are saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually.
+
+// tag::dataencryption[]
+=== Encrypting data files `[coming in v2.0]`
+
+_{explain how the user can enable/disable data encryption}_
+// end::dataencryption[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
@@ -380,12 +425,12 @@ e.g. `add n/James Ho sn/A22224444 e/jamesho@example.com f/School of Computing t/
 e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [sn/STUDENT_NUMBER] [e/EMAIL] [f/FACULTY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Sort* : `sort PARAMETER` +
-e.g. `sort NAME`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
-e.g. `attd CS2103-Tutorial-W13`
+e.g. `attendance 1 at/1` or `attendance m/tutorial1 at/1`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo`
+* *Cancel* : `cancel event/EVENT_NAME date/DATE start/TIME_START end/TIME_END` +
+e.g. `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00`
 * *Email* : `email GROUP_NAME [MORE_GROUP_NAMES]
 e.g. `email CS2103-Tutorial-W13`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
@@ -397,3 +442,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Tag* : `tag add|set|del index|m/mark [t/tags...]`
+* *Mark* : `mark [m/m1] ...`
+** `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and mark under _m1_
+** `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
+** `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
+** `show` -- displays students from _m1_ in the GUI

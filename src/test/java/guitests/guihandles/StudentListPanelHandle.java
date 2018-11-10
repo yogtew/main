@@ -14,7 +14,7 @@ import seedu.address.model.student.Student;
 public class StudentListPanelHandle extends NodeHandle<ListView<Student>> {
     public static final String STUDENT_LIST_VIEW_ID = "#studentListView";
 
-    private static final String CARD_PANE_ID = "#cardPane";
+    private static final String CARD_PANE_ID = "#cardStudentPane";
 
     private Optional<Student> lastRememberedSelectedStudentCard;
 

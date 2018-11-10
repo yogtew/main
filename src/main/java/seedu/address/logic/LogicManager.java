@@ -3,7 +3,9 @@ package seedu.address.logic;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
 import javafx.collections.ObservableList;
+
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.MarkPanelSelectionChangedEvent;

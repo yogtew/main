@@ -19,6 +19,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
 import guitests.guihandles.CommandBoxHandle;
+import guitests.guihandles.EventListPanelHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.StudentListPanelHandle;
@@ -32,7 +33,9 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Calendar;
 import seedu.address.model.Model;
+import seedu.address.testutil.TypicalEvents;
 import seedu.address.testutil.TypicalStudents;
 import seedu.address.ui.CommandBox;
 
@@ -60,7 +63,10 @@ public abstract class AddressBookSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(this::getInitialStudentData,
+                this::getInitialEventData,
+                getAddressBookDataFileLocation(),
+                getCalendarDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         assertApplicationStartingStateIsCorrect();
@@ -73,17 +79,31 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Returns the data to be loaded into the file in {@link #getDataFileLocation()}.
+     * Returns the data to be loaded into the file in {@link #getAddressBookDataFileLocation()}.
      */
-    protected AddressBook getInitialData() {
+    protected AddressBook getInitialStudentData() {
         return TypicalStudents.getTypicalAddressBook();
     }
 
     /**
-     * Returns the directory of the data file.
+     * Returns the data to be loaded into the file in {@link #getCalendarDataFileLocation()}.
      */
-    protected Path getDataFileLocation() {
-        return TestApp.SAVE_LOCATION_FOR_TESTING;
+    protected Calendar getInitialEventData() {
+        return TypicalEvents.getTypicalCalendar();
+    }
+
+    /**
+     * Returns the directory of the address book data file.
+     */
+    protected Path getAddressBookDataFileLocation() {
+        return TestApp.ADDRESSBOOK_SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Returns the directory of the calendar data file.
+     */
+    protected Path getCalendarDataFileLocation() {
+        return TestApp.CALENDAR_SAVE_LOCATION_FOR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -96,6 +116,10 @@ public abstract class AddressBookSystemTest {
 
     public StudentListPanelHandle getStudentListPanel() {
         return mainWindowHandle.getStudentListPanel();
+    }
+
+    public EventListPanelHandle getEventListPanel() {
+        return mainWindowHandle.getEventListPanel();
     }
 
     public MainMenuHandle getMainMenu() {
@@ -165,6 +189,7 @@ public abstract class AddressBookSystemTest {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(new AddressBook(expectedModel.getAddressBook()), testApp.readStorageAddressBook());
+        assertEquals(new Calendar(expectedModel.getCalendar()), testApp.readStorageCalendar());
         assertListMatching(getStudentListPanel(), expectedModel.getFilteredStudentList());
     }
 
@@ -248,7 +273,8 @@ public abstract class AddressBookSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertEquals("", getResultDisplay().getText());
         assertListMatching(getStudentListPanel(), getModel().getFilteredStudentList());
-        assertEquals(Paths.get(".").resolve(testApp.getStorageSaveLocation()).toString(),
+        assertListMatching(getEventListPanel(), getModel().getFilteredEventList());
+        assertEquals(Paths.get(".").resolve(testApp.getAddressBookStorageSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }

@@ -97,7 +97,12 @@ public class ScheduleCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitModel() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -141,13 +146,11 @@ public class ScheduleCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void undoAddressBook() {
+        private void undoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void redoAddressBook() {
+        private void redoAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -196,18 +199,36 @@ public class ScheduleCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void undoCalendar() {
+        private void undoCalendar() {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void redoCalendar() {
+        private void redoCalendar() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void commitCalendar() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndo() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedo() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undo() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redo() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -218,6 +239,11 @@ public class ScheduleCommandTest {
 
         @Override
         public void setMark(String markName, Mark mark) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Mark> getFilteredMarkList() {
             throw new AssertionError("This method should not be called.");
         }
     }

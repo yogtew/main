@@ -129,7 +129,7 @@ public class Student {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
-                .append(" StudentNumber: ")
+                .append(" Student Number: ")
                 .append(getStudentNumber())
                 .append(" Email: ")
                 .append(getEmail())

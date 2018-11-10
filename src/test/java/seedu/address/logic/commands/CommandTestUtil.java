@@ -9,12 +9,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_END;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EVENT_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_START;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.testutil.TypicalEvents.EVENT_NOT_PRESENT;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +25,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.event.Event;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.EditStudentDescriptorBuilder;
@@ -62,7 +63,7 @@ public class CommandTestUtil {
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_PHYSICS;
     public static final String SUBJECT_DESC = " " + PREFIX_SUBJECT + VALID_SUBJECT_EMAIL;
     public static final String BODY_DESC = " " + PREFIX_BODY + VALID_BODY_EMAIL;
-    public static final String INDEX_DESC_AMY = " " + PREFIX_INDEX + VALID_INDEX_AMY;
+    public static final String INDEX_DESC_AMY = " " + VALID_INDEX_AMY;
 
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
@@ -73,7 +74,7 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "nope*"; // '*' not allowed in tags
     public static final String INVALID_SUBJECT_DESC = " " + PREFIX_SUBJECT; //empty string not allowed for subject
     public static final String INVALID_BODY_DESC = " " + PREFIX_BODY; //empty string not allowed for body of email
-    public static final String INVALID_INDEX_DESC = " " + PREFIX_INDEX + "1a"; //'a' not allowed in index
+    public static final String INVALID_INDEX_DESC = " " + "1a"; //'a' not allowed in index
 
     public static final String VALID_EVENT_NAME_TUTORIAL = "Tutorial";
     public static final String VALID_EVENT_NAME_CONSULTATION = "Consultation";
@@ -190,6 +191,23 @@ public class CommandTestUtil {
         Student firstStudent = model.getFilteredStudentList().get(0);
         model.deleteStudent(firstStudent);
         model.commitAddressBook();
+    }
+
+    /**
+     * Deletes the first event in {@code model}'s filtered list from {@code model}'s calendar.
+     */
+    public static void deleteFirstEvent(Model model) {
+        Event firstEvent = model.getFilteredEventList().get(0);
+        model.deleteEvent(firstEvent);
+        model.commitCalendar();
+    }
+
+    /**
+     * Adds a typical event to {@code model}'s calendar.
+     */
+    public static void addTypicalEvent(Model model) {
+        model.addEvent(EVENT_NOT_PRESENT);
+        model.commitCalendar();
     }
 
 }

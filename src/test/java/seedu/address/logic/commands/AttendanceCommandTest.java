@@ -47,10 +47,10 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(editedStudent.getAttendance().value.toString()));
 
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
+        String expectedMessage = "Successfully updated attendance of 1 student";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new Calendar(), new UserPrefs());
+                new Calendar(model.getCalendar()), new UserPrefs());
         expectedModel.updateStudent(firstStudent, editedStudent);
         expectedModel.commitAddressBook();
 
@@ -67,10 +67,10 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(editedStudent.getAttendance().value.toString()));
 
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
+        String expectedMessage = "Successfully updated attendance of 1 student";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
-                new Calendar(), new UserPrefs());
+                new Calendar(model.getCalendar()), new UserPrefs());
         expectedModel.updateStudent(firstStudent, editedStudent);
         expectedModel.commitAddressBook();
 
@@ -112,7 +112,7 @@ public class AttendanceCommandTest {
 
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(ATTENDANCE_STUB));
-        Model expectedModel = new ModelManager(model.getAddressBook(), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendar(), new UserPrefs());
         expectedModel.updateStudent(studentToModify, modifiedStudent);
         expectedModel.commitAddressBook();
 
@@ -120,11 +120,11 @@ public class AttendanceCommandTest {
         attendanceCommand.execute(model, commandHistory);
 
         // undo -> reverts conTAct back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first student modified again
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -153,7 +153,7 @@ public class AttendanceCommandTest {
     public void executeUndoRedo_validIndexFilteredList_sameStudentDeleted() throws Exception {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(ATTENDANCE_STUB));
-        Model expectedModel = new ModelManager(model.getAddressBook(), new Calendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendar(), new UserPrefs());
 
         showStudentAtIndex(model, INDEX_SECOND_STUDENT);
         Student studentToModify = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -165,34 +165,34 @@ public class AttendanceCommandTest {
         attendanceCommand.execute(model, commandHistory);
 
         // undo -> reverts address book back to previous state and filtered student list to show all students
-        expectedModel.undoAddressBook();
+        expectedModel.undo();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> modifies same second student in unfiltered student list
-        expectedModel.redoAddressBook();
+        expectedModel.redo();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() {
-        final AttendanceCommand standardCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
+        final AttendanceCommand standardIndexCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY));
         // same values -> returns true
-        AttendanceCommand commandWithSameValues = new AttendanceCommand(INDEX_FIRST_STUDENT,
+        AttendanceCommand indexCommandWithSameValues = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY));
-        assertTrue(standardCommand.equals(commandWithSameValues));
+        assertTrue(standardIndexCommand.equals(indexCommandWithSameValues));
 
         // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
+        assertTrue(standardIndexCommand.equals(standardIndexCommand));
 
         // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        assertFalse(standardIndexCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardIndexCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_SECOND_STUDENT,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_SECOND_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY))));
 
         assertEquals(new Attendance(AttendanceEnum.UNDEFINED), new Attendance(AttendanceEnum.UNDEFINED));
@@ -204,7 +204,34 @@ public class AttendanceCommandTest {
         assertEquals(new Attendance(" "), new Attendance(AttendanceEnum.UNDEFINED));
 
         // different attendance -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
+                new Attendance("1"))));
+
+        String markName = "tut1";
+        final AttendanceCommand standardMarkCommand = new AttendanceCommand(markName,
+                new Attendance(VALID_ATTENDANCE_AMY));
+
+        // same values -> returns true
+        AttendanceCommand markCommandWithSameValues = new AttendanceCommand(markName,
+                new Attendance(VALID_ATTENDANCE_AMY));
+        assertTrue(standardMarkCommand.equals(markCommandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardMarkCommand.equals(standardMarkCommand));
+
+        // null -> returns false
+        assertFalse(standardMarkCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardMarkCommand.equals(new ClearCommand()));
+
+        // different markName -> return false
+        String otherMarkName = "tut2";
+        assertFalse(standardMarkCommand.equals(new AttendanceCommand(otherMarkName,
+                new Attendance(VALID_ATTENDANCE_AMY))));
+
+        // different attendance -> return false
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(markName,
                 new Attendance("1"))));
     }
 }
