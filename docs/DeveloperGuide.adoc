@@ -443,8 +443,8 @@ Currently, this operation exists within the logic component of ConTAct.
 
 Below is an example of how the attendance command behaves:
 
-`attendance 1 at/0`
-`attendance m/tutorial1 at/1`
+* `attendance 1 at/0`
+* `attendance m/tutorial1 at/1`
 
 This will simply specify the attendance field of the Student/Students with the specified attendance and store it similar to how the addressbook stores a student.
 Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
