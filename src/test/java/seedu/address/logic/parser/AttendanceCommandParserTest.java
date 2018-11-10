@@ -4,11 +4,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 
 import org.junit.Test;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AttendanceCommand;
 import seedu.address.model.mark.Mark;
@@ -43,25 +41,25 @@ public class AttendanceCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser,"-5", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5", MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser,"0", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0", MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as index
-        assertParseFailure(parser,"some string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "some string", MESSAGE_INVALID_FORMAT);
 
         // invalid prefix being parsed as index
-        assertParseFailure(parser,"1 i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
 
         // invalid mark
         assertParseFailure(parser, VALID_ATTENDANCE + INVALID_MARK, Mark.MARK_NAME_CONSTRAINTS);
 
         // valid mark but random stuff in preamble
-        assertParseFailure(parser,PREFIX_ATTENDANCE + "some string" + VALID_MARK, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, PREFIX_ATTENDANCE + "some string" + VALID_MARK, MESSAGE_INVALID_FORMAT);
 
         // negative attendance
-        assertParseFailure(parser,  PREFIX_ATTENDANCE + "-1", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, PREFIX_ATTENDANCE + "-1", MESSAGE_INVALID_FORMAT);
 
         // invalid attendance
         assertParseFailure(parser, PREFIX_ATTENDANCE + INVALID_ATTENDANCE, MESSAGE_INVALID_FORMAT);
@@ -69,9 +67,6 @@ public class AttendanceCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        // invalid command
-        //assertParseFailure(parser, INVALID_COMMAND + "1", MESSAGE_INVALID_FORMAT);
-
         // valid command but invalid index
         assertParseFailure(parser, "-1", MESSAGE_INVALID_FORMAT);
     }

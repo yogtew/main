@@ -98,6 +98,12 @@ public class AttendanceCommand extends Command {
         model.updateStudent(target, editedStudent);
     }
 
+    /**
+     * executeMark method which processes students in the mark
+     * @param model
+     * @param history
+     * @return
+     */
     public CommandResult executeMark(Model model, CommandHistory history) {
         Mark m = model.getMark(markName);
         m.getList().forEach(p -> {
@@ -141,8 +147,7 @@ public class AttendanceCommand extends Command {
         AttendanceCommand a = (AttendanceCommand) object;
         if (index == null) {
             return markName.equals(a.markName) && attendance.equals(a.attendance);
-        }
-        else {
+        } else {
             return index.equals(a.index) && attendance.equals(a.attendance);
         }
     }
