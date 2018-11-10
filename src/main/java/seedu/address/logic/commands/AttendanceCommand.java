@@ -124,16 +124,6 @@ public class AttendanceCommand extends Command {
         return new CommandResult(String.format("Successfully updated attendance of %d %s", n, pluralName));
     }
 
-    /**
-     * Generates a command execution success message based on whether the attendance is updated to or removed from
-     * {@code studentToEdit}.
-     */
-    private String generateSuccessMessage(Student studentToEdit) {
-        String message = !attendance.value.toString().isEmpty()
-                ? MESSAGE_ADD_ATTENDANCE_SUCCESS : MESSAGE_REMOVE_ATTENDANCE_SUCCESS;
-        return String.format(message, studentToEdit);
-    }
-
     @Override
     public boolean equals(Object object) {
         if (object == this) {
