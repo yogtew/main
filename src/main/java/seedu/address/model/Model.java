@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.student.Student;
@@ -76,7 +77,7 @@ public interface Model {
      */
     void commitAddressBook();
 
-    Mark getMark(String markName);
+    Mark getMark(String markName) throws MarkNotFoundException;
 
     void setMark(String markName, Mark mark);
 

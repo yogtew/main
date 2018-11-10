@@ -12,6 +12,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.model.student.IsTaggedPredicate;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 public class FindCommandParserTest {
 
@@ -36,7 +37,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_tag_valid() {
         FindCommand expectedFindCommand =
-                new FindCommand(new IsTaggedPredicate(Arrays.asList(new Tag("friends"), new Tag("colleagues"))));
+                new FindCommand(new IsTaggedPredicate(SampleDataUtil.getTagSet("friends", "colleagues")));
         // multiple tags
         assertParseSuccess(parser, " t/friends t/colleagues", expectedFindCommand);
     }

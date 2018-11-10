@@ -18,6 +18,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
 import seedu.address.commons.events.model.StudentChangedEvent;
+import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.student.Student;
@@ -28,12 +29,12 @@ import seedu.address.model.student.Student;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedAddressBook versionedAddressBook;
-    private final FilteredList<Student> filteredStudents;
+    protected final VersionedAddressBook versionedAddressBook;
+    protected final FilteredList<Student> filteredStudents;
     private final ObservableList<Mark> marks;
 
-    private final VersionedCalendar versionedCalendar;
-    private final FilteredList<Event> filteredEvents;
+    protected final VersionedCalendar versionedCalendar;
+    protected final FilteredList<Event> filteredEvents;
 
 
     // maintain an internal undo/redo stack to keep track of which model to undo/redo
@@ -62,6 +63,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
+
+        setMark(Mark.DEFAULT_NAME, Mark.getEmpty());
     }
 
     public ModelManager() {
@@ -346,15 +349,24 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredEvents.equals(other.filteredEvents);
     }
 
-    public Mark getMark(String markName) throws IllegalArgumentException {
+    /**
+     *
+     * @param markName name of mark to get
+     * @return mark if found
+     * @throws MarkNotFoundException if mark not found in model
+     */
+    public Mark getMark(String markName) throws MarkNotFoundException {
         Mark.checkValidMarkName(markName);
-        return marks.stream().filter(m -> m.getName().equals(markName)).findFirst().orElse(Mark.EMPTY);
+        return marks.stream().filter(m -> m.getName().equals(markName)).findFirst()
+                .orElseThrow(() -> new MarkNotFoundException(Mark.MESSAGE_MARK_NOT_FOUND));
     }
 
     public void setMark(String markName, Mark mark) {
-        Mark old = getMark(mark.getName());
-        if (!old.equals(Mark.EMPTY)) {
+        try {
+            Mark old = getMark(mark.getName());
             marks.remove(old);
+        } catch (MarkNotFoundException ignored) {
+
         }
         mark.setName(markName);
         marks.add(mark);

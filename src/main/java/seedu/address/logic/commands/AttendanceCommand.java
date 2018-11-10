@@ -104,7 +104,7 @@ public class AttendanceCommand extends Command {
      * @param history
      * @return
      */
-    public CommandResult executeMark(Model model, CommandHistory history) {
+    public CommandResult executeMark(Model model, CommandHistory history) throws CommandException {
         Mark m = model.getMark(markName);
         m.getList().forEach(p -> {
             processStudent(model, history, p);

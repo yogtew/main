@@ -12,6 +12,7 @@ import seedu.address.commons.events.ui.MarkPanelSelectionChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.logic.commands.mark.MarkShowCommand;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -69,6 +70,10 @@ public class LogicManager extends ComponentManager implements Logic {
 
     @Subscribe
     public void markSelectionChangedEventHandler(MarkPanelSelectionChangedEvent event) {
-        new MarkShowCommand(event.getNewSelection().getName()).execute(model, history);
+        try {
+            new MarkShowCommand(event.getNewSelection().getName()).execute(model, history);
+        } catch (MarkNotFoundException ignored) {
+
+        }
     }
 }

@@ -15,9 +15,9 @@ import seedu.address.model.student.Student;
  */
 public class Mark {
     public static final String DEFAULT_NAME = "default";
-    public static final Mark EMPTY = new Mark();
     public static final String MARK_NAME_CONSTRAINTS =
             "Mark names should only contain alphanumeric characters, and it should not be blank";
+    public static final String MESSAGE_MARK_NOT_FOUND = "Specified mark does not exist";
     /*
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
@@ -109,6 +109,14 @@ public class Mark {
         ArrayList<Student> copy = new ArrayList<>(set);
         copy.retainAll(other.getList());
         return new Mark(copy);
+    }
+
+    /**
+     * Returns an empty Mark
+     * @return empty mark
+     */
+    public static Mark getEmpty() {
+        return new Mark();
     }
 
 
