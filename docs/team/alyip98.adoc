@@ -1,0 +1,50 @@
+= Yip Seng Yeun - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ConTAct
+
+---
+
+== Overview
+
+ConTAct is an application designed to help teaching assistants manage the details of their students. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.
+
+== Summary of contributions
+
+* *Major enhancement*: Ability to add students to a temporary group and perform batch operations on the group
+** What it does: allows the user to create temporary groups of students and manipulate these groups using set operations (union, intersection) and run commands on groups of students instead of one by one
+** Justification: This enhancement saves time and improves productivity as the user only has to run one command for each batch, instead of one command for every student
+** Highlights: This enhancement greatly improves the usability of the application by serving as the foundation for batch operations.
+
+* *Minor enhancement*: added a `tag` command to update tags of a group of students
+
+* *Code contributed*: 
+
+* *Other contributions*:
+
+** Project management:
+***
+** Enhancements to existing features:
+** Documentation:
+** Community:
+** Tools:
+*** Tweaked Travis CI build settings to forgive trivial errors (e.g. incorrect alphabetical order of imports will now only give a warning)
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=mark]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=mark]
