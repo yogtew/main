@@ -416,11 +416,11 @@ is distinct.
 
 The `attendance` command is a completely new feature that allows the user to mark the attendance of students
 within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
-storage of the other commands. 
+storage of the other commands.
 To facilitate this command, a new data type is introduced: the Attendance class.
 The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class
-uses another class called the AttendanceEnum class. 
-This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class. 
+uses another class called the AttendanceEnum class.
+This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class.
 The attendance class has an overloaded constructor which takes in different parameters.
 
 Field of first constructor:
@@ -435,7 +435,7 @@ Currently, the main operation is the `attendance` command, and it is implemented
 
 * `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
 
-The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such: 
+The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such:
 
 * `attendance PREFIX_MARK/markName PREFIX_ATTENDANCE/attendance`
 
