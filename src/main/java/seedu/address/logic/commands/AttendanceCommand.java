@@ -139,8 +139,12 @@ public class AttendanceCommand extends Command {
         }
 
         AttendanceCommand a = (AttendanceCommand) object;
-        return index.equals(a.index)
-                && attendance.equals(a.attendance);
+        if (index == null) {
+            return markName.equals(a.markName) && attendance.equals(a.attendance);
+        }
+        else {
+            return index.equals(a.index) && attendance.equals(a.attendance);
+        }
     }
 
 }
