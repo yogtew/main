@@ -26,15 +26,15 @@ public class EmailCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sends email to person specified. "
             + "Parameters: "
-            + PREFIX_INDEX + "INDEX (must be a positive integer) "
+            + "INDEX (must be a positive integer) "
             + PREFIX_SUBJECT + "SUBJECT "
             + PREFIX_BODY + "BODY "
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_INDEX + "1 "
+            + "1 "
             + PREFIX_SUBJECT + "Tutorial time changed "
             + PREFIX_BODY + "Tutorial this week is on tuesday. ";
 
-    private public static final String MESSAGE_SENT_SUCCESS = "Email sent to: %1$s";
+    private static final String MESSAGE_SENT_SUCCESS = "Email sent to: %1$s";
 
     private final EmailDraft emailDraft;
 
@@ -67,7 +67,6 @@ public class EmailCommand extends Command {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         return new CommandResult(String.format(MESSAGE_SENT_SUCCESS, addressToEmail));
     }

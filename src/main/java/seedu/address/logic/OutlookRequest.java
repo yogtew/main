@@ -1,6 +1,6 @@
 package seedu.address.logic;
 
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,21 +43,20 @@ public class OutlookRequest {
      */
     public static void sendMail(OutlookRequest outlookRequest) throws Exception {
 
-        // Opens microsoft authentication page in a browser tab
-        Desktop.getDesktop().browse(new URI(ApplicationDetails.authURL));
-
-        // setup a http listener on localhost:8000 to wait for the returned authcode
-        ServerSocket serverSocket = new ServerSocket(8000);
-        Socket socket = serverSocket.accept();
-        InputStream is = socket.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-        String inputLine;
-        ArrayList<String> content = new ArrayList<>();
-        while ((inputLine = bufferedReader.readLine()) != null) {
-            content.add(inputLine);
-        }
-
         try {
+            // Opens microsoft authentication page in a browser tab
+            Desktop.getDesktop().browse(new URI(ApplicationDetails.authURL));
+
+            // setup a http listener on localhost:8000 to wait for the returned authcode
+            ServerSocket serverSocket = new ServerSocket(8000);
+            Socket socket = serverSocket.accept();
+            InputStream is = socket.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            String inputLine;
+            ArrayList<String> content = new ArrayList<>();
+            while ((inputLine = bufferedReader.readLine()) != null) {
+                content.add(inputLine);
+            }
 
             // extract authcode from returned request
             String authCode = content.get(13).split("&")[0].split("code=")[1];

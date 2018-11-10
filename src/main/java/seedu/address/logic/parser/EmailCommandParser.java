@@ -27,14 +27,14 @@ public class EmailCommandParser implements Parser<EmailCommand> {
      */
     public EmailCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_INDEX, PREFIX_SUBJECT, PREFIX_BODY);
+                ArgumentTokenizer.tokenize(args, PREFIX_SUBJECT, PREFIX_BODY);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_SUBJECT, PREFIX_BODY)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_SUBJECT, PREFIX_BODY)
+                || argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EmailCommand.MESSAGE_USAGE));
         }
 
-        Index index = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_INDEX).get());
+        Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
         Subject subject = ParserUtil.parseSubject(argMultimap.getValue(PREFIX_SUBJECT).get());
         Body body = ParserUtil.parseBody(argMultimap.getValue(PREFIX_BODY).get());
 
