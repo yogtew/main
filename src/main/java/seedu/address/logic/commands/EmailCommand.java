@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BODY;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 
 import java.util.List;
@@ -34,7 +33,7 @@ public class EmailCommand extends Command {
             + PREFIX_SUBJECT + "Tutorial time changed "
             + PREFIX_BODY + "Tutorial this week is on tuesday. ";
 
-    private static final String MESSAGE_SENT_SUCCESS = "Email sent to: %1$s";
+    public static final String MESSAGE_SENT_SUCCESS = "Email sent to: %1$s";
 
     private final EmailDraft emailDraft;
 
