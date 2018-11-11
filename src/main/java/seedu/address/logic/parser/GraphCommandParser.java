@@ -1,20 +1,17 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.GraphCommand;
-import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ArgumentTokenizer;
-import seedu.address.logic.parser.Parser;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.student.IsTaggedPredicate;
-import seedu.address.model.student.NameContainsKeywordsPredicate;
-import seedu.address.model.tag.Tag;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import seedu.address.logic.commands.GraphCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.student.IsTaggedPredicate;
+import seedu.address.model.student.NameContainsKeywordsPredicate;
+import seedu.address.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new FindCommand object

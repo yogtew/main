@@ -13,10 +13,9 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ShowGraphRequestEvent;
-import seedu.address.model.student.Student;
 
 /**
- * The Browser Panel of the App.
+ * The Graph Panel of the App.
  */
 public class GraphPanel extends UiPart<Region> {
 
@@ -44,7 +43,10 @@ public class GraphPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(ShowGraphRequestEvent event) {
+    /**
+     * Loads graph using attendance data from event object.
+     */
+    private void loadGraph(ShowGraphRequestEvent event) {
         String url = SEARCH_PAGE_URL
                 + DATA_1_PARSE + event.getAttendanceList().get(0)
                 + DATA_2_PARSE + event.getAttendanceList().get(1)
@@ -66,8 +68,8 @@ public class GraphPanel extends UiPart<Region> {
 
 
     @Subscribe
-    private void ShowGraphRequestEvent(ShowGraphRequestEvent event) {
+    private void showGraphRequestEvent(ShowGraphRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event);
+        loadGraph(event);
     }
 }
