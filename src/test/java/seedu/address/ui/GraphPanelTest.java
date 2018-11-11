@@ -8,23 +8,27 @@ import static seedu.address.ui.GraphPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.GraphPanelHandle;
 import seedu.address.MainApp;
-import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ShowGraphRequestEvent;
 
 public class GraphPanelTest extends GuiUnitTest {
-    private StudentPanelSelectionChangedEvent selectionChangedEventStub;
+    private ShowGraphRequestEvent graphRequestEventStub;
 
     private GraphPanel graphPanel;
     private GraphPanelHandle graphPanelHandle;
 
     @Before
     public void setUp() {
-        selectionChangedEventStub = new StudentPanelSelectionChangedEvent(ALICE);
+        ArrayList<Integer> integerList = new ArrayList<>();
+        integerList.add(1);
+        integerList.add(3);
+        graphRequestEventStub = new ShowGraphRequestEvent(integerList);
 
         guiRobot.interact(() -> graphPanel = new GraphPanel());
         uiPartRule.setUiPart(graphPanel);
@@ -35,12 +39,11 @@ public class GraphPanelTest extends GuiUnitTest {
     @Test
     public void display() throws Exception {
         // default web page
-        URL expectedDefaultPageUrl = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
+        URL expectedDefaultPageUrl = new URL(DEFAULT_PAGE);
         assertEquals(expectedDefaultPageUrl, graphPanelHandle.getLoadedUrl());
 
         // associated web page of a person
-        postNow(selectionChangedEventStub);
-        URL expectedPersonUrl = new URL(GraphPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
+        URL expectedPersonUrl = new URL(GraphPanel.SEARCH_PAGE_URL);
 
         waitUntilBrowserLoaded(graphPanelHandle);
         assertEquals(expectedPersonUrl, graphPanelHandle.getLoadedUrl());

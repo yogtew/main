@@ -19,7 +19,7 @@ import seedu.address.commons.events.ui.ShowGraphRequestEvent;
  */
 public class GraphPanel extends UiPart<Region> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String DEFAULT_PAGE = "https://cyrusguo.github.io/web/index.html?";
     public static final String SEARCH_PAGE_URL =
             "https://cyrusguo.github.io/web/index.html?";
     public static final String DATA_1_PARSE = "&data1=";
@@ -62,8 +62,8 @@ public class GraphPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+//        URL defaultPage = MainApp.class.getResource(DEFAULT_PAGE);
+        loadPage(DEFAULT_PAGE);
     }
 
 
