@@ -208,10 +208,6 @@ public class MainWindow extends UiPart<Stage> {
         return studentListPanel;
     }
 
-    void releaseResources() {
-        GraphPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
