@@ -36,6 +36,7 @@ https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126])
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/78[#78]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/125[#125]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/128[#128]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/139[#139])
 
 *** Reported bugs for Team F10-2 during Practical Exam dry run. (Issues
 https://github.com/CS2103-AY1819S1-F10-2/main/issues/204[#204]
