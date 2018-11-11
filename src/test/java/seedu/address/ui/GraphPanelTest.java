@@ -2,10 +2,7 @@ package seedu.address.ui;
 
 import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalStudents.ALICE;
 import static seedu.address.ui.GraphPanel.DEFAULT_PAGE;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -14,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import guitests.guihandles.GraphPanelHandle;
-import seedu.address.MainApp;
 import seedu.address.commons.events.ui.ShowGraphRequestEvent;
 
 public class GraphPanelTest extends GuiUnitTest {
