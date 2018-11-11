@@ -262,7 +262,7 @@ image::UML REST API.png[width="400"]
 Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
 // end::email[]
 
-//tag::calendar[]
+// tag::calendar[]
 === Calendar feature
 ==== Current Implementation
 
