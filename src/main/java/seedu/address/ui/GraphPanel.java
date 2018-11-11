@@ -57,12 +57,6 @@ public class GraphPanel extends UiPart<Region> {
         loadPage(defaultPage.toExternalForm());
     }
 
-    /**
-     * Frees resources allocated to the browser.
-     */
-    public void freeResources() {
-        browser = null;
-    }
 
     @Subscribe
     private void handleStudentPanelSelectionChangedEvent(StudentPanelSelectionChangedEvent event) {
