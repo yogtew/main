@@ -109,14 +109,13 @@ Edits the student number and email address of the 1st student to be `A91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
+// tag::attendance[]
 === Marking attendance: `attendance`
 
 Allows the user to mark the attendance of students using the index number as well as group name. +
 Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance g/GROUP_NAME at/ATTENDANCE`
 
-****
-* The attendance marking as present is done individually, by using the index number of the student, and the user can individually group students who are absent as 'absent'/'0' and who are present as 'present'/'1'. The user can also collectively group the attendance using the GROUP feature. Then, the user can update the attendance of the students who do not follow the majority specifically.
-****
+* The attendance marking as present is done individually, by using the index number of the student. The user can also collectively mark the attendance using the GROUP feature. Then, the user can update the attendance of the students who do not follow the majority specifically. The user can update the attendance of the student/students who are absent as 'absent'/'0' and who are present as 'present'/'1'(any other value updates the attendance to undefined).
 
 Examples:
 
@@ -128,6 +127,7 @@ Marks the attendance of the student with index number 3 as absent.
 
 * `attendance g/tutorial1 at/1` +
 Marks the attendance of all the students in group-tutorial1 as present.
+// end::attendance[]
 
 === Schedule timetables: `schedule`
 // tag::schedule[]
