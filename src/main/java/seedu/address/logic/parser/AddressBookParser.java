@@ -103,6 +103,7 @@ public class AddressBookParser {
             return new CancelCommandParser().parse(arguments);
 
         case GroupCommand.COMMAND_WORD:
+        case GroupCommand.ALIAS:
             return new GroupCommandParser().parse(arguments);
 
         case TagCommand.COMMAND_WORD:

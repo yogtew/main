@@ -10,6 +10,7 @@ import seedu.address.logic.commands.Command;
 public abstract class GroupCommand extends Command {
 
     public static final String COMMAND_WORD = "group";
+    public static final String ALIAS = "grp";
     public static final String SHOW = "show";
     public static final String FIND = "find";
     public static final String JOIN = "join";
