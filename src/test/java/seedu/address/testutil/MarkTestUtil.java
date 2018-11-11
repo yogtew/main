@@ -7,6 +7,9 @@ import java.util.List;
 import seedu.address.model.AddressBook;
 import seedu.address.model.student.Student;
 
+/**
+ * Utility class for testing mark commands
+ */
 public class MarkTestUtil {
     public static final Student A = new StudentBuilder().withTags("cs2103", "tut1", "m")
             .withName("Adam").withFaculty("SoC").withStudentNumber("A0123456A").withEmail("test@example.com").build();

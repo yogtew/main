@@ -5,6 +5,9 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCalendar;
 import seedu.address.model.UserPrefs;
 
+/**
+ * Debug Model Manager that prints comparison discrepancies
+ */
 public class DebugModelManager extends ModelManager {
     public DebugModelManager(ReadOnlyAddressBook addressBook, ReadOnlyCalendar calendar, UserPrefs userPrefs) {
         super(addressBook, calendar, userPrefs);

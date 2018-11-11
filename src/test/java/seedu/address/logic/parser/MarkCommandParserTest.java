@@ -8,6 +8,7 @@ import static seedu.address.logic.parser.MarkCommandParser.MESSAGE_INVALID_MARK_
 import static seedu.address.logic.parser.MarkCommandParser.MESSAGE_INVALID_SUBCOMMAND;
 
 import org.junit.Test;
+
 import seedu.address.logic.commands.mark.MarkAndCommand;
 import seedu.address.logic.commands.mark.MarkCommand;
 import seedu.address.logic.commands.mark.MarkFindCommand;
@@ -43,7 +44,7 @@ public class MarkCommandParserTest {
 
         // find with a valid tag
         assertParseSuccess(parser, findSubCommand + " t/" + validTagName,
-                new MarkFindCommand(new IsTaggedPredicate(validTagName),  Mark.DEFAULT_NAME));
+                new MarkFindCommand(new IsTaggedPredicate(validTagName), Mark.DEFAULT_NAME));
 
         // find with a invalid tag
         assertParseFailure(parser, findSubCommand + " t/" + invalidTagName,
@@ -51,7 +52,7 @@ public class MarkCommandParserTest {
 
         // find with a valid tag and valid mark
         assertParseSuccess(parser, PREFIX_MARK + validMarkName + " " + findSubCommand + " t/" + validTagName,
-                new MarkFindCommand(new IsTaggedPredicate(validTagName),  validMarkName));
+                new MarkFindCommand(new IsTaggedPredicate(validTagName), validMarkName));
     }
 
     @Test
@@ -64,8 +65,8 @@ public class MarkCommandParserTest {
                 + showSubCommand, new MarkShowCommand(validMarkName));
 
         // show with an invalid alias
-        assertParseFailure(parser, PREFIX_MARK + invalidMarkName + " "
-                + showSubCommand, String.format(MESSAGE_INVALID_MARK_NAME, invalidMarkName, Mark.MARK_NAME_CONSTRAINTS));
+        assertParseFailure(parser, PREFIX_MARK + invalidMarkName + " " + showSubCommand,
+                String.format(MESSAGE_INVALID_MARK_NAME, invalidMarkName, Mark.MARK_NAME_CONSTRAINTS));
     }
 
     @Test

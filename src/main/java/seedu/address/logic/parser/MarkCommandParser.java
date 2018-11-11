@@ -24,8 +24,8 @@ import seedu.address.model.student.Student;
  * Parses input arguments and creates a new FindCommand object
  */
 public class MarkCommandParser implements Parser<MarkCommand> {
-    public static final String MESSAGE_INVALID_SUBCOMMAND = "Invalid subcommand: %s\n" +
-            "Valid subcommands include: show, find, join, add";
+    public static final String MESSAGE_INVALID_SUBCOMMAND = "Invalid subcommand: %s\n"
+            + "Valid subcommands include: show, find, join, add";
     public static final String MESSAGE_INVALID_MARK_NAME = "Invalid mark name: %s\n%s";
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand

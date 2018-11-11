@@ -17,7 +17,6 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
-import seedu.address.commons.events.model.StudentChangedEvent;
 import seedu.address.commons.events.ui.ResetStudentViewEvent;
 import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.event.Event;
@@ -32,12 +31,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     protected final VersionedAddressBook versionedAddressBook;
     protected final FilteredList<Student> filteredStudents;
+    protected final VersionedCalendar versionedCalendar;
+    protected final FilteredList<Event> filteredEvents;
+
     private final ObservableList<Mark> marks;
     private Mark watchedMark;
     private boolean isWatchingMark;
 
-    protected final VersionedCalendar versionedCalendar;
-    protected final FilteredList<Event> filteredEvents;
 
 
     // maintain an internal undo/redo stack to keep track of which model to undo/redo
@@ -373,8 +373,8 @@ public class ModelManager extends ComponentManager implements Model {
         try {
             Mark old = getMark(mark.getName());
             marks.remove(old);
-        } catch (MarkNotFoundException ignored) {
-
+        } catch (MarkNotFoundException e) {
+            e.printStackTrace();
         }
         mark.setName(markName);
         marks.add(mark);

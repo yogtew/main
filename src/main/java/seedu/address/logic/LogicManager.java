@@ -72,8 +72,8 @@ public class LogicManager extends ComponentManager implements Logic {
     public void markSelectionChangedEventHandler(MarkPanelSelectionChangedEvent event) {
         try {
             new MarkShowCommand(event.getNewSelection().getName()).execute(model, history);
-        } catch (MarkNotFoundException ignored) {
-
+        } catch (MarkNotFoundException e) {
+            e.printStackTrace();
         }
     }
 }

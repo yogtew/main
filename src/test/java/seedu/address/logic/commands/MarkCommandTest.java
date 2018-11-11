@@ -1,24 +1,19 @@
 package seedu.address.logic.commands;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.MarkTestUtil.A;
 import static seedu.address.testutil.MarkTestUtil.B;
 import static seedu.address.testutil.MarkTestUtil.C;
 import static seedu.address.testutil.MarkTestUtil.D;
 import static seedu.address.testutil.TypicalEvents.getTypicalCalendar;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_STUDENT;
 
 import java.util.Arrays;
 
 import org.junit.Test;
+
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.EditCommand.EditStudentDescriptor;
 import seedu.address.logic.commands.mark.MarkAndCommand;
 import seedu.address.logic.commands.mark.MarkFindCommand;
 import seedu.address.logic.commands.mark.MarkJoinCommand;
@@ -38,7 +33,8 @@ import seedu.address.testutil.MarkTestUtil;
  */
 public class MarkCommandTest {
 
-    private Model model = new DebugModelManager(MarkTestUtil.getTypicalAddressBook(), getTypicalCalendar(), new UserPrefs());
+    private Model model = new DebugModelManager(
+            MarkTestUtil.getTypicalAddressBook(), getTypicalCalendar(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
     private String markName1 = "tut1";
     private String markName2 = "tut2";
@@ -189,12 +185,14 @@ public class MarkCommandTest {
 
     @Test
     public void equals() {
-        final MarkFindCommand standardFindCommand = new MarkFindCommand(new IsTaggedPredicate("tut1"), Mark.DEFAULT_NAME);
+        final MarkFindCommand standardFindCommand = new MarkFindCommand(
+                new IsTaggedPredicate("tut1"), Mark.DEFAULT_NAME);
         final MarkJoinCommand standardJoinCommand = new MarkJoinCommand(Mark.DEFAULT_NAME, markName1, markName2);
         final MarkAndCommand standardAndCommand = new MarkAndCommand(Mark.DEFAULT_NAME, markName1, markName2);
 
         // same values -> returns true
-        assertTrue(standardFindCommand.equals(new MarkFindCommand(new IsTaggedPredicate("tut1"), Mark.DEFAULT_NAME)));
+        assertTrue(standardFindCommand.equals(new MarkFindCommand(
+                new IsTaggedPredicate("tut1"), Mark.DEFAULT_NAME)));
         assertTrue(standardJoinCommand.equals(new MarkJoinCommand(Mark.DEFAULT_NAME, markName1, markName2)));
         assertTrue(standardAndCommand.equals(new MarkAndCommand(Mark.DEFAULT_NAME, markName1, markName2)));
 
