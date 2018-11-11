@@ -116,7 +116,7 @@ Allows the user to mark the attendance of students using the index number as wel
 Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance m/MARK_NAME at/ATTENDANCE`
 
 ****
-* The attendance marking as present is done individually, by using the index number of the student, and the user can individually mark students who are absent as 'absent'/'0' and who are present as 'present'/'1'. The user can also collectively mark the attendance using the MARK feature. Then, the user can update the attendance of the students who do not follow the majority specifically.
+* The attendance marking as present is done individually, by using the index number of the student. The user can also collectively mark the attendance using the MARK feature. Then, the user can update the attendance of the students who do not follow the majority specifically. The user can update the attendance of the student/students who are absent as 'absent'/'0' and who are present as 'present'/'1'(any other value updates the attendance to undefined).
 ****
 
 Examples:
