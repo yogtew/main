@@ -23,7 +23,7 @@ public class GraphCommand extends Command {
 
     public static final String COMMAND_WORD = "graph";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Display a graph all students whose names contain any of "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Graphs all students whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
@@ -59,23 +59,25 @@ public class GraphCommand extends Command {
                 && predicate.equals(((GraphCommand) other).predicate)); // state check
     }
 
-    private ArrayList<Integer> getAttendanceStats(ObservableList<Student> studentList){
+    private ArrayList<Integer> getAttendanceStats(ObservableList<Student> studentList) {
         ArrayList<Integer> attendanceStats = new ArrayList<Integer>();
         Integer present = 0;
         Integer absent = 0;
         Integer undef = 0;
-        for (Student s : studentList){
+        for (Student s : studentList) {
             String attendance = s.getAttendance().toString().toLowerCase();
-            switch(attendance){
-                case "present":
-                    present++;
-                    break;
-                case "absent":
-                    absent++;
-                    break;
-                case "undefined":
-                    undef++;
-                    break;
+            switch(attendance) {
+            case "present":
+                present++;
+                break;
+            case "absent":
+                absent++;
+                break;
+            case "undefined":
+                undef++;
+                break;
+            default:
+                break;
             }
         }
         attendanceStats.add(present);
