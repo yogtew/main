@@ -24,7 +24,6 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.mark.Mark;
 import seedu.address.model.student.IsTaggedPredicate;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.testutil.DebugModelManager;
 import seedu.address.testutil.MarkTestUtil;
 
 /**
@@ -33,7 +32,7 @@ import seedu.address.testutil.MarkTestUtil;
  */
 public class MarkCommandTest {
 
-    private Model model = new DebugModelManager(
+    private Model model = new ModelManager(
             MarkTestUtil.getTypicalAddressBook(), getTypicalCalendar(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
     private String markName1 = "tut1";
@@ -48,7 +47,7 @@ public class MarkCommandTest {
     public void show() {
         // ensures that the displayed list is the same
         MarkShowCommand command = new MarkShowCommand(markName1);
-        Model expectedModel = new DebugModelManager(model.getAddressBook(), model.getCalendar(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getCalendar(), new UserPrefs());
         String expectedMessage = String.format(MarkShowCommand.MESSAGE_SUCCESS, 2, markName1);
         model.setMark(markName1, markTut1);
         expectedModel.setMark(markName1, markTut1);
