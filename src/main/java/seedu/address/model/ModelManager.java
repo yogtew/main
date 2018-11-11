@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -168,6 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void undoAddressBook() {
         versionedAddressBook.undo();
+        removeExpiredMarks();
         indicateAddressBookChanged();
     }
 
@@ -176,6 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void redoAddressBook() {
         versionedAddressBook.redo();
+        removeExpiredMarks();
         indicateAddressBookChanged();
     }
 
@@ -415,7 +418,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @param oldStudent
      * @param newStudent
      */
-    public void updateMarks(Student oldStudent, Student newStudent) {
+    private void updateMarks(Student oldStudent, Student newStudent) {
         marks.forEach((mark) -> {
             Set<Student> set = new HashSet<>(mark.getSet());
             if (set.contains(oldStudent)) {
@@ -426,6 +429,19 @@ public class ModelManager extends ComponentManager implements Model {
                 Mark newMark = new Mark(set, mark.getName());
                 setMark(mark.getName(), newMark);
             }
+        });
+    }
+
+    /**
+     * Removes expired marks when undo or redo is executed
+     */
+    private void removeExpiredMarks() {
+        marks.forEach((mark) -> {
+            Set<Student> set = mark.getSet().stream().filter(student ->
+                versionedAddressBook.getStudentList().contains(student)
+            ).collect(Collectors.toSet());
+            Mark newMark = new Mark(set, mark.getName());
+            setMark(mark.getName(), newMark);
         });
     }
 }

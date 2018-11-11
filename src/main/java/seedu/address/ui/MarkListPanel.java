@@ -62,7 +62,7 @@ public class MarkListPanel extends UiPart<Region> {
     private void handleResetStudentViewEvent(ResetStudentViewEvent event) {
         System.out.println("Clear selection");
         Platform.runLater(() -> {
-            // genericListView.getSelectionModel().clearSelection();
+            genericListView.getSelectionModel().clearSelection();
         });
     }
 
