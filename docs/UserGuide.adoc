@@ -109,6 +109,7 @@ Edits the student number and email address of the 1st student to be `A91234567` 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
 
+// tag::attendance[]
 === Marking attendance: `attendance`
 
 Allows the user to mark the attendance of students using the index number as well as mark name. +
@@ -128,6 +129,7 @@ Marks the attendance of the student with index number 3 as absent.
 
 * `attendance m/tutorial1 at/1` +
 Marks the attendance of all the students in mark-tutorial1 as present.
+// end::attendance[]
 
 === Schedule timetables: `schedule`
 // tag::schedule[]
