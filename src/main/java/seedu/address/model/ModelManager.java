@@ -374,7 +374,7 @@ public class ModelManager extends ComponentManager implements Model {
             Mark old = getMark(mark.getName());
             marks.remove(old);
         } catch (MarkNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Nothing to worry about");
         }
         mark.setName(markName);
         marks.add(mark);

@@ -60,16 +60,10 @@ public class MarkListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
-
-    @Subscribe
     private void handleResetStudentViewEvent(ResetStudentViewEvent event) {
         System.out.println("Clear selection");
         Platform.runLater(() -> {
-            genericListView.getSelectionModel().clearSelection();
+            // genericListView.getSelectionModel().clearSelection();
         });
     }
 

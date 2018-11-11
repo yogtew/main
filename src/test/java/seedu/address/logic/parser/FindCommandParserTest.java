@@ -48,7 +48,7 @@ public class FindCommandParserTest {
         assertParseFailure(parser, " t/", Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // no arguments
-        assertParseFailure(parser, "", Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
 }

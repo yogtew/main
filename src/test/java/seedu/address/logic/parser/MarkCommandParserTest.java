@@ -66,6 +66,7 @@ public class MarkCommandParserTest {
 
         // show with an invalid alias
         assertParseFailure(parser, PREFIX_MARK + invalidMarkName + " " + showSubCommand,
+
                 String.format(MESSAGE_INVALID_MARK_NAME, invalidMarkName, Mark.MARK_NAME_CONSTRAINTS));
     }
 
