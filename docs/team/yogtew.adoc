@@ -1,4 +1,7 @@
 = Yogusvi Tewari - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
 
 == Project: ConTAct
 
