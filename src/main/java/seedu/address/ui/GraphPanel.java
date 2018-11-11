@@ -12,17 +12,19 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.StudentPanelSelectionChangedEvent;
-import seedu.address.model.student.Student;
+import seedu.address.commons.events.ui.ShowGraphRequestEvent;
 
 /**
- * The Browser Panel of the App.
+ * The Graph Panel of the App.
  */
 public class GraphPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://cyrusguo.github.io/web/index.html?name=";
+            "https://cyrusguo.github.io/web/index.html?";
+    public static final String DATA_1_PARSE = "&data1=";
+    public static final String DATA_2_PARSE = "&data2=";
+    public static final String DATA_3_PARSE = "&data3=";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -41,8 +43,15 @@ public class GraphPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
-    private void loadPersonPage(Student student) {
-        loadPage(SEARCH_PAGE_URL + student.getName().fullName);
+    /**
+     * Loads graph using attendance data from event object.
+     */
+    private void loadGraph(ShowGraphRequestEvent event) {
+        String url = SEARCH_PAGE_URL
+                + DATA_1_PARSE + event.getAttendanceList().get(0)
+                + DATA_2_PARSE + event.getAttendanceList().get(1)
+                + DATA_3_PARSE + event.getAttendanceList().get(2);
+        loadPage(url);
     }
 
     public void loadPage(String url) {
@@ -59,8 +68,8 @@ public class GraphPanel extends UiPart<Region> {
 
 
     @Subscribe
-    private void handleStudentPanelSelectionChangedEvent(StudentPanelSelectionChangedEvent event) {
+    private void showGraphRequestEvent(ShowGraphRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection());
+        loadGraph(event);
     }
 }
