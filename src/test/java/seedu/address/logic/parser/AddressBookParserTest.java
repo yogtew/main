@@ -33,6 +33,7 @@ import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.GraphCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -143,6 +144,12 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
+    }
+
+    @Test
+    public void parseCommand_graph() throws Exception {
+        assertTrue(parser.parseCommand(GraphCommand.COMMAND_WORD) instanceof GraphCommand);
+        assertTrue(parser.parseCommand(GraphCommand.COMMAND_WORD + " 3") instanceof GraphCommand);
     }
 
     @Test
