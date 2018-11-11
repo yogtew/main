@@ -34,43 +34,43 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
                 List.of()); // first names of Benson and Daniel are "Meier"
 
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: repeat previous find command where student list is displaying the students we are finding
          * -> 2 students found
          */
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find student where student list is not displaying the student we are finding -> 1 student found */
         command = FindCommand.COMMAND_WORD + " Carl";
         ModelHelper.setFilteredList(expectedModel, List.of(CARL), List.of());
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find multiple students in address book, 2 keywords -> 2 students found */
         command = FindCommand.COMMAND_WORD + " Benson Daniel";
         ModelHelper.setFilteredList(expectedModel, List.of(BENSON, DANIEL), List.of());
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find multiple students in address book, 2 keywords in reversed order -> 2 students found */
         command = FindCommand.COMMAND_WORD + " Daniel Benson";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find multiple students in address book, 2 keywords with 1 repeat -> 2 students found */
         command = FindCommand.COMMAND_WORD + " Daniel Benson Daniel";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find multiple students in address book, 2 matching keywords and 1 non-matching keyword
          * -> 2 students found
          */
         command = FindCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
@@ -89,50 +89,50 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, List.of(DANIEL), List.of());
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find student in address book, keyword is same as name but of different case -> 1 student found */
         command = FindCommand.COMMAND_WORD + " MeIeR";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find student in address book, keyword is substring of name -> 0 students found */
         command = FindCommand.COMMAND_WORD + " Mei";
         ModelHelper.setFilteredList(expectedModel, List.of(), List.of());
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find student in address book, name is substring of keyword -> 0 students found */
         command = FindCommand.COMMAND_WORD + " Meiers";
         ModelHelper.setFilteredList(expectedModel, List.of(), List.of());
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find student not in address book -> 0 students found */
         command = FindCommand.COMMAND_WORD + " Group";
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find student number of student in address book -> 0 students found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getStudentNumber().value;
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find address of student in address book -> 0 students found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getFaculty().value;
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find email of student in address book -> 0 students found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find tags of student in address book -> 0 students found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: find while a student is selected -> selected card deselected */
         showAllStudents();
@@ -144,12 +144,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardDeselected();
 
         /* Case: find student in empty address book -> 0 students found */
-        deleteAllStudents();
+        deleteAllEntries();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
         ModelHelper.setFilteredList(expectedModel, List.of(DANIEL), List.of());
         assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
         command = "FiNd Meier";
@@ -190,7 +190,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }
