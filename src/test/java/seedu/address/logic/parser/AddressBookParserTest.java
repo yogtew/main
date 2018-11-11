@@ -122,6 +122,14 @@ public class AddressBookParserTest {
     }
 
     @Test
+    public void parseCommand_graph() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        GraphCommand command = (GraphCommand) parser.parseCommand(
+                GraphCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new GraphCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
@@ -146,11 +154,6 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
-    @Test
-    public void parseCommand_graph() throws Exception {
-        assertTrue(parser.parseCommand(GraphCommand.COMMAND_WORD) instanceof GraphCommand);
-        assertTrue(parser.parseCommand(GraphCommand.COMMAND_WORD + " 3") instanceof GraphCommand);
-    }
 
     @Test
     public void parseCommand_select() throws Exception {

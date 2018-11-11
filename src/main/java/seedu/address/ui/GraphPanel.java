@@ -60,7 +60,8 @@ public class GraphPanel extends UiPart<Region> {
      * Loads a default HTML file with a background that matches the general theme.
      */
     private void loadDefaultPage() {
-        // URL defaultPage = MainApp.class.getResource(DEFAULT_PAGE);
+        // URL defaultPage = MainApp
+        // .class.getResource(DEFAULT_PAGE);
         loadPage(DEFAULT_PAGE);
     }
 
