@@ -112,10 +112,10 @@ Edits the name of the 2nd student to be `Betsy Crower` and clears all existing t
 === Marking attendance: `attendance`
 
 Allows the user to mark the attendance of students using the index number as well as group name. +
-Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance g/MARK_NAME at/ATTENDANCE`
+Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance g/GROUP_NAME at/ATTENDANCE`
 
 ****
-* The attendance marking as present is done individually, by using the index number of the student, and the user can individually group students who are absent as 'absent'/'0' and who are present as 'present'/'1'. The user can also collectively group the attendance using the MARK feature. Then, the user can update the attendance of the students who do not follow the majority specifically.
+* The attendance marking as present is done individually, by using the index number of the student, and the user can individually group students who are absent as 'absent'/'0' and who are present as 'present'/'1'. The user can also collectively group the attendance using the GROUP feature. Then, the user can update the attendance of the students who do not follow the majority specifically.
 ****
 
 Examples:
@@ -227,7 +227,7 @@ This creates a Group containing the Students returned by the find command with t
 E.g. `group find t/friends` will find all students in the Address Book tagged with "friends" and add them to a Group.
 
 ==== Named Groups
-Groups can be named by using the prefix `g/MARKNAME`. If not specified, the name of the created Group will default to "g/default".
+Groups can be named by using the prefix `g/GROUPNAME`. If not specified, the name of the created Group will default to "g/default".
 
 E.g. `group g/myGroupName find t/friends` will add the Students tagged with "friends" to a Group called "myGroupName"
 
@@ -236,7 +236,7 @@ Note: Group names must be alphanumeric and do not contain spaces.
 ==== Manipulating Groups
 Groups are able to be manipulated in the same way as sets, namely, they support the following operations: `union (join)`, `intersection (and)`, `complement (NYI)`
 
-Format: `group [g/DEST_MARK] <operation> g/OPERANDMARK1 [g/OPERANDMARK2]`
+Format: `group [g/DEST_GROUP] <operation> g/OPERANDGROUP1 [g/OPERANDGROUP2]`
 
 E.g. `group g/students join g/tut1 g/tut2` g/students will contain the Students of g/tut1 and g/tut2 merged together
 
@@ -247,7 +247,7 @@ Note: The first operand is compulsory while the second operand is optional and w
 ==== Displaying Groups
 The Students in a Group can be shown in the GUI with the following command:
 
-`group [g/MARKTOBESHOWN] show`
+`group [g/GROUPTOBESHOWN] show`
 
 ==== Interactions with `undo` and `redo`
 Due to the way `undo` and `redo` are implemented, Groups that are changed as a result of these commands will not behave as expected, the students that are changed will be removed from the Group.

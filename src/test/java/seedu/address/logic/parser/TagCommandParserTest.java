@@ -20,9 +20,9 @@ public class TagCommandParserTest {
     private static final String VALID_SET_COMMAND = "set ";
     private static final String VALID_DEL_COMMAND = "del ";
     private static final String INVALID_COMMAND = "asd ";
-    private static final String VALID_MARK = "g/tut1 ";
-    private static final String VALID_MARK_NAME = "tut1";
-    private static final String INVALID_MARK = "g/tut@ ";
+    private static final String VALID_GROUP = "g/tut1 ";
+    private static final String VALID_GROUP_NAME = "tut1";
+    private static final String INVALID_GROUP = "g/tut@ ";
 
     private TagCommandParser parser = new TagCommandParser();
 
@@ -54,10 +54,10 @@ public class TagCommandParserTest {
         // ======= Group ========
 
         // invalid group
-        assertParseFailure(parser, VALID_ADD_COMMAND + INVALID_MARK, Group.GROUP_NAME_CONSTRAINTS);
+        assertParseFailure(parser, VALID_ADD_COMMAND + INVALID_GROUP, Group.GROUP_NAME_CONSTRAINTS);
 
         // valid group but random stuff in preamble
-        assertParseFailure(parser, VALID_ADD_COMMAND + "asd " + VALID_MARK, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_ADD_COMMAND + "asd " + VALID_GROUP, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -74,20 +74,20 @@ public class TagCommandParserTest {
         assertParseSuccess(parser, VALID_ADD_COMMAND + "1",
                 new TagCommand(Index.fromOneBased(1), new HashSet<>(), TagCommandMode.ADD));
 
-        assertParseSuccess(parser, VALID_ADD_COMMAND + VALID_MARK,
-                new TagCommand(VALID_MARK_NAME, new HashSet<>(), TagCommandMode.ADD));
+        assertParseSuccess(parser, VALID_ADD_COMMAND + VALID_GROUP,
+                new TagCommand(VALID_GROUP_NAME, new HashSet<>(), TagCommandMode.ADD));
 
         assertParseSuccess(parser, VALID_SET_COMMAND + "1",
                 new TagCommand(Index.fromOneBased(1), new HashSet<>(), TagCommandMode.SET));
 
-        assertParseSuccess(parser, VALID_SET_COMMAND + VALID_MARK,
-                new TagCommand(VALID_MARK_NAME, new HashSet<>(), TagCommandMode.SET));
+        assertParseSuccess(parser, VALID_SET_COMMAND + VALID_GROUP,
+                new TagCommand(VALID_GROUP_NAME, new HashSet<>(), TagCommandMode.SET));
 
         assertParseSuccess(parser, VALID_DEL_COMMAND + "1",
                 new TagCommand(Index.fromOneBased(1), new HashSet<>(), TagCommandMode.DEL));
 
-        assertParseSuccess(parser, VALID_DEL_COMMAND + VALID_MARK,
-                new TagCommand(VALID_MARK_NAME, new HashSet<>(), TagCommandMode.DEL));
+        assertParseSuccess(parser, VALID_DEL_COMMAND + VALID_GROUP,
+                new TagCommand(VALID_GROUP_NAME, new HashSet<>(), TagCommandMode.DEL));
     }
 
 

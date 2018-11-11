@@ -16,10 +16,10 @@ public abstract class GroupCommand extends Command {
     public static final String AND = "and";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a Group.\n"
             + "Parameters: "
-            + "[" + PREFIX_GROUP + "MARK1] "
+            + "[" + PREFIX_GROUP + "GROUP1] "
             + SHOW + "|" + FIND + "|" + JOIN + "|" + AND
-            + " " + PREFIX_GROUP + "MARK2 "
-            + "[" + PREFIX_GROUP + "MARK3]\n"
+            + " " + PREFIX_GROUP + "GROUP2 "
+            + "[" + PREFIX_GROUP + "GROUP3]\n"
             + "Example: group "
             + PREFIX_GROUP + "group1 "
             + JOIN + " "

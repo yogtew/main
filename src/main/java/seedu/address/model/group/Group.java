@@ -22,7 +22,7 @@ public class Group {
      * The first character of the address must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
-    public static final String MARK_VALIDATION_REGEX = "[\\p{Alnum}]+";
+    public static final String GROUP_VALIDATION_REGEX = "[\\p{Alnum}]+";
 
     private HashSet<Student> set;
     private String name;
@@ -65,7 +65,7 @@ public class Group {
             * Returns true if a given string is a valid name.
      */
     public static boolean isValidGroupName(String test) {
-        return test.matches(MARK_VALIDATION_REGEX);
+        return test.matches(GROUP_VALIDATION_REGEX);
     }
 
     public ArrayList<Student> getList() {

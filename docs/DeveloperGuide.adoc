@@ -437,7 +437,7 @@ Currently, the main operation is the `attendance` command, and it is implemented
 
 The `attendance` command may also be used with the `group` command to update the attendance of multiple students at the same time. It is implemented as such:
 
-* `attendance PREFIX_MARK/groupName PREFIX_ATTENDANCE/attendance`
+* `attendance PREFIX_GROUP/groupName PREFIX_ATTENDANCE/attendance`
 
 Currently, this operation exists within the logic component of ConTAct.
 

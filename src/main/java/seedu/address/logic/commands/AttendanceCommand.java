@@ -26,7 +26,7 @@ public class AttendanceCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Attendance can be 1 (Present) or 0 (Absent).\n"
             + "Parameters: INDEX (must be a positive integer)|"
-            + PREFIX_GROUP + " MARK "
+            + PREFIX_GROUP + " GROUP "
             + PREFIX_ATTENDANCE + "[ATTENDANCE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ATTENDANCE + "1 OR "
