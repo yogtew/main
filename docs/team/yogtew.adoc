@@ -36,6 +36,7 @@ https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126])
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/78[#78]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/125[#125]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/128[#128]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/139[#139])
 
 *** Reported bugs for Team F10-2 during Practical Exam dry run. (Issues
 https://github.com/CS2103-AY1819S1-F10-2/main/issues/204[#204]
@@ -52,3 +53,21 @@ https://github.com/CS2103-AY1819S1-W13-3/main/pull/87[#87]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/88[#88]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/103[#103]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=attendance]
+
+== Contributions to the Developer Guide
+
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=attendance]
