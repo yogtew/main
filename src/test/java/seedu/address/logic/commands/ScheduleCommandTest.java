@@ -252,6 +252,11 @@ public class ScheduleCommandTest {
         public void setMarkPredicate(String markName) throws MarkNotFoundException {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void resetView() {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

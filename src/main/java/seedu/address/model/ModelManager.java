@@ -117,7 +117,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addStudent(Student student) {
         versionedAddressBook.addStudent(student);
-        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        resetView();
         indicateAddressBookChanged();
     }
 
@@ -201,7 +201,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate a student has been changed */
     private void indicateStudentDeleted(Student target) {
-        raise(new StudentChangedEvent(target, null));
+        // raise(new StudentChangedEvent(target, null));
+        updateMarks(target, null);
     }
 
     /** Raises an event to indicate a student has been changed */

@@ -46,6 +46,9 @@ public class FindCommandParserTest {
     public void parse_tag_invalid() {
         // empty tag name
         assertParseFailure(parser, " t/", Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        // no arguments
+        assertParseFailure(parser, "", Tag.MESSAGE_TAG_CONSTRAINTS);
     }
 
 }

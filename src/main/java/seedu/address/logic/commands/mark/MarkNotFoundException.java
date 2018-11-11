@@ -10,10 +10,4 @@ public class MarkNotFoundException extends CommandException {
         super(message);
     }
 
-    /**
-     * Constructs a new {@code MarkNotFoundException} with the specified detail {@code message} and {@code cause}.
-     */
-    public MarkNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

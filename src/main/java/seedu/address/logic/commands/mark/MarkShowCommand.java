@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.mark.Mark;
 
@@ -25,8 +24,8 @@ public class MarkShowCommand extends MarkCommand {
             Mark mark = model.getMark(alias1);
             model.setMarkPredicate(alias1);
             return new CommandResult(String.format(MESSAGE_SUCCESS, mark.getList().size(), alias1));
-        } catch (IllegalArgumentException e) {
-            throw new MarkNotFoundException(e.getMessage());
+        } catch (MarkNotFoundException ignored) {
+            return null;
         }
     }
 }
