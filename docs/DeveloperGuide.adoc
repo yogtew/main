@@ -430,11 +430,11 @@ Field of second constructor:
 
 Currently, the main operation is the `attendance` command, and it is implemented as such:
 
-* `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
+* `attendance INDEX at/ATTENDANCE`
 
 The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such:
 
-* `attendance PREFIX_MARK/markName PREFIX_ATTENDANCE/attendance`
+* `attendance m/MARK_NAME at/ATTENDANCE`
 
 Currently, this operation exists within the logic component of ConTAct.
 
@@ -477,7 +477,7 @@ image::attendance_diagram_logic.png[width="800"]
 
 ==== Proposed addition for v2.0
 * Store attendance of each student in an array according to weeks so that the user has a track of the attendance of each student for each of its classes according to week.
-* Proposed new command format: `attendance INDEX_NUMBER|m/MARK_NAME w/WEEK_NUMBER at/ATTENDANCE`
+* Proposed new command format: `attendance INDEX|m/MARK_NAME w/WEEK_NUMBER at/ATTENDANCE`
 // end::attendance[]
 
 // tag::undoredo[]
