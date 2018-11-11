@@ -465,6 +465,7 @@ The diagram below shows how the `attendance` command is parsed in the Logic comp
 
 .Logic Diagram for `attendance` command
 image::attendance_diagram_logic.png[width="800"]
+// end::attendance[]
 
 // tag::undoredo[]
 === Undo/Redo feature
