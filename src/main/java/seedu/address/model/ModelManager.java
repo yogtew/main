@@ -29,10 +29,10 @@ import seedu.address.model.student.Student;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    protected final VersionedAddressBook versionedAddressBook;
-    protected final FilteredList<Student> filteredStudents;
-    protected final VersionedCalendar versionedCalendar;
-    protected final FilteredList<Event> filteredEvents;
+    private final VersionedAddressBook versionedAddressBook;
+    private final FilteredList<Student> filteredStudents;
+    private final VersionedCalendar versionedCalendar;
+    private final FilteredList<Event> filteredEvents;
 
     private final ObservableList<Mark> marks;
     private Mark watchedMark;
