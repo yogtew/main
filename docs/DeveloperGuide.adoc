@@ -435,16 +435,16 @@ Currently, the main operation is the `attendance` command, and it is implemented
 
 * `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
 
-The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such:
+The `attendance` command may also be used with the `group` command to update the attendance of multiple students at the same time. It is implemented as such:
 
-* `attendance PREFIX_MARK/markName PREFIX_ATTENDANCE/attendance`
+* `attendance PREFIX_MARK/groupName PREFIX_ATTENDANCE/attendance`
 
 Currently, this operation exists within the logic component of ConTAct.
 
 Below is an example of how the attendance command behaves:
 
 * `attendance 1 at/0`
-* `attendance m/tutorial1 at/1`
+* `attendance g/tutorial1 at/1`
 
 This will simply specify the attendance field of the Student/Students with the specified attendance and store it similar to how the addressbook stores a student.
 Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
@@ -546,47 +546,47 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::markfeature[]
-=== Mark feature
-Marks allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
+// tag::groupfeature[]
+=== Group feature
+Groups allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
 It is designed to work well with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
 ==== Implementation
-`Mark` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Marks`.
+`Group` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Groups`.
 
-image::MarkClassDiagram.png[]
+image::GroupClassDiagram.png[]
 
-Marks are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Mark` for commands.
+Groups are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Group` for commands.
 
-Commands relating to the creation and manipulations of Marks are parsed by `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed.
+Commands relating to the creation and manipulations of Groups are parsed by `GroupCommandParser`, which then returns the appropriate `GroupSubCommand` to be executed.
 It is designed in this way to be easily extensible in the future as more sub-commands are added.
 
 The commands adhere to the following pattern:
 
- mark [m/m1] <subcommand> <arguments>`
+ group [g/m1] <subcommand> <arguments>`
 
-The arguments `m/m1` may be optional in some cases and default to `Mark.DEFAULT_NAME`
+The arguments `g/m1` may be optional in some cases and default to `Group.DEFAULT_NAME`
 
 ==== Sub-commands
-* `find name` -- marks Students matched by name
-* `find t/tag...` -- marks Students matched by tags
-* `join m/m2 [m/m3]` -- returns union of m2 and m3
-* `and m/m2 [m/m3]` -- returns intersection of m2 and m3
-* `show` -- shows marked Students in GUI
+* `find name` -- groups Students matched by name
+* `find t/tag...` -- groups Students matched by tags
+* `join g/m2 [g/m3]` -- returns union of m2 and m3
+* `and g/m2 [g/m3]` -- returns intersection of m2 and m3
+* `show` -- shows grouped Students in GUI
 
-image::MarkCommandClassDiagram.png[]
+image::GroupCommandClassDiagram.png[]
 
 ==== Planned Sub-commands (2.0)
-* `index <indexes>` -- marks students by index, separated by space, e.g. `mark index 1 3 4 5`
+* `index <indexes>` -- groups students by index, separated by space, e.g. `group index 1 3 4 5`
 
 ==== Parser Flowchart
 
-image::MarkCommandParserFlowchart.png[]
+image::GroupCommandParserFlowchart.png[]
 
 ==== Execution
 
-image::MarkCommandSeqDiagram.png[]
+image::GroupCommandSeqDiagram.png[]
 
 ==== Use Cases:
 Suppose a tutor wants to mark the attendance of all students from tutorial groups W13 and W14.
@@ -606,23 +606,23 @@ Instead of:
 
 The tutor can type in:
 
- mark m/a find t/W13` // adds students tagged with "W13" to mark m/a
- mark m/b find t/W14` // adds students tagged with "W14" to mark m/b
- mark m/res join m/a m/b` // merges students in m/a and m/b to mark m/res
- attendance m/res at/Present` // updates the marked students' attendance
+ group g/a find t/W13` // adds students tagged with "W13" to group g/a
+ group g/b find t/W14` // adds students tagged with "W14" to group g/b
+ group g/res join g/a g/b` // merges students in g/a and g/b to group g/res
+ attendance g/res at/Present` // updates the grouped students' attendance
 
 Suppose the tutor then wants to send an email to the aforementioned group of students.
 They can do that with a simple command:
 
- email m/res b/[emailText]
+ email g/res b/[emailText]
 
 ==== Tracking students
 
 The application is implemented with immutable `Student` objects.
 As a result, when a student is edited, a new `Student` instance is created with the updated fields and stored in the `AddressBook`.
-This causes the stored `Student` objects in existing Marks to be outdated, and attempts to use those objects will lead to a crash.
+This causes the stored `Student` objects in existing Groups to be outdated, and attempts to use those objects will lead to a crash.
 
-To solve this issue, after every command where student(s) are changed, the stored Marks will be updated as depicted in the activity diagram below.
+To solve this issue, after every command where student(s) are changed, the stored Groups will be updated as depicted in the activity diagram below.
 
 image::UpdateStudentsActivityDiagram.png[]
 
@@ -640,17 +640,17 @@ Efficiency is a nice bonus but not significant as the expected number of Student
 ===== Aspect: Command format
 
 * Separate sub Commands
-** separate commands into `mark-find`, `mark-show` etc.
+** separate commands into `group-find`, `group-show` etc.
 ** Pros: Easy parsing, easy to understand
 
 * Single command (Current)
-** single root command `mark` with subcommands `mark find`, `mark show`
+** single root command `group` with subcommands `group find`, `group show`
 ** Pros: Usability, minimize code duplication
 
 
 
 
-// end::markfeature[]
+// end::groupfeature[]
 
 === Logging
 

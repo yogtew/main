@@ -8,9 +8,9 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.student.Student;
 
 /**
- * Utility class for testing mark commands
+ * Utility class for testing group commands
  */
-public class MarkTestUtil {
+public class GroupTestUtil {
     public static final Student A = new StudentBuilder().withTags("cs2103", "tut1", "m")
             .withName("Adam").withFaculty("SoC").withStudentNumber("A0123456A").withEmail("test@example.com").build();
     public static final Student B = new StudentBuilder().withTags("cs2103", "tut1", "f")
@@ -19,7 +19,7 @@ public class MarkTestUtil {
             .withName("Chris").withFaculty("SoC").withStudentNumber("A0123456A").withEmail("test@example.com").build();
     public static final Student D = new StudentBuilder().withTags("cs2103", "tut2", "f")
             .withName("Diane").withFaculty("SoC").withStudentNumber("A0123456A").withEmail("test@example.com").build();
-    private MarkTestUtil() {}
+    private GroupTestUtil() {}
 
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();

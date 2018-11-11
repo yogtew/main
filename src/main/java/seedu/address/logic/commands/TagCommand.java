@@ -8,38 +8,38 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.mark.IMarkExecutable;
+import seedu.address.logic.commands.group.IGroupExecutable;
 import seedu.address.model.Model;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 import seedu.address.model.tag.Tag;
 
 /**
- * Command that adds tags to marked Students
+ * Command that adds tags to students within group
  */
-public class TagCommand extends Command implements IMarkExecutable {
+public class TagCommand extends Command implements IGroupExecutable {
 
     public static final String COMMAND_WORD = "tag";
-    public static final String MESSAGE_USAGE = COMMAND_WORD + " add|set|del index|mark tags...";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " add|set|del index|group tags...";
     private final Set<Tag> tags;
-    private String markName = "";
+    private String groupName = "";
     private Index index = Index.fromZeroBased(0);
-    private boolean useMark;
+    private boolean useGroup;
     private TagCommandMode mode;
 
 
-    public TagCommand(String markName, Set<Tag> tags, TagCommandMode mode) {
-        this.markName = markName;
+    public TagCommand(String groupName, Set<Tag> tags, TagCommandMode mode) {
+        this.groupName = groupName;
         this.tags = tags;
         this.mode = mode;
-        useMark = true;
+        useGroup = true;
     }
 
     public TagCommand(Index index, Set<Tag> tags, TagCommandMode mode) {
         this.index = index;
         this.tags = tags;
         this.mode = mode;
-        useMark = false;
+        useGroup = false;
     }
 
     /**
@@ -71,8 +71,8 @@ public class TagCommand extends Command implements IMarkExecutable {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        if (useMark) {
-            return executeMark(model, history);
+        if (useGroup) {
+            return executeGroup(model, history);
         }
 
         List<Student> lastShownList = model.getFilteredStudentList();
@@ -89,8 +89,8 @@ public class TagCommand extends Command implements IMarkExecutable {
     }
 
     @Override
-    public CommandResult executeMark(Model model, CommandHistory history) throws CommandException {
-        Mark m = model.getMark(markName);
+    public CommandResult executeGroup(Model model, CommandHistory history) throws CommandException {
+        Group m = model.getGroup(groupName);
         m.getList().forEach(p -> {
             processStudent(model, history, p);
         });
@@ -129,9 +129,9 @@ public class TagCommand extends Command implements IMarkExecutable {
     public boolean equals(Object other) {
         return this == other
                 || (other instanceof TagCommand
-                && markName.equals(((TagCommand) other).markName)
+                && groupName.equals(((TagCommand) other).groupName)
                 && tags.equals(((TagCommand) other).tags)
-                && useMark == ((TagCommand) other).useMark
+                && useGroup == ((TagCommand) other).useGroup
                 && index.equals(((TagCommand) other).index)
                 && mode.equals(((TagCommand) other).mode));
     }

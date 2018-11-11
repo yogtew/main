@@ -109,7 +109,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: find student not in address book -> 0 students found */
-        command = FindCommand.COMMAND_WORD + " Mark";
+        command = FindCommand.COMMAND_WORD + " Group";
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

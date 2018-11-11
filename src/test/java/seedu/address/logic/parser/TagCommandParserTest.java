@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommandMode;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 
 public class TagCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
@@ -20,9 +20,9 @@ public class TagCommandParserTest {
     private static final String VALID_SET_COMMAND = "set ";
     private static final String VALID_DEL_COMMAND = "del ";
     private static final String INVALID_COMMAND = "asd ";
-    private static final String VALID_MARK = "m/tut1 ";
+    private static final String VALID_MARK = "g/tut1 ";
     private static final String VALID_MARK_NAME = "tut1";
-    private static final String INVALID_MARK = "m/tut@ ";
+    private static final String INVALID_MARK = "g/tut@ ";
 
     private TagCommandParser parser = new TagCommandParser();
 
@@ -51,12 +51,12 @@ public class TagCommandParserTest {
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, VALID_ADD_COMMAND + "1 i/ string", MESSAGE_INVALID_FORMAT);
 
-        // ======= Mark ========
+        // ======= Group ========
 
-        // invalid mark
-        assertParseFailure(parser, VALID_ADD_COMMAND + INVALID_MARK, Mark.MARK_NAME_CONSTRAINTS);
+        // invalid group
+        assertParseFailure(parser, VALID_ADD_COMMAND + INVALID_MARK, Group.GROUP_NAME_CONSTRAINTS);
 
-        // valid mark but random stuff in preamble
+        // valid group but random stuff in preamble
         assertParseFailure(parser, VALID_ADD_COMMAND + "asd " + VALID_MARK, MESSAGE_INVALID_FORMAT);
     }
 

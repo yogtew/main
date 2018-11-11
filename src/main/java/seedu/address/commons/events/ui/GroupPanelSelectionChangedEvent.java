@@ -1,17 +1,17 @@
 package seedu.address.commons.events.ui;
 
 import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 
 /**
  * Represents a selection change in the Student List Panel
  */
-public class MarkPanelSelectionChangedEvent extends BaseEvent {
+public class GroupPanelSelectionChangedEvent extends BaseEvent {
 
 
-    private final Mark newSelection;
+    private final Group newSelection;
 
-    public MarkPanelSelectionChangedEvent(Mark newSelection) {
+    public GroupPanelSelectionChangedEvent(Group newSelection) {
         this.newSelection = newSelection;
     }
 
@@ -20,7 +20,7 @@ public class MarkPanelSelectionChangedEvent extends BaseEvent {
         return getClass().getSimpleName();
     }
 
-    public Mark getNewSelection() {
+    public Group getNewSelection() {
         return newSelection;
     }
 }

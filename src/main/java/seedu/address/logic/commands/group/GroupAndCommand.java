@@ -1,21 +1,21 @@
-package seedu.address.logic.commands.mark;
+package seedu.address.logic.commands.group;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 
 /**
- * Mark "and" subcommand
+ * Group "and" subcommand
  */
-public class MarkAndCommand extends MarkCommand {
+public class GroupAndCommand extends GroupCommand {
     public static final String MESSAGE_SUCCESS = "%d students were added to %s from (%s intersect %s)";
     private final String alias1;
     private final String alias2;
     private final String alias3;
 
-    public MarkAndCommand(String alias1, String alias2, String alias3) {
+    public GroupAndCommand(String alias1, String alias2, String alias3) {
         this.alias1 = alias1;
         this.alias2 = alias2;
         this.alias3 = alias3;
@@ -23,9 +23,9 @@ public class MarkAndCommand extends MarkCommand {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-        Mark mark1 = model.getMark(alias2);
-        Mark result = mark1.intersect(model.getMark(alias3));
-        model.setMark(alias1, result);
+        Group group1 = model.getGroup(alias2);
+        Group result = group1.intersect(model.getGroup(alias3));
+        model.setGroup(alias1, result);
         return new CommandResult(String.format(MESSAGE_SUCCESS, result.count(), alias1, alias2, alias3));
     }
 
@@ -35,11 +35,11 @@ public class MarkAndCommand extends MarkCommand {
             return true;
         }
 
-        if (!(other instanceof MarkAndCommand)) {
+        if (!(other instanceof GroupAndCommand)) {
             return false;
         }
 
-        MarkAndCommand command = (MarkAndCommand) other;
+        GroupAndCommand command = (GroupAndCommand) other;
 
         return alias1.equals(command.alias1)
                 && alias2.equals(command.alias2)

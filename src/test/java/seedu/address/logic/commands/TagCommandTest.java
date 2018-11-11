@@ -25,7 +25,7 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.StudentBuilder;
@@ -148,19 +148,19 @@ public class TagCommandTest {
     }
 
     @Test
-    public void execute_markSingleTag_success() {
+    public void execute_groupSingleTag_success() {
         // Set a tag to student
         HashSet<Tag> tagsToAdd = new HashSet<>();
         tagsToAdd.add(new Tag("tut1"));
 
-        String markName = "m1";
-        Mark mark = new Mark(Arrays.asList(ALICE, BENSON), markName);
-        model.setMark(markName, new Mark(mark));
+        String groupName = "m1";
+        Group group = new Group(Arrays.asList(ALICE, BENSON), groupName);
+        model.setGroup(groupName, new Group(group));
 
-        List<Pair<Student, Student>> expectedStudents = mark.getList().stream().map(
+        List<Pair<Student, Student>> expectedStudents = group.getList().stream().map(
             student -> new Pair<>(student, new StudentBuilder(student).withTags("tut1").build()))
             .collect(Collectors.toList());
-        TagCommand tagCommand = new TagCommand(markName, tagsToAdd, TagCommandMode.SET);
+        TagCommand tagCommand = new TagCommand(groupName, tagsToAdd, TagCommandMode.SET);
 
         String expectedMessage = "Successfully updated tags of 2 students";
 
@@ -173,7 +173,7 @@ public class TagCommandTest {
 
         // Add a tag to student
         tagsToAdd.add(new Tag("tut2"));
-        tagCommand = new TagCommand(markName, tagsToAdd, TagCommandMode.ADD);
+        tagCommand = new TagCommand(groupName, tagsToAdd, TagCommandMode.ADD);
 
         expectedStudents = expectedStudents.stream().map(pair -> new Pair<>(pair.getValue(),
                 new StudentBuilder(pair.getValue()).withTags("tut1", "tut2").build()))
@@ -189,7 +189,7 @@ public class TagCommandTest {
         // Remove a tag from a student
         HashSet<Tag> tagsToRemove = new HashSet<>();
         tagsToRemove.add(new Tag("tut1"));
-        tagCommand = new TagCommand(markName, tagsToRemove, TagCommandMode.DEL);
+        tagCommand = new TagCommand(groupName, tagsToRemove, TagCommandMode.DEL);
 
         expectedStudents = expectedStudents.stream().map(pair -> new Pair<>(pair.getValue(),
             new StudentBuilder(pair.getValue()).withTags("tut2").build()))
@@ -232,26 +232,26 @@ public class TagCommandTest {
         assertFalse(standardSetCommand.equals(standardDelCommand));
         assertFalse(standardDelCommand.equals(standardAddCommand));
 
-        String markName = "tut1";
-        final TagCommand markAddCommand = new TagCommand(markName, tagsToAdd, TagCommandMode.ADD);
-        final TagCommand markSetCommand = new TagCommand(markName, tagsToAdd, TagCommandMode.SET);
-        final TagCommand markDelCommand = new TagCommand(markName, tagsToAdd, TagCommandMode.DEL);
+        String groupName = "tut1";
+        final TagCommand groupAddCommand = new TagCommand(groupName, tagsToAdd, TagCommandMode.ADD);
+        final TagCommand groupSetCommand = new TagCommand(groupName, tagsToAdd, TagCommandMode.SET);
+        final TagCommand groupDelCommand = new TagCommand(groupName, tagsToAdd, TagCommandMode.DEL);
 
-        final TagCommand similarMarkAddCommand = new TagCommand(markName, sameTags, TagCommandMode.ADD);
-        final TagCommand similarMarkSetCommand = new TagCommand(markName, sameTags, TagCommandMode.SET);
-        final TagCommand similarMarkDelCommand = new TagCommand(markName, sameTags, TagCommandMode.DEL);
+        final TagCommand similarGroupAddCommand = new TagCommand(groupName, sameTags, TagCommandMode.ADD);
+        final TagCommand similarGroupSetCommand = new TagCommand(groupName, sameTags, TagCommandMode.SET);
+        final TagCommand similarGroupDelCommand = new TagCommand(groupName, sameTags, TagCommandMode.DEL);
 
-        assertTrue(markAddCommand.equals(markAddCommand));
-        assertTrue(markSetCommand.equals(markSetCommand));
-        assertTrue(markDelCommand.equals(markDelCommand));
+        assertTrue(groupAddCommand.equals(groupAddCommand));
+        assertTrue(groupSetCommand.equals(groupSetCommand));
+        assertTrue(groupDelCommand.equals(groupDelCommand));
 
-        assertFalse(markAddCommand.equals(standardAddCommand));
-        assertFalse(markSetCommand.equals(standardSetCommand));
-        assertFalse(markDelCommand.equals(standardDelCommand));
+        assertFalse(groupAddCommand.equals(standardAddCommand));
+        assertFalse(groupSetCommand.equals(standardSetCommand));
+        assertFalse(groupDelCommand.equals(standardDelCommand));
 
-        assertTrue(markAddCommand.equals(similarMarkAddCommand));
-        assertTrue(markSetCommand.equals(similarMarkSetCommand));
-        assertTrue(markDelCommand.equals(similarMarkDelCommand));
+        assertTrue(groupAddCommand.equals(similarGroupAddCommand));
+        assertTrue(groupSetCommand.equals(similarGroupSetCommand));
+        assertTrue(groupDelCommand.equals(similarGroupDelCommand));
 
 
 
