@@ -24,9 +24,9 @@ import seedu.address.model.student.Student;
  * Parses input arguments and creates a new FindCommand object
  */
 public class MarkCommandParser implements Parser<MarkCommand> {
-
-
-
+    public static final String MESSAGE_INVALID_SUBCOMMAND = "Invalid subcommand: %s\n"
+            + "Valid subcommands include: show, find, join, add";
+    public static final String MESSAGE_INVALID_MARK_NAME = "Invalid mark name: %s\n%s";
     /**
      * Parses the given {@code String} of arguments in the context of the FindCommand
      * and returns an FindCommand object for execution.
@@ -44,6 +44,8 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             join - union of two Marks
             and - intersection of two Marks
          */
+
+
 
         // arguments as a list of keywords
         ArrayList<String> splitArgs = new ArrayList<>(Arrays.asList(args.trim().split(" ")));
@@ -69,41 +71,36 @@ public class MarkCommandParser implements Parser<MarkCommand> {
             if (splitArgs.size() == 0) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
             }
-            int index = splitArgs.indexOf("f/");
-            if (index != -1) {
-                findArgs = String.join(" ", splitArgs.subList(0, index));
-            } else {
-                findArgs = String.join(" ", splitArgs);
-            }
-            findArgs = " " + findArgs; // because parser expects " t/tags" but not "t/tags"
+
+            // because parser expects " t/tags" but not "t/tags"
+            findArgs = " " + String.join(" ", splitArgs);
             FindCommand findCommand = new FindCommandParser().parse(findArgs);
             Predicate<Student> p = findCommand.getPredicate();
             return new MarkFindCommand(p, alias1);
         case MarkCommand.JOIN:
-            // mark [alias1] join [alias2] [alias3]
+        case MarkCommand.AND:
+            // mark [alias1] join alias2 [alias3]
             splitArgs.remove(0); // removes "join"
+
+            // neither alias2 nor alias3 was provided -> invalid command format
             if (splitArgs.size() == 0) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkJoinCommand.MESSAGE_USAGE));
             }
+
             alias2 = checkAlias(StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK));
+
+            // alias3 is optional, can default to the default mark
             if (splitArgs.size() == 2) {
                 alias3 = checkAlias(StringUtil.extractArgument(splitArgs.get(1), PREFIX_MARK));
             }
-            return new MarkJoinCommand(alias1, alias2, alias3);
-        case MarkCommand.AND:
-            // mark [alias1] join [alias2] [alias3]
-            splitArgs.remove(0); // removes "and"
-            if (splitArgs.size() == 0) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkAndCommand.MESSAGE_USAGE));
-            }
-            alias2 = StringUtil.extractArgument(splitArgs.get(0), PREFIX_MARK);
-            if (splitArgs.size() == 2) {
-                alias3 = checkAlias(StringUtil.extractArgument(splitArgs.get(1), PREFIX_MARK));
+
+            if (subCommand.equals(MarkCommand.JOIN)) {
+                return new MarkJoinCommand(alias1, alias2, alias3);
             }
             return new MarkAndCommand(alias1, alias2, alias3);
         default:
             // invalid command
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_SUBCOMMAND, subCommand));
         }
     }
 
@@ -115,7 +112,7 @@ public class MarkCommandParser implements Parser<MarkCommand> {
      */
     private String checkAlias(String name) throws ParseException {
         if (!Mark.isValidMarkName(name)) {
-            throw new ParseException(Mark.MARK_NAME_CONSTRAINTS);
+            throw new ParseException(String.format(MESSAGE_INVALID_MARK_NAME, name, Mark.MARK_NAME_CONSTRAINTS));
         }
         return name;
     }

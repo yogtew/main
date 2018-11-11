@@ -6,7 +6,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STUDENT_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENT;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -84,7 +83,6 @@ public class EditCommand extends Command {
         }
 
         model.updateStudent(studentToEdit, editedStudent);
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
         model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, editedStudent));
     }

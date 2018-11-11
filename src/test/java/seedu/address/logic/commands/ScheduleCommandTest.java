@@ -16,6 +16,7 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.Calendar;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -244,6 +245,16 @@ public class ScheduleCommandTest {
 
         @Override
         public ObservableList<Mark> getFilteredMarkList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setMarkPredicate(String markName) throws MarkNotFoundException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void resetView() {
             throw new AssertionError("This method should not be called.");
         }
     }

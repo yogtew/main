@@ -13,7 +13,7 @@ import seedu.address.model.student.Student;
  * Mark "find" subcommand
  */
 public class MarkFindCommand extends MarkCommand {
-    private static final String MESSAGE_SUCCESS = "Successfully added %d students to %s";
+    public static final String MESSAGE_SUCCESS = "Successfully added %d students to %s";
     private Predicate<Student> p;
     public MarkFindCommand(Predicate<Student> p, String alias1) {
         this.p = p;
@@ -26,5 +26,20 @@ public class MarkFindCommand extends MarkCommand {
         Mark mark = new Mark(marked, alias1);
         model.setMark(alias1, mark);
         return new CommandResult(String.format(MESSAGE_SUCCESS, marked.size(), alias1));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof MarkFindCommand)) {
+            return false;
+        }
+
+        MarkFindCommand command = (MarkFindCommand) other;
+
+        return p.equals(command.p) && alias1.equals(command.alias1);
     }
 }
