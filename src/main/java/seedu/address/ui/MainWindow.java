@@ -34,7 +34,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private GraphPanel GraphPanel;
+    private GraphPanel graphPanel;
     private StudentListPanel studentListPanel;
     private EventListPanel eventListPanel;
     private MarkListPanel markListPanel;
@@ -128,8 +128,8 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
 
-        GraphPanel = new GraphPanel();
-        graphPlaceholder.getChildren().add(GraphPanel.getRoot());
+        graphPanel = new GraphPanel();
+        graphPlaceholder.getChildren().add(graphPanel.getRoot());
 
         studentListPanel = new StudentListPanel(logic.getFilteredStudentList());
         studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
