@@ -555,6 +555,8 @@ It is session based, meaning that groups are not stored in the data files after 
 ==== Implementation
 `Mark` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Marks`.
 
+image::MarkClassDiagram.png[]
+
 Marks are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Mark` for commands.
 
 Commands relating to the creation and manipulations of Marks are parsed by `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed.
@@ -562,20 +564,29 @@ It is designed in this way to be easily extensible in the future as more sub-com
 
 The commands adhere to the following pattern:
 
- mark [m/m1] <subcommand> [m/m2] [m/m3]`
+ mark [m/m1] <subcommand> <arguments>`
 
-The arguments `m/m1`, `m/m2`, `m/m3` may be optional in some cases and default to `Mark.DEFAULT_NAME`
+The arguments `m/m1` may be optional in some cases and default to `Mark.DEFAULT_NAME`
 
 ==== Sub-commands
-* `find [name|tag]` -- marks Students matched by find command
+* `find name` -- marks Students matched by name
+* `find t/tag...` -- marks Students matched by tags
 * `join m/m2 [m/m3]` -- returns union of m2 and m3
 * `and m/m2 [m/m3]` -- returns intersection of m2 and m3
 * `show` -- shows marked Students in GUI
 
-==== Planned Sub-commands (1.4)
-* `tag [tagName]` -- tags marked Students with tagName
-* `attd [0|1]` -- marks attendance of marked Students
-* `email [emailText]` -- sends email to marked Students
+image::MarkCommandClassDiagram.png[]
+
+==== Planned Sub-commands (2.0)
+* `index <indexes>` -- marks students by index, separated by space, e.g. `mark index 1 3 4 5`
+
+==== Parser Flowchart
+
+image::MarkCommandParserFlowchart.png[]
+
+==== Execution
+
+image::MarkCommandSeqDiagram.png[]
 
 ==== Use Cases:
 Suppose a tutor wants to mark the attendance of all students from tutorial groups W13 and W14.
@@ -605,16 +616,41 @@ They can do that with a simple command:
 
  email m/res b/[emailText]
 
+==== Tracking students
+
+The application is implemented with immutable `Student` objects.
+As a result, when a student is edited, a new `Student` instance is created with the updated fields and stored in the `AddressBook`.
+This causes the stored `Student` objects in existing Marks to be outdated, and attempts to use those objects will lead to a crash.
+
+To solve this issue, after every command where student(s) are changed, the stored Marks will be updated as depicted in the activity diagram below.
+
+image::UpdateStudentsActivityDiagram.png[]
+
 ==== Design considerations
+===== Aspect: Data structure for storing Students
+
+* HashSet (Current)
+** Pros: Built in duplicates prevention, easier implementation of methods, faster
+* ArrayList
+** Pros: Order is preserved, able to convert to ObservableList easily
+
+Ordering was not as important as duplicates prevention and the fact that many of the methods are designed for a Set.
+Efficiency is a nice bonus but not significant as the expected number of Student entries is well below the magnitude where the difference in speed is significant.
+
+===== Aspect: Command format
+
+* Separate sub Commands
+** separate commands into `mark-find`, `mark-show` etc.
+** Pros: Easy parsing, easy to understand
+
+* Single command (Current)
+** single root command `mark` with subcommands `mark find`, `mark show`
+** Pros: Usability, minimize code duplication
+
+
+
 
 // end::markfeature[]
-
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
 
 === Logging
 

@@ -68,19 +68,6 @@ public class Mark {
         return test.matches(MARK_VALIDATION_REGEX);
     }
 
-    /**
-     * checks if its a valid mark name. if it is return the name, otherwise throw an exception
-     * @param name
-     * @return
-     * @throws IllegalArgumentException
-     */
-    public static String checkValidMarkName(String name) throws IllegalArgumentException {
-        if (isValidMarkName(name)) {
-            return name;
-        }
-        throw new IllegalArgumentException(Mark.MARK_NAME_CONSTRAINTS);
-    }
-
     public ArrayList<Student> getList() {
         return new ArrayList<>(set);
     }

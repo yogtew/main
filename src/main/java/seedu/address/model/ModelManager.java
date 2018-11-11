@@ -364,7 +364,7 @@ public class ModelManager extends ComponentManager implements Model {
      * @throws MarkNotFoundException if mark not found in model
      */
     public Mark getMark(String markName) throws MarkNotFoundException {
-        Mark.checkValidMarkName(markName);
+        Mark.checkArguments(markName);
         return marks.stream().filter(m -> m.getName().equals(markName)).findFirst()
                 .orElseThrow(() -> new MarkNotFoundException(Mark.MESSAGE_MARK_NOT_FOUND));
     }

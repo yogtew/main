@@ -359,7 +359,7 @@ E.g. `mark find t/friends` will find all students in the Address Book tagged wit
 ==== Named Marks
 Marks can be named by using the prefix `m/MARKNAME`. If not specified, the name of the created Mark will default to "m/default".
 
-E.g. `mark m/myMarkName t/friends` will add the Students tagged with "friends" to a Mark called "myMarkName"
+E.g. `mark m/myMarkName find t/friends` will add the Students tagged with "friends" to a Mark called "myMarkName"
 
 Note: Mark names must be alphanumeric and do not contain spaces.
 
