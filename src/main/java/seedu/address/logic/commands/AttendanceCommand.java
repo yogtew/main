@@ -24,7 +24,7 @@ public class AttendanceCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Updates the attendance of a student "
             + "by the index number used in the displayed student list or by using a mark name\n"
             + "Existing values will be overwritten by the input values.\n"
-            + "Attendance can be 1 (Present) or 0 (Absent).\n"
+            + "Attendance can be 1 (Present) or 0 (Absent). Other values will update the attendance to undefined.\n"
             + "Parameters: INDEX (must be a positive integer)|"
             + PREFIX_MARK + " MARK "
             + PREFIX_ATTENDANCE + "[ATTENDANCE]\n"
@@ -33,16 +33,15 @@ public class AttendanceCommand extends Command {
             + COMMAND_WORD + " markname "
             + PREFIX_ATTENDANCE + "1";
 
-    public static final String MESSAGE_ADD_ATTENDANCE_SUCCESS = "Added attendance for student: %1$s";
-    public static final String MESSAGE_REMOVE_ATTENDANCE_SUCCESS = "Removed attendance for student: %1$s";
-
     private Index index;
     private final Attendance attendance;
     private String markName = "";
     private boolean useMark;
 
     /**
-     * @param index of the student to mark the attendance of
+     * Creates an Attendance Command with the following params
+     *
+     * @param index of the student to update the attendance of
      * @param attendance of the student
      */
     public AttendanceCommand(Index index, Attendance attendance) {
@@ -53,9 +52,10 @@ public class AttendanceCommand extends Command {
     }
 
     /**
+     * Creates an Attendance Command with the following params
      *
-     * @param markName
-     * @param attendance
+     * @param markName of the mark to be updated
+     * @param attendance of the students in the mark
      */
     public AttendanceCommand(String markName, Attendance attendance) {
         requireAllNonNull(markName, attendance);
@@ -64,6 +64,14 @@ public class AttendanceCommand extends Command {
         useMark = true;
     }
 
+    /**
+     * Executes the Attendance Command
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @param history {@code CommandHistory} which the command should operate on.
+     * @return CommandResult
+     * @throws CommandException if index is invalid
+     */
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
 
@@ -85,10 +93,11 @@ public class AttendanceCommand extends Command {
     }
 
     /**
-     * Performs the command on one person
-     * @param model
-     * @param history
-     * @param target
+     * Performs the command on one student
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @param history {@code CommandHistory} which the command should operate on.
+     * @param target the student to perform the command on
      */
     private void processStudent(Model model, CommandHistory history, Student target) {
         Student editedStudent = new Student(target.getName(),
@@ -100,9 +109,10 @@ public class AttendanceCommand extends Command {
 
     /**
      * executeMark method which processes students in the mark
-     * @param model
-     * @param history
-     * @return
+     *
+     * @param model {@code Model} which the command should operate on.
+     * @param history {@code CommandHistory} which the command should operate on.
+     * @return CommandResult
      */
     public CommandResult executeMark(Model model, CommandHistory history) {
         Mark m = model.getMark(markName);
@@ -115,8 +125,9 @@ public class AttendanceCommand extends Command {
 
     /**
      * Formats a CommandResult to be returned
-     * @param n
-     * @return
+     *
+     * @param n number of students
+     * @return CommandResult
      */
     private CommandResult formatCommandResult(int n) {
         String pluralName = n == 1 ? "student" : "students";
@@ -141,5 +152,4 @@ public class AttendanceCommand extends Command {
             return index.equals(a.index) && attendance.equals(a.attendance);
         }
     }
-
 }

@@ -19,12 +19,22 @@ public class Attendance {
 
     public final AttendanceEnum value;
 
+    /**
+     * Constructs a {@code Attendance}
+     *
+     * @param attendance An AttendanceEnum attendance
+     */
     public Attendance(AttendanceEnum attendance) {
         requireNonNull(attendance);
         checkArgument(isValidAttendance(attendance.toString()), MESSAGE_ATTENDANCE_CONSTRAINTS);
         value = attendance;
     }
 
+    /**
+     * Constructs a {@code Attendance}
+     *
+     * @param attendance A String attendance
+     */
     public Attendance(String attendance) {
         requireNonNull(attendance);
         value = fromString(attendance);
