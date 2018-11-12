@@ -10,6 +10,7 @@ public class Messages {
     public static final String MESSAGE_INVALID_TIMES_FORMAT = "The start time is later than the end time!";
     public static final String MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX = "The student index provided is invalid";
     public static final String MESSAGE_STUDENTS_LISTED_OVERVIEW = "%1$d students listed!";
+    public static final String MESSAGE_STUDENTS_GRAPHED_OVERVIEW = "%1$d students graphed!";
     public static final String MESSAGE_INVALID_EVENT = "The event specified cannot be found";
     public static final String MESSAGE_WIP_COMMAND = "Command is a work-in-progress: %1$s";
 

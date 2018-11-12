@@ -46,7 +46,7 @@ public class GraphCommand extends Command {
 
         EventsCenter.getInstance().post(new ShowGraphRequestEvent(getAttendanceStats(model.getFilteredStudentList())));
         return new CommandResult(
-                String.format(Messages.MESSAGE_STUDENTS_LISTED_OVERVIEW, model.getFilteredStudentList().size()));
+                String.format(Messages.MESSAGE_STUDENTS_GRAPHED_OVERVIEW, model.getFilteredStudentList().size()));
     }
 
     public Predicate<Student> getPredicate() {
