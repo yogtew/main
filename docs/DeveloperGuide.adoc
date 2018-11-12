@@ -696,6 +696,60 @@ I briefly considered a natural language parser but decided that it was not worth
 
 // end::groupfeature[]
 
+// tag::graph[]
+=== Graph feature
+==== Current implementation - Graphing attendance of a group of students
+
+The graph feature leverages on d3 graph for the responsiveness and asthetics of displaying data.
+
+This feature uses query strings to make server-client communication to draw and display the graph data. This is made so that it can be compatible with exporting of data to other applications in the near future. Future iterations of this feature can be made to RESTful API for better compatibilty with 3rd party applications
+
+The graph command get the set of users `Set<Student>` to query for the attendance status and then returns an array of data to be graphed on a d3 graph.
+
+Commands relating to the manipulation of the Set data of students are parsed by `GraphCommandParser`, which then returns the appropriate graph to be shown.
+
+This architecture is planned such that the feature has low coupling which allows for future integration with 3rd party applications are easy.
+
+The commands adhere to the following pattern:
+
+ graph KEYWORD [KEYWORDS]`
+or
+ graph t\TAGS`
+
+==== Sequence Diagram
+The sequence diagram below shows how the components interact for the scenario where the user issues the graph command.
+
+.High level Sequence Diagram for `graph` command
+image::GraphSD.png[width="800"]
+
+.Sequence Diagram for `graph` command
+image::GraphCI.png[width="800"]
+
+==== Design Considerations:
+
+For displaying of the data a donut graph is to display the 3 main attendance states as mentioned in AttendanceEnum class. The donut graph allows more room to display more data points in future should there be a need to as well. The labels used instead of a legend as legend can be confusing when there are many colors/data available on the graph as well.
+
+.Rendering of the Attendance Graph
+image::GraphMockup.png[width="500"]
+// end::graph[]
+
+==== Use Cases:
+A tutor can graph and understand the attendance information of students in various tags or names.
+
+Original Use Case:
+
+ find alan
+ <see attendance record of alan>
+ find bob
+ <see attendance record of alan>
+
+Using graphs:
+
+ graph alan bob
+ <graph of attendance statistics is displayed>
+ graph t/cs2103
+ <graph of attendance statistics of all students with the cs2103 tag is displayed>
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -1360,6 +1414,24 @@ Expected: New group _grp1_ created with 2 students
 .. Other incorrect commands to try: `attendance`, `attendance a/tut2 b/1`, `attendance at/1`, `attendance x at/0` (where x is larger than the size of the list) +
    Expected: Error message shown in status bar.
 // end::attendancetests[]
+
+// tag::graphtests[]
+=== Displaying the attendance graph of students
+
+. Display the attendance graph of a student or a `tag` of students
+
+.. Prerequisites: The student must exist on the conTAct list/the `tag` of students must exist. If the student does not exist, add the student first. If the `tag` does not exist, create a `tag` of students with the existing required tag.
+.. Test case: `graph alan` +
+   Expected: The attendance graph of only Alan is shown.
+.. Test case: `graph alan von` +
+   Expected: The attendance graph of Alan and Von is shown.
+.. Test case: `graph t/student` +
+   Expected: The attendance graph of all students with the tag "student" is shown.
+.. Test case: `graph abcxyz` +
+   Expected: The attendance graph is not updated as student does not exist.
+.. Other incorrect commands to try: `attendance` +
+   Expected: Error message shown in status bar.
+// end::graphtests[]
 
 === Emailing a student
 // tag::emailManualTest[]
