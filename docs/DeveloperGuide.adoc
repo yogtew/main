@@ -1212,8 +1212,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a student
 
 . Deleting a student while all students are listed
@@ -1225,9 +1223,7 @@ _{ more test cases ... }_
    Expected: No student is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
-
-_{ more test cases ... }_
-
+   
 // tag::attendancetests[]
 === Marking Attendance of a student(s)
 
@@ -1267,8 +1263,6 @@ _{ more test cases ... }_
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
 
 // tag::emailManualTest[]
 === Emailing a student
