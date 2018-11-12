@@ -1,4 +1,4 @@
-package seedu.address.logic.commands.mark;
+package seedu.address.logic.commands.group;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -6,26 +6,26 @@ import java.util.function.Predicate;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.Model;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 
 /**
- * Mark "find" subcommand
+ * Group "find" subcommand
  */
-public class MarkFindCommand extends MarkCommand {
+public class GroupFindCommand extends GroupCommand {
     public static final String MESSAGE_SUCCESS = "Successfully added %d students to %s";
     private Predicate<Student> p;
-    public MarkFindCommand(Predicate<Student> p, String alias1) {
+    public GroupFindCommand(Predicate<Student> p, String alias1) {
         this.p = p;
         this.alias1 = alias1;
     }
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
-        List<Student> marked = model.getAddressBook().getStudentList().filtered(p);
-        Mark mark = new Mark(marked, alias1);
-        model.setMark(alias1, mark);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, marked.size(), alias1));
+        List<Student> matched = model.getAddressBook().getStudentList().filtered(p);
+        Group group = new Group(matched, alias1);
+        model.setGroup(alias1, group);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, matched.size(), alias1));
     }
 
     @Override
@@ -34,11 +34,11 @@ public class MarkFindCommand extends MarkCommand {
             return true;
         }
 
-        if (!(other instanceof MarkFindCommand)) {
+        if (!(other instanceof GroupFindCommand)) {
             return false;
         }
 
-        MarkFindCommand command = (MarkFindCommand) other;
+        GroupFindCommand command = (GroupFindCommand) other;
 
         return p.equals(command.p) && alias1.equals(command.alias1);
     }

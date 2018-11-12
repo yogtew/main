@@ -8,17 +8,17 @@ import javafx.collections.ObservableList;
 
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.MarkPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.commands.mark.MarkNotFoundException;
-import seedu.address.logic.commands.mark.MarkShowCommand;
+import seedu.address.logic.commands.group.GroupShowCommand;
+import seedu.address.logic.commands.group.GroupNotFoundException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.event.Event;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 
 /**
@@ -59,8 +59,8 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Override
-    public ObservableList<Mark> getFilteredMarkList() {
-        return model.getFilteredMarkList();
+    public ObservableList<Group> getFilteredGroupList() {
+        return model.getFilteredGroupList();
     }
 
     @Override
@@ -69,10 +69,10 @@ public class LogicManager extends ComponentManager implements Logic {
     }
 
     @Subscribe
-    public void markSelectionChangedEventHandler(MarkPanelSelectionChangedEvent event) {
+    public void groupSelectionChangedEventHandler(GroupPanelSelectionChangedEvent event) {
         try {
-            new MarkShowCommand(event.getNewSelection().getName()).execute(model, history);
-        } catch (MarkNotFoundException e) {
+            new GroupShowCommand(event.getNewSelection().getName()).execute(model, history);
+        } catch (GroupNotFoundException e) {
             e.printStackTrace();
         }
     }

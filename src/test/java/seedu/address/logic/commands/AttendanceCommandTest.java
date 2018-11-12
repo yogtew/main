@@ -222,31 +222,31 @@ public class AttendanceCommandTest {
         assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance("1"))));
 
-        String markName = "tut1";
-        final AttendanceCommand standardMarkCommand = new AttendanceCommand(markName,
+        String groupName = "tut1";
+        final AttendanceCommand standardGroupCommand = new AttendanceCommand(groupName,
                 new Attendance(VALID_ATTENDANCE_AMY));
 
         // same values -> returns true
-        AttendanceCommand markCommandWithSameValues = new AttendanceCommand(markName,
+        AttendanceCommand groupCommandWithSameValues = new AttendanceCommand(groupName,
                 new Attendance(VALID_ATTENDANCE_AMY));
-        assertTrue(standardMarkCommand.equals(markCommandWithSameValues));
+        assertTrue(standardGroupCommand.equals(groupCommandWithSameValues));
 
         // same object -> returns true
-        assertTrue(standardMarkCommand.equals(standardMarkCommand));
+        assertTrue(standardGroupCommand.equals(standardGroupCommand));
 
         // null -> returns false
-        assertFalse(standardMarkCommand.equals(null));
+        assertFalse(standardGroupCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardMarkCommand.equals(new ClearCommand()));
+        assertFalse(standardGroupCommand.equals(new ClearCommand()));
 
-        // different markName -> return false
-        String otherMarkName = "tut2";
-        assertFalse(standardMarkCommand.equals(new AttendanceCommand(otherMarkName,
+        // different groupName -> return false
+        String otherGroupName = "tut2";
+        assertFalse(standardGroupCommand.equals(new AttendanceCommand(otherGroupName,
                 new Attendance(VALID_ATTENDANCE_AMY))));
 
         // different attendance -> return false
-        assertFalse(standardIndexCommand.equals(new AttendanceCommand(markName,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(groupName,
                 new Attendance("1"))));
     }
 }

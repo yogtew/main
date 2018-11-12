@@ -3,12 +3,12 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AttendanceCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Attendance;
 
 /**
@@ -23,18 +23,18 @@ public class AttendanceCommandParser implements Parser<AttendanceCommand> {
      */
     public AttendanceCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_MARK, PREFIX_ATTENDANCE);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP, PREFIX_ATTENDANCE);
         Index index;
 
-        // if both mark and index are absent -> throw exception
-        if (!argMultimap.getValue(PREFIX_MARK).isPresent() && (argMultimap.getPreamble().isEmpty())) {
+        // if both group and index are absent -> throw exception
+        if (!argMultimap.getValue(PREFIX_GROUP).isPresent() && (argMultimap.getPreamble().isEmpty())) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AttendanceCommand.MESSAGE_USAGE));
-        } else if (argMultimap.getValue(PREFIX_MARK).isPresent()) {
-            // if mark is present, return new AttendanceCommand with the parameters
-            String markName = checkMark(argMultimap.getValue(PREFIX_MARK).orElse(Mark.DEFAULT_NAME));
+        } else if (argMultimap.getValue(PREFIX_GROUP).isPresent()) {
+            // if group is present, return new AttendanceCommand with the parameters
+            String groupName = checkGroup(argMultimap.getValue(PREFIX_GROUP).orElse(Group.DEFAULT_NAME));
             String attendance = argMultimap.getValue(PREFIX_ATTENDANCE).get();
-            return new AttendanceCommand(markName, new Attendance(attendance));
+            return new AttendanceCommand(groupName, new Attendance(attendance));
         } else {
             try {
                 // if index is present, return new AttendanceCommand with the parameters
@@ -49,14 +49,14 @@ public class AttendanceCommandParser implements Parser<AttendanceCommand> {
     }
 
     /**
-     * checks if the mark name is valid otherwise throws an exception
-     * @param name markName entered by the user
+     * checks if the group name is valid otherwise throws an exception
+     * @param name groupName entered by the user
      * @return name
-     * @throws ParseException with the mark name constraints
+     * @throws ParseException with the group name constraints
      */
-    private String checkMark(String name) throws ParseException {
-        if (!Mark.isValidMarkName(name)) {
-            throw new ParseException(Mark.MARK_NAME_CONSTRAINTS);
+    private String checkGroup(String name) throws ParseException {
+        if (!Group.isValidGroupName(name)) {
+            throw new ParseException(Group.GROUP_NAME_CONSTRAINTS);
         }
         return name;
     }
