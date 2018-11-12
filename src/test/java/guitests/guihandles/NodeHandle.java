@@ -36,6 +36,16 @@ public abstract class NodeHandle<T extends Node> {
     }
 
     /**
+     * Retrieves the {@code query} node owned by the {@code rootNode}.
+     *
+     * @param query name of the CSS selector for the node to retrieve.
+     */
+    protected <Q extends Node> Optional<Q> getOptionalChildNode(String query) {
+        Optional<Q> node = guiRobot.from(rootNode).lookup(query).tryQuery();
+        return node;
+    }
+
+    /**
      * Clicks on the root node (i.e. itself).
      */
     public void click() {

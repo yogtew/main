@@ -4,58 +4,63 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Student> PREDICATE_SHOW_ALL_STUDENT = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar);
+
+    /** Commits the entire model. */
+    void commitModel();
 
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a student with the same identity as {@code student} exists in the address book.
      */
-    boolean hasPerson(Person person);
+    boolean hasStudent(Student student);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given student.
+     * The student must exist in the address book.
      */
-    void deletePerson(Person target);
+    void deleteStudent(Student target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given student.
+     * {@code student} must not already exist in the address book.
      */
-    void addPerson(Person person);
+    void addStudent(Student student);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given student {@code target} with {@code editedStudent}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The student identity of {@code editedStudent} must not be
+     * the same as another existing student in the address book.
      */
-    void updatePerson(Person target, Person editedPerson);
+    void updateStudent(Student target, Student editedStudent);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered student list */
+    ObservableList<Student> getFilteredStudentList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered student list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredStudentList(Predicate<Student> predicate);
 
     /**
      * Returns true if the model has previous address book states to restore.
@@ -68,23 +73,19 @@ public interface Model {
     boolean canRedoAddressBook();
 
     /**
-     * Restores the model's address book to its previous state.
-     */
-    void undoAddressBook();
-
-    /**
-     * Restores the model's address book to its previously undone state.
-     */
-    void redoAddressBook();
-
-    /**
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
 
-    Mark getMark(String markName);
+    Mark getMark(String markName) throws MarkNotFoundException;
 
     void setMark(String markName, Mark mark);
+
+    ObservableList<Mark> getFilteredMarkList();
+
+    void setMarkPredicate(String markName) throws MarkNotFoundException;
+
+    void resetView ();
 
     /** Returns the Calendar */
     ReadOnlyCalendar getCalendar();
@@ -126,14 +127,24 @@ public interface Model {
     boolean canRedoCalendar();
 
     /**
-     * Restores the model's calendar to its previous state.
+     * Controls undoing of the calendar and address book.
      */
-    void undoCalendar();
+    void undo();
 
     /**
-     * Restores the model's calendar to its previously undone state.
+     * Controls redoing of the calendar and address book.
      */
-    void redoCalendar();
+    void redo();
+
+    /**
+     * Returns true if the model has an previous state to restore
+     */
+    boolean canUndo();
+
+    /**
+     * Returns true if the model has an undone state to restore.
+     */
+    boolean canRedo();
 
     /**
      * Saves the current calendar state for undo/redo.

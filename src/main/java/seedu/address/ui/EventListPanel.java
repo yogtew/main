@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,9 +12,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.EventPanelSelectionChangedEvent;
 import seedu.address.model.event.Date;
-import seedu.address.model.event.Description;
 import seedu.address.model.event.EndTime;
 import seedu.address.model.event.Event;
 import seedu.address.model.event.EventName;
@@ -42,6 +39,17 @@ public class EventListPanel extends UiPart<Region> {
     private void setConnections(ObservableList<Event> eventList) {
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> new EventListViewCell());
+        setEventHandlerForSelectionChangeEvent();
+    }
+
+    private void setEventHandlerForSelectionChangeEvent() {
+        eventListView.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        logger.fine("Selection in event list panel changed to : '" + newValue + "'");
+                        raise(new EventPanelSelectionChangedEvent(newValue));
+                    }
+                });
     }
 
     /**
@@ -62,20 +70,13 @@ public class EventListPanel extends UiPart<Region> {
         String startTime = time.format(DateTimeFormatter.ofPattern("HH:mm"));
         int index = 0;
         // Creating a dummy event to compare to
-        Event event = new Event(new EventName("index"), new Date(date), new StartTime(startTime), new EndTime("23:59"),
-                new Description("nil"));
+        Event event = new Event(new EventName("a"), new Date(date), new StartTime(startTime), new EndTime("00:00"));
         Comparator<Event> comparator = Event.COMPARATOR;
         // Finding the index of the nearest upcoming event to scroll to
         while (index < eventList.size() && comparator.compare(event, eventList.get(index)) > 0) {
             index++;
         }
         scrollTo(index);
-    }
-
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
     }
 
     /**

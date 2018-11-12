@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Student with an invalid studentNumber field -->
+<student>
+    <name>Hans Muster</name>
+    <studentNumber>9482as*f424</studentNumber>
+    <email>hans@example</email>
+    <faculty>School of Computing</faculty>
+    <tagged>computerscience</tagged>
+</student>

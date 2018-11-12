@@ -3,13 +3,11 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-
-import com.google.common.eventbus.Subscribe;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,10 +17,11 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
-import seedu.address.commons.events.model.PersonChangedEvent;
+import seedu.address.commons.events.ui.ResetStudentViewEvent;
+import seedu.address.logic.commands.mark.MarkNotFoundException;
 import seedu.address.model.event.Event;
 import seedu.address.model.mark.Mark;
-import seedu.address.model.person.Person;
+import seedu.address.model.student.Student;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -31,11 +30,26 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final VersionedAddressBook versionedAddressBook;
-    private final FilteredList<Person> filteredPersons;
-    private final HashMap<String, Mark> marks = new HashMap<>();
-
+    private final FilteredList<Student> filteredStudents;
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
+
+    private final ObservableList<Mark> marks;
+    private Mark watchedMark;
+    private boolean isWatchingMark;
+
+
+
+    // maintain an internal undo/redo stack to keep track of which model to undo/redo
+    private final Stack<ModelType> undoStack = new Stack<>();
+    private final Stack<ModelType> redoStack = new Stack<>();
+
+    /**
+     * Denotes the operations carried out on the model.
+     */
+    private enum ModelType {
+        ADDRESSBOOK, CALENDAR, ALL
+    }
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -47,10 +61,13 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
+        filteredStudents = new FilteredList<>(versionedAddressBook.getStudentList());
+        marks = FXCollections.observableArrayList();
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
+
+        setMark(Mark.DEFAULT_NAME, Mark.getEmpty());
     }
 
     public ModelManager() {
@@ -58,9 +75,20 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        versionedAddressBook.resetData(newData);
+    public void resetData(ReadOnlyAddressBook newAddressBook, ReadOnlyCalendar newCalendar) {
+        versionedAddressBook.resetData(newAddressBook);
+        versionedCalendar.resetData(newCalendar);
+        commitModel();
         indicateAddressBookChanged();
+        indicateCalendarChanged();
+    }
+
+    @Override
+    public void commitModel() {
+        undoStack.push(ModelType.ALL);
+        redoStack.clear();
+        versionedAddressBook.commit();
+        versionedCalendar.commit();
     }
 
     @Override
@@ -74,49 +102,53 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return versionedAddressBook.hasPerson(person);
+    public boolean hasStudent(Student student) {
+        requireNonNull(student);
+        return versionedAddressBook.hasStudent(student);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        versionedAddressBook.removePerson(target);
+    public void deleteStudent(Student target) {
+        versionedAddressBook.removeStudent(target);
         indicateAddressBookChanged();
-        indicatePersonDeleted(target);
+        indicateStudentDeleted(target);
     }
 
     @Override
-    public void addPerson(Person person) {
-        versionedAddressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public void addStudent(Student student) {
+        versionedAddressBook.addStudent(student);
+        resetView();
         indicateAddressBookChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void updateStudent(Student target, Student editedStudent) {
+        requireAllNonNull(target, editedStudent);
 
-        versionedAddressBook.updatePerson(target, editedPerson);
+        versionedAddressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
-        indicatePersonUpdated(target, editedPerson);
+        indicateStudentUpdated(target, editedStudent);
+        if (!isWatchingMark) {
+            updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        }
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Student List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
+     * Returns an unmodifiable view of the list of {@code Student} backed by the internal list of
      * {@code versionedAddressBook}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+    public ObservableList<Student> getFilteredStudentList() {
+        return FXCollections.unmodifiableObservableList(filteredStudents);
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredStudentList(Predicate<Student> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredStudents.setPredicate(predicate);
+        isWatchingMark = false;
     }
 
     //=========== Undo/Redo Address Book =====================================================================
@@ -131,20 +163,26 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedAddressBook.canRedo();
     }
 
-    @Override
-    public void undoAddressBook() {
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    private void undoAddressBook() {
         versionedAddressBook.undo();
         indicateAddressBookChanged();
     }
 
-    @Override
-    public void redoAddressBook() {
+    /**
+     * Restores the model's address book to its previously undone state.
+     */
+    private void redoAddressBook() {
         versionedAddressBook.redo();
         indicateAddressBookChanged();
     }
 
     @Override
     public void commitAddressBook() {
+        undoStack.push(ModelType.ADDRESSBOOK);
+        redoStack.clear();
         versionedAddressBook.commit();
     }
 
@@ -161,14 +199,16 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-    /** Raises an event to indicate a person has been changed */
-    private void indicatePersonDeleted(Person target) {
-        raise(new PersonChangedEvent(target, null));
+    /** Raises an event to indicate a student has been changed */
+    private void indicateStudentDeleted(Student target) {
+        // raise(new StudentChangedEvent(target, null));
+        updateMarks(target, null);
     }
 
-    /** Raises an event to indicate a person has been changed */
-    private void indicatePersonUpdated(Person target, Person newPerson) {
-        raise(new PersonChangedEvent(target, newPerson));
+    /** Raises an event to indicate a student has been changed */
+    private void indicateStudentUpdated(Student target, Student newStudent) {
+        // raise(new StudentChangedEvent(target, newStudent));
+        updateMarks(target, newStudent);
     }
 
 
@@ -203,20 +243,26 @@ public class ModelManager extends ComponentManager implements Model {
         return versionedCalendar.canRedo();
     }
 
-    @Override
-    public void undoCalendar() {
+    /**
+     * Restores the model's calendar to its previous state.
+     */
+    private void undoCalendar() {
         versionedCalendar.undo();
         indicateCalendarChanged();
     }
 
-    @Override
-    public void redoCalendar() {
+    /**
+     * Restores the model's calendar to its previously undone state.
+     */
+    private void redoCalendar() {
         versionedCalendar.redo();
         indicateCalendarChanged();
     }
 
     @Override
     public void commitCalendar() {
+        undoStack.push(ModelType.CALENDAR);
+        redoStack.clear();
         versionedCalendar.commit();
     }
 
@@ -237,6 +283,60 @@ public class ModelManager extends ComponentManager implements Model {
         filteredEvents.setPredicate(predicate);
     }
 
+    //=========== Undo/Redo Controllers ==============================================================
+
+    @Override
+    public void undo() {
+        switch (undoStack.pop()) {
+        case ADDRESSBOOK:
+            undoAddressBook();
+            redoStack.push(ModelType.ADDRESSBOOK);
+            break;
+        case CALENDAR:
+            undoCalendar();
+            redoStack.push(ModelType.CALENDAR);
+            break;
+        case ALL:
+            undoAddressBook();
+            undoCalendar();
+            redoStack.push(ModelType.ALL);
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Override
+    public void redo() {
+        switch (redoStack.pop()) {
+        case ADDRESSBOOK:
+            redoAddressBook();
+            undoStack.push(ModelType.ADDRESSBOOK);
+            break;
+        case CALENDAR:
+            redoCalendar();
+            undoStack.push(ModelType.CALENDAR);
+            break;
+        case ALL:
+            redoAddressBook();
+            redoCalendar();
+            undoStack.push(ModelType.ALL);
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Override
+    public boolean canUndo() {
+        return !undoStack.empty();
+    }
+
+    @Override
+    public boolean canRedo() {
+        return !redoStack.empty();
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -252,27 +352,79 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedAddressBook.equals(other.versionedAddressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredStudents.equals(other.filteredStudents)
+                && versionedCalendar.equals(other.versionedCalendar)
+                && filteredEvents.equals(other.filteredEvents);
     }
 
-    public Mark getMark(String markName) {
-        return marks.getOrDefault(markName, Mark.EMPTY);
+    /**
+     *
+     * @param markName name of mark to get
+     * @return mark if found
+     * @throws MarkNotFoundException if mark not found in model
+     */
+    public Mark getMark(String markName) throws MarkNotFoundException {
+        Mark.checkValidMarkName(markName);
+        return marks.stream().filter(m -> m.getName().equals(markName)).findFirst()
+                .orElseThrow(() -> new MarkNotFoundException(Mark.MESSAGE_MARK_NOT_FOUND));
     }
 
     public void setMark(String markName, Mark mark) {
-        marks.put(markName, mark);
+        try {
+            Mark old = getMark(mark.getName());
+            marks.remove(old);
+        } catch (MarkNotFoundException e) {
+            System.out.println("Nothing to worry about");
+        }
+        mark.setName(markName);
+        marks.add(mark);
+        if (isWatchingMark && mark.getName().equals(watchedMark.getName())) {
+            watchedMark = mark;
+            refreshMarkPredicate();
+        }
     }
 
-    @Subscribe
-    public void personChangedEventHandler(PersonChangedEvent event) {
-        marks.forEach((name, mark) -> {
-            Set<Person> set = new HashSet<>(mark.getSet());
-            if (set.contains(event.oldPerson)) {
-                set.remove(event.oldPerson);
-                if (event.newPerson != null) {
-                    set.add(event.newPerson);
+    @Override
+    public ObservableList<Mark> getFilteredMarkList() {
+        return marks;
+    }
+
+    @Override
+    public void setMarkPredicate(String markName) throws MarkNotFoundException {
+        // should only be called from MarkShowCommand
+        watchedMark = getMark(markName);
+        refreshMarkPredicate();
+    }
+
+    @Override
+    public void resetView() {
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        raise(new ResetStudentViewEvent(""));
+    }
+
+    /**
+     * Updates the predicate when a student is edited
+     */
+    private void refreshMarkPredicate() {
+        updateFilteredStudentList(watchedMark.getPredicate());
+        isWatchingMark = true;
+    }
+
+    /**
+     * updates the marks whenever a student is updated
+     * @param oldStudent
+     * @param newStudent
+     */
+    public void updateMarks(Student oldStudent, Student newStudent) {
+        marks.forEach((mark) -> {
+            Set<Student> set = new HashSet<>(mark.getSet());
+            if (set.contains(oldStudent)) {
+                set.remove(oldStudent);
+                if (newStudent != null) {
+                    set.add(newStudent);
                 }
-                setMark(name, new Mark(set, name));
+                Mark newMark = new Mark(set, mark.getName());
+                setMark(mark.getName(), newMark);
             }
         });
     }

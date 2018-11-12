@@ -4,10 +4,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.DATE_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.DESCRIPTION_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.EVENT_NAME_DESC_TUTORIAL;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_TUTORIAL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_BODY_EMAIL;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ATTENDANCE;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL;
+import static seedu.address.testutil.TypicalEvents.TUTORIAL_NO_DESCRIPTION;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_STUDENT;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +26,10 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AttendanceCommand;
+import seedu.address.logic.commands.CancelCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -30,19 +37,20 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ScheduleCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.email.Body;
 import seedu.address.model.email.EmailDraft;
 import seedu.address.model.email.Subject;
-import seedu.address.model.person.Attendance;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.student.Attendance;
+import seedu.address.model.student.NameContainsKeywordsPredicate;
+import seedu.address.model.student.Student;
+import seedu.address.testutil.EditStudentDescriptorBuilder;
 import seedu.address.testutil.EmailDraftUtil;
-import seedu.address.testutil.PersonBuilder;
-import seedu.address.testutil.PersonUtil;
+import seedu.address.testutil.StudentBuilder;
+import seedu.address.testutil.StudentUtil;
 
 public class AddressBookParserTest {
     @Rule
@@ -52,17 +60,17 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Person person = new PersonBuilder().build();
-        AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        Student student = new StudentBuilder().build();
+        AddCommand command = (AddCommand) parser.parseCommand(StudentUtil.getAddCommand(student));
+        assertEquals(new AddCommand(student), command);
     }
 
     @Test
     public void parseCommand_attendance() throws Exception {
         final Attendance attendance = new Attendance("Some attendance.");
         AttendanceCommand command = (AttendanceCommand) parser.parseCommand(AttendanceCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_ATTENDANCE + attendance.value);
-        assertEquals(new AttendanceCommand(INDEX_FIRST_PERSON, attendance), command);
+                + INDEX_FIRST_STUDENT.getOneBased() + " " + PREFIX_ATTENDANCE + attendance.value);
+        assertEquals(new AttendanceCommand(INDEX_FIRST_STUDENT, attendance), command);
     }
 
     @Test
@@ -74,17 +82,17 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
+                DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_STUDENT.getOneBased());
+        assertEquals(new DeleteCommand(INDEX_FIRST_STUDENT), command);
     }
 
     @Test
     public void parseCommand_edit() throws Exception {
-        Person person = new PersonBuilder().build();
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(person).build();
+        Student student = new StudentBuilder().build();
+        EditCommand.EditStudentDescriptor descriptor = new EditStudentDescriptorBuilder(student).build();
         EditCommand command = (EditCommand) parser.parseCommand(EditCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " " + PersonUtil.getEditPersonDescriptorDetails(descriptor));
-        assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
+                + INDEX_FIRST_STUDENT.getOneBased() + " " + StudentUtil.getEditStudentDescriptorDetails(descriptor));
+        assertEquals(new EditCommand(INDEX_FIRST_STUDENT, descriptor), command);
     }
 
     @Test
@@ -93,7 +101,7 @@ public class AddressBookParserTest {
         thrown.expectMessage(ParserUtil.MESSAGE_INVALID_INDEX);
         Subject subject = new Subject(VALID_SUBJECT_EMAIL);
         Body body = new Body(VALID_BODY_EMAIL);
-        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_PERSON, subject, body);
+        EmailDraft emailDraft = new EmailDraft(INDEX_FIRST_STUDENT, subject, body);
         EmailCommand command = (EmailCommand) parser.parseCommand(EmailDraftUtil.getEmailCommand(emailDraft));
         assertEquals(new EmailCommand(emailDraft), command);
     }
@@ -140,8 +148,33 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_select() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
-                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
+                SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_STUDENT.getOneBased());
+        assertEquals(new SelectCommand(INDEX_FIRST_STUDENT), command);
+    }
+
+    @Test
+    public void parseCommand_schedule() throws Exception {
+        ScheduleCommand command = (ScheduleCommand) parser.parseCommand(
+                ScheduleCommand.COMMAND_WORD + " "
+                + EVENT_NAME_DESC_TUTORIAL
+                + DATE_DESC_TUTORIAL
+                + START_TIME_DESC_TUTORIAL
+                + END_TIME_DESC_TUTORIAL
+                + DESCRIPTION_DESC_TUTORIAL
+        );
+        assertEquals(new ScheduleCommand(TUTORIAL), command);
+    }
+
+    @Test
+    public void parseCommand_cancel() throws Exception {
+        CancelCommand command = (CancelCommand) parser.parseCommand(
+                CancelCommand.COMMAND_WORD + " "
+                + EVENT_NAME_DESC_TUTORIAL
+                + DATE_DESC_TUTORIAL
+                + START_TIME_DESC_TUTORIAL
+                + END_TIME_DESC_TUTORIAL
+        );
+        assertEquals(new CancelCommand(TUTORIAL_NO_DESCRIPTION), command);
     }
 
     @Test

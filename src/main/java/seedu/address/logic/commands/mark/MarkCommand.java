@@ -5,7 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
 import seedu.address.logic.commands.Command;
 
 /**
- * Marks Persons based on supplied Predicates
+ * Marks Students based on supplied Predicates
  */
 public abstract class MarkCommand extends Command {
 
@@ -17,14 +17,15 @@ public abstract class MarkCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Creates a Mark.\n"
             + "Parameters: "
             + "[" + PREFIX_MARK + "MARK1] "
-            + "[" + SHOW + "|" + FIND + "|" + JOIN + "|" + AND + "] "
-            + "[" + PREFIX_MARK + "MARK2] "
+            + SHOW + "|" + FIND + "|" + JOIN + "|" + AND
+            + " " + PREFIX_MARK + "MARK2 "
             + "[" + PREFIX_MARK + "MARK3]\n"
             + "Example: mark "
             + PREFIX_MARK + "mark1 "
             + JOIN + " "
             + PREFIX_MARK + "mark2 "
-            + PREFIX_MARK + "mark3";
+            + PREFIX_MARK + "mark3\n"
+            + "Note: different subcommands might require different arguments";
 
     protected String alias1;
     protected String alias2;

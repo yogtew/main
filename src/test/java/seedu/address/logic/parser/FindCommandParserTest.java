@@ -9,9 +9,10 @@ import java.util.Arrays;
 import org.junit.Test;
 
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.model.person.IsTaggedPredicate;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.student.IsTaggedPredicate;
+import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 public class FindCommandParserTest {
 
@@ -36,7 +37,7 @@ public class FindCommandParserTest {
     @Test
     public void parse_tag_valid() {
         FindCommand expectedFindCommand =
-                new FindCommand(new IsTaggedPredicate(Arrays.asList(new Tag("friends"), new Tag("colleagues"))));
+                new FindCommand(new IsTaggedPredicate(SampleDataUtil.getTagSet("friends", "colleagues")));
         // multiple tags
         assertParseSuccess(parser, " t/friends t/colleagues", expectedFindCommand);
     }
@@ -45,6 +46,9 @@ public class FindCommandParserTest {
     public void parse_tag_invalid() {
         // empty tag name
         assertParseFailure(parser, " t/", Tag.MESSAGE_TAG_CONSTRAINTS);
+
+        // no arguments
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
     }
 
 }

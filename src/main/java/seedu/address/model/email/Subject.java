@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Subject {
 
     public static final String MESSAGE_SUBJECT_CONSTRAINTS =
-            "Subject should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Subject should not be blank";
 
     /*
      * The first character of the address must not be a whitespace,

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- Student with invalid name field -->
+    <students>
+        <name>Ha!ns Mu@ster</name>
+        <studentNumber isPrivate="false">9482424</studentNumber>
+        <email isPrivate="false">hans@example.com</email>
+        <faculty isPrivate="false">4th street</faculty>
+    </students>
+</addressbook>

@@ -43,7 +43,10 @@ public class EventCard extends UiPart<Region> {
         date.setText("Date: " + event.getDate().date);
         startTime.setText("Start: " + event.getStartTime().startTime);
         endTime.setText("End: " + event.getEndTime().endTime);
-        description.setText(event.getDescription().description);
+        event.getDescription().ifPresentOrElse(desc -> {
+            description.setText(desc.description);
+        }, () -> description.setText(" "));
+
     }
 
     @Override

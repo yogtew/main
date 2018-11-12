@@ -19,7 +19,7 @@ import seedu.address.model.Calendar;
 import seedu.address.model.event.Event;
 
 /**
- * A utility class containing a list o {@code Event} objects to be used in tests.
+ * A utility class containing a list of {@code Event} objects to be used in tests.
  */
 public class TypicalEvents {
     public static final Event BIRTHDAY = new EventBuilder().withEventName("Birthday")
@@ -28,6 +28,17 @@ public class TypicalEvents {
     public static final Event INTERVIEW = new EventBuilder().withEventName("Interview")
             .withDate("15-10-2018").withStartTime("15:00").withEndTime("15:30")
             .withDescription("At Google HQ").build();
+    public static final Event EXAM = new EventBuilder().withEventName("Exam")
+            .withDate("12-12-2018").withStartTime("14:00").withEndTime("16:00")
+            .withDescription("MPSH1").build();
+    public static final Event MEETING = new EventBuilder().withEventName("Meeting")
+            .withDate("11-11-2018").withStartTime("08:00").withEndTime("12:30")
+            .withDescription("At COM1").build();
+
+    // Events not present in the Calendar
+    public static final Event EVENT_NOT_PRESENT = new EventBuilder().withEventName("EventNotPresent")
+            .withDate("01-01-2018").withStartTime("00:00").withEndTime("23:59")
+            .withDescription("nil").build();
 
     // Manually added - Event's details found in {@code CommandTestUtil}
     public static final Event CONSULTATION = new EventBuilder()
@@ -44,7 +55,12 @@ public class TypicalEvents {
             .withEndTime(VALID_END_TIME_TUTORIAL)
             .withDescription(VALID_DESCRIPTION_TUTORIAL)
             .build();
-
+    public static final Event TUTORIAL_NO_DESCRIPTION = new EventBuilder()
+            .withEventName(VALID_EVENT_NAME_TUTORIAL)
+            .withDate(VALID_DATE_TUTORIAL)
+            .withStartTime(VALID_START_TIME_TUTORIAL)
+            .withEndTime(VALID_END_TIME_TUTORIAL)
+            .build();
     private TypicalEvents() {} // prevents instantiation
 
     /**
@@ -59,6 +75,8 @@ public class TypicalEvents {
     }
 
     public static List<Event> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(BIRTHDAY, INTERVIEW, CONSULTATION, TUTORIAL));
+        ArrayList<Event> list = new ArrayList<>(Arrays.asList(BIRTHDAY, MEETING, INTERVIEW, EXAM));
+        list.sort(Event.COMPARATOR);
+        return list;
     }
 }
