@@ -1226,7 +1226,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Marking Attendance of a student(s)
 // tag::attendancetests[]
-Marking attendance
+* Marking attendance
 
 . Update the attendance of a student or a `group` of students
 
