@@ -278,6 +278,12 @@ image::Request Sequence Diagram.png[width="800"]
 
 * **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
 ** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
+
+==== Proposed additions for v2.0:
+
+* Emailing an entire group/class through the CLI, using the grouping feature
+* Sending emails with attachments to students
+* Pre-written email templates that the user can just send out to students
 // end::email[]
 
 // tag::calendar[]
@@ -1151,6 +1157,7 @@ Use case ends.
 Use case ends.
 // end::calendarusecases[]
 
+// tag:: emailUseCase[]
 [discrete]
 === Use case: Email students
 
@@ -1180,6 +1187,7 @@ Use case ends.
 ** 2a1. ConTAct shows an error message.
 +
 Use case ends.
+// end:: emailUseCase[]
 
 [appendix]
 == Non Functional Requirements
@@ -1285,7 +1293,7 @@ Expected: Student display area updated to show only 2 students, all of them are 
 Expected: New group _grp1_ created with 2 students, both
 
 // tag::attendancetests[]
-=== Marking Attendance of a student/students
+=== Marking Attendance of a student(s)
 
 . Update the attendance of a student or a `group` of students
 
@@ -1295,17 +1303,17 @@ Expected: New group _grp1_ created with 2 students, both
 .. Test case: `attendance 2 at/0` +
    Expected: The attendance of the second student on the list is updated to ABSENT. Success message shown in the status bar.
 .. Test case: `attendance 3 at/123` +
-   Expected: The attendance of the third student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the third student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance 4 at/present` +
    Expected: The attendance of the fourth student on the list is updated to PRESENT. Success message shown in the status bar.
 .. Test case: `attendance 5 at/absent` +
    Expected: The attendance of the fifth student on the list is updated to ABSENT. Success message shown in the status bar.
 .. Test case: `attendance 6 at/not here` +
-   Expected: The attendance of the sixth student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the sixth student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance 0 at/1` +
    Expected: Invalid index. Error message is shown in the status bar.
 .. Test case: `attendance 0 at/` +
-   Expected: The attendance of the first student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the first student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance g/tut2 at/1` +
    Expected: The attendance of all students in `group` tut2 is updated to PRESENT. Success message shown in the status bar.
 .. Test case: `attendance g/tut1 at/0` +
@@ -1318,6 +1326,7 @@ Expected: New group _grp1_ created with 2 students, both
    Expected: Error message shown in status bar.
 // end::attendancetests[]
 
+// tag::emailManualTest[]
 === Emailing a student
 
 . Emailing a student
@@ -1335,3 +1344,4 @@ Expected: New group _grp1_ created with 2 students, both
    Expected: No student is emailed. Error details shown in status message.
 .. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
    Expected: Similar to previous
+// end::emailManualTest[]
