@@ -567,6 +567,8 @@ A `Group` allows tutors to manage students easily without typing a command for e
 It is designed to work with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
+Note: was previously called `Mark`
+
 ==== Implementation
 Each `Group` represents a collection of unique students, stored with a `Set<Student>` and exposes getter and setter methods, as well as methods for the manipulation of `Groups`.
 
@@ -1230,8 +1232,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a student
 
 . Deleting a student while all students are listed
@@ -1244,12 +1244,46 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Saving data
 
-. Dealing with missing/corrupted data files
+. Dealing with missing data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+.. Prerequisites: Delete ./data folder
+.. Launch the jar file +
+Expected: A set of sample data (students and calendar) is automatically generated
 
-_{ more test cases ... }_
+. Dealing with corrupt data files
+
+.. Prerequisites: Modify files inside ./data folder (random additions/deletions)
+.. Launch the jar file
+... Possible scenario: syntax is still preserved (unlikely) +
+Expected: Data still shows up but with missing/incorrect entries
+... Possible scenario: syntax is broken (extremely likely) +
+Expected: Application launches with a clean data folder (no entries)
+
+=== Groups
+. Creating groups
+.. Prerequisites: user is using the default data set
+.. Test case: `group find t/tut1` +
+Expected: 5 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 5 students) OR entering `group show` +
+Expected: Student display area updated to show only 5 students, all of them are tagged with "tut1"
+.. Test case: `group find dylan` +
+Expected: 1 student is grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 1 students) OR entering `group show` +
+Expected: Student display area updated to show only 1 student, called Dylan
+.. Test case: `group g/y2 find t/year2` +
+Expected: A new card appears on the left panel, (_y2_ 13 students), middle panel does not change
+... Clicking on the card (_y2_ 13 students) OR entering `group g/y2 show` +
+Expected: Student display area updated to show only 13 students, all of them are tagged with "year2"
+
+. Manipulating groups
+.. Prerequisites: user is using the default data set, have run `group g/y2 find t/year2` and `group g/t1 find t/tut1`
+.. Test case: `group join g/y2 g/t1` +
+Expected: 16 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 16 students) OR entering `group show` +
+Expected: Student display area updated to show only 16 students, all of them are tagged with "tut1" and/or "year2"
+.. Test case: `group and g/y2 g/t1` +
+Expected: 2 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 2 students) OR entering `group show` +
+Expected: Student display area updated to show only 2 students, all of them are tagged with both  "tut1" and "year2"
