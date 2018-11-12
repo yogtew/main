@@ -1107,9 +1107,9 @@ Use case ends.
 
 *MSS*
 
-1. User requests to email all students in a given group
-2. ConTAct fetches the emails of the students
-3. User types in the email header and body
+1. User requests to email a students at an index
+2. ConTAct fetches the email of the student
+3. User types in the email header and body after the index
 4. ConTAct sends out the email
 +
 Use case ends.
@@ -1117,7 +1117,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. The group(s) is invalid.
+* 1a. The index is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -1129,14 +1129,6 @@ Use case ends.
 +
 [none]
 ** 2a1. ConTAct shows an error message.
-+
-Use case ends.
-
-[none]
-* 4a. ConTAct cannot send out the email.
-+
-[none]
-** 4a1. ConTAct shows an error message.
 +
 Use case ends.
 
