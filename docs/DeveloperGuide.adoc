@@ -722,6 +722,22 @@ For displaying of the data a donut graph is to display the 3 main attendance sta
 image::GraphMockup.png[width="500"]
 // end::graph[]
 
+==== Use Cases:
+A tutor can graph and understand the attendance information of students in various tags or names.
+
+Original Use Case:
+
+ find alan
+ <see attendance record of alan>
+ find bob
+ <see attendance record of alan>
+
+Using graphs:
+
+ graph alan bob
+ <graph of attendance statistics is displayed>
+ graph t/cs2103
+ <graph of attendance statistics of all students with the cs2103 tag is displayed>
 
 === Logging
 
@@ -1291,6 +1307,24 @@ _{ more test cases ... }_
 .. Other incorrect commands to try: `attendance`, `attendance a/tut2 b/1`, `attendance at/1`, `attendance x at/0` (where x is larger than the size of the list) +
    Expected: Error message shown in status bar.
 // end::attendancetests[]
+
+// tag::graphtests[]
+=== Displaying the attendance graph of students
+
+. Display the attendance graph of a student or a `tag` of students
+
+.. Prerequisites: The student must exist on the conTAct list/the `tag` of students must exist. If the student does not exist, add the student first. If the `tag` does not exist, create a `tag` of students with the existing required tag.
+.. Test case: `graph alan` +
+   Expected: The attendance graph of only Alan is shown.
+.. Test case: `graph alan von` +
+   Expected: The attendance graph of Alan and Von is shown.
+.. Test case: `graph t/student` +
+   Expected: The attendance graph of all students with the tag "student" is shown.
+.. Test case: `graph abcxyz` +
+   Expected: The attendance graph is not updated as student does not exist.
+.. Other incorrect commands to try: `attendance` +
+   Expected: Error message shown in status bar.
+// end::graphtests[]
 
 === Saving data
 
