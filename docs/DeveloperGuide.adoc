@@ -163,7 +163,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `StatusBarFooter`, `EventListPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `EventListPanel`, `GroupListPanel`, `GraphPanel`, `StatusBarFooter`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -206,7 +206,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * stores the Calendar data.
-* exposes an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Student>` and `ObservableList<Event>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -342,7 +342,7 @@ image::EventStorageSequenceDiagram.png[width="800"]
 The diagram below shows how the schedule command is parsed in the Logic component. Here again, `EVENT` is the event as specified by the input parameters.
 
 .Logic diagram for `schedule EVENT` command
-image::ScheduleEventSdForLogic.png[width="800"]
+image::ScheduleSequenceDiagram.png[width="800"]
 
 ===== Cancel
 
@@ -413,26 +413,14 @@ interacts as expected with the undo/redo command as well.
 ==== Aspect: How to display events
 * **Alternative 1 (current choice):** Simply display all events, and scroll to nearest upcoming event.
 ** Pros: Allows the user to see the entire list of events, past and future.
-** Cons: Will definitely get cluttered over time.
 
 * **Alternative 2:** Display upcoming events, and keep past events in a "history" tab.
 ** Pros: Is a compromise between the alternative 1 and 3.
-** Cons: May make the GUI itself cluttered.
+** Cons: Will distract from the focus of the events.
 
 * **Alternative 3:** Delete events once they are in the past.
 ** Pros: Keeps things neat and in a to-do fashion.
 ** Cons: Takes control away from the user to handle their own events.
-
-===== Aspect: How schedule handles the event model and storage
-
-* **Alternative 1 (current choice):** Stores the list of events within the same model as the addressbook, but keep
-storage separate.
-** Pros: Will be consistent with the implementation of the addressbook, while also ensuring that the storage component
-is distinct.
-
-* **Alternative 2:** Store the list of events as its own separate model and separate storage.
-** Pros: Will not interfere greatly with the implementation of the addressbook itself
-** Cons: Will be detached from the original architecture
 // end::calendar[]
 
 // tag::attendance[]
@@ -707,6 +695,60 @@ I briefly considered a natural language parser but decided that it was not worth
 
 
 // end::groupfeature[]
+
+// tag::graph[]
+=== Graph feature
+==== Current implementation - Graphing attendance of a group of students
+
+The graph feature leverages on d3 graph for the responsiveness and asthetics of displaying data.
+
+This feature uses query strings to make server-client communication to draw and display the graph data. This is made so that it can be compatible with exporting of data to other applications in the near future. Future iterations of this feature can be made to RESTful API for better compatibilty with 3rd party applications
+
+The graph command get the set of users `Set<Student>` to query for the attendance status and then returns an array of data to be graphed on a d3 graph.
+
+Commands relating to the manipulation of the Set data of students are parsed by `GraphCommandParser`, which then returns the appropriate graph to be shown.
+
+This architecture is planned such that the feature has low coupling which allows for future integration with 3rd party applications are easy.
+
+The commands adhere to the following pattern:
+
+ graph KEYWORD [KEYWORDS]`
+or
+ graph t\TAGS`
+
+==== Sequence Diagram
+The sequence diagram below shows how the components interact for the scenario where the user issues the graph command.
+
+.High level Sequence Diagram for `graph` command
+image::GraphSD.png[width="800"]
+
+.Sequence Diagram for `graph` command
+image::GraphCI.png[width="800"]
+
+==== Design Considerations:
+
+For displaying of the data a donut graph is to display the 3 main attendance states as mentioned in AttendanceEnum class. The donut graph allows more room to display more data points in future should there be a need to as well. The labels used instead of a legend as legend can be confusing when there are many colors/data available on the graph as well.
+
+.Rendering of the Attendance Graph
+image::GraphMockup.png[width="500"]
+// end::graph[]
+
+==== Use Cases:
+A tutor can graph and understand the attendance information of students in various tags or names.
+
+Original Use Case:
+
+ find alan
+ <see attendance record of alan>
+ find bob
+ <see attendance record of alan>
+
+Using graphs:
+
+ graph alan bob
+ <graph of attendance statistics is displayed>
+ graph t/cs2103
+ <graph of attendance statistics of all students with the cs2103 tag is displayed>
 
 === Logging
 
@@ -1258,6 +1300,52 @@ Expected: Data still shows up but with missing/incorrect entries
 ... Possible scenario: syntax is broken (extremely likely) +
 Expected: Application launches with a clean data folder (no entries)
 
+// tag::calendartests[]
+=== Scheduling of an event
+
+. Scheduling an event in the event list
+.. Test case: `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Acceptance testing` +
+   Expected: The event with the specified details is scheduled into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case: `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Testing other programs` +
+   Expected: No event scheduled. Error message denoting duplicate event (if previous test case has run) +
+.. Test case: `schedule event/Tutorial date/16-11-2018 start/12:00 end/13:00` +
+   Expected: The event with the specified details (without description) is scheduled into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case: `schedule event/Consultation date/32-11-2018 start/16:00 end/18:00 descr/With Bob` +
+   Expected: No event scheduled. Error message denoting invalid date +
+.. Test case: `schedule event/CS2103 Tutorial date/15-11-2018 end/12:00 descr/Content review` +
+  Expected: No event scheduled. Error message denoting missing parameter. +
+.. Test case: `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Acceptance testing` +
+   Expected: The event with the specified details are scheduled into the calendar. +
+
+. Cancelling an event in the event list
+.. Prerequisites: The events must exist in the calendar.
+.. Test case: `cancel event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00` +
+   Expected: The event with the specified details is deleted from the calendar. Details of the cancelled event are shown. Timestamp in the status bar is updated. +
+.. Test case: `cancel event/tutorial date/16-11-2018 start/25:00 end/18:00` +
+   Expected: Error message denoting invalid time. Calendar remains the same. +
+.. Other incorrect cancel commands to try: `cancel`, `cancel e` (where e is not in the calendar)
+   Expected: Error details shown.
+
+. Undoing and Redoing commands between the calendar and address book
+.. Prerequisites: Multiple students in the student list, and the following test cases are carried out in order
+.. Test case (set up): `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Acceptance testing` +
+   Expected: The event with the specified details is scheduled into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case (set up): `delete 1` +
+   Expected: First student is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. +
+.. Test case: `undo` +
+   Expected: Deleted student is added back into the list. Undo success is shown. Timestamp in the status bar is updated. +
+.. Test case: `undo` +
+   Expected: The event added in the first test case is deleted from the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case: `redo` +
+   Expected: The event deleted in the previous `undo` is scheduled back into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Incorrect commands to try: `undo` when no changes have been made, `redo` when the previous command was not an `undo` and had changed the calendar/address book.
+   Expected: Error details shown.
+
+. Clearing the calendar and address book
+.. Test case: `clear`
+   Expected: The calendar and address book are cleared.
+// end::calendartests[]
+
 === Groups
 . Creating groups
 .. Prerequisites: user is using the default data set
@@ -1292,8 +1380,9 @@ Expected: Student display area updated to show only 2 students, all of them are 
 ... `group g/grp1 and g/y2 g/t1` +
 Expected: New group _grp1_ created with 2 students
 
-// tag::attendancetests[]
 === Marking Attendance of a student(s)
+// tag::attendancetests[]
+* Marking attendance
 
 . Update the attendance of a student or a `group` of students
 
@@ -1326,15 +1415,32 @@ Expected: New group _grp1_ created with 2 students
    Expected: Error message shown in status bar.
 // end::attendancetests[]
 
-// tag::emailManualTest[]
-=== Emailing a student
+// tag::graphtests[]
+=== Displaying the attendance graph of students
 
+. Display the attendance graph of a student or a `tag` of students
+
+.. Prerequisites: The student must exist on the conTAct list/the `tag` of students must exist. If the student does not exist, add the student first. If the `tag` does not exist, create a `tag` of students with the existing required tag.
+.. Test case: `graph alan` +
+   Expected: The attendance graph of only Alan is shown.
+.. Test case: `graph alan von` +
+   Expected: The attendance graph of Alan and Von is shown.
+.. Test case: `graph t/student` +
+   Expected: The attendance graph of all students with the tag "student" is shown.
+.. Test case: `graph abcxyz` +
+   Expected: The attendance graph is not updated as student does not exist.
+.. Other incorrect commands to try: `attendance` +
+   Expected: Error message shown in status bar.
+// end::graphtests[]
+
+=== Emailing a student
+// tag::emailManualTest[]
 . Emailing a student
 
 .. Prerequisites: The student must exist on the list, at the correct index. If student does not exist yet, add student first.
 .. Test case: `email 1 s/Attendance b/Your attendance is good` +
    Expected: Email sent to student at index '1' and success message shown in status message.
-.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!` +
+.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!!` +
    Expected: Email sent to student at index '1' and success message shown in status message.
 .. Test case: `email 0 s/Attendance b/Your attendance is good!` +
    Expected: No student is emailed. Error details shown in status message.
@@ -1342,6 +1448,6 @@ Expected: New group _grp1_ created with 2 students
    Expected: No student is emailed. Error details shown in status message.
 .. Test case: `email 1 x/subject y/body` +
    Expected: No student is emailed. Error details shown in status message.
-.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
+.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size) +
    Expected: Similar to previous
 // end::emailManualTest[]
