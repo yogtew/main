@@ -971,7 +971,7 @@ Use case ends.
 +
 [none]
 ** 3a1. User requests to mark the attendance of a specified group
-** 3a2. User creates a group for that 
+** 3a2. User creates a group for that
 ** 3a3. The user inputs the attendance of the group
 ** 3a4. ConTAct displays the resulting list with the updated attendance
 +
