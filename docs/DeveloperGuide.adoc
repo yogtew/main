@@ -236,33 +236,51 @@ This section describes some noteworthy details on how certain features are imple
 === Email feature
 ==== Current implementation - Emailing a single student
 
-The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. This API is a RESTful API, made for server-client communication. Since the Outlook mail API is a RESTful API, this feature uses the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message) to send the email specified in the user-input to the student specified in the user-input.
+The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account.
+
+This API is a RESTful API, made for server-client communication. Since the Outlook mail API is a RESTful API, this feature uses the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message) to send the email specified in the user-input to the student specified in the user-input.
+
+.Component interactions for Email command
+image::Component Interactions Email.png[width="800"]
+
 The email command itself takes a few parameters:
 
-* `Index`: Index number of student in list. Only positive numbers present in list are valid.(`i/`)
+* `Index`: Index number of student in list. Only positive numbers present in list are valid.
 * `Subject`: Subject of email to be sent, valid if not an empty string.(`s/`)
 * `Body`: Subject of email to be sent, valid if not an empty string.(`b/`)
 
-e.g `email i/2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
+e.g `email 2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-When the user inputs the email in the CLI, the app fetches the email address of the student `index` specified and the subject and body of the email specified. This is converted to JSON, and passed as the `body` of the 'POST' request to Outlook.
+When the user inputs the email command in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted.
 
-The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the student whose index is specified.
+The subject and body are converted to JSON, and passed as the `body` of the 'POST' request to Outlook, along with the access token that is also retrieved through a series of requests to the server.
 
-.Component interactions for email command
-image::EmailCommand Sequence Diagram.png[width="800"]
+.Sequence Diagram for Email command
+image::Sequence Diagram LOGIC.png[width="1200"]
 
-In the 'POST' request, a access token is required in order to be able to communicate to the web server, which is `Outlook` in this case. To get this access token from Outlook, a authorization code must be used, which is also provided when applicatoin is registered and authorized under Outlook. Only with this access token, can the email that is created be sent to Outlook as a 'POST' request.
+The `CommandResult` object that is returned by the email command lets the user know that the email address has been successfully send to the student whose index is specified.
 
-.App interactions with Outlook for email command
-image::UML REST API.png[width="400"]
+**Retrieving access token for the request:** +
 
-==== Alternative implementations:
+When the user uses the command, he/she is redirected to a browser window of Outlook's sign in page. Once they sign in, they will be asked for their permission for the application to send e-mails on their behalf. Once they accept and give consent, the response is sent from the server back to the application, containing the authorization code.
 
-Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
+This authorization code is then extracted from the response and used to request for the access token, which is what is ultimately needed in order to interact with the server and send the mail.
+
+Using the authorization code in the request, the access token is retrieved. Once the access token is extracted from the response and available for use, the actual POST request to send the email is made.
+
+.Within the App interactions and the App's interactions with Outlook
+image::Request Sequence Diagram.png[width="800"]
+
+==== Design Considerations:
+
+* **GUI design:** Using the browser panel to display the email drafting page of Outlook
+** Pros: Gives the user a more visual aid in drafting their message, making it easy to type longer messages
+
+* **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
+** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
 // end::email[]
 
-//tag::calendar[]
+// tag::calendar[]
 === Calendar feature
 ==== Current Implementation
 
@@ -1121,9 +1139,9 @@ Use case ends.
 
 *MSS*
 
-1. User requests to email all students in a given group
-2. ConTAct fetches the emails of the students
-3. User types in the email header and body
+1. User requests to email a students at an index
+2. ConTAct fetches the email of the student
+3. User types in the email header and body after the index
 4. ConTAct sends out the email
 +
 Use case ends.
@@ -1131,7 +1149,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. The group(s) is invalid.
+* 1a. The index is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
@@ -1143,14 +1161,6 @@ Use case ends.
 +
 [none]
 ** 2a1. ConTAct shows an error message.
-+
-Use case ends.
-
-[none]
-* 4a. ConTAct cannot send out the email.
-+
-[none]
-** 4a1. ConTAct shows an error message.
 +
 Use case ends.
 
@@ -1217,3 +1227,21 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Emailing a student
+
+. Emailing a student
+
+.. Prerequisites: The student must exist on the list, at the correct index. If student does not exist yet, add student first.
+.. Test case: `email 1 s/Attendance b/Your attendance is good` +
+   Expected: Email sent to student at index '1' and success message shown in status message.
+.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!` +
+   Expected: Email sent to student at index '1' and success message shown in status message.
+.. Test case: `email 0 s/Attendance b/Your attendance is good!` +
+   Expected: No student is emailed. Error details shown in status message.
+.. Test case: `email 1 s/ b/` +
+   Expected: No student is emailed. Error details shown in status message.
+.. Test case: `email 1 x/subject y/body` +
+   Expected: No student is emailed. Error details shown in status message.
+.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
+   Expected: Similar to previous
