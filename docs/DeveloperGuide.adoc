@@ -1265,9 +1265,13 @@ Expected: Student display area updated to show only 1 student, called Dylan
 Expected: A new card appears on the left panel, (_y2_ 13 students), middle panel does not change
 ... Clicking on the card (_y2_ 13 students) OR entering `group g/y2 show` +
 Expected: Student display area updated to show only 13 students, all of them are tagged with "year2"
+.. Test case: `group g/y2@ find t/year2` +
+Expected: Invalid group name message shown.
+.. Test case: `group g/y2 find` +
+Expected: Invalid command format message shown.
 
 . Manipulating groups
-.. Prerequisites: user is using the default data set, have run `group g/y2 find t/year2` and `group g/t1 find t/tut1`
+.. Prerequisites: user is using the default data set, and ran these commands: `group g/y2 find t/year2`, `group g/t1 find t/tut1`
 .. Test case: `group join g/y2 g/t1` +
 Expected: 16 students are grouped under _default_, shown in the leftmost panel of the GUI.
 ... Clicking on the card (_default_ 16 students) OR entering `group show` +
@@ -1276,6 +1280,9 @@ Expected: Student display area updated to show only 16 students, all of them are
 Expected: 2 students are grouped under _default_, shown in the leftmost panel of the GUI.
 ... Clicking on the card (_default_ 2 students) OR entering `group show` +
 Expected: Student display area updated to show only 2 students, all of them are tagged with both  "tut1" and "year2"
+.. Variations of the above:
+... `group g/grp1 and g/y2 g/t1` +
+Expected: New group _grp1_ created with 2 students, both
 
 // tag::attendancetests[]
 === Marking Attendance of a student/students
