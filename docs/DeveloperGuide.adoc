@@ -260,6 +260,7 @@ image::UML REST API.png[width="400"]
 ==== Alternative implementations:
 
 Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
+// end::email[]
 
 //tag::calendar[]
 === Calendar feature
@@ -394,7 +395,7 @@ interacts as expected with the undo/redo command as well.
 ** Pros: Is a compromise between the alternative 1 and 3.
 ** Cons: May make the GUI itself cluttered.
 
-* **Alternative 2:** Delete events once they are in the past.
+* **Alternative 3:** Delete events once they are in the past.
 ** Pros: Keeps things neat and in a to-do fashion.
 ** Cons: Takes control away from the user to handle their own events.
 
@@ -416,12 +417,9 @@ is distinct.
 
 The `attendance` command is a completely new feature that allows the user to mark the attendance of students
 within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
-storage of the other commands.
-To facilitate this command, a new data type is introduced: the Attendance class.
-The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class
-uses another class called the AttendanceEnum class.
-This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class.
-The attendance class has an overloaded constructor which takes in different parameters.
+storage of the other commands.To facilitate this command, a new data type is introduced: the Attendance class. The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class uses another class called the AttendanceEnum class. This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class.
+
+* The attendance class has an overloaded constructor which takes in different parameters.
 
 Field of first constructor:
 
@@ -433,22 +431,23 @@ Field of second constructor:
 
 Currently, the main operation is the `attendance` command, and it is implemented as such:
 
-* `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
+* `attendance INDEX at/ATTENDANCE`
 
-The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such:
+The `attendance` command may also be used with the `group` command to update the attendance of multiple students at the same time. It is implemented as such:
 
-* `attendance PREFIX_MARK/markName PREFIX_ATTENDANCE/attendance`
+* `attendance PREFIX_GROUP/groupName PREFIX_ATTENDANCE/attendance`
 
 Currently, this operation exists within the logic component of ConTAct.
 
 Below is an example of how the attendance command behaves:
 
 * `attendance 1 at/0`
-* `attendance m/tutorial1 at/1`
+* `attendance g/tutorial1 at/1`
 
 This will simply specify the attendance field of the Student/Students with the specified attendance and store it similar to how the addressbook stores a student.
 Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
 
+==== Sequence Diagrams
 The sequence diagram below shows how the components interact for the scenario where the user issues the attendance command.
 
 .Component interactions for `attendance` command (part1)
@@ -465,6 +464,22 @@ The diagram below shows how the `attendance` command is parsed in the Logic comp
 
 .Logic Diagram for `attendance` command
 image::attendance_diagram_logic.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Updating attendance of student
+* **Alternative 1 (current choice):** Update using index and mark
+** Pros: Allows flexibility for the user to either update attendance individually or collectively using mark.
+** Cons: Slightly problematic to implement parser for the same command with two differing formats.
+
+* **Alternative 2:** Update only using index/mark
+** Pros: Easier to implement.
+** Cons: If only implemented using index, user may face difficulty in updating attendance of a large number of students. If only mark is implemented, user can only update attendance of a mark and not of an individual student.
+
+==== Proposed addition for v2.0
+* Store attendance of each student in an array according to weeks so that the user has a track of the attendance of each student for each of its classes according to week.
+* Proposed new command format: `attendance INDEX|m/MARK_NAME w/WEEK_NUMBER at/ATTENDANCE`
+// end::attendance[]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -546,36 +561,47 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::markfeature[]
-=== Mark feature
-Marks allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
+// tag::groupfeature[]
+=== Group feature
+Groups allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
 It is designed to work well with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
 ==== Implementation
-`Mark` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Marks`.
+`Group` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Groups`.
 
-Marks are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Mark` for commands.
+image::GroupClassDiagram.png[]
 
-Commands relating to the creation and manipulations of Marks are parsed by `MarkCommandParser`, which then returns the appropriate `MarkSubCommand` to be executed.
+Groups are maintained by `ModelManager`, which is responsible for updating, storing and providing the correct `Group` for commands.
+
+Commands relating to the creation and manipulations of Groups are parsed by `GroupCommandParser`, which then returns the appropriate `GroupSubCommand` to be executed.
 It is designed in this way to be easily extensible in the future as more sub-commands are added.
 
 The commands adhere to the following pattern:
 
- mark [m/m1] <subcommand> [m/m2] [m/m3]`
+ group [g/m1] <subcommand> <arguments>`
 
-The arguments `m/m1`, `m/m2`, `m/m3` may be optional in some cases and default to `Mark.DEFAULT_NAME`
+The arguments `g/m1` may be optional in some cases and default to `Group.DEFAULT_NAME`
 
 ==== Sub-commands
-* `find [name|tag]` -- marks Students matched by find command
-* `join m/m2 [m/m3]` -- returns union of m2 and m3
-* `and m/m2 [m/m3]` -- returns intersection of m2 and m3
-* `show` -- shows marked Students in GUI
+* `find name` -- groups Students matched by name
+* `find t/tag...` -- groups Students matched by tags
+* `join g/m2 [g/m3]` -- returns union of m2 and m3
+* `and g/m2 [g/m3]` -- returns intersection of m2 and m3
+* `show` -- shows grouped Students in GUI
 
-==== Planned Sub-commands (1.4)
-* `tag [tagName]` -- tags marked Students with tagName
-* `attd [0|1]` -- marks attendance of marked Students
-* `email [emailText]` -- sends email to marked Students
+image::GroupCommandClassDiagram.png[]
+
+==== Planned Sub-commands (2.0)
+* `index <indexes>` -- groups students by index, separated by space, e.g. `group index 1 3 4 5`
+
+==== Parser Flowchart
+
+image::GroupCommandParserFlowchart.png[]
+
+==== Execution
+
+image::GroupCommandSeqDiagram.png[]
 
 ==== Use Cases:
 Suppose a tutor wants to mark the attendance of all students from tutorial groups W13 and W14.
@@ -595,26 +621,51 @@ Instead of:
 
 The tutor can type in:
 
- mark m/a find t/W13` // adds students tagged with "W13" to mark m/a
- mark m/b find t/W14` // adds students tagged with "W14" to mark m/b
- mark m/res join m/a m/b` // merges students in m/a and m/b to mark m/res
- attendance m/res at/Present` // updates the marked students' attendance
+ group g/a find t/W13` // adds students tagged with "W13" to group g/a
+ group g/b find t/W14` // adds students tagged with "W14" to group g/b
+ group g/res join g/a g/b` // merges students in g/a and g/b to group g/res
+ attendance g/res at/Present` // updates the grouped students' attendance
 
 Suppose the tutor then wants to send an email to the aforementioned group of students.
 They can do that with a simple command:
 
- email m/res b/[emailText]
+ email g/res b/[emailText]
+
+==== Tracking students
+
+The application is implemented with immutable `Student` objects.
+As a result, when a student is edited, a new `Student` instance is created with the updated fields and stored in the `AddressBook`.
+This causes the stored `Student` objects in existing Groups to be outdated, and attempts to use those objects will lead to a crash.
+
+To solve this issue, after every command where student(s) are changed, the stored Groups will be updated as depicted in the activity diagram below.
+
+image::UpdateStudentsActivityDiagram.png[]
 
 ==== Design considerations
+===== Aspect: Data structure for storing Students
 
-// end::markfeature[]
+* HashSet (Current)
+** Pros: Built in duplicates prevention, easier implementation of methods, faster
+* ArrayList
+** Pros: Order is preserved, able to convert to ObservableList easily
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+Ordering was not as important as duplicates prevention and the fact that many of the methods are designed for a Set.
+Efficiency is a nice bonus but not significant as the expected number of Student entries is well below the magnitude where the difference in speed is significant.
 
-_{Explain here how the data encryption feature will be implemented}_
+===== Aspect: Command format
 
-// end::dataencryption[]
+* Separate sub Commands
+** separate commands into `group-find`, `group-show` etc.
+** Pros: Easy parsing, easy to understand
+
+* Single command (Current)
+** single root command `group` with subcommands `group find`, `group show`
+** Pros: Usability, minimize code duplication
+
+
+
+
+// end::groupfeature[]
 
 === Logging
 
@@ -926,69 +977,64 @@ Use case ends.
 +
 Use case ends.
 
-[discrete]
-=== Use case: Sort students
-
-*MSS*
-
-1. User requests to sort the students according to a parameter
-2. ConTAct displays the list of students in sorted order
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 1a. The parameter is invalid.
-+
-[none]
-** 1a1. ConTAct shows an error message.
-+
-Use case ends.
-
-[none]
-* 2a. The list is empty
-+
-[none]
-** 2a1. ConTAct shows an error message.
-+
-Use case ends.
-
+// tag::attendanceusecases[]
 [discrete]
 === Use case: Mark attendance
 
 *MSS*
 
-1. User requests to mark the attendance of a specified group
-2. ConTAct displays the list of students in that group
-3. The user inputs the attendance of the group
-4. ConTAct displays the resulting list
+1. User requests to mark the attendance of a student
+2. The user inputs the attendance of the student
+3. ConTAct displays the resulting student with the updated attendance
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. The group is invalid.
+* 1a. The formatting is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
 +
 Use case ends.
-
 [none]
-* 2a. The list is empty
-+
+* 2a. The user types in an incorrect input.
 [none]
 ** 2a1. ConTAct shows an error message.
 +
 Use case ends.
+* 3a. User wants to mark attendance of a group.
++
 [none]
-* 3a. The user types in an incorrect input.
-[none]
-** 3a1. ConTAct shows an error message.
+** 3a1. User requests to mark the attendance of a specified group
+** 3a2. User creates a group for that
+** 3a3. The user inputs the attendance of the group
+** 3a4. ConTAct displays the resulting list with the updated attendance
 +
 Use case ends.
+** *Extensions*
+[none]
+*** 1b. The group is invalid.
++
+[none]
+**** 1b1. ConTAct shows an error message.
++
+Use case ends.
+[none]
+*** 2b. The group is empty
++
+[none]
+**** 2b1. ConTAct shows an error message.
++
+Use case ends.
+[none]
+*** 3b. The user types in an incorrect input.
+[none]
+**** 3b1. ConTAct shows an error message.
++
+Use case ends.
+// end::attendanceusecases[]
 
 [discrete]
 === Use case: Delete students
@@ -1125,23 +1171,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing

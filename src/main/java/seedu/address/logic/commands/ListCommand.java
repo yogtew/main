@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENT;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
@@ -19,7 +18,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        model.resetView();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

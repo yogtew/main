@@ -28,6 +28,12 @@ public class TypicalEvents {
     public static final Event INTERVIEW = new EventBuilder().withEventName("Interview")
             .withDate("15-10-2018").withStartTime("15:00").withEndTime("15:30")
             .withDescription("At Google HQ").build();
+    public static final Event EXAM = new EventBuilder().withEventName("Exam")
+            .withDate("12-12-2018").withStartTime("14:00").withEndTime("16:00")
+            .withDescription("MPSH1").build();
+    public static final Event MEETING = new EventBuilder().withEventName("Meeting")
+            .withDate("11-11-2018").withStartTime("08:00").withEndTime("12:30")
+            .withDescription("At COM1").build();
 
     // Events not present in the Calendar
     public static final Event EVENT_NOT_PRESENT = new EventBuilder().withEventName("EventNotPresent")
@@ -69,6 +75,8 @@ public class TypicalEvents {
     }
 
     public static List<Event> getTypicalEvents() {
-        return new ArrayList<>(Arrays.asList(BIRTHDAY, INTERVIEW, CONSULTATION, TUTORIAL));
+        ArrayList<Event> list = new ArrayList<>(Arrays.asList(BIRTHDAY, MEETING, INTERVIEW, EXAM));
+        list.sort(Event.COMPARATOR);
+        return list;
     }
 }

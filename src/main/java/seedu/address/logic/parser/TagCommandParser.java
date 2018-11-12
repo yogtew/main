@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MARK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommandMode;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -27,9 +27,9 @@ public class TagCommandParser implements Parser<TagCommand> {
     @Override
     public TagCommand parse(String args) throws ParseException {
         /*
-        Usage: tag add|set|del index|m/mark [t/tagName...]
+        Usage: tag add|set|del index|g/group [t/tagName...]
         */
-        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_MARK, PREFIX_TAG);
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_GROUP, PREFIX_TAG);
         Set<Tag> tags;
         try {
             tags = argMultiMap.getAllValues(PREFIX_TAG).stream().map(Tag::new).collect(Collectors.toSet());
@@ -53,13 +53,13 @@ public class TagCommandParser implements Parser<TagCommand> {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE));
         }
 
-        if (argMultiMap.getAllValues(PREFIX_MARK).size() == 1) {
+        if (argMultiMap.getAllValues(PREFIX_GROUP).size() == 1) {
             if (splitArgs.length == 2) {
                 throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                         TagCommand.MESSAGE_USAGE));
             }
-            String markName = checkAlias(argMultiMap.getValue(PREFIX_MARK).orElse(Mark.DEFAULT_NAME));
-            return new TagCommand(markName, tags, mode);
+            String groupName = checkAlias(argMultiMap.getValue(PREFIX_GROUP).orElse(Group.DEFAULT_NAME));
+            return new TagCommand(groupName, tags, mode);
         } else if (splitArgs.length == 1) {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     TagCommand.MESSAGE_USAGE));
@@ -76,14 +76,14 @@ public class TagCommandParser implements Parser<TagCommand> {
     }
 
     /**
-     * checks if the mark name is valid otherwise throws an exception
+     * checks if the group name is valid otherwise throws an exception
      * @param name
      * @return
      * @throws ParseException
      */
     private String checkAlias(String name) throws ParseException {
-        if (!Mark.isValidMarkName(name)) {
-            throw new ParseException(Mark.MARK_NAME_CONSTRAINTS);
+        if (!Group.isValidGroupName(name)) {
+            throw new ParseException(Group.GROUP_NAME_CONSTRAINTS);
         }
         return name;
     }
