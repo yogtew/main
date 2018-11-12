@@ -165,7 +165,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         } else {
-            assertSelectedCardUnchanged();
+            assertSelectedStudentCardUnchanged();
         }
 
         assertCommandBoxShowsDefaultStyle();
@@ -187,7 +187,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

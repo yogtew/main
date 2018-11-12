@@ -47,18 +47,18 @@
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+          <VBox fx:id="groupList" minWidth="120" prefWidth="120" SplitPane.resizableWithParent="false">
+            <padding>
+              <Insets top="10" right="10" bottom="10" left="10" />
+            </padding>
+            <StackPane fx:id="groupListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
+
           <VBox fx:id="studentList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
             <StackPane fx:id="studentListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-          </VBox>
-
-          <VBox fx:id="markList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
-            <StackPane fx:id="markListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
           <VBox fx:id="eventList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">

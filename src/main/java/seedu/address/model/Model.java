@@ -4,8 +4,9 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.logic.commands.group.GroupNotFoundException;
 import seedu.address.model.event.Event;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 
 /**
@@ -76,11 +77,15 @@ public interface Model {
      */
     void commitAddressBook();
 
-    Mark getMark(String markName);
+    Group getGroup(String groupName) throws GroupNotFoundException;
 
-    void setMark(String markName, Mark mark);
+    void setGroup(String groupName, Group group);
 
-    ObservableList<Mark> getFilteredMarkList();
+    ObservableList<Group> getFilteredGroupList();
+
+    void setGroupPredicate(String groupName) throws GroupNotFoundException;
+
+    void resetView ();
 
     /** Returns the Calendar */
     ReadOnlyCalendar getCalendar();

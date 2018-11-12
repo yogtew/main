@@ -16,12 +16,13 @@ import org.junit.rules.ExpectedException;
 import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.group.GroupNotFoundException;
 import seedu.address.model.Calendar;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyCalendar;
 import seedu.address.model.event.Event;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 import seedu.address.testutil.EventBuilder;
 
@@ -233,17 +234,27 @@ public class ScheduleCommandTest {
         }
 
         @Override
-        public Mark getMark(String markName) {
+        public Group getGroup(String groupName) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setMark(String markName, Mark mark) {
+        public void setGroup(String groupName, Group group) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Mark> getFilteredMarkList() {
+        public ObservableList<Group> getFilteredGroupList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setGroupPredicate(String groupName) throws GroupNotFoundException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void resetView() {
             throw new AssertionError("This method should not be called.");
         }
     }

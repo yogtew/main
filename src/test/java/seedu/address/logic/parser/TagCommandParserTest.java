@@ -11,7 +11,7 @@ import org.junit.Test;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.TagCommand;
 import seedu.address.logic.commands.TagCommandMode;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 
 public class TagCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
@@ -20,9 +20,9 @@ public class TagCommandParserTest {
     private static final String VALID_SET_COMMAND = "set ";
     private static final String VALID_DEL_COMMAND = "del ";
     private static final String INVALID_COMMAND = "asd ";
-    private static final String VALID_MARK = "m/tut1 ";
-    private static final String VALID_MARK_NAME = "tut1";
-    private static final String INVALID_MARK = "m/tut@ ";
+    private static final String VALID_GROUP = "g/tut1 ";
+    private static final String VALID_GROUP_NAME = "tut1";
+    private static final String INVALID_GROUP = "g/tut@ ";
 
     private TagCommandParser parser = new TagCommandParser();
 
@@ -51,13 +51,13 @@ public class TagCommandParserTest {
         // invalid prefix being parsed as preamble
         assertParseFailure(parser, VALID_ADD_COMMAND + "1 i/ string", MESSAGE_INVALID_FORMAT);
 
-        // ======= Mark ========
+        // ======= Group ========
 
-        // invalid mark
-        assertParseFailure(parser, VALID_ADD_COMMAND + INVALID_MARK, Mark.MARK_NAME_CONSTRAINTS);
+        // invalid group
+        assertParseFailure(parser, VALID_ADD_COMMAND + INVALID_GROUP, Group.GROUP_NAME_CONSTRAINTS);
 
-        // valid mark but random stuff in preamble
-        assertParseFailure(parser, VALID_ADD_COMMAND + "asd " + VALID_MARK, MESSAGE_INVALID_FORMAT);
+        // valid group but random stuff in preamble
+        assertParseFailure(parser, VALID_ADD_COMMAND + "asd " + VALID_GROUP, MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -74,20 +74,20 @@ public class TagCommandParserTest {
         assertParseSuccess(parser, VALID_ADD_COMMAND + "1",
                 new TagCommand(Index.fromOneBased(1), new HashSet<>(), TagCommandMode.ADD));
 
-        assertParseSuccess(parser, VALID_ADD_COMMAND + VALID_MARK,
-                new TagCommand(VALID_MARK_NAME, new HashSet<>(), TagCommandMode.ADD));
+        assertParseSuccess(parser, VALID_ADD_COMMAND + VALID_GROUP,
+                new TagCommand(VALID_GROUP_NAME, new HashSet<>(), TagCommandMode.ADD));
 
         assertParseSuccess(parser, VALID_SET_COMMAND + "1",
                 new TagCommand(Index.fromOneBased(1), new HashSet<>(), TagCommandMode.SET));
 
-        assertParseSuccess(parser, VALID_SET_COMMAND + VALID_MARK,
-                new TagCommand(VALID_MARK_NAME, new HashSet<>(), TagCommandMode.SET));
+        assertParseSuccess(parser, VALID_SET_COMMAND + VALID_GROUP,
+                new TagCommand(VALID_GROUP_NAME, new HashSet<>(), TagCommandMode.SET));
 
         assertParseSuccess(parser, VALID_DEL_COMMAND + "1",
                 new TagCommand(Index.fromOneBased(1), new HashSet<>(), TagCommandMode.DEL));
 
-        assertParseSuccess(parser, VALID_DEL_COMMAND + VALID_MARK,
-                new TagCommand(VALID_MARK_NAME, new HashSet<>(), TagCommandMode.DEL));
+        assertParseSuccess(parser, VALID_DEL_COMMAND + VALID_GROUP,
+                new TagCommand(VALID_GROUP_NAME, new HashSet<>(), TagCommandMode.DEL));
     }
 
 
