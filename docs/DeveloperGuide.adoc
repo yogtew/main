@@ -281,7 +281,7 @@ image::Request Sequence Diagram.png[width="800"]
 
 ==== Proposed additions for v2.0:
 
-* Emailing an entired group/class through the CLI, using the grouping feature
+* Emailing an entire group/class through the CLI, using the grouping feature
 * Sending emails with attachments to students
 * Pre-written email templates that the user can just send out to students
 // end::email[]
