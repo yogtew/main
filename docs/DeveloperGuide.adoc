@@ -163,7 +163,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `StatusBarFooter`, `EventListPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `EventListPanel`, `GroupListPanel`, `GraphPanel`, `StatusBarFooter`, etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -206,7 +206,7 @@ The `Model`,
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
 * stores the Calendar data.
-* exposes an unmodifiable `ObservableList<Student>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Student>` and `ObservableList<Event>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -278,6 +278,12 @@ image::Request Sequence Diagram.png[width="800"]
 
 * **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
 ** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
+
+==== Proposed additions for v2.0:
+
+* Emailing an entire group/class through the CLI, using the grouping feature
+* Sending emails with attachments to students
+* Pre-written email templates that the user can just send out to students
 // end::email[]
 
 // tag::calendar[]
@@ -336,7 +342,7 @@ image::EventStorageSequenceDiagram.png[width="800"]
 The diagram below shows how the schedule command is parsed in the Logic component. Here again, `EVENT` is the event as specified by the input parameters.
 
 .Logic diagram for `schedule EVENT` command
-image::ScheduleEventSdForLogic.png[width="800"]
+image::ScheduleSequenceDiagram.png[width="800"]
 
 ===== Cancel
 
@@ -407,26 +413,14 @@ interacts as expected with the undo/redo command as well.
 ==== Aspect: How to display events
 * **Alternative 1 (current choice):** Simply display all events, and scroll to nearest upcoming event.
 ** Pros: Allows the user to see the entire list of events, past and future.
-** Cons: Will definitely get cluttered over time.
 
 * **Alternative 2:** Display upcoming events, and keep past events in a "history" tab.
 ** Pros: Is a compromise between the alternative 1 and 3.
-** Cons: May make the GUI itself cluttered.
+** Cons: Will distract from the focus of the events.
 
 * **Alternative 3:** Delete events once they are in the past.
 ** Pros: Keeps things neat and in a to-do fashion.
 ** Cons: Takes control away from the user to handle their own events.
-
-===== Aspect: How schedule handles the event model and storage
-
-* **Alternative 1 (current choice):** Stores the list of events within the same model as the addressbook, but keep
-storage separate.
-** Pros: Will be consistent with the implementation of the addressbook, while also ensuring that the storage component
-is distinct.
-
-* **Alternative 2:** Store the list of events as its own separate model and separate storage.
-** Pros: Will not interfere greatly with the implementation of the addressbook itself
-** Cons: Will be detached from the original architecture
 // end::calendar[]
 
 // tag::attendance[]
@@ -580,13 +574,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::groupfeature[]
+
 === Group feature
-Groups allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
-It is designed to work well with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
+A `Group` allows tutors to manage students easily without typing a command for each student.
+It is designed to work with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
+Note: was previously called `Mark`
+
 ==== Implementation
-`Group` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Groups`.
+Each `Group` represents a collection of unique students, stored with a `Set<Student>` and exposes getter and setter methods, as well as methods for the manipulation of `Groups`.
 
 image::GroupClassDiagram.png[]
 
@@ -608,6 +605,8 @@ The arguments `g/m1` may be optional in some cases and default to `Group.DEFAULT
 * `and g/m2 [g/m3]` -- returns intersection of m2 and m3
 * `show` -- shows grouped Students in GUI
 
+Note: The base command by itself does not do anything, i.e. `group` will not do anything but display an error
+
 image::GroupCommandClassDiagram.png[]
 
 ==== Planned Sub-commands (2.0)
@@ -618,6 +617,7 @@ image::GroupCommandClassDiagram.png[]
 image::GroupCommandParserFlowchart.png[]
 
 ==== Execution
+The following sequence diagram illustrates how `GroupCommands` are processed and executed
 
 image::GroupCommandSeqDiagram.png[]
 
@@ -647,15 +647,15 @@ The tutor can type in:
 Suppose the tutor then wants to send an email to the aforementioned group of students.
 They can do that with a simple command:
 
- email g/res b/[emailText]
+ email g/res s/subject b/body (group email command coming in V2.0)
 
 ==== Tracking students
 
 The application is implemented with immutable `Student` objects.
 As a result, when a student is edited, a new `Student` instance is created with the updated fields and stored in the `AddressBook`.
-This causes the stored `Student` objects in existing Groups to be outdated, and attempts to use those objects will lead to a crash.
+This causes the stored `Student` objects in existing `Groups` to be outdated, and attempts to use those objects will lead to a crash.
 
-To solve this issue, after every command where student(s) are changed, the stored Groups will be updated as depicted in the activity diagram below.
+To solve this issue, after every command where student(s) are changed, the stored `Groups` will be updated as depicted in the activity diagram below.
 
 image::UpdateStudentsActivityDiagram.png[]
 
@@ -672,15 +672,26 @@ Efficiency is a nice bonus but not significant as the expected number of Student
 
 ===== Aspect: Command format
 
-* Separate sub Commands
+* Separate commands for subcommands
 ** separate commands into `group-find`, `group-show` etc.
-** Pros: Easy parsing, easy to understand
+** Pros: Easy parsing, easy to understand, beginner friendly
 
 * Single command (Current)
 ** single root command `group` with subcommands `group find`, `group show`
-** Pros: Usability, minimize code duplication
+** Pros: More usable, intuitive, minimize code duplication, better extensiblity
 
+* Natural language
+** single "root" command but parsed intelligently using keywords such as `to` and `with`
+** e.g. `group students with tags t/tut1 to g/destination`, `group g/group1 and g/group2 to g/group3`
+** Pros: Highly intuitive, beginner friendly
+** Cons: Difficult to implement and exhaustively test
 
+Initially, the single command approach was thought to be better as I had expected users with CLI experience to be familiar with this style of commands, and will provide greater degree of customization of commands (due to the different combinations of arguments available). Furthermore, as the subcommands have very similar argument patterns, I believed that it would make more sense to consolidate the parsing code in one place.
+
+However, feedback from trials suggest that some users prefer self-explanatory command names e.g. `group-by-tag-to t/tagName g/destinationGroup` over `group g/destinationGroup find t/tagName`.
+Despite this, as a developer I prefer the latter.
+
+I briefly considered a natural language parser but decided that it was not worth the effort.
 
 
 // end::groupfeature[]
@@ -1188,6 +1199,7 @@ Use case ends.
 Use case ends.
 // end::calendarusecases[]
 
+// tag:: emailUseCase[]
 [discrete]
 === Use case: Email students
 
@@ -1217,6 +1229,7 @@ Use case ends.
 ** 2a1. ConTAct shows an error message.
 +
 Use case ends.
+// end:: emailUseCase[]
 
 [appendix]
 == Non Functional Requirements
@@ -1258,8 +1271,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a student
 
 . Deleting a student while all students are listed
@@ -1272,10 +1283,106 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Saving data
 
+. Dealing with missing data files
+
+.. Prerequisites: Delete ./data folder
+.. Launch the jar file +
+Expected: A set of sample data (students and calendar) is automatically generated
+
+. Dealing with corrupt data files
+
+.. Prerequisites: Modify files inside ./data folder (random additions/deletions)
+.. Launch the jar file
+... Possible scenario: syntax is still preserved (unlikely) +
+Expected: Data still shows up but with missing/incorrect entries
+... Possible scenario: syntax is broken (extremely likely) +
+Expected: Application launches with a clean data folder (no entries)
+
+// tag::calendartests[]
+=== Scheduling of an event
+
+. Scheduling an event in the event list
+.. Test case: `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Acceptance testing` +
+   Expected: The event with the specified details is scheduled into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case: `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Testing other programs` +
+   Expected: No event scheduled. Error message denoting duplicate event (if previous test case has run) +
+.. Test case: `schedule event/Tutorial date/16-11-2018 start/12:00 end/13:00` +
+   Expected: The event with the specified details (without description) is scheduled into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case: `schedule event/Consultation date/32-11-2018 start/16:00 end/18:00 descr/With Bob` +
+   Expected: No event scheduled. Error message denoting invalid date +
+.. Test case: `schedule event/CS2103 Tutorial date/15-11-2018 end/12:00 descr/Content review` +
+  Expected: No event scheduled. Error message denoting missing parameter. +
+.. Test case: `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Acceptance testing` +
+   Expected: The event with the specified details are scheduled into the calendar. +
+
+. Cancelling an event in the event list
+.. Prerequisites: The events must exist in the calendar.
+.. Test case: `cancel event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00` +
+   Expected: The event with the specified details is deleted from the calendar. Details of the cancelled event are shown. Timestamp in the status bar is updated. +
+.. Test case: `cancel event/tutorial date/16-11-2018 start/25:00 end/18:00` +
+   Expected: Error message denoting invalid time. Calendar remains the same. +
+.. Other incorrect cancel commands to try: `cancel`, `cancel e` (where e is not in the calendar)
+   Expected: Error details shown.
+
+. Undoing and Redoing commands between the calendar and address book
+.. Prerequisites: Multiple students in the student list, and the following test cases are carried out in order
+.. Test case (set up): `schedule event/CS2103 Practical Exam date/16-11-2018 start/16:00 end/18:00 descr/Acceptance testing` +
+   Expected: The event with the specified details is scheduled into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case (set up): `delete 1` +
+   Expected: First student is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. +
+.. Test case: `undo` +
+   Expected: Deleted student is added back into the list. Undo success is shown. Timestamp in the status bar is updated. +
+.. Test case: `undo` +
+   Expected: The event added in the first test case is deleted from the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Test case: `redo` +
+   Expected: The event deleted in the previous `undo` is scheduled back into the calendar. Details of the event are shown. Timestamp in the status bar is updated. +
+.. Incorrect commands to try: `undo` when no changes have been made, `redo` when the previous command was not an `undo` and had changed the calendar/address book.
+   Expected: Error details shown.
+
+. Clearing the calendar and address book
+.. Test case: `clear`
+   Expected: The calendar and address book are cleared.
+// end::calendartests[]
+
+=== Groups
+. Creating groups
+.. Prerequisites: user is using the default data set
+.. Test case: `group find t/tut1` +
+Expected: 5 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 5 students) OR entering `group show` +
+Expected: Student display area updated to show only 5 students, all of them are tagged with "tut1"
+.. Test case: `group find dylan` +
+Expected: 1 student is grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 1 students) OR entering `group show` +
+Expected: Student display area updated to show only 1 student, called Dylan
+.. Test case: `group g/y2 find t/year2` +
+Expected: A new card appears on the left panel, (_y2_ 13 students), middle panel does not change
+... Clicking on the card (_y2_ 13 students) OR entering `group g/y2 show` +
+Expected: Student display area updated to show only 13 students, all of them are tagged with "year2"
+.. Test case: `group g/y2@ find t/year2` +
+Expected: Invalid group name message shown.
+.. Test case: `group g/y2 find` +
+Expected: Invalid command format message shown.
+
+. Manipulating groups
+.. Prerequisites: user is using the default data set, and ran these commands: `group g/y2 find t/year2`, `group g/t1 find t/tut1`
+.. Test case: `group join g/y2 g/t1` +
+Expected: 16 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 16 students) OR entering `group show` +
+Expected: Student display area updated to show only 16 students, all of them are tagged with "tut1" and/or "year2"
+.. Test case: `group and g/y2 g/t1` +
+Expected: 2 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 2 students) OR entering `group show` +
+Expected: Student display area updated to show only 2 students, all of them are tagged with both  "tut1" and "year2"
+.. Variations of the above:
+... `group g/grp1 and g/y2 g/t1` +
+Expected: New group _grp1_ created with 2 students
+
+=== Marking Attendance of a student(s)
 // tag::attendancetests[]
-=== Marking Attendance of a student/students
+* Marking attendance
 
 . Update the attendance of a student or a `group` of students
 
@@ -1285,17 +1392,17 @@ _{ more test cases ... }_
 .. Test case: `attendance 2 at/0` +
    Expected: The attendance of the second student on the list is updated to ABSENT. Success message shown in the status bar.
 .. Test case: `attendance 3 at/123` +
-   Expected: The attendance of the third student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the third student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance 4 at/present` +
    Expected: The attendance of the fourth student on the list is updated to PRESENT. Success message shown in the status bar.
 .. Test case: `attendance 5 at/absent` +
    Expected: The attendance of the fifth student on the list is updated to ABSENT. Success message shown in the status bar.
 .. Test case: `attendance 6 at/not here` +
-   Expected: The attendance of the sixth student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the sixth student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance 0 at/1` +
    Expected: Invalid index. Error message is shown in the status bar.
 .. Test case: `attendance 0 at/` +
-   Expected: The attendance of the first student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the first student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance g/tut2 at/1` +
    Expected: The attendance of all students in `group` tut2 is updated to PRESENT. Success message shown in the status bar.
 .. Test case: `attendance g/tut1 at/0` +
@@ -1326,22 +1433,14 @@ _{ more test cases ... }_
    Expected: Error message shown in status bar.
 // end::graphtests[]
 
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
-
 === Emailing a student
-
+// tag::emailManualTest[]
 . Emailing a student
 
 .. Prerequisites: The student must exist on the list, at the correct index. If student does not exist yet, add student first.
 .. Test case: `email 1 s/Attendance b/Your attendance is good` +
    Expected: Email sent to student at index '1' and success message shown in status message.
-.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!` +
+.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!!` +
    Expected: Email sent to student at index '1' and success message shown in status message.
 .. Test case: `email 0 s/Attendance b/Your attendance is good!` +
    Expected: No student is emailed. Error details shown in status message.
@@ -1349,5 +1448,6 @@ _{ more test cases ... }_
    Expected: No student is emailed. Error details shown in status message.
 .. Test case: `email 1 x/subject y/body` +
    Expected: No student is emailed. Error details shown in status message.
-.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
+.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size) +
    Expected: Similar to previous
+// end::emailManualTest[]

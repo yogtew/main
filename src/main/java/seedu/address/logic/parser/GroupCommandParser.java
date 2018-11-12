@@ -58,6 +58,10 @@ public class GroupCommandParser implements Parser<GroupCommand> {
             splitArgs.remove(0);
         }
 
+        if (splitArgs.size() == 0) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupCommand.MESSAGE_USAGE));
+        }
+
         //<command>
         String subCommand = splitArgs.get(0);
         switch (subCommand) {
@@ -98,6 +102,8 @@ public class GroupCommandParser implements Parser<GroupCommand> {
                 return new GroupJoinCommand(alias1, alias2, alias3);
             }
             return new GroupAndCommand(alias1, alias2, alias3);
+        case "":
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupJoinCommand.MESSAGE_USAGE));
         default:
             // invalid command
             throw new ParseException(String.format(MESSAGE_INVALID_SUBCOMMAND, subCommand));

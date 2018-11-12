@@ -377,7 +377,7 @@ public class ModelManager extends ComponentManager implements Model {
             Group old = getGroup(group.getName());
             groups.remove(old);
         } catch (GroupNotFoundException e) {
-            System.out.println("Nothing to worry about");
+            logger.info("Setting groups, but not found");
         }
         group.setName(groupName);
         groups.add(group);

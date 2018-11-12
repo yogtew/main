@@ -53,7 +53,7 @@ public class GuiTestAssert {
 
         expectedEvent.getDescription().ifPresentOrElse(desc -> {
             assertEquals(desc.description, actualCard.getDescription().orElse(null));
-        }, () -> assertEquals(null, actualCard.getDescription().orElse(null)));
+        }, () -> assertEquals(" ", actualCard.getDescription().orElse(null)));
     }
 
     /**
