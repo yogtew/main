@@ -74,20 +74,23 @@ Examples:
 Shows a list of all students in the address book. +
 Format: `list`
 
-=== Emailing a student : `email`
+// tag::email[]
+=== Emailing a student: `email`
 
- Allows the user to email a specified student. +
- Format: `email INDEX s/SUBJECT b/BODY`
+Allows the user to email a specific student. +
+Format: `email INDEX s/SUBJECT b/BODY`
 
- ****
- * The subject of the email is specified after the s/ and the body after the b/.
- * The user can specify only one student index, after the 'email' command word.
- ****
+****
+* The subject of the email is specified after the s/ and the body after the b/.
+* The user can specify one student index, after the `email` command word.
+* The user will be redirected to an Outlook sign in page, and has to give consent to allow the application to send the mail on the user's behalf.
+****
 
- Examples:
+Examples:
 
- * `email 2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
- Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
+* `email 2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
+This gathers the email address of the student at index 2, and sets the subject and body respectively. It then asks the user for permission to send the email on their behalf and once the user consents, it sends the email.
+// end::email[]
 
 === Editing a student : `edit`
 
@@ -115,7 +118,11 @@ Edits the name of the 2nd student to be `Betsy Crower` and clears all existing t
 Allows the user to mark the attendance of students using the index number as well as group name. +
 Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance g/GROUP_NAME at/ATTENDANCE`
 
-* The attendance marking as present is done individually, by using the index number of the student. The user can also collectively mark the attendance using the GROUP feature. Then, the user can update the attendance of the students who do not follow the majority specifically. The user can update the attendance of the student/students who are absent as 'absent'/'0' and who are present as 'present'/'1'(any other value updates the attendance to undefined).
+* The attendance marking can be done individually, by using the index number of the student.
+* The user can also collectively mark the attendance by specifying the `group`. Then, the user can update the attendance of the students who do not follow the majority specifically.
+** The group must exist for the user to update the attendance of the group. If the group does not exist, the user needs to create the required group first. See `group` feature on how to create a group of students.
+* The user can update the attendance of the student/students who are absent as 'absent' or '0' and who are present as 'present' or '1' (any other value updates the attendance to undefined).
+* The existing attendance of the student will be overwritten by the user input values.
 
 Examples:
 
@@ -164,22 +171,6 @@ Examples:
 * `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
 Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
 // end::cancel[]
-
-// tag::email[]
-=== Emailing students: `email`
-
-Allows the user to email a specified student. +
-Format: `email i/INDEX s/SUBJECT b/BODY`
-
-****
-* The subject of the email is specified after the s/ and the body after the b/.
-* The user can specify only one student index, after the 'i/'.
-****
-
-Examples:
-
-* `email i/2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
-Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
 
 === Locating students by name/tag: `find`
 

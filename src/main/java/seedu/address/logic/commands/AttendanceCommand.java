@@ -26,11 +26,12 @@ public class AttendanceCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Attendance can be 1 (Present) or 0 (Absent). Other values will update the attendance to undefined.\n"
             + "Parameters: INDEX (must be a positive integer)|"
-            + PREFIX_GROUP + " GROUP "
+            + PREFIX_GROUP + "GROUP "
             + PREFIX_ATTENDANCE + "[ATTENDANCE]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_ATTENDANCE + "1 OR "
-            + COMMAND_WORD + " groupname "
+            + COMMAND_WORD + " "
+            + PREFIX_GROUP + "groupname "
             + PREFIX_ATTENDANCE + "1";
 
     private Index index;
