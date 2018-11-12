@@ -76,4 +76,5 @@ include::../UserGuide.adoc[tag=attendance]
 
 include::../DeveloperGuide.adoc[tag=attendance]
 include::../DeveloperGuide.adoc[tag=attendanceusecases]
+Instructions for Manual Testing +
 include::../DeveloperGuide.adoc[tag=attendancetests]

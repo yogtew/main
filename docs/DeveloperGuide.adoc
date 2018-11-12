@@ -1229,7 +1229,7 @@ _{ more test cases ... }_
 _{ more test cases ... }_
 
 // tag::attendancetests[]
-=== Marking Attendance of a student/students
+=== Marking Attendance of a student(s)
 
 . Update the attendance of a student or a `group` of students
 
@@ -1239,17 +1239,17 @@ _{ more test cases ... }_
 .. Test case: `attendance 2 at/0` +
    Expected: The attendance of the second student on the list is updated to ABSENT. Success message shown in the status bar.
 .. Test case: `attendance 3 at/123` +
-   Expected: The attendance of the third student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the third student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance 4 at/present` +
    Expected: The attendance of the fourth student on the list is updated to PRESENT. Success message shown in the status bar.
 .. Test case: `attendance 5 at/absent` +
    Expected: The attendance of the fifth student on the list is updated to ABSENT. Success message shown in the status bar.
 .. Test case: `attendance 6 at/not here` +
-   Expected: The attendance of the sixth student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the sixth student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance 0 at/1` +
    Expected: Invalid index. Error message is shown in the status bar.
 .. Test case: `attendance 0 at/` +
-   Expected: The attendance of the first student on the list is updated to UNDEFIND. Success message shown in the status bar.
+   Expected: The attendance of the first student on the list is updated to UNDEFINED. Success message shown in the status bar.
 .. Test case: `attendance g/tut2 at/1` +
    Expected: The attendance of all students in `group` tut2 is updated to PRESENT. Success message shown in the status bar.
 .. Test case: `attendance g/tut1 at/0` +
