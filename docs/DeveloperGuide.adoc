@@ -940,41 +940,64 @@ Use case ends.
 +
 Use case ends.
 
+// tag::attendanceusecases[]
 [discrete]
 === Use case: Mark attendance
 
 *MSS*
 
-1. User requests to mark the attendance of a specified group
-2. ConTAct displays the list of students in that group
-3. The user inputs the attendance of the group
-4. ConTAct displays the resulting list
+1. User requests to mark the attendance of a student
+2. The user inputs the attendance of the student
+3. ConTAct displays the resulting student with the updated attendance
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. The group is invalid.
+* 1a. The formatting is invalid.
 +
 [none]
 ** 1a1. ConTAct shows an error message.
 +
 Use case ends.
-
 [none]
-* 2a. The list is empty
-+
+* 2a. The user types in an incorrect input.
 [none]
 ** 2a1. ConTAct shows an error message.
 +
 Use case ends.
+* 3a. User wants to mark attendance of a group.
++
 [none]
-* 3a. The user types in an incorrect input.
-[none]
-** 3a1. ConTAct shows an error message.
+** 3a1. User requests to mark the attendance of a specified group
+** 3a2. User creates a group for that 
+** 3a3. The user inputs the attendance of the group
+** 3a4. ConTAct displays the resulting list with the updated attendance
 +
 Use case ends.
+** *Extensions*
+[none]
+*** 1b. The group is invalid.
++
+[none]
+**** 1b1. ConTAct shows an error message.
++
+Use case ends.
+[none]
+*** 2b. The group is empty
++
+[none]
+**** 2b1. ConTAct shows an error message.
++
+Use case ends.
+[none]
+*** 3b. The user types in an incorrect input.
+[none]
+**** 3b1. ConTAct shows an error message.
++
+Use case ends.
+// end::attendanceusecases[]
 
 [discrete]
 === Use case: Delete students
