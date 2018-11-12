@@ -4,7 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import seedu.address.logic.commands.GraphCommand;
@@ -45,8 +45,8 @@ public class GraphCommandParser implements Parser<GraphCommand> {
 
         // tag prefixes found
         try {
-            List<Tag> tags = argumentMultimap.getAllValues(PREFIX_TAG)
-                    .stream().map(Tag::new).collect(Collectors.toList());
+            Set<Tag> tags = argumentMultimap.getAllValues(PREFIX_TAG)
+                    .stream().map(Tag::new).collect(Collectors.toSet());
             return new GraphCommand(new IsTaggedPredicate(tags));
         } catch (IllegalArgumentException e) {
             throw new ParseException(e.getMessage());
