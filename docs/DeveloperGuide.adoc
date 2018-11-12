@@ -695,7 +695,7 @@ This feature uses query strings to make server-client communication to draw and 
 
 
 .Component interactions for Graph command
-image::Component Interactions Graph.png[width="800"]
+image::GraphCI.png[width="800"]
 
 The graph command get the set of users `Set<Student>` to query for the attendance status and then returns an array of data to be graphed on a d3 graph.
 
@@ -710,7 +710,11 @@ or
  graph t\TAGS`
 
 
+==== Sequence Diagrams
+The sequence diagram below shows how the components interact for the scenario where the user issues the graph command.
 
+.Component interactions for `graph` command
+image::GraphSD.png[width="800"]
 
 
 
