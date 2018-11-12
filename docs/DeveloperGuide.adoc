@@ -236,7 +236,7 @@ This section describes some noteworthy details on how certain features are imple
 === Email feature
 ==== Current implementation - Emailing a single student
 
-The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account. 
+The email feature is faciliated by Outlook Mail API, since most NUS teaching assistants have an Outlook account.
 
 This API is a RESTful API, made for server-client communication. Since the Outlook mail API is a RESTful API, this feature uses the 'POST' request (which requests that the web server accepts the data enclosed in the body of the request message) to send the email specified in the user-input to the student specified in the user-input.
 
@@ -248,7 +248,7 @@ The email command itself takes a few parameters:
 
 e.g `email 2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-When the user inputs the email in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted. 
+When the user inputs the email in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted.
 
 The subject and body are converted to JSON, and passed as the `body` of the 'POST' request to Outlook, along with the access token that is also retrieved through a series of requests to the server.
 
@@ -256,13 +256,13 @@ The subject and body are converted to JSON, and passed as the `body` of the 'POS
 
 When the user uses the command, he/she is redirected to a browser window page of Outlook's sign in page. Once they sign in, they will be asked for their permission for the application to send mails on their behalf. Once they accept and give consent, the response sent from the server contains the authorization code.
 
-This authorization code is then extracted from the response and used to request for the access token, which is what is ultimately needed to interact with the server to send the mail itself. 
+This authorization code is then extracted from the response and used to request for the access token, which is what is ultimately needed to interact with the server to send the mail itself.
 
 Using the authorization code, the access token is retrieved through a request. Once the access token is extracted from the response and available, the actual POST request to send the email is made.
 
 .App interactions with Outlook for email command
 image::Request Sequence Diagram.png[width="800"]
- 
+
 The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the student whose index is specified.
 
 .Component interactions for email command
