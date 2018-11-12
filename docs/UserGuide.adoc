@@ -89,7 +89,7 @@ Format: `email INDEX s/SUBJECT b/BODY`
 Examples:
 
 * `email 2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
-This gathers the email address of the student at index 2, and sets the subject and body respectively. It then asks the user for permission to send the email on their behalf and once the user consents, it send the email.
+This gathers the email address of the student at index 2, and sets the subject and body respectively. It then asks the user for permission to send the email on their behalf and once the user consents, it sends the email.
 // end::email[]
 
 === Editing a student : `edit`
