@@ -251,24 +251,24 @@ The email command itself takes a few parameters:
 
 e.g `email 2 s/Attendance poor. b/Your attendance seems to be poor. Is there a problem?`
 
-When the user inputs the email in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted.
+When the user inputs the email command in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted.
 
 The subject and body are converted to JSON, and passed as the `body` of the 'POST' request to Outlook, along with the access token that is also retrieved through a series of requests to the server.
 
 .Sequence Diagram for Email command
 image::Sequence Diagram LOGIC.png[width="1200"]
 
-The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the student whose index is specified.
+The `CommandResult` object that is returned by the email command lets the user know that the email address has been successfully send to the student whose index is specified.
 
 **Retrieving access token for the request:** +
 
-When the user uses the command, he/she is redirected to a browser window page of Outlook's sign in page. Once they sign in, they will be asked for their permission for the application to send mails on their behalf. Once they accept and give consent, the response sent from the server contains the authorization code.
+When the user uses the command, he/she is redirected to a browser window of Outlook's sign in page. Once they sign in, they will be asked for their permission for the application to send e-mails on their behalf. Once they accept and give consent, the response is sent from the server back to the application, containing the authorization code.
 
-This authorization code is then extracted from the response and used to request for the access token, which is what is ultimately needed to interact with the server to send the mail itself.
+This authorization code is then extracted from the response and used to request for the access token, which is what is ultimately needed in order to interact with the server and send the mail.
 
-Using the authorization code, the access token is retrieved through a request. Once the access token is extracted from the response and available, the actual POST request to send the email is made.
+Using the authorization code in the request, the access token is retrieved. Once the access token is extracted from the response and available for use, the actual POST request to send the email is made.
 
-.With the App interactions and the App's interactions with Outlook
+.Within the App interactions and the App's interactions with Outlook
 image::Request Sequence Diagram.png[width="800"]
 
 ==== Design Considerations:
@@ -278,8 +278,6 @@ image::Request Sequence Diagram.png[width="800"]
 
 * **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
 ** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
-
-
 // end::email[]
 
 // tag::calendar[]
