@@ -1212,3 +1212,21 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Emailing a student
+
+. Emailing a student
+
+.. Prerequisites: The student must exist on the list, at the correct index. If student does not exist yet, add student first.
+.. Test case: `email 1 s/Attendance b/Your attendance is good` +
+   Expected: Email sent to student at index '1' and success message shown in status message.
+.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!` +
+   Expected: Email sent to student at index '1' and success message shown in status message.
+.. Test case: `email 0 s/Attendance b/Your attendance is good!` +
+   Expected: No student is emailed. Error details shown in status message.
+..Test case: `email 1 s/ b/ ` +
+   Expected: No student is emailed. Error details shown in status message.
+..Test case: `email 1 x/subject y/body` +
+   Expected: No student is emailed. Error details shown in status message.
+.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
+   Expected: Similar to previous
