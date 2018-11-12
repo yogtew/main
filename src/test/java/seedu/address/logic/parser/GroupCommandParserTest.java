@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.GroupCommandParser.MESSAGE_INVALID_GROUP_NAME;
-import static seedu.address.logic.parser.GroupCommandParser.MESSAGE_INVALID_SUBCOMMAND;
 
 import org.junit.Test;
 
@@ -33,7 +32,8 @@ public class GroupCommandParserTest {
 
     @Test
     public void empty() {
-        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_SUBCOMMAND, ""));
+        assertParseFailure(parser, "",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupJoinCommand.MESSAGE_USAGE));
     }
 
     @Test

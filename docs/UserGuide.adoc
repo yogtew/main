@@ -204,34 +204,62 @@ Returns any student having names `Betsy`, `Tim`, or `John`
 Returns students tagged with `t/students`
 * `find t/students t/colleagues` +
 Returns students tagged with `t/students` or `t/colleagues`
-//end::email[]
 
 // tag::group[]
 === Group: `group`
-A Group represents a group of Students in the app. Some commands accept Groups as an alternative to INDEX as a parameter to quickly perform batch operations.
+A `Group` represents a group of `Students` in the app. Some commands accept `Groups` as an alternative to `INDEX` as a parameter to perform batch operations instead of individual operations.
 
 ==== Group Creation
-Format: `group find t/TAGNAME` or `group find KEYWORD`
+Format: `group [g/grpName] find t/TAGNAME` or `group [g/grpName] find KEYWORD`
 
 This creates a Group containing the Students returned by the find command with the supplied arguments.
 
-E.g. `group find t/friends` will find all students in the Address Book tagged with "friends" and add them to a Group.
+`group find t/friends` will find all students in the Address Book tagged with "friends" and add them to a group.
+
+* [v2.0] `group index INDEX...` will take a series of indices as arguments and group the students represented by the indices
+```
+// assume that the current display shows {Adam, Bob, Charles, Dylan}
+group g/grp1 index 1 4
+// g/grp1 will then contain {Adam, Dylan} since Adam is index 1 and Dylan is index 4 on the currently displayed list
+```
 
 ==== Named Groups
-Groups can be named by using the prefix `g/GROUPNAME`. If not specified, the name of the created Group will default to "g/default".
+Groups can be named by using the prefix `g/GROUPNAME`. If not specified, the name of the created Group will default to "g/default",
+i.e. `group find t/friends` is equivalent to `group g/default find t/friends`
 
 E.g. `group g/myGroupName find t/friends` will add the Students tagged with "friends" to a Group called "myGroupName"
 
-Note: Group names must be alphanumeric and do not contain spaces.
+Note: Group names must be alphanumeric and not contain spaces.
+
 
 ==== Manipulating Groups
-Groups are able to be manipulated in the same way as sets, namely, they support the following operations: `union (join)`, `intersection (and)`, `complement (NYI)`
+Groups are able to be manipulated to expand or contract the selection to fit the users needs
 
-Format: `group [g/DEST_GROUP] <operation> g/OPERANDGROUP1 [g/OPERANDGROUP2]`
+* `join` will take two groups as arguments and create a new group that contains students from either of the groups
+```
+// assume that g/grp1 contains {Adam, Bob}
+// g/grp2 contains {Bob, Charles}
+group g/grp3 join g/grp1 g/grp2
+// g/grp3 will contain {Adam, Bob, Charles}
+```
 
-E.g. `group g/students join g/tut1 g/tut2` g/students will contain the Students of g/tut1 and g/tut2 merged together
+* `and` will take two groups as arguments and create a new group that contains only students that are in both of the groups
+```
+// assume that g/grp1 contains {Adam, Bob}
+// g/grp2 contains {Bob, Charles}
+group g/grp3 and g/grp1 g/grp2
+// g/grp3 will contain {Bob} since Bob is the only student in g/grp1 and g/grp2
+```
 
-E.g. `group g/canRetake and g/absentFromTest g/validReason` -- g/canRetake will contain Students that are in both g/absentFromTest and g/validReason
+* [v2.0] `complement` will take one groups as an argument and create a new group that contains every student except those in the supplied group
+```
+// assume that there are a total of 3 entries, {Adam, Bob, Charles}
+// and g/grp1 contains {Bob}
+group g/grp2 complement g/grp1
+// g/grp2 will then contain {Adam, Charles} since Bob is in g/grp1 and will thus be excluded
+```
+
+General format: `group [g/DEST_GROUP] <operation> g/OPERANDGROUP1 [g/OPERANDGROUP2]`
 
 Note: The first operand is compulsory while the second operand is optional and will default to "g/default"
 
@@ -243,17 +271,26 @@ The Students in a Group can be shown in the GUI with the following command:
 ==== Interactions with `undo` and `redo`
 Due to the way `undo` and `redo` are implemented, Groups that are changed as a result of these commands will not behave as expected, the students that are changed will be removed from the Group.
 
-==== Reference
-`group [g/m1] ...`
+For example,
+```
+// g/grp1 contains {Adam, Bob}
+delete 1 // delete Adam
+// g/grp1 will now only contain {Bob}
+undo // restores Adam to the addressbook
+// g/grp1 will not be restored to the previous state and will still only contain {Bob}
+```
 
-* `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and group under _m1_
-* `join g/m2 g/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
-* `and g/m2 g/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
-* `show` -- displays students from _m1_ in the GUI
+==== Reference
+(Implemented as of 1.4)
+
+* `group [g/grp1] find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and group under _grp1_
+* `group [g/grp1] join g/grp2 g/grp3` -- groups the *union* of _grp2_ and _grp3_ under _grp1_
+* `group [g/grp1] and g/grp2 g/grp3` -- groups the *intersection* of _grp2_ and _grp3_ under _grp1_
+* `group [g/grp1] show` -- displays students from _grp1_ in the GUI
 
 Notes:
 
-* _m1_ defaults to "default" if omitted
+* g/grp1 defaults to _default_ if omitted
 
 Examples:
 
@@ -263,6 +300,29 @@ Examples:
 * `group and g/a g/b` -- groups students in both _g/a_ and _g/b_ under _g/default_ (intersection of a and b)
 * `group g/test show` -- shows students grouped under _g/test_ in the GUI
 // end::group[]
+
+// tag::cmdtag[]
+=== Tag Students: `tag`
+Adds, sets or deletes tags from students (by index or by name).
+
+Format: `tag add|set|del index|g/group [t/tags...]`
+
+Examples:
+```
+tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
+tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
+tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
+
+tag add g/students t/cs2103 // Adds the tag "cs2103" to all students in the group named "students"
+```
+
+Note:
+
+* The command accepts any number of tags (including 0), using `tag set` with no tags supplied will clear all tags
+* The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
+* The command will not fail even if the supplied tag is absent in the case of `tag delete`
+* The command will still display a success message if the above cases occur
+// end::cmdtag[]
 
 === Deleting a student : `delete`
 
@@ -375,27 +435,6 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
-
-=== Tag Students: `tag`
-Adds, sets or deletes tags from students (by index or by name).
-
-Format: `tag add|set|del index|g/group [t/tags...]`
-
-Examples:
-```
-tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
-tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
-tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
-
-tag add g/students t/cs2103 // Adds the tag "cs2103" to all students in the group named "students"
-```
-
-Note:
-
-* The command accepts any number of tags (including 0), using `tag set` with no tags supplied will clear all tags
-* The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
-* The command will not fail even if the supplied tag is absent in the case of `tag delete`
-* The command will still display a success message if the above cases occur
 
 === Saving the data
 
