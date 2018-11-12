@@ -1290,7 +1290,7 @@ Expected: 2 students are grouped under _default_, shown in the leftmost panel of
 Expected: Student display area updated to show only 2 students, all of them are tagged with both  "tut1" and "year2"
 .. Variations of the above:
 ... `group g/grp1 and g/y2 g/t1` +
-Expected: New group _grp1_ created with 2 students, both
+Expected: New group _grp1_ created with 2 students
 
 // tag::attendancetests[]
 === Marking Attendance of a student(s)
