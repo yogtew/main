@@ -98,6 +98,8 @@ public class GroupCommandParser implements Parser<GroupCommand> {
                 return new GroupJoinCommand(alias1, alias2, alias3);
             }
             return new GroupAndCommand(alias1, alias2, alias3);
+        case "":
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupJoinCommand.MESSAGE_USAGE));
         default:
             // invalid command
             throw new ParseException(String.format(MESSAGE_INVALID_SUBCOMMAND, subCommand));

@@ -45,7 +45,7 @@ ConTAct is an application designed to help teaching assistants manage the detail
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=mark]
+include::../UserGuide.adoc[tag=group]
 
 == Contributions to the Developer Guide
 
@@ -53,4 +53,4 @@ include::../UserGuide.adoc[tag=mark]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=mark]
+include::../DeveloperGuide.adoc[tag=groupfeature]

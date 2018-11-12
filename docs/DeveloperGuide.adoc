@@ -563,12 +563,12 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 // tag::groupfeature[]
 === Group feature
-Groups allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
-It is designed to work well with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
+A `Group` allows tutors to manage students easily without typing a command for each student.
+It is designed to work with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
 ==== Implementation
-`Group` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Groups`.
+Each `Group` represents a collection of unique students, stored with a `Set<Student>` and exposes getter and setter methods, as well as methods for the manipulation of `Groups`.
 
 image::GroupClassDiagram.png[]
 
@@ -590,6 +590,8 @@ The arguments `g/m1` may be optional in some cases and default to `Group.DEFAULT
 * `and g/m2 [g/m3]` -- returns intersection of m2 and m3
 * `show` -- shows grouped Students in GUI
 
+Note: The base command by itself does not do anything, i.e. `group` will not do anything but display an error
+
 image::GroupCommandClassDiagram.png[]
 
 ==== Planned Sub-commands (2.0)
@@ -600,6 +602,7 @@ image::GroupCommandClassDiagram.png[]
 image::GroupCommandParserFlowchart.png[]
 
 ==== Execution
+The following sequence diagram illustrates how `GroupCommands` are processed and executed
 
 image::GroupCommandSeqDiagram.png[]
 
@@ -629,15 +632,15 @@ The tutor can type in:
 Suppose the tutor then wants to send an email to the aforementioned group of students.
 They can do that with a simple command:
 
- email g/res b/[emailText]
+ email g/res s/subject b/body (group email command coming in V2.0)
 
 ==== Tracking students
 
 The application is implemented with immutable `Student` objects.
 As a result, when a student is edited, a new `Student` instance is created with the updated fields and stored in the `AddressBook`.
-This causes the stored `Student` objects in existing Groups to be outdated, and attempts to use those objects will lead to a crash.
+This causes the stored `Student` objects in existing `Groups` to be outdated, and attempts to use those objects will lead to a crash.
 
-To solve this issue, after every command where student(s) are changed, the stored Groups will be updated as depicted in the activity diagram below.
+To solve this issue, after every command where student(s) are changed, the stored `Groups` will be updated as depicted in the activity diagram below.
 
 image::UpdateStudentsActivityDiagram.png[]
 
@@ -654,15 +657,26 @@ Efficiency is a nice bonus but not significant as the expected number of Student
 
 ===== Aspect: Command format
 
-* Separate sub Commands
+* Separate commands for subcommands
 ** separate commands into `group-find`, `group-show` etc.
-** Pros: Easy parsing, easy to understand
+** Pros: Easy parsing, easy to understand, beginner friendly
 
 * Single command (Current)
 ** single root command `group` with subcommands `group find`, `group show`
-** Pros: Usability, minimize code duplication
+** Pros: More usable, intuitive, minimize code duplication, better extensiblity
 
+* Natural language
+** single "root" command but parsed intelligently using keywords such as `to` and `with`
+** e.g. `group students with tags t/tut1 to g/destination`, `group g/group1 and g/group2 to g/group3`
+** Pros: Highly intuitive, beginner friendly
+** Cons: Difficult to implement and exhaustively test
 
+Initially, the single command approach was thought to be better as I had expected users with CLI experience to be familiar with this style of commands, and will provide greater degree of customization of commands (due to the different combinations of arguments available). Furthermore, as the subcommands have very similar argument patterns, I believed that it would make more sense to consolidate the parsing code in one place.
+
+However, feedback from trials suggest that some users prefer self-explanatory command names e.g. `group-by-tag-to t/tagName g/destinationGroup` over `group g/destinationGroup find t/tagName`.
+Despite this, as a developer I prefer the latter.
+
+I briefly considered a natural language parser but decided that it was not worth the effort.
 
 
 // end::groupfeature[]
