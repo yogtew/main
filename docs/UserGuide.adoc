@@ -204,7 +204,6 @@ Returns any student having names `Betsy`, `Tim`, or `John`
 Returns students tagged with `t/students`
 * `find t/students t/colleagues` +
 Returns students tagged with `t/students` or `t/colleagues`
-//end::email[]
 
 // tag::group[]
 === Group: `group`
@@ -396,6 +395,40 @@ Note:
 * The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
 * The command will not fail even if the supplied tag is absent in the case of `tag delete`
 * The command will still display a success message if the above cases occur
+
+// tag:graph[]
+=== Graph Students: `graph`
+Graph students attendance whose names contain any of the given keywords. +
+Format: `graph KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Students matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+****
+
+Graph students attendance tagged with specified tag. +
+Format: `graph t/TAG [MORE_TAGS]`
+
+****
+* Tags are case sensitive
+* The order of the tags does not matter
+* Students matching at least one tag will be returned (i.e. `OR` search)
+****
+
+Examples:
+
+* `graph John` +
+Returns attendance graph of `john` and `John Doe`
+* `graph Betsy Tim John` +
+Returns attendance graph of any student having names `Betsy`, `Tim`, or `John`
+* `graph t/students` +
+Returns attendance graph of students tagged with `t/students`
+* `graph t/students t/colleagues` +
+Returns attendance graph of students tagged with `t/students` or `t/colleagues`
+// end:graph[]
 
 === Saving the data
 

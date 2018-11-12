@@ -685,6 +685,66 @@ Efficiency is a nice bonus but not significant as the expected number of Student
 
 // end::groupfeature[]
 
+// tag::graph[]
+=== Graph feature
+==== Current implementation - Graphing attendance of a group of students
+
+The graph feature leverages on d3 graph for the responsiveness and asthetics of displaying data.
+
+This feature uses query strings to make server-client communication to draw and display the graph data. This is made so that it can be compatible with exporting of data to other applications in the near future. Future iterations of this feature can be made to RESTful API for better compatibilty with 3rd party applications
+
+
+.Component interactions for Graph command
+image::Component Interactions Graph.png[width="800"]
+
+The graph command get the set of users `Set<Student>` to query for the attendance status and then returns an array of data to be graphed on a d3 graph.
+
+Commands relating to the manipulation of the Set data of students are parsed by `GraphCommandParser`, which then returns the appropriate graph to be shown.
+
+This architecture is planned such that the feature has low coupling which allows for future integration with 3rd party applications are easy.
+
+The commands adhere to the following pattern:
+
+ graph KEYWORD [KEYWORDS]`
+or
+ graph t\TAGS`
+
+
+
+
+
+
+
+When the user inputs the email command in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted.
+
+The subject and body are converted to JSON, and passed as the `body` of the 'POST' request to Outlook, along with the access token that is also retrieved through a series of requests to the server.
+
+.Sequence Diagram for Email command
+image::Sequence Diagram LOGIC.png[width="1200"]
+
+The `CommandResult` object that is returned by the email command lets the user know that the email address has been successfully send to the student whose index is specified.
+
+**Retrieving access token for the request:** +
+
+When the user uses the command, he/she is redirected to a browser window of Outlook's sign in page. Once they sign in, they will be asked for their permission for the application to send e-mails on their behalf. Once they accept and give consent, the response is sent from the server back to the application, containing the authorization code.
+
+This authorization code is then extracted from the response and used to request for the access token, which is what is ultimately needed in order to interact with the server and send the mail.
+
+Using the authorization code in the request, the access token is retrieved. Once the access token is extracted from the response and available for use, the actual POST request to send the email is made.
+
+.Within the App interactions and the App's interactions with Outlook
+image::Request Sequence Diagram.png[width="800"]
+
+==== Design Considerations:
+
+* **GUI design:** Using the browser panel to display the email drafting page of Outlook
+** Pros: Gives the user a more visual aid in drafting their message, making it easy to type longer messages
+
+* **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
+** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
+// end::graph[]
+
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
