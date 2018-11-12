@@ -33,7 +33,8 @@ public class GroupCommandParserTest {
 
     @Test
     public void empty() {
-        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_SUBCOMMAND, ""));
+        assertParseFailure(parser, "",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, GroupJoinCommand.MESSAGE_USAGE));
     }
 
     @Test
