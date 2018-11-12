@@ -21,8 +21,7 @@ Tutors interact with the application through the CLI, and the GUI is implemented
 * *Major enhancement*: added the Calendar feature in ConTAct
 ** What it does: Allows the tutor to manage their calendar and timetables through the use of various commands
 ** Justification: This feature significantly improves the product by offering a means for the tutor to keep track of their day to day schedule and manage it accordingly.
-** Highlights: This feature adds the `schedule` and `cancel` command as ways for the user to interact with the calendar, while integrating existing commands such as `undo/redo` and `clear` to support the calendar.
-The design considerations were significant to ensure that the calendar was implemented effectively.
+** Highlights: This feature adds the `schedule` and `cancel` command as ways for the user to interact with the calendar, while integrating existing commands such as `undo/redo` and `clear` to support the calendar. The design considerations were significant to ensure that the calendar was implemented effectively.
 ** Credits: The initial addressbook-level4 provided a good starting platform for the implementation of this feature.
 
 * *Other contributions*:
@@ -31,8 +30,7 @@ The design considerations were significant to ensure that the calendar was imple
 *** Managed git workflow within the team.
 *** Set up Travis, Netlify, and Coveralls in the repository.
 *** Managed issue tracker, milestones, and organization on GitHub.
-*** Refactoring of the initial application to suit ConTAct.
-*** Managed initial documentation.
+*** Refactoring of the application to suit ConTAct.
 ** Community:
 *** Aided teammates in their own features and/or documentation. (Pull requests
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/3[#3]
@@ -76,8 +74,6 @@ include::../UserGuide.adoc[tag=schedule]
 
 include::../UserGuide.adoc[tag=cancel]
 
-include::../UserGuide.adoc[tag=undoredo]
-
 include::../UserGuide.adoc[tag=clear]
 
 == Contributions to the Developer Guide
@@ -91,6 +87,8 @@ Updated UML diagrams
 image::ModelClassDiagram.png[width"800"]
 
 image::StorageClassDiagram.png[width="800"]
+
+image::UiClassDiagram.png[width="800"]
 
 include::../DeveloperGuide.adoc[tag=calendar]
 
