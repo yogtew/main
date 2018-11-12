@@ -11,17 +11,21 @@ import seedu.address.model.mark.Mark;
  * Mark "show" subcommand
  */
 public class MarkShowCommand extends MarkCommand {
-    private static final String MESSAGE_SUCCESS = "Listed %d students in %s";
+    public static final String MESSAGE_SUCCESS = "Listed %d students in %s";
 
     public MarkShowCommand(String alias1) {
         this.alias1 = alias1;
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history) throws MarkNotFoundException {
         requireNonNull(model);
-        Mark mark = model.getMark(alias1);
-        model.updateFilteredStudentList(mark.getPredicate());
-        return new CommandResult(String.format(MESSAGE_SUCCESS, mark.getList().size(), alias1));
+        try {
+            Mark mark = model.getMark(alias1);
+            model.setMarkPredicate(alias1);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, mark.getList().size(), alias1));
+        } catch (MarkNotFoundException ignored) {
+            return null;
+        }
     }
 }

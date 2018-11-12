@@ -1,6 +1,7 @@
 package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static seedu.address.storage.XmlAdaptedStudent.MISSING_FIELD_MESSAGE_FORMAT;
 import static seedu.address.testutil.TypicalStudents.BENSON;
 
@@ -31,6 +32,18 @@ public class XmlAdaptedStudentTest {
     private static final List<XmlAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
             .map(XmlAdaptedTag::new)
             .collect(Collectors.toList());
+
+    @Test
+    public void equals_sameStudent() throws Exception {
+        XmlAdaptedStudent student = new XmlAdaptedStudent(BENSON);
+        assertEquals(student, student);
+    }
+
+    @Test
+    public void equals_differentEvent_assertNotEquals() throws Exception {
+        XmlAdaptedStudent student = new XmlAdaptedStudent(BENSON);
+        assertNotEquals(student, null);
+    }
 
     @Test
     public void toModelType_validStudentDetails_returnsStudent() throws Exception {

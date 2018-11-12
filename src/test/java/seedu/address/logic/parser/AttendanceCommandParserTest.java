@@ -21,7 +21,6 @@ public class AttendanceCommandParserTest {
     private static final String VALID_ATTENDANCE_VALUE = "1";
     private static final String VALID_ATTENDANCE = "at/1 ";
     private static final String INVALID_ATTENDANCE = "234";
-    private static final String INVALID_COMMAND = "invalid ";
 
     private AttendanceCommandParser parser = new AttendanceCommandParser();
 

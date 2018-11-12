@@ -1,0 +1,98 @@
+= Andrew Tan Jin Shen - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ConTAct
+
+---
+
+== Overview
+
+ConTAct is a desktop application designed to aid teaching assistants by providing them with features that is
+catered specifically for their use while still managing to be all-purpose enough to serve a variety of needs.
+
+Tutors interact with the application through the CLI, and the GUI is implemented using JavaFX. The app itself is written in Java.
+
+== Summary of contributions
+
+* Code Contributed: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=andrewtanjs&sort=displayName&since=2018-09-12&until=2018-11-07&timeframe=day&reverse=false&repoSort=true[RepoSense Report]
+
+* *Major enhancement*: added the Calendar feature in ConTAct
+** What it does: Allows the tutor to manage their calendar and timetables through the use of various commands
+** Justification: This feature significantly improves the product by offering a means for the tutor to keep track of their day to day schedule and manage it accordingly.
+** Highlights: This feature adds the `schedule` and `cancel` command as ways for the user to interact with the calendar, while integrating existing commands such as `undo/redo` and `clear` to support the calendar.
+The design considerations were significant to ensure that the calendar was implemented effectively.
+** Credits: The initial addressbook-level4 provided a good starting platform for the implementation of this feature.
+
+* *Other contributions*:
+** Project management:
+*** Managed releases `v1.2` - `v1.4` (5 releases) on GitHub.
+*** Managed git workflow within the team.
+*** Set up Travis, Netlify, and Coveralls in the repository.
+*** Managed issue tracker, milestones, and organization on GitHub.
+*** Refactoring of the initial application to suit ConTAct.
+*** Managed initial documentation.
+** Community:
+*** Aided teammates in their own features and/or documentation. (Pull requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/3[#3]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/4[#4]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/96[#96])
+*** Wrote additional tests for existing features to increase coverage (Pull requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/117[#117]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/41[#41])
+*** Updated documentation and sequence diagrams (Pull requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/82[#82]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/49[#49]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/47[#47]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/43[#43])
+*** Reported bugs in the PE dry run. (Issues for W14-1
+https://github.com/CS2103-AY1819S1-W14-1/main/issues/198[#198]
+https://github.com/CS2103-AY1819S1-W14-1/main/issues/204[#204]
+https://github.com/CS2103-AY1819S1-W14-1/main/issues/211[#211]
+https://github.com/CS2103-AY1819S1-W14-1/main/issues/215[#215]
+https://github.com/CS2103-AY1819S1-W14-1/main/issues/219[#219])
+*** PRs reviewed:
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/57[#57]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/67[#67]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/69[#69]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/74[#74]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/78[#78]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/81[#81]
+
+** Enhancements to existing features:
+*** Updated the `undo/redo` command and the `cancel` command to accommodate the Calendar feature.
+*** Updated the system tests and the corresponding existing features (Pull requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/117[#117])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=schedule]
+
+include::../UserGuide.adoc[tag=cancel]
+
+include::../UserGuide.adoc[tag=undoredo]
+
+include::../UserGuide.adoc[tag=clear]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+Updated UML diagrams
+
+image::ModelClassDiagram.png[width"800"]
+
+image::StorageClassDiagram.png[width="800"]
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+include::../DeveloperGuide.adoc[tag=calendarusecases]
+

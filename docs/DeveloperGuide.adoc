@@ -395,7 +395,7 @@ interacts as expected with the undo/redo command as well.
 ** Pros: Is a compromise between the alternative 1 and 3.
 ** Cons: May make the GUI itself cluttered.
 
-* **Alternative 2:** Delete events once they are in the past.
+* **Alternative 3:** Delete events once they are in the past.
 ** Pros: Keeps things neat and in a to-do fashion.
 ** Cons: Takes control away from the user to handle their own events.
 
@@ -417,12 +417,9 @@ is distinct.
 
 The `attendance` command is a completely new feature that allows the user to mark the attendance of students
 within ConTAct. It follows a similar command flow as that of the address book, and the command will uses the model and
-storage of the other commands.
-To facilitate this command, a new data type is introduced: the Attendance class.
-The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class
-uses another class called the AttendanceEnum class.
-This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class.
-The attendance class has an overloaded constructor which takes in different parameters.
+storage of the other commands.To facilitate this command, a new data type is introduced: the Attendance class. The Attendance class has it's own unique fields that the user can specify to mark the attendance. The Attendance class uses another class called the AttendanceEnum class. This AttendanceEnum class is used to declare the Attendance Enums:PRESENT, ABSENT and UNDEFINED which are then used in the Attendance class.
+
+* The attendance class has an overloaded constructor which takes in different parameters.
 
 Field of first constructor:
 
@@ -434,11 +431,11 @@ Field of second constructor:
 
 Currently, the main operation is the `attendance` command, and it is implemented as such:
 
-* `attendance index/INDEX PREFIX_ATTENDANCE/attendance`
+* `attendance INDEX at/ATTENDANCE`
 
 The `attendance` command may also be used with the `mark` command to update the attendance of multiple students at the same time. It is implemented as such:
 
-* `attendance PREFIX_MARK/markName PREFIX_ATTENDANCE/attendance`
+* `attendance m/MARK_NAME at/ATTENDANCE`
 
 Currently, this operation exists within the logic component of ConTAct.
 
@@ -450,6 +447,7 @@ Below is an example of how the attendance command behaves:
 This will simply specify the attendance field of the Student/Students with the specified attendance and store it similar to how the addressbook stores a student.
 Furthermore, the attendance command ensures that all the fields specified must be valid for it to be a success.
 
+==== Sequence Diagrams
 The sequence diagram below shows how the components interact for the scenario where the user issues the attendance command.
 
 .Component interactions for `attendance` command (part1)
@@ -466,6 +464,22 @@ The diagram below shows how the `attendance` command is parsed in the Logic comp
 
 .Logic Diagram for `attendance` command
 image::attendance_diagram_logic.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Updating attendance of student
+* **Alternative 1 (current choice):** Update using index and mark
+** Pros: Allows flexibility for the user to either update attendance individually or collectively using mark.
+** Cons: Slightly problematic to implement parser for the same command with two differing formats.
+
+* **Alternative 2:** Update only using index/mark
+** Pros: Easier to implement.
+** Cons: If only implemented using index, user may face difficulty in updating attendance of a large number of students. If only mark is implemented, user can only update attendance of a mark and not of an individual student.
+
+==== Proposed addition for v2.0
+* Store attendance of each student in an array according to weeks so that the user has a track of the attendance of each student for each of its classes according to week.
+* Proposed new command format: `attendance INDEX|m/MARK_NAME w/WEEK_NUMBER at/ATTENDANCE`
+// end::attendance[]
 
 // tag::undoredo[]
 === Undo/Redo feature
