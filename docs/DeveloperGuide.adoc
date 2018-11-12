@@ -247,7 +247,7 @@ e.g `email 2 s/Attendance poor. b/Your attendance seems to be poor. Is there a p
 
 When the user inputs the email in the CLI,  the input is parsed, and the email address of the student at the `index` specified, the subject, and body of the email specified are recognized and extracted. The subject and body are converted to JSON, and passed as the `body` of the 'POST' request to Outlook, along with the access token that is also retrieved through a series of requests to the server.
 
-Retrieving access token for the request: +
+**Retrieving access token for the request:** +
 
 When the user uses the command, he/she is redirected to a browser window page of Outlook's sign in page. Once they sign in, they will be asked for their permission for the application to send mails on their behalf. Once they accept and give consent, the response sent from the server contains the authorization code.
 
