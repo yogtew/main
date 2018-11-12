@@ -1103,6 +1103,7 @@ Use case ends.
 Use case ends.
 // end::calendarusecases[]
 
+// tag:: emailUseCase[]
 [discrete]
 === Use case: Email students
 
@@ -1132,6 +1133,7 @@ Use case ends.
 ** 2a1. ConTAct shows an error message.
 +
 Use case ends.
+// end:: emailUseCase[]
 
 [appendix]
 == Non Functional Requirements
@@ -1214,6 +1216,7 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+// tag::emailManualTest[]
 === Emailing a student
 
 . Emailing a student
@@ -1231,3 +1234,4 @@ _{ more test cases ... }_
    Expected: No student is emailed. Error details shown in status message.
 .. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
    Expected: Similar to previous
+// end::emailManualTest[]
