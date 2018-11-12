@@ -278,6 +278,12 @@ image::Request Sequence Diagram.png[width="800"]
 
 * **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
 ** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
+
+==== Proposed additions for v2.0:
+
+* Emailing an entired group/class through the CLI, using the grouping feature
+* Sending emails with attachments to students
+* Pre-written email templates that the user can just send out to students
 // end::email[]
 
 // tag::calendar[]
