@@ -12,6 +12,7 @@ import seedu.address.model.group.Group;
  */
 public class GroupShowCommand extends GroupCommand {
     public static final String MESSAGE_SUCCESS = "Listed %d students in %s";
+    public static final String MESSAGE_GROUP_NOT_FOUND = "Group %s not found";
 
     public GroupShowCommand(String alias1) {
         this.alias1 = alias1;
@@ -24,8 +25,8 @@ public class GroupShowCommand extends GroupCommand {
             Group group = model.getGroup(alias1);
             model.setGroupPredicate(alias1);
             return new CommandResult(String.format(MESSAGE_SUCCESS, group.getList().size(), alias1));
-        } catch (GroupNotFoundException ignored) {
-            return null;
+        } catch (GroupNotFoundException e) {
+            throw new GroupNotFoundException(String.format(MESSAGE_GROUP_NOT_FOUND, alias1));
         }
     }
 }
