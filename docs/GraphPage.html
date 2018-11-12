@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<header>
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 360px;
+  height: 200px;
+  position: relative;
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+
+</style>
+<script type="text/javascript">
+			function getJsonFromUrl() {
+				var query = location.search.substr(1);
+				var result = {};
+				query.split("&").forEach(function(part) {
+					var item = part.split("=");
+					result[item[0]] = decodeURIComponent(item[1]);
+				});
+				return result;
+			}
+			document.addEventListener("DOMContentLoaded", function(event) {
+			if (getJsonFromUrl().data1 == undefined && getJsonFromUrl().data2 == undefined && getJsonFromUrl().data3 == undefined){
+				document.getElementById("name").innerHTML="No Data Found";
+			}
+		});
+		</script>
+
+</header>
+<body>
+<span id="name"></span>
+<span id="data1"></span>
+<span id="data2"></span>
+<span id="data3"></span>
+
+<script src="d3.v3.min.js"></script>
+<script>
+if (getJsonFromUrl().data1 == undefined){
+	var present = 0;
+}else{var present = getJsonFromUrl().data1}
+if (getJsonFromUrl().data2 == undefined){
+	var absent = 0.
+}else{var absent = getJsonFromUrl().data2}
+if (getJsonFromUrl().data3 == undefined){
+	var misc = 0;
+}else{var misc = getJsonFromUrl().data3;}
+
+if (present == 0 && absent == 0 && misc == 0){
+	document.getElementById("name").innerHTML="No Data Found";
+}else{
+				document.getElementById("name").innerHTML="Attendance Graph";
+			}
+
+var sum = parseInt(present)+parseInt(absent)+parseInt(misc);
+		console.log(present);
+		console.log(absent);
+		console.log(misc);
+		console.log(sum);
+present = present/sum;
+		console.log(present);
+absent = absent/sum;
+misc = misc/sum;
+
+var svg = d3.select("body")
+	.append("svg")
+	.append("g")
+
+svg.append("g")
+	.attr("class", "slices");
+svg.append("g")
+	.attr("class", "labels");
+svg.append("g")
+	.attr("class", "lines");
+
+var width = 300,
+    height = 150,
+	radius = Math.min(width, height) / 2;
+
+var pie = d3.layout.pie()
+	.sort(null)
+	.value(function(d) {
+		return d.value;
+	});
+
+var arc = d3.svg.arc()
+	.outerRadius(radius * 0.8)
+	.innerRadius(radius * 0.4);
+
+var outerArc = d3.svg.arc()
+	.innerRadius(radius * 0.9)
+	.outerRadius(radius * 0.9);
+
+svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var key = function(d){ return d.data.label; };
+
+var color = d3.scale.ordinal()
+	.domain(["PRESENT", "ABSENT", "UNDEFINED"])
+	.range(["#98abc5", "#8a89a6", "#7b6888"]);
+
+function generateData (){
+	var labels = color.domain();
+	var list = [];
+	if (present >0){
+		list.push ({label: "Present", value: present})
+	}if (absent >0){
+		list.push ({label: "Absent", value: absent})
+	}if (misc >0){
+		list.push ({label: "Undefined", value: misc})
+	}
+	return list
+	// return [{label: "PRESENT", value: present}, {label: "ABSENT", value: absent}, {label: "UNDEFINED", value: misc} ]
+	// return labels.map(function(label){
+	// 	return { label: label, value: Math.random() }
+	// });
+
+}
+
+console.log(generateData());
+change(generateData());
+
+
+
+function change(data) {
+
+	/* ------- PIE SLICES -------*/
+	var slice = svg.select(".slices").selectAll("path.slice")
+		.data(pie(data), key);
+
+	slice.enter()
+		.insert("path")
+		.style("fill", function(d) { return color(d.data.label); })
+		.attr("class", "slice");
+
+	slice
+		.transition().duration(1000)
+		.attrTween("d", function(d) {
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				return arc(interpolate(t));
+			};
+		})
+
+	slice.exit()
+		.remove();
+
+	/* ------- TEXT LABELS -------*/
+
+	var text = svg.select(".labels").selectAll("text")
+		.data(pie(data), key);
+
+	text.enter()
+		.append("text")
+		.attr("dy", ".35em")
+		.attr("font-size", "12px")
+		.text(function(d) {
+			return d.data.label;
+		});
+
+	function midAngle(d){
+		return d.startAngle + (d.endAngle - d.startAngle)/2;
+	}
+
+	text.transition().duration(1000)
+		.attrTween("transform", function(d) {
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				var pos = outerArc.centroid(d2);
+				pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+				return "translate("+ pos +")";
+			};
+		})
+		.styleTween("text-anchor", function(d){
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				return midAngle(d2) < Math.PI ? "start":"end";
+			};
+		});
+
+	text.exit()
+		.remove();
+
+	/* ------- SLICE TO TEXT POLYLINES -------*/
+
+	var polyline = svg.select(".lines").selectAll("polyline")
+		.data(pie(data), key);
+
+	polyline.enter()
+		.append("polyline");
+
+	polyline.transition().duration(1000)
+		.attrTween("points", function(d){
+			this._current = this._current || d;
+			var interpolate = d3.interpolate(this._current, d);
+			this._current = interpolate(0);
+			return function(t) {
+				var d2 = interpolate(t);
+				var pos = outerArc.centroid(d2);
+				pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+				return [arc.centroid(d2), outerArc.centroid(d2), pos];
+			};
+		});
+
+	polyline.exit()
+		.remove();
+};
+
+</script>
+</body>

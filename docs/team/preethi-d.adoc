@@ -9,21 +9,22 @@
 
 == Overview
 
-ConTAct is a desktop application designed to aid teaching assistants by providing them with features that is
-catered specifically for their use while still managing to be all-purpose enough to serve a variety of needs.
+ConTAct is a desktop application designed to help teaching assistants by providing them with multiple features that are
+catered specifically to easing student management.
 
 Tutors interact with the application through the CLI, and the GUI is implemented using JavaFX. The app itself is written in Java.
 
 == Summary of contributions
 
 * *Major Enhancement*: added Email feature in ConTAct
-** What it does: allows the user to email a student directly from the application through a command
+** What it does: allows the user to email a student directly from the application through an input to the CLI
 ** Justification: this feature significantly enhances the product by easing the process of emailing a student,
 making it quicker.
 ** Highlights: The feature includes a simple `email` command with which the subject and content can all be set,
 just through a single command. It required an in-depth anaylsis of how working with REST-ful API worked,
 and how to integrate it with a native application. It was a challenge to make it allow any NUS Outlook user be
-able to sign-in with his/her email and send an email to their student.
+able to sign-in with his/her email and send an email to their student. Other challenges included ensuring security, receiving permission from users, and understanding the flow of the authorization-code grant method of getting an access token.
+
 ** Credits: The Outlook API usage online provided by Outlook itself served as a good guidance in implementing this.
 
 * Code contributed: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=preethi-d&sort=displayName&since=2018-09-12&until=2018-11-09&timeframe=day&reverse=false&repoSort=true[RepoSense Report]
@@ -67,6 +68,8 @@ include::../UserGuide.adoc[tag=email]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-Updated UML Diagram
-
 include::../DeveloperGuide.adoc[tag=email]
+include::../DeveloperGuide.adoc[tag=emailUseCase]
+
+Manual Test:
+include::../DeveloperGuide.adoc[tag=emailManualTest]

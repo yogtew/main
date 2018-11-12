@@ -74,20 +74,23 @@ Examples:
 Shows a list of all students in the address book. +
 Format: `list`
 
-=== Emailing a student : `email`
+// tag::email[]
+=== Emailing a student: `email`
 
- Allows the user to email a specified student. +
- Format: `email INDEX s/SUBJECT b/BODY`
+Allows the user to email a specific student. +
+Format: `email INDEX s/SUBJECT b/BODY`
 
- ****
- * The subject of the email is specified after the s/ and the body after the b/.
- * The user can specify only one student index, after the 'email' command word.
- ****
+****
+* The subject of the email is specified after the s/ and the body after the b/.
+* The user can specify one student index, after the `email` command word.
+* The user will be redirected to an Outlook sign in page, and has to give consent to allow the application to send the mail on the user's behalf.
+****
 
- Examples:
+Examples:
 
- * `email 2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
- Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
+* `email 2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
+This gathers the email address of the student at index 2, and sets the subject and body respectively. It then asks the user for permission to send the email on their behalf and once the user consents, it sends the email.
+// end::email[]
 
 === Editing a student : `edit`
 
@@ -168,22 +171,6 @@ Examples:
 * `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
 Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
 // end::cancel[]
-
-// tag::email[]
-=== Emailing students: `email`
-
-Allows the user to email a specified student. +
-Format: `email i/INDEX s/SUBJECT b/BODY`
-
-****
-* The subject of the email is specified after the s/ and the body after the b/.
-* The user can specify only one student index, after the 'i/'.
-****
-
-Examples:
-
-* `email i/2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
-Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
 
 === Locating students by name/tag: `find`
 
