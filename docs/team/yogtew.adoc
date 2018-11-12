@@ -74,3 +74,4 @@ include::../UserGuide.adoc[tag=attendance]
 |===
 
 include::../DeveloperGuide.adoc[tag=attendance]
+include::../DeveloperGuide.adoc[tag=attendanceusecases]
