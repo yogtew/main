@@ -9,19 +9,18 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AttendanceCommand;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Attendance;
 
 public class AttendanceCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, AttendanceCommand.MESSAGE_USAGE);
-    private static final String VALID_MARK = "m/tut1 ";
-    private static final String VALID_MARK_NAME = "tut1";
-    private static final String INVALID_MARK = "m/tut@ ";
+    private static final String VALID_GROUP = "g/tut1 ";
+    private static final String VALID_GROUP_NAME = "tut1";
+    private static final String INVALID_GROUP = "g/tut@ ";
     private static final String VALID_ATTENDANCE_VALUE = "1";
     private static final String VALID_ATTENDANCE = "at/1 ";
     private static final String INVALID_ATTENDANCE = "234";
-    private static final String INVALID_COMMAND = "invalid ";
 
     private AttendanceCommandParser parser = new AttendanceCommandParser();
 
@@ -52,11 +51,11 @@ public class AttendanceCommandParserTest {
         // invalid prefix being parsed as index
         assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
 
-        // invalid mark
-        assertParseFailure(parser, VALID_ATTENDANCE + INVALID_MARK, Mark.MARK_NAME_CONSTRAINTS);
+        // invalid group
+        assertParseFailure(parser, VALID_ATTENDANCE + INVALID_GROUP, Group.GROUP_NAME_CONSTRAINTS);
 
-        // valid mark but random stuff in preamble
-        assertParseFailure(parser, PREFIX_ATTENDANCE + "some string" + VALID_MARK, MESSAGE_INVALID_FORMAT);
+        // valid group but random stuff in preamble
+        assertParseFailure(parser, PREFIX_ATTENDANCE + "some string" + VALID_GROUP, MESSAGE_INVALID_FORMAT);
 
         // negative attendance
         assertParseFailure(parser, PREFIX_ATTENDANCE + "-1", MESSAGE_INVALID_FORMAT);
@@ -77,8 +76,8 @@ public class AttendanceCommandParserTest {
         assertParseSuccess(parser, "1 " + VALID_ATTENDANCE,
                 new AttendanceCommand(Index.fromOneBased(1), new Attendance(VALID_ATTENDANCE_VALUE)));
 
-        // with mark
-        assertParseSuccess(parser, " " + VALID_MARK + VALID_ATTENDANCE,
-                new AttendanceCommand(VALID_MARK_NAME, new Attendance(VALID_ATTENDANCE_VALUE)));
+        // with group
+        assertParseSuccess(parser, " " + VALID_GROUP + VALID_ATTENDANCE,
+                new AttendanceCommand(VALID_GROUP_NAME, new Attendance(VALID_ATTENDANCE_VALUE)));
     }
 }

@@ -112,12 +112,10 @@ Edits the name of the 2nd student to be `Betsy Crower` and clears all existing t
 // tag::attendance[]
 === Marking attendance: `attendance`
 
-Allows the user to mark the attendance of students using the index number as well as mark name. +
-Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance m/MARK_NAME at/ATTENDANCE`
+Allows the user to mark the attendance of students using the index number as well as group name. +
+Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance g/GROUP_NAME at/ATTENDANCE`
 
-****
-* The attendance marking as present is done individually, by using the index number of the student. The user can also collectively mark the attendance using the MARK feature. Then, the user can update the attendance of the students who do not follow the majority specifically. The user can update the attendance of the student/students who are absent as 'absent'/'0' and who are present as 'present'/'1'(any other value updates the attendance to undefined).
-****
+* The attendance marking as present is done individually, by using the index number of the student. The user can also collectively mark the attendance using the GROUP feature. Then, the user can update the attendance of the students who do not follow the majority specifically. The user can update the attendance of the student/students who are absent as 'absent'/'0' and who are present as 'present'/'1'(any other value updates the attendance to undefined).
 
 Examples:
 
@@ -127,8 +125,8 @@ Marks the attendance of the student with index number 1 as present.
 * `attendance 3 at/0` +
 Marks the attendance of the student with index number 3 as absent.
 
-* `attendance m/tutorial1 at/1` +
-Marks the attendance of all the students in mark-tutorial1 as present.
+* `attendance g/tutorial1 at/1` +
+Marks the attendance of all the students in group-tutorial1 as present.
 // end::attendance[]
 
 === Schedule timetables: `schedule`
@@ -166,6 +164,8 @@ Examples:
 * `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
 Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
 // end::cancel[]
+
+// tag::email[]
 === Emailing students: `email`
 
 Allows the user to email a specified student. +
@@ -213,6 +213,65 @@ Returns any student having names `Betsy`, `Tim`, or `John`
 Returns students tagged with `t/students`
 * `find t/students t/colleagues` +
 Returns students tagged with `t/students` or `t/colleagues`
+//end::email[]
+
+// tag::group[]
+=== Group: `group`
+A Group represents a group of Students in the app. Some commands accept Groups as an alternative to INDEX as a parameter to quickly perform batch operations.
+
+==== Group Creation
+Format: `group find t/TAGNAME` or `group find KEYWORD`
+
+This creates a Group containing the Students returned by the find command with the supplied arguments.
+
+E.g. `group find t/friends` will find all students in the Address Book tagged with "friends" and add them to a Group.
+
+==== Named Groups
+Groups can be named by using the prefix `g/GROUPNAME`. If not specified, the name of the created Group will default to "g/default".
+
+E.g. `group g/myGroupName find t/friends` will add the Students tagged with "friends" to a Group called "myGroupName"
+
+Note: Group names must be alphanumeric and do not contain spaces.
+
+==== Manipulating Groups
+Groups are able to be manipulated in the same way as sets, namely, they support the following operations: `union (join)`, `intersection (and)`, `complement (NYI)`
+
+Format: `group [g/DEST_GROUP] <operation> g/OPERANDGROUP1 [g/OPERANDGROUP2]`
+
+E.g. `group g/students join g/tut1 g/tut2` g/students will contain the Students of g/tut1 and g/tut2 merged together
+
+E.g. `group g/canRetake and g/absentFromTest g/validReason` -- g/canRetake will contain Students that are in both g/absentFromTest and g/validReason
+
+Note: The first operand is compulsory while the second operand is optional and will default to "g/default"
+
+==== Displaying Groups
+The Students in a Group can be shown in the GUI with the following command:
+
+`group [g/GROUPTOBESHOWN] show`
+
+==== Interactions with `undo` and `redo`
+Due to the way `undo` and `redo` are implemented, Groups that are changed as a result of these commands will not behave as expected, the students that are changed will be removed from the Group.
+
+==== Reference
+`group [g/m1] ...`
+
+* `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and group under _m1_
+* `join g/m2 g/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
+* `and g/m2 g/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
+* `show` -- displays students from _m1_ in the GUI
+
+Notes:
+
+* _m1_ defaults to "default" if omitted
+
+Examples:
+
+* `group find t/friends` -- adds all students with tag _t/friends_ under _g/default_
+* `group g/abc find t/colleagues` -- groups all students with tag _t/colleagues_ under _g/abc_
+* `group join g/a g/b` -- groups students in either _g/a_ or _g/b_ under _g/default_ (union of a and b)
+* `group and g/a g/b` -- groups students in both _g/a_ and _g/b_ under _g/default_ (intersection of a and b)
+* `group g/test show` -- shows students grouped under _g/test_ in the GUI
+// end::group[]
 
 === Deleting a student : `delete`
 
@@ -329,7 +388,7 @@ Format: `exit`
 === Tag Students: `tag`
 Adds, sets or deletes tags from students (by index or by name).
 
-Format: `tag add|set|del index|m/mark [t/tags...]`
+Format: `tag add|set|del index|g/group [t/tags...]`
 
 Examples:
 ```
@@ -337,7 +396,7 @@ tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
 tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
 tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
 
-tag add m/students t/cs2103 // Adds the tag "cs2103" to all students in the mark named "students"
+tag add g/students t/cs2103 // Adds the tag "cs2103" to all students in the group named "students"
 ```
 
 Note:
@@ -346,61 +405,6 @@ Note:
 * The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
 * The command will not fail even if the supplied tag is absent in the case of `tag delete`
 * The command will still display a success message if the above cases occur
-
-// tag::mark[]
-=== Mark: `mark`
-A Mark represents a group of Students in the app. Some commands accept Marks as an alternative to INDEX as a parameter to quickly perform batch operations.
-
-==== Mark Creation
-Format: `mark find t/TAGNAME` or `mark find KEYWORD`
-
-This creates a Mark containing the Students returned by the find command with the supplied arguments.
-
-E.g. `mark find t/friends` will find all students in the Address Book tagged with "friends" and add them to a Mark.
-
-==== Named Marks
-Marks can be named by using the prefix `m/MARKNAME`. If not specified, the name of the created Mark will default to "m/default".
-
-E.g. `mark m/myMarkName t/friends` will add the Students tagged with "friends" to a Mark called "myMarkName"
-
-Note: Mark names must be alphanumeric and do not contain spaces.
-
-==== Manipulating Marks
-Marks are able to be manipulated in the same way as sets, namely, they support the following operations: `union (join)`, `intersection (and)`, `complement (NYI)`
-
-Format: `mark [m/DEST_MARK] <operation> m/OPERANDMARK1 [m/OPERANDMARK2]`
-
-E.g. `mark m/students join m/tut1 m/tut2` m/students will contain the Students of m/tut1 and m/tut2 merged together
-
-E.g. `mark m/canRetake and m/absentFromTest m/validReason` -- m/canRetake will contain Students that are in both m/absentFromTest and m/validReason
-
-Note: The first operand is compulsory while the second operand is optional and will default to "m/default"
-
-==== Displaying Marks
-The Students in a Mark can be shown in the GUI wit the following command:
-
-`mark [m/MARKTOBESHOWN] show`
-
-==== Reference
-`mark [m/m1] ...`
-
-* `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and mark under _m1_
-* `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
-* `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
-* `show` -- displays students from _m1_ in the GUI
-
-Notes:
-
-* _m1_ defaults to "default" if omitted
-
-Examples:
-
-* `mark find t/friends` -- adds all students with tag _t/friends_ under _m/default_
-* `mark m/abc find t/colleagues` -- marks all students with tag _t/colleagues_ under _m/abc_
-* `mark join m/a m/b` -- marks students in either _m/a_ or _m/b_ under _m/default_ (union of a and b)
-* `mark and m/a m/b` -- marks students in both _m/a_ and _m/b_ under _m/default_ (intersection of a and b)
-* `mark m/test show` -- shows students marked under _m/test_ in the GUI
-// end::mark[]
 
 === Saving the data
 
@@ -428,7 +432,7 @@ e.g. `delete 3`
 * *Edit* : `edit INDEX [n/NAME] [sn/STUDENT_NUMBER] [e/EMAIL] [f/FACULTY] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Attendance* : `attendance INDEX_NUMBER at/ATTENDANCE`
-e.g. `attendance 1 at/1` or `attendance m/tutorial1 at/1`
+e.g. `attendance 1 at/1` or `attendance g/tutorial1 at/1`
 * *Schedule* : `schedule event/EVENT_NAME date/DATE start/TIME_START end/TIME_END descr/DESCRIPTION` +
 e.g `schedule event/CS2103-Tutorial-W13 date/22-3-2018 start/16:00 end/18:00 descr/Product demo`
 * *Cancel* : `cancel event/EVENT_NAME date/DATE start/TIME_START end/TIME_END` +
@@ -444,9 +448,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Tag* : `tag add|set|del index|m/mark [t/tags...]`
-* *Mark* : `mark [m/m1] ...`
-** `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and mark under _m1_
-** `join m/m2 m/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
-** `and m/m2 m/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
+* *Tag* : `tag add|set|del index|g/group [t/tags...]`
+* *Group* : `group [g/m1] ...`
+** `find <KEYWORD|t/TAG...>` -- finds persons matching KEYWORD in their name or matching specified tags and group under _m1_
+** `join g/m2 g/m3` -- sets _m1_ to be the *union* of _m2_ and _m3_
+** `and g/m2 g/m3` -- sets _m1_ to be the *intersection* of _m2_ and _m3_
 ** `show` -- displays students from _m1_ in the GUI

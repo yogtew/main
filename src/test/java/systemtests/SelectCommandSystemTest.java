@@ -93,7 +93,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
 
         /* Case: select from empty address book -> rejected */
-        deleteAllStudents();
+        deleteAllEntries();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_STUDENT.getOneBased(),
                 MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
@@ -122,7 +122,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
-            assertSelectedCardUnchanged();
+            assertSelectedStudentCardUnchanged();
         } else {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         }
@@ -147,7 +147,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

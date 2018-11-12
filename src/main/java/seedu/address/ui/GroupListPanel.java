@@ -12,29 +12,29 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
-import seedu.address.commons.events.ui.MarkPanelSelectionChangedEvent;
-import seedu.address.model.mark.Mark;
+import seedu.address.commons.events.ui.GroupPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.ResetStudentViewEvent;
+import seedu.address.model.group.Group;
 
 /**
  * Panel containing the list of students.
  */
-public class MarkListPanel extends UiPart<Region> {
+public class GroupListPanel extends UiPart<Region> {
     private static final String FXML = "GenericListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(MarkListPanel.class);
+    private final Logger logger = LogsCenter.getLogger(GroupListPanel.class);
 
     @FXML
-    private ListView<Mark> genericListView;
+    private ListView<Group> genericListView;
 
-    public MarkListPanel(ObservableList<Mark> markObservableList) {
+    public GroupListPanel(ObservableList<Group> groupObservableList) {
         super(FXML);
-        setConnections(markObservableList);
+        setConnections(groupObservableList);
         registerAsAnEventHandler(this);
     }
 
-    private void setConnections(ObservableList<Mark> markObservableList) {
-        genericListView.setItems(markObservableList);
-        genericListView.setCellFactory(listView -> new MarkListViewCell());
+    private void setConnections(ObservableList<Group> groupObservableList) {
+        genericListView.setItems(groupObservableList);
+        genericListView.setCellFactory(listView -> new GroupListViewCell());
         setEventHandlerForSelectionChangeEvent();
     }
 
@@ -42,8 +42,8 @@ public class MarkListPanel extends UiPart<Region> {
         genericListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in mark list panel changed to : '" + newValue + "'");
-                        raise(new MarkPanelSelectionChangedEvent(newValue));
+                        logger.fine("Selection in group list panel changed to : '" + newValue + "'");
+                        raise(new GroupPanelSelectionChangedEvent(newValue));
                     }
                 });
     }
@@ -59,24 +59,26 @@ public class MarkListPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
+    private void handleResetStudentViewEvent(ResetStudentViewEvent event) {
+        System.out.println("Clear selection");
+        Platform.runLater(() -> {
+            genericListView.getSelectionModel().clearSelection();
+        });
     }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code Student} using a {@code StudentCard}.
      */
-    class MarkListViewCell extends ListCell<Mark> {
+    class GroupListViewCell extends ListCell<Group> {
         @Override
-        protected void updateItem(Mark mark, boolean empty) {
-            super.updateItem(mark, empty);
+        protected void updateItem(Group group, boolean empty) {
+            super.updateItem(group, empty);
 
-            if (empty || mark == null) {
+            if (empty || group == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new MarkCard(mark, getIndex() + 1).getRoot());
+                setGraphic(new GroupCard(group, getIndex() + 1).getRoot());
             }
         }
     }

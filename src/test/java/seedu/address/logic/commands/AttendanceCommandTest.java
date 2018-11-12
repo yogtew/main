@@ -39,6 +39,9 @@ public class AttendanceCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalCalendar(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
+    /**
+     * Successfully update attendance of student with unfiltered list
+     */
     @Test
     public void execute_addAttendanceUnfilteredList_success() {
         Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -57,6 +60,9 @@ public class AttendanceCommandTest {
         assertCommandSuccess(attendanceCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
+    /**
+     * Successfully update attendance of student with filtered list
+     */
     @Test
     public void execute_filteredList_success() {
         Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -77,6 +83,9 @@ public class AttendanceCommandTest {
         assertCommandSuccess(attendanceCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
+    /**
+     * Index is not valid
+     */
     @Test
     public void execute_invalidStudentIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredStudentList().size() + 1);
@@ -105,6 +114,10 @@ public class AttendanceCommandTest {
                 Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
 
+    /**
+     * Updates attendance of student and then undo and redo modification
+     * @throws Exception
+     */
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Student studentToModify = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -128,6 +141,9 @@ public class AttendanceCommandTest {
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    /**
+     * Undo Redo execution fails
+     */
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredStudentList().size() + 1);
@@ -143,11 +159,10 @@ public class AttendanceCommandTest {
     }
 
     /**
-     * 1. Modifies {@code Student#remark} from a filtered list.
-     * 2. Undo the modification.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously modified student in the
+     * Modifies {@code Student} from a filtered list. Undo the modification.
+     * The unfiltered list should be shown now. Verify that the index of the previously modified student in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the modification. This ensures {@code RedoCommand} modifies the student object regardless of indexing.
+     * Redo the modification. This ensures {@code RedoCommand} modifies the student object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameStudentDeleted() throws Exception {
@@ -207,31 +222,31 @@ public class AttendanceCommandTest {
         assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance("1"))));
 
-        String markName = "tut1";
-        final AttendanceCommand standardMarkCommand = new AttendanceCommand(markName,
+        String groupName = "tut1";
+        final AttendanceCommand standardGroupCommand = new AttendanceCommand(groupName,
                 new Attendance(VALID_ATTENDANCE_AMY));
 
         // same values -> returns true
-        AttendanceCommand markCommandWithSameValues = new AttendanceCommand(markName,
+        AttendanceCommand groupCommandWithSameValues = new AttendanceCommand(groupName,
                 new Attendance(VALID_ATTENDANCE_AMY));
-        assertTrue(standardMarkCommand.equals(markCommandWithSameValues));
+        assertTrue(standardGroupCommand.equals(groupCommandWithSameValues));
 
         // same object -> returns true
-        assertTrue(standardMarkCommand.equals(standardMarkCommand));
+        assertTrue(standardGroupCommand.equals(standardGroupCommand));
 
         // null -> returns false
-        assertFalse(standardMarkCommand.equals(null));
+        assertFalse(standardGroupCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardMarkCommand.equals(new ClearCommand()));
+        assertFalse(standardGroupCommand.equals(new ClearCommand()));
 
-        // different markName -> return false
-        String otherMarkName = "tut2";
-        assertFalse(standardMarkCommand.equals(new AttendanceCommand(otherMarkName,
+        // different groupName -> return false
+        String otherGroupName = "tut2";
+        assertFalse(standardGroupCommand.equals(new AttendanceCommand(otherGroupName,
                 new Attendance(VALID_ATTENDANCE_AMY))));
 
         // different attendance -> return false
-        assertFalse(standardIndexCommand.equals(new AttendanceCommand(markName,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(groupName,
                 new Attendance("1"))));
     }
 }

@@ -172,11 +172,12 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Deletes all students in the address book.
+     * Deletes all entries in the address book and calendar.
      */
-    protected void deleteAllStudents() {
+    protected void deleteAllEntries() {
         executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getAddressBook().getStudentList().size());
+        assertEquals(0, getModel().getCalendar().getEventList().size());
     }
 
     /**
@@ -194,7 +195,7 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code StudentListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code StudentListPanelHandle}, {@code EventListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
@@ -202,18 +203,18 @@ public abstract class AddressBookSystemTest {
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getStudentListPanel().rememberSelectedStudentCard();
+        getEventListPanel().rememberSelectedEventCard();
     }
 
     /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected student.
+     * Asserts that the previously selected card is now deselected.
      */
     protected void assertSelectedCardDeselected() {
         assertFalse(getStudentListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the student in the student list panel at
+     * Asserts that the selected card in the student list panel is changed
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
      * @see StudentListPanelHandle#isSelectedStudentCardChanged()
      */
@@ -224,10 +225,10 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the student list panel remain unchanged.
+     * Asserts that the selected card in the student list panel remain unchanged.
      * @see StudentListPanelHandle#isSelectedStudentCardChanged()
      */
-    protected void assertSelectedCardUnchanged() {
+    protected void assertSelectedStudentCardUnchanged() {
         assertFalse(getStudentListPanel().isSelectedStudentCardChanged());
     }
 
