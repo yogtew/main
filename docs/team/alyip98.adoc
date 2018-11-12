@@ -16,18 +16,24 @@ ConTAct is an application designed to help teaching assistants manage the detail
 * *Major enhancement*: Ability to add students to a temporary group and perform batch operations on the group
 ** What it does: allows the user to create temporary groups of students and manipulate these groups using set operations (union, intersection) and run commands on groups of students instead of one by one
 ** Justification: This enhancement saves time and improves productivity as the user only has to run one command for each batch, instead of one command for every student
-** Highlights: This enhancement greatly improves the usability of the application by serving as the foundation for batch operations.
+** Highlights: Greatly improves usability. Enhances other commands/features.
 
-* *Minor enhancement*: added a `tag` command to update tags of a group of students
 
-* *Code contributed*: 
+* *Code contributed*: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=alyip98[Link]
 
 * *Other contributions*:
 
+** Minor enhancement: added a `tag` command to update tags of a group of students
 ** Project management:
-***
+*** Maintain issue tracker
+*** Populate SampleData
+*** Assist GUI redesign
+*** Review team pull requests
+*** Assist team in debugging other features
 ** Enhancements to existing features:
+*** added ability to `find` by tag
 ** Documentation:
+*** Review other members' documentation and suggest improvements
 ** Community:
 ** Tools:
 *** Tweaked Travis CI build settings to forgive trivial errors (e.g. incorrect alphabetical order of imports will now only give a warning)
