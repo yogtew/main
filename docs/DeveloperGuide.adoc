@@ -693,10 +693,6 @@ The graph feature leverages on d3 graph for the responsiveness and asthetics of 
 
 This feature uses query strings to make server-client communication to draw and display the graph data. This is made so that it can be compatible with exporting of data to other applications in the near future. Future iterations of this feature can be made to RESTful API for better compatibilty with 3rd party applications
 
-
-.Component interactions for Graph command
-image::GraphCI.png[width="800"]
-
 The graph command get the set of users `Set<Student>` to query for the attendance status and then returns an array of data to be graphed on a d3 graph.
 
 Commands relating to the manipulation of the Set data of students are parsed by `GraphCommandParser`, which then returns the appropriate graph to be shown.
@@ -709,20 +705,21 @@ The commands adhere to the following pattern:
 or
  graph t\TAGS`
 
-
 ==== Sequence Diagram
 The sequence diagram below shows how the components interact for the scenario where the user issues the graph command.
 
-.Component interactions for `graph` command
+.High level Sequence Diagram for `graph` command
 image::GraphSD.png[width="800"]
 
+.Sequence Diagram for `graph` command
+image::GraphCI.png[width="800"]
 
 ==== Design Considerations:
 
 For displaying of the data a donut graph is to display the 3 main attendance states as mentioned in AttendanceEnum class. The donut graph allows more room to display more data points in future should there be a need to as well. The labels used instead of a legend as legend can be confusing when there are many colors/data available on the graph as well.
 
 .Rendering of the Attendance Graph
-image::GraphMockup.png[width="800"]
+image::GraphMockup.png[width="500"]
 // end::graph[]
 
 
