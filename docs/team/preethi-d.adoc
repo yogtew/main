@@ -71,3 +71,5 @@ include::../UserGuide.adoc[tag=email]
 Updated UML Diagram
 
 include::../DeveloperGuide.adoc[tag=email]
+include::../DeveloperGuide.adoc[tag=emailUseCase]
+include::../DeveloperGuide.adoc[tag=emailManualTest]
