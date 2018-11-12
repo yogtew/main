@@ -1208,8 +1208,6 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Marking Attendance of a student(s)
 // tag::attendancetests[]
 Marking attendance
