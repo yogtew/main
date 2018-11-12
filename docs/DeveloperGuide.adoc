@@ -1231,6 +1231,6 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No student is emailed. Error details shown in status message.
 .. Test case: `email 1 x/subject y/body` +
    Expected: No student is emailed. Error details shown in status message.
-.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
+.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size) +
    Expected: Similar to previous
 // end::emailManualTest[]
