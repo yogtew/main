@@ -118,7 +118,11 @@ Edits the name of the 2nd student to be `Betsy Crower` and clears all existing t
 Allows the user to mark the attendance of students using the index number as well as group name. +
 Format: `attendance INDEX_NUMBER at/ATTENDANCE` or `attendance g/GROUP_NAME at/ATTENDANCE`
 
-* The attendance marking as present is done individually, by using the index number of the student. The user can also collectively mark the attendance using the GROUP feature. Then, the user can update the attendance of the students who do not follow the majority specifically. The user can update the attendance of the student/students who are absent as 'absent'/'0' and who are present as 'present'/'1'(any other value updates the attendance to undefined).
+* The attendance marking can be done individually, by using the index number of the student.
+* The user can also collectively mark the attendance by specifying the `group`. Then, the user can update the attendance of the students who do not follow the majority specifically.
+** The group must exist for the user to update the attendance of the group. If the group does not exist, the user needs to create the required group first. See `group` feature on how to create a group of students.
+* The user can update the attendance of the student/students who are absent as 'absent' or '0' and who are present as 'present' or '1' (any other value updates the attendance to undefined).
+* The existing attendance of the student will be overwritten by the user input values.
 
 Examples:
 

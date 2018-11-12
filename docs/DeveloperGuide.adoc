@@ -1220,6 +1220,40 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+// tag::attendancetests[]
+=== Marking Attendance of a student/students
+
+. Update the attendance of a student or a `group` of students
+
+.. Prerequisites: The student must exist on the conTAct list/the `group` of students must exist. If the student does not exist, add the student first. If the `group` does not exist, create a `group` of students with the existing required tag.
+.. Test case: `attendance 1 at/1` +
+   Expected: The attendance of the first student on the list is updated to PRESENT. Success message shown in the status bar.
+.. Test case: `attendance 2 at/0` +
+   Expected: The attendance of the second student on the list is updated to ABSENT. Success message shown in the status bar.
+.. Test case: `attendance 3 at/123` +
+   Expected: The attendance of the third student on the list is updated to UNDEFIND. Success message shown in the status bar.
+.. Test case: `attendance 4 at/present` +
+   Expected: The attendance of the fourth student on the list is updated to PRESENT. Success message shown in the status bar.
+.. Test case: `attendance 5 at/absent` +
+   Expected: The attendance of the fifth student on the list is updated to ABSENT. Success message shown in the status bar.
+.. Test case: `attendance 6 at/not here` +
+   Expected: The attendance of the sixth student on the list is updated to UNDEFIND. Success message shown in the status bar.
+.. Test case: `attendance 0 at/1` +
+   Expected: Invalid index. Error message is shown in the status bar.
+.. Test case: `attendance 0 at/` +
+   Expected: The attendance of the first student on the list is updated to UNDEFIND. Success message shown in the status bar.
+.. Test case: `attendance g/tut2 at/1` +
+   Expected: The attendance of all students in `group` tut2 is updated to PRESENT. Success message shown in the status bar.
+.. Test case: `attendance g/tut1 at/0` +
+   Expected: The attendance of all students in `group` tut1 is updated to ABSENT. Success message shown in the status bar.
+.. Test case: `attendance g/tu1 at/0` +
+   Expected: If `group` does not exist, attendance will not be updated. Error message shown in the status bar.
+.. Test case: `attendance g/ at/1` +
+   Expected: The `group` name should not be blank, attendance will not be updated. Error message shown in the status bar.
+.. Other incorrect commands to try: `attendance`, `attendance a/tut2 b/1`, `attendance at/1`, `attendance x at/0` (where x is larger than the size of the list) +
+   Expected: Error message shown in status bar.
+// end::attendancetests[]
+
 === Saving data
 
 . Dealing with missing/corrupted data files
