@@ -204,7 +204,6 @@ Returns any student having names `Betsy`, `Tim`, or `John`
 Returns students tagged with `t/students`
 * `find t/students t/colleagues` +
 Returns students tagged with `t/students` or `t/colleagues`
-//end::email[]
 
 // tag::group[]
 === Group: `group`
