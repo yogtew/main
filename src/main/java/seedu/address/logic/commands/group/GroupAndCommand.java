@@ -25,6 +25,7 @@ public class GroupAndCommand extends GroupCommand {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         Group group1 = model.getGroup(alias2);
         Group result = group1.intersect(model.getGroup(alias3));
+        result.setName(alias1);
         model.setGroup(alias1, result);
         return new CommandResult(String.format(MESSAGE_SUCCESS, result.count(), alias1, alias2, alias3));
     }

@@ -586,13 +586,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::groupfeature[]
+
 === Group feature
-Groups allow tutors to manage groups of students easily without typing a command multiple times for each student in the class.
-It is designed to work well with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
+A `Group` allows tutors to manage students easily without typing a command for each student.
+It is designed to work with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.
 It is session based, meaning that groups are not stored in the data files after the app has closed, and is not intended as a replacement for `Tag`.
 
+Note: was previously called `Mark`
+
 ==== Implementation
-`Group` is a container class which stores a `Set<Student>` and exposes getter and setter methods, as well as methods for union and intersection of `Groups`.
+Each `Group` represents a collection of unique students, stored with a `Set<Student>` and exposes getter and setter methods, as well as methods for the manipulation of `Groups`.
 
 image::GroupClassDiagram.png[]
 
@@ -614,6 +617,8 @@ The arguments `g/m1` may be optional in some cases and default to `Group.DEFAULT
 * `and g/m2 [g/m3]` -- returns intersection of m2 and m3
 * `show` -- shows grouped Students in GUI
 
+Note: The base command by itself does not do anything, i.e. `group` will not do anything but display an error
+
 image::GroupCommandClassDiagram.png[]
 
 ==== Planned Sub-commands (2.0)
@@ -624,6 +629,7 @@ image::GroupCommandClassDiagram.png[]
 image::GroupCommandParserFlowchart.png[]
 
 ==== Execution
+The following sequence diagram illustrates how `GroupCommands` are processed and executed
 
 image::GroupCommandSeqDiagram.png[]
 
@@ -653,15 +659,15 @@ The tutor can type in:
 Suppose the tutor then wants to send an email to the aforementioned group of students.
 They can do that with a simple command:
 
- email g/res b/[emailText]
+ email g/res s/subject b/body (group email command coming in V2.0)
 
 ==== Tracking students
 
 The application is implemented with immutable `Student` objects.
 As a result, when a student is edited, a new `Student` instance is created with the updated fields and stored in the `AddressBook`.
-This causes the stored `Student` objects in existing Groups to be outdated, and attempts to use those objects will lead to a crash.
+This causes the stored `Student` objects in existing `Groups` to be outdated, and attempts to use those objects will lead to a crash.
 
-To solve this issue, after every command where student(s) are changed, the stored Groups will be updated as depicted in the activity diagram below.
+To solve this issue, after every command where student(s) are changed, the stored `Groups` will be updated as depicted in the activity diagram below.
 
 image::UpdateStudentsActivityDiagram.png[]
 
@@ -678,15 +684,26 @@ Efficiency is a nice bonus but not significant as the expected number of Student
 
 ===== Aspect: Command format
 
-* Separate sub Commands
+* Separate commands for subcommands
 ** separate commands into `group-find`, `group-show` etc.
-** Pros: Easy parsing, easy to understand
+** Pros: Easy parsing, easy to understand, beginner friendly
 
 * Single command (Current)
 ** single root command `group` with subcommands `group find`, `group show`
-** Pros: Usability, minimize code duplication
+** Pros: More usable, intuitive, minimize code duplication, better extensiblity
 
+* Natural language
+** single "root" command but parsed intelligently using keywords such as `to` and `with`
+** e.g. `group students with tags t/tut1 to g/destination`, `group g/group1 and g/group2 to g/group3`
+** Pros: Highly intuitive, beginner friendly
+** Cons: Difficult to implement and exhaustively test
 
+Initially, the single command approach was thought to be better as I had expected users with CLI experience to be familiar with this style of commands, and will provide greater degree of customization of commands (due to the different combinations of arguments available). Furthermore, as the subcommands have very similar argument patterns, I believed that it would make more sense to consolidate the parsing code in one place.
+
+However, feedback from trials suggest that some users prefer self-explanatory command names e.g. `group-by-tag-to t/tagName g/destinationGroup` over `group g/destinationGroup find t/tagName`.
+Despite this, as a developer I prefer the latter.
+
+I briefly considered a natural language parser but decided that it was not worth the effort.
 
 
 // end::groupfeature[]
@@ -1224,6 +1241,57 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
+=== Saving data
+
+. Dealing with missing data files
+
+.. Prerequisites: Delete ./data folder
+.. Launch the jar file +
+Expected: A set of sample data (students and calendar) is automatically generated
+
+. Dealing with corrupt data files
+
+.. Prerequisites: Modify files inside ./data folder (random additions/deletions)
+.. Launch the jar file
+... Possible scenario: syntax is still preserved (unlikely) +
+Expected: Data still shows up but with missing/incorrect entries
+... Possible scenario: syntax is broken (extremely likely) +
+Expected: Application launches with a clean data folder (no entries)
+
+=== Groups
+. Creating groups
+.. Prerequisites: user is using the default data set
+.. Test case: `group find t/tut1` +
+Expected: 5 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 5 students) OR entering `group show` +
+Expected: Student display area updated to show only 5 students, all of them are tagged with "tut1"
+.. Test case: `group find dylan` +
+Expected: 1 student is grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 1 students) OR entering `group show` +
+Expected: Student display area updated to show only 1 student, called Dylan
+.. Test case: `group g/y2 find t/year2` +
+Expected: A new card appears on the left panel, (_y2_ 13 students), middle panel does not change
+... Clicking on the card (_y2_ 13 students) OR entering `group g/y2 show` +
+Expected: Student display area updated to show only 13 students, all of them are tagged with "year2"
+.. Test case: `group g/y2@ find t/year2` +
+Expected: Invalid group name message shown.
+.. Test case: `group g/y2 find` +
+Expected: Invalid command format message shown.
+
+. Manipulating groups
+.. Prerequisites: user is using the default data set, and ran these commands: `group g/y2 find t/year2`, `group g/t1 find t/tut1`
+.. Test case: `group join g/y2 g/t1` +
+Expected: 16 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 16 students) OR entering `group show` +
+Expected: Student display area updated to show only 16 students, all of them are tagged with "tut1" and/or "year2"
+.. Test case: `group and g/y2 g/t1` +
+Expected: 2 students are grouped under _default_, shown in the leftmost panel of the GUI.
+... Clicking on the card (_default_ 2 students) OR entering `group show` +
+Expected: Student display area updated to show only 2 students, all of them are tagged with both  "tut1" and "year2"
+.. Variations of the above:
+... `group g/grp1 and g/y2 g/t1` +
+Expected: New group _grp1_ created with 2 students
+
 === Marking Attendance of a student(s)
 // tag::attendancetests[]
 * Marking attendance
@@ -1258,12 +1326,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect commands to try: `attendance`, `attendance a/tut2 b/1`, `attendance at/1`, `attendance x at/0` (where x is larger than the size of the list) +
    Expected: Error message shown in status bar.
 // end::attendancetests[]
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 // tag::emailManualTest[]
 === Emailing a student
