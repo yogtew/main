@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.Stack;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,9 +18,10 @@ import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.CalendarChangedEvent;
-import seedu.address.commons.events.model.StudentChangedEvent;
+import seedu.address.commons.events.ui.ResetStudentViewEvent;
+import seedu.address.logic.commands.group.GroupNotFoundException;
 import seedu.address.model.event.Event;
-import seedu.address.model.mark.Mark;
+import seedu.address.model.group.Group;
 import seedu.address.model.student.Student;
 
 /**
@@ -30,10 +32,13 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final VersionedAddressBook versionedAddressBook;
     private final FilteredList<Student> filteredStudents;
-    private final ObservableList<Mark> marks;
-
     private final VersionedCalendar versionedCalendar;
     private final FilteredList<Event> filteredEvents;
+
+    private final ObservableList<Group> groups;
+    private Group watchedGroup;
+    private boolean isWatchingGroup;
+
 
 
     // maintain an internal undo/redo stack to keep track of which model to undo/redo
@@ -58,10 +63,12 @@ public class ModelManager extends ComponentManager implements Model {
 
         versionedAddressBook = new VersionedAddressBook(addressBook);
         filteredStudents = new FilteredList<>(versionedAddressBook.getStudentList());
-        marks = FXCollections.observableArrayList();
+        groups = FXCollections.observableArrayList();
 
         versionedCalendar = new VersionedCalendar(calendar);
         filteredEvents = new FilteredList<>(versionedCalendar.getEventList());
+
+        setGroup(Group.DEFAULT_NAME, Group.getEmpty());
     }
 
     public ModelManager() {
@@ -111,7 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void addStudent(Student student) {
         versionedAddressBook.addStudent(student);
-        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        resetView();
         indicateAddressBookChanged();
     }
 
@@ -122,6 +129,9 @@ public class ModelManager extends ComponentManager implements Model {
         versionedAddressBook.updateStudent(target, editedStudent);
         indicateAddressBookChanged();
         indicateStudentUpdated(target, editedStudent);
+        if (!isWatchingGroup) {
+            updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        }
     }
 
     //=========== Filtered Student List Accessors =============================================================
@@ -139,6 +149,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredStudentList(Predicate<Student> predicate) {
         requireNonNull(predicate);
         filteredStudents.setPredicate(predicate);
+        isWatchingGroup = false;
     }
 
     //=========== Undo/Redo Address Book =====================================================================
@@ -158,6 +169,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void undoAddressBook() {
         versionedAddressBook.undo();
+        removeExpiredGroups();
         indicateAddressBookChanged();
     }
 
@@ -166,6 +178,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     private void redoAddressBook() {
         versionedAddressBook.redo();
+        removeExpiredGroups();
         indicateAddressBookChanged();
     }
 
@@ -191,13 +204,14 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate a student has been changed */
     private void indicateStudentDeleted(Student target) {
-        raise(new StudentChangedEvent(target, null));
+        // raise(new StudentChangedEvent(target, null));
+        updateGroups(target, null);
     }
 
     /** Raises an event to indicate a student has been changed */
     private void indicateStudentUpdated(Student target, Student newStudent) {
         // raise(new StudentChangedEvent(target, newStudent));
-        updateMarks(target, newStudent);
+        updateGroups(target, newStudent);
     }
 
 
@@ -346,40 +360,88 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredEvents.equals(other.filteredEvents);
     }
 
-    public Mark getMark(String markName) throws IllegalArgumentException {
-        Mark.checkValidMarkName(markName);
-        return marks.stream().filter(m -> m.getName().equals(markName)).findFirst().orElse(Mark.EMPTY);
+    /**
+     *
+     * @param groupName name of group to get
+     * @return group if found
+     * @throws GroupNotFoundException if group not found in model
+     */
+    public Group getGroup(String groupName) throws GroupNotFoundException {
+        Group.checkArguments(groupName);
+        return groups.stream().filter(m -> m.getName().equals(groupName)).findFirst()
+                .orElseThrow(() -> new GroupNotFoundException(Group.MESSAGE_GROUP_NOT_FOUND));
     }
 
-    public void setMark(String markName, Mark mark) {
-        Mark old = getMark(mark.getName());
-        if (!old.equals(Mark.EMPTY)) {
-            marks.remove(old);
+    public void setGroup(String groupName, Group group) {
+        try {
+            Group old = getGroup(group.getName());
+            groups.remove(old);
+        } catch (GroupNotFoundException e) {
+            System.out.println("Nothing to worry about");
         }
-        mark.setName(markName);
-        marks.add(mark);
+        group.setName(groupName);
+        groups.add(group);
+        if (isWatchingGroup && group.getName().equals(watchedGroup.getName())) {
+            watchedGroup = group;
+            refreshGroupPredicate();
+        }
     }
 
     @Override
-    public ObservableList<Mark> getFilteredMarkList() {
-        return marks;
+    public ObservableList<Group> getFilteredGroupList() {
+        return groups;
+    }
+
+    @Override
+    public void setGroupPredicate(String groupName) throws GroupNotFoundException {
+        // should only be called from GroupShowCommand
+        watchedGroup = getGroup(groupName);
+        refreshGroupPredicate();
+    }
+
+    @Override
+    public void resetView() {
+        updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENT);
+        raise(new ResetStudentViewEvent(""));
     }
 
     /**
-     * updates the marks whenever a student is updated
+     * Updates the predicate when a student is edited
+     */
+    private void refreshGroupPredicate() {
+        updateFilteredStudentList(watchedGroup.getPredicate());
+        isWatchingGroup = true;
+    }
+
+    /**
+     * updates the groups whenever a student is updated
      * @param oldStudent
      * @param newStudent
      */
-    public void updateMarks(Student oldStudent, Student newStudent) {
-        marks.forEach((mark) -> {
-            Set<Student> set = new HashSet<>(mark.getSet());
+    private void updateGroups(Student oldStudent, Student newStudent) {
+        groups.forEach((group) -> {
+            Set<Student> set = new HashSet<>(group.getSet());
             if (set.contains(oldStudent)) {
                 set.remove(oldStudent);
                 if (newStudent != null) {
                     set.add(newStudent);
                 }
-                setMark(mark.getName(), new Mark(set, mark.getName()));
+                Group newGroup = new Group(set, group.getName());
+                setGroup(group.getName(), newGroup);
             }
+        });
+    }
+
+    /**
+     * Removes expired groups when undo or redo is executed
+     */
+    private void removeExpiredGroups() {
+        groups.forEach((group) -> {
+            Set<Student> set = group.getSet().stream().filter(student ->
+                versionedAddressBook.getStudentList().contains(student)
+            ).collect(Collectors.toSet());
+            Group newGroup = new Group(set, group.getName());
+            setGroup(group.getName(), newGroup);
         });
     }
 }

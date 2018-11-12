@@ -39,6 +39,9 @@ public class AttendanceCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalCalendar(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
 
+    /**
+     * Successfully update attendance of student with unfiltered list
+     */
     @Test
     public void execute_addAttendanceUnfilteredList_success() {
         Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -47,7 +50,7 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(editedStudent.getAttendance().value.toString()));
 
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
+        String expectedMessage = "Successfully updated attendance of 1 student";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new Calendar(model.getCalendar()), new UserPrefs());
@@ -57,6 +60,9 @@ public class AttendanceCommandTest {
         assertCommandSuccess(attendanceCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
+    /**
+     * Successfully update attendance of student with filtered list
+     */
     @Test
     public void execute_filteredList_success() {
         Student firstStudent = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -67,7 +73,7 @@ public class AttendanceCommandTest {
         AttendanceCommand attendanceCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(editedStudent.getAttendance().value.toString()));
 
-        String expectedMessage = String.format(AttendanceCommand.MESSAGE_ADD_ATTENDANCE_SUCCESS, editedStudent);
+        String expectedMessage = "Successfully updated attendance of 1 student";
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new Calendar(model.getCalendar()), new UserPrefs());
@@ -77,6 +83,9 @@ public class AttendanceCommandTest {
         assertCommandSuccess(attendanceCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
+    /**
+     * Index is not valid
+     */
     @Test
     public void execute_invalidStudentIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredStudentList().size() + 1);
@@ -105,6 +114,10 @@ public class AttendanceCommandTest {
                 Messages.MESSAGE_INVALID_STUDENT_DISPLAYED_INDEX);
     }
 
+    /**
+     * Updates attendance of student and then undo and redo modification
+     * @throws Exception
+     */
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Student studentToModify = model.getFilteredStudentList().get(INDEX_FIRST_STUDENT.getZeroBased());
@@ -128,6 +141,9 @@ public class AttendanceCommandTest {
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    /**
+     * Undo Redo execution fails
+     */
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredStudentList().size() + 1);
@@ -143,11 +159,10 @@ public class AttendanceCommandTest {
     }
 
     /**
-     * 1. Modifies {@code Student#remark} from a filtered list.
-     * 2. Undo the modification.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously modified student in the
+     * Modifies {@code Student} from a filtered list. Undo the modification.
+     * The unfiltered list should be shown now. Verify that the index of the previously modified student in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the modification. This ensures {@code RedoCommand} modifies the student object regardless of indexing.
+     * Redo the modification. This ensures {@code RedoCommand} modifies the student object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameStudentDeleted() throws Exception {
@@ -175,24 +190,24 @@ public class AttendanceCommandTest {
 
     @Test
     public void equals() {
-        final AttendanceCommand standardCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
+        final AttendanceCommand standardIndexCommand = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY));
         // same values -> returns true
-        AttendanceCommand commandWithSameValues = new AttendanceCommand(INDEX_FIRST_STUDENT,
+        AttendanceCommand indexCommandWithSameValues = new AttendanceCommand(INDEX_FIRST_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY));
-        assertTrue(standardCommand.equals(commandWithSameValues));
+        assertTrue(standardIndexCommand.equals(indexCommandWithSameValues));
 
         // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
+        assertTrue(standardIndexCommand.equals(standardIndexCommand));
 
         // null -> returns false
-        assertFalse(standardCommand.equals(null));
+        assertFalse(standardIndexCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
+        assertFalse(standardIndexCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_SECOND_STUDENT,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_SECOND_STUDENT,
                 new Attendance(VALID_ATTENDANCE_AMY))));
 
         assertEquals(new Attendance(AttendanceEnum.UNDEFINED), new Attendance(AttendanceEnum.UNDEFINED));
@@ -204,7 +219,34 @@ public class AttendanceCommandTest {
         assertEquals(new Attendance(" "), new Attendance(AttendanceEnum.UNDEFINED));
 
         // different attendance -> returns false
-        assertFalse(standardCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(INDEX_FIRST_STUDENT,
+                new Attendance("1"))));
+
+        String groupName = "tut1";
+        final AttendanceCommand standardGroupCommand = new AttendanceCommand(groupName,
+                new Attendance(VALID_ATTENDANCE_AMY));
+
+        // same values -> returns true
+        AttendanceCommand groupCommandWithSameValues = new AttendanceCommand(groupName,
+                new Attendance(VALID_ATTENDANCE_AMY));
+        assertTrue(standardGroupCommand.equals(groupCommandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardGroupCommand.equals(standardGroupCommand));
+
+        // null -> returns false
+        assertFalse(standardGroupCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardGroupCommand.equals(new ClearCommand()));
+
+        // different groupName -> return false
+        String otherGroupName = "tut2";
+        assertFalse(standardGroupCommand.equals(new AttendanceCommand(otherGroupName,
+                new Attendance(VALID_ATTENDANCE_AMY))));
+
+        // different attendance -> return false
+        assertFalse(standardIndexCommand.equals(new AttendanceCommand(groupName,
                 new Attendance("1"))));
     }
 }

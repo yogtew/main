@@ -1,0 +1,79 @@
+= Yogusvi Tewari - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: ConTAct
+
+---
+
+== Overview
+
+ConTAct is a desktop application that is aimed at making a teaching assistant's (TA) job easier. The application provides a variety of features to help the TA with managing students and student contacts.
+
+The application is written is Java, with the Graphical User Interface (GUI) implemented using JavaFX. The user interacts with the application through Command-Line Interface (CLI).
+
+== Summary of Contributions
+
+* Code Contributed: https://nus-cs2103-ay1819s1.github.io/cs2103-dashboard/#=undefined&search=yogtew&sort=displayName&since=2018-09-12&until=2018-11-09&timeframe=day&reverse=false&repoSort=true[RepoSense Report for Contribution]
+
+* *Main Feature Implemented:* Added Attendance feature to ConTAct
+** What is does: The attendance feature allows the user to update the attendance of students in their class.
+** Justification: This feature is important and useful to the user i.e the TA as it is necessary for a TA to keep track of the attendance of their students and this feature, integrated with the various other features in the application, allows an easy way to do so.
+** Highlights: This feature is implemented using the `attendance` command. It allows attendance to be updated in two types of ways. The user can either individually update the attendance of each student in their class or can collectively update the attendance of a whole class and then individually update the students' attendance that does not follow the majority.
+** Credits: The initial addressbook-level4 provided a good basis for the implementation of this feature.
+
+* *Other Contributions:*
+** Project Managment:
+*** Managed Documentation for project
+
+** Community:
+*** Aided teammates in their features/documentation. (Pull requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/26[#26]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/47[#47]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/83[#83]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/117[#117]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126])
+
+*** Updated Documentation and sequence diagrams. (Pull requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/78[#78]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/125[#125]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/128[#128]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/139[#139])
+
+*** Reported bugs for Team F10-2 during Practical Exam dry run. (Issues
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/204[#204]
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/216[#216]
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/227[#227]
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/236[#236]
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/239[#239]
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/243[#243]
+https://github.com/CS2103-AY1819S1-F10-2/main/issues/244[#244])
+
+*** PRs reviewed: (Pull Requests
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/50[#50]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/87[#87]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/88[#88]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/103[#103]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/148[#148])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=attendance]
+
+== Contributions to the Developer Guide
+
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=attendance]
+include::../DeveloperGuide.adoc[tag=attendanceusecases]
+include::../DeveloperGuide.adoc[tag=attendancetests]

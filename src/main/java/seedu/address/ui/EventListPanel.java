@@ -70,7 +70,7 @@ public class EventListPanel extends UiPart<Region> {
         String startTime = time.format(DateTimeFormatter.ofPattern("HH:mm"));
         int index = 0;
         // Creating a dummy event to compare to
-        Event event = new Event(new EventName("index"), new Date(date), new StartTime(startTime), new EndTime("23:59"));
+        Event event = new Event(new EventName("a"), new Date(date), new StartTime(startTime), new EndTime("00:00"));
         Comparator<Event> comparator = Event.COMPARATOR;
         // Finding the index of the nearest upcoming event to scroll to
         while (index < eventList.size() && comparator.compare(event, eventList.get(index)) > 0) {
