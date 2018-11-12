@@ -169,20 +169,6 @@ Examples:
 * `cancel event/CS2103 Consultation date/24-9-2019 start/18:00 end/19:00` +
 Cancels the event named `CS2103-Tutorial-W13` on 24-9-2019 from 6:00pm to 7:00pm.
 // end::cancel[]
-=== Emailing students: `email`
-
-Allows the user to email a specified student. +
-Format: `email i/INDEX s/SUBJECT b/BODY`
-
-****
-* The subject of the email is specified after the s/ and the body after the b/.
-* The user can specify only one student index, after the 'i/'.
-****
-
-Examples:
-
-* `email i/2 s/Attendance Problem b/Your attendance is poor. Is there a problem?` +
-Gathers the email address of the student with index 2 for emailing, and sets the subject and body respectively.
 
 === Locating students by name/tag: `find`
 
