@@ -311,6 +311,29 @@ Examples:
 * `group g/test show` -- shows students grouped under _g/test_ in the GUI
 // end::group[]
 
+// tag::cmdtag[]
+=== Tag Students: `tag`
+Adds, sets or deletes tags from students (by index or by name).
+
+Format: `tag add|set|del index|g/group [t/tags...]`
+
+Examples:
+```
+tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
+tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
+tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
+
+tag add g/students t/cs2103 // Adds the tag "cs2103" to all students in the group named "students"
+```
+
+Note:
+
+* The command accepts any number of tags (including 0), using `tag set` with no tags supplied will clear all tags
+* The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
+* The command will not fail even if the supplied tag is absent in the case of `tag delete`
+* The command will still display a success message if the above cases occur
+// end::cmdtag[]
+
 === Deleting a student : `delete`
 
 Deletes the specified student from the address book. +
@@ -422,27 +445,6 @@ Format: `clear`
 
 Exits the program. +
 Format: `exit`
-
-=== Tag Students: `tag`
-Adds, sets or deletes tags from students (by index or by name).
-
-Format: `tag add|set|del index|g/group [t/tags...]`
-
-Examples:
-```
-tag add 1 t/tut1 // Adds the tag "tut1" to first person in list
-tag set 1 t/tut1 // Removes all tags from first person in list and adds tag "tut1"
-tag del 1 t/tut1 // Removes the tag "tut1" to first person in list (does not do anything if supplied tag is not found)
-
-tag add g/students t/cs2103 // Adds the tag "cs2103" to all students in the group named "students"
-```
-
-Note:
-
-* The command accepts any number of tags (including 0), using `tag set` with no tags supplied will clear all tags
-* The command will not fail even if the supplied tag is already present in the case of `tag add` and `tag set`
-* The command will not fail even if the supplied tag is absent in the case of `tag delete`
-* The command will still display a success message if the above cases occur
 
 === Saving the data
 

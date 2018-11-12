@@ -562,6 +562,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // end::undoredo[]
 
 // tag::groupfeature[]
+
 === Group feature
 A `Group` allows tutors to manage students easily without typing a command for each student.
 It is designed to work with the existing `Tag` system, and designed with commands such as `attendance` and `email` in mind.

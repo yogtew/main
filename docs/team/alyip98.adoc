@@ -47,6 +47,9 @@ ConTAct is an application designed to help teaching assistants manage the detail
 
 include::../UserGuide.adoc[tag=group]
 
+include::../UserGuide.adoc[tag=cmdtag]
+
+
 == Contributions to the Developer Guide
 
 |===
