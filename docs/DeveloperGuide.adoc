@@ -1380,8 +1380,8 @@ Expected: Student display area updated to show only 2 students, all of them are 
 ... `group g/grp1 and g/y2 g/t1` +
 Expected: New group _grp1_ created with 2 students
 
-=== Marking Attendance of a student(s)
 // tag::attendancetests[]
+=== Marking Attendance of a student(s)
 * Marking attendance
 
 . Update the attendance of a student or a `group` of students
