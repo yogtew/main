@@ -1326,15 +1326,14 @@ Expected: New group _grp1_ created with 2 students
    Expected: Error message shown in status bar.
 // end::attendancetests[]
 
-// tag::emailManualTest[]
 === Emailing a student
-
+// tag::emailManualTest[]
 . Emailing a student
 
 .. Prerequisites: The student must exist on the list, at the correct index. If student does not exist yet, add student first.
 .. Test case: `email 1 s/Attendance b/Your attendance is good` +
    Expected: Email sent to student at index '1' and success message shown in status message.
-.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!` +
+.. Test case: `email 1 s/Attendance! b/Your attendance is very good!!!` +
    Expected: Email sent to student at index '1' and success message shown in status message.
 .. Test case: `email 0 s/Attendance b/Your attendance is good!` +
    Expected: No student is emailed. Error details shown in status message.
@@ -1342,6 +1341,6 @@ Expected: New group _grp1_ created with 2 students
    Expected: No student is emailed. Error details shown in status message.
 .. Test case: `email 1 x/subject y/body` +
    Expected: No student is emailed. Error details shown in status message.
-.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size)
+.. Other incorrect email commands to try: `email`, `email 1`, `email 1 s/subject`, `email x s/subject b/body` (where x is larger than the list size) +
    Expected: Similar to previous
 // end::emailManualTest[]
