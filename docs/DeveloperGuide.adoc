@@ -259,11 +259,17 @@ image::Request Sequence Diagram.png[width="800"]
 The `CommandResult` object that is returned by the email command lets the user know if the email address has been successfully send to the student whose index is specified.
 
 .Component interactions for email command
-image::Sequence Diagram LOGIC.png[width="800"]
+image::Sequence Diagram LOGIC.png[width="1200"]
 
-==== Alternative implementations:
+==== Design Considerations:
 
-Including UI features to make Outlook's mail drafting screen appear in the `Browser Panel`, and requiring the user to input the index of student to email, the subject, and the body as three seperate inputs instead of one.
+* **GUI design:** Using the browser panel to display the email drafting page of Outlook
+** Pros: Gives the user a more visual aid in drafting their message, making it easy to type longer messages
+
+* **Input:** Allow the user to type the index the subject and the body of the email in 3 seperate inputs
+** Pros: Less confusing for user, as there is no need to follow the set `email 2 s/subject b/body` design. The user can type the index, press enter, and then the subject, press enter, and then the body finally. This would ease the users experience.
+
+
 // end::email[]
 
 // tag::calendar[]
