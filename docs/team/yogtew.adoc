@@ -55,7 +55,8 @@ https://github.com/CS2103-AY1819S1-W13-3/main/pull/50[#50]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/87[#87]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/88[#88]
 https://github.com/CS2103-AY1819S1-W13-3/main/pull/103[#103]
-https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126])
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/126[#126]
+https://github.com/CS2103-AY1819S1-W13-3/main/pull/148[#148])
 
 == Contributions to the User Guide
 
@@ -74,3 +75,5 @@ include::../UserGuide.adoc[tag=attendance]
 |===
 
 include::../DeveloperGuide.adoc[tag=attendance]
+include::../DeveloperGuide.adoc[tag=attendanceusecases]
+include::../DeveloperGuide.adoc[tag=attendancetests]

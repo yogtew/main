@@ -245,6 +245,20 @@ task deployOfflineDocs(type: Copy) {
     }
 }
 
+task copyJavascript(type: Copy) {
+    from "${asciidoctor.sourceDir}/js"
+    into "${asciidoctor.outputDir}/html5/js"
+}
+
+task copyJSON(type: Copy) {
+    from "${asciidoctor.sourceDir}/json"
+    into "${asciidoctor.outputDir}/html5/json"
+}
+
+task copyGraphPage(type: Copy) {
+    from "${asciidoctor.sourceDir}/GraphPage.html"
+    into "${asciidoctor.outputDir}/docs/html5"
+}
 
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
