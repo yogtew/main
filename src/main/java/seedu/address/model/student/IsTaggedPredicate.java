@@ -1,18 +1,23 @@
 package seedu.address.model.student;
 
-import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.model.tag.Tag;
+import seedu.address.model.util.SampleDataUtil;
 
 /**
  * Tests that a {@code Student}'s contains any of the tags given.
  */
 public class IsTaggedPredicate implements Predicate<Student> {
-    private final List<Tag> tags;
+    private final Set<Tag> tags;
 
-    public IsTaggedPredicate(List<Tag> tags) {
+    public IsTaggedPredicate(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public IsTaggedPredicate(String... tags) {
+        this.tags = SampleDataUtil.getTagSet(tags);
     }
 
     @Override

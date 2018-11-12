@@ -284,7 +284,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         } else {
-            assertSelectedCardUnchanged();
+            assertSelectedStudentCardUnchanged();
         }
         assertStatusBarUnchangedExceptSyncStatus();
     }
@@ -304,7 +304,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
+        assertSelectedStudentCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
     }

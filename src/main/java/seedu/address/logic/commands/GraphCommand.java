@@ -23,10 +23,10 @@ public class GraphCommand extends Command {
 
     public static final String COMMAND_WORD = "graph";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Graphs all students whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Graphs all students whose names or tags contain any of "
+            + "the specified keywords (case-insensitive) or tags and displays the attendance graph.\n"
+            + "Example: " + COMMAND_WORD + " alice bob charlie\n"
+            + "Example: " + COMMAND_WORD + " t/student\n";
 
     private final Predicate<Student> predicate;
 
